@@ -13,7 +13,7 @@ export class App {
         { route: ['','welcome'],  moduleId: './welcome',      nav: true, title:'Welcome' },
      //   { route: 'flickr',        moduleId: './flickr',       nav: true },
      //   { route: 'child-router',  moduleId: './child-router', nav: true, title:'Child Router' },
-        { route: 'stamp-grid',  moduleId: './stamp-grid', nav: true, title:'Stamps' }
+        { route: 'stamp-list',  moduleId: './components/stamp-list', nav: true, title:'Stamps' }
       ]);
     });
   }

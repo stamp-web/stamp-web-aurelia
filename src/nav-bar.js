@@ -9,10 +9,4 @@ export class NavBar {
     this.eventBus = eventBus;
   }
 
-  sendSearch() {
-    var options = {
-      searchText: this.searchText
-    };
-    this.eventBus.publish(EventNames.keywordSearch,options);
-  }
 }

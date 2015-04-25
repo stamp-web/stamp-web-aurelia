@@ -12,6 +12,13 @@
         <span>${router.title}</span>
       </a>
     </div>
+	  <div class="navbar-header" >
+		  <ul class="nav navbar-nav">
+			  <li>
+				  <a><span class="glyphicon glyphicon-wrench" aria-hidden="true" title="Manage user preferences"></span></a>
+			  </li>
+		  </ul>
+	  </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
@@ -30,11 +37,11 @@
         <li>
           <a>Sellers</a>
         </li>
-        <li>
-          <a><span class="glyphicon glyphicon-wrench" aria-hidden="true" title="Manage user preferences"></span></a>
-        </li>
+
       </ul>
     </div>
+
+
      <span class="loader" if.bind="router.isNavigating">
           <i class="fa fa-spinner fa-spin fa-2x"></i>
         </span>

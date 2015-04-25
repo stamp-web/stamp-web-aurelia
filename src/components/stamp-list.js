@@ -1,8 +1,8 @@
 import {inject,LogManager} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {Countries} from 'services/countries';
-import {Stamps} from 'services/stamps';
-import {EventNames} from './event-names';
+import {Countries} from '../services/countries';
+import {Stamps} from '../services/stamps';
+import {EventNames} from '../event-names';
 
 const logger = LogManager.getLogger('stamp-grid');
 
@@ -24,6 +24,14 @@ export class StampGrid {
     this.eventBus = eventBus;
 
   }
+
+
+	sendSearch() {
+		var options = {
+			searchText: this.searchText
+		};
+		this.eventBus.publish(EventNames.keywordSearch,options);
+	}
 
   subscribe() {
     this.eventBus.subscribe(EventNames.keywordSearch, options => {

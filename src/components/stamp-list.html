@@ -1,0 +1,78 @@
+<template>
+	<link rel="stylesheet" type="text/css" href="/../../styles/components/stamp-list.css">
+	<require from="./stamp-card"></require>
+
+
+	<nav class="navbar navbar-default stamp-grid-nav">
+
+
+		<form class="navbar-form" role="search" submit.delegate="sendSearch()">
+			<div class="btn-toolbar" role="toolbar">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-sm btn-default" title="New Stamp">
+						<span class="glyphicon glyphicon glyphicon-plus"></span>
+					</button>
+				</div>
+				<div class="btn-group" role="group">
+					<div class="form-group">
+						<input type="text" class="form-control" value.bind="searchText" placeholder="Search">
+						<button type="submit" class="btn btn-sm btn-default" title="Search">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</div>
+
+				</div>
+				<div class="btn-group" role="group">
+					<button type="submit" class="btn btn-sm btn-default" title="Show as grid">
+						<span class="glyphicon glyphicon-th"></span>
+					</button>
+					<button type="submit" class="btn btn-sm btn-default" title="Show as list">
+						<span class="glyphicon glyphicon-th-list"></span>
+					</button>
+				</div>
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm"><span
+						class="glyphicon glyphicon glyphicon-plus"></span> New stamp
+					</button>
+					<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+							aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">New stamp</a></li>
+						<li><a href="#">New wantlist stamp</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li class="divider"></li>
+						<li><a href="#">Separated link</a></li>
+					</ul>
+				</div>
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+							aria-expanded="false">
+						Filter <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li>All stamps</li>
+						<li>Only owned stamps</li>
+						<li>Only wantlist stamps</li>
+					</ul>
+				</div>
+
+			</div>
+		</form>
+
+	</nav>
+	<div class="stamp-grid">
+		Total Results <span class="badge">${stamps.length}</span>
+
+		<div class="row5">
+			<div class="col-xs-6 col-sm-6 col-md-4 col-lg-2" repeat.for="stamp of stamps">
+				<stamp-card model.bind="stamp"></stamp-card>
+			</div>
+		</div>
+	</div>
+	
+</template>
