@@ -1,0 +1,257 @@
+{
+  "total": 42,
+  "preferences": [
+    {
+      "id": 1,
+      "category": "stamps",
+      "name": "pageSize",
+      "value": "1000"
+    },
+    {
+      "id": 2,
+      "category": "stamps",
+      "name": "imagePath",
+      "value": "http://192.168.0.25:9001/Pictures/Stamps"
+    },
+    {
+      "id": 3,
+      "category": "stamps",
+      "name": "AlbumBean",
+      "value": "1302"
+    },
+    {
+      "id": 4,
+      "category": "stamps",
+      "name": "Catalogue",
+      "value": "1"
+    },
+    {
+      "id": 5,
+      "category": "stamps",
+      "name": "CountryBean",
+      "value": "4550"
+    },
+    {
+      "id": 6,
+      "category": "stamps",
+      "name": "Condition",
+      "value": "0"
+    },
+    {
+      "id": 7,
+      "category": "currency",
+      "name": "CurrencyCode",
+      "value": "USD"
+    },
+    {
+      "id": 17,
+      "category": "stamps",
+      "name": "Catalogue_Reference",
+      "value": "600"
+    },
+    {
+      "id": 18,
+      "category": "currency",
+      "name": "USD->USD.updateTimestamp",
+      "value": "1387232428659"
+    },
+    {
+      "id": 19,
+      "category": "currency",
+      "name": "USD->USD",
+      "value": "1"
+    },
+    {
+      "id": 20,
+      "category": "currency",
+      "name": "GBP->USD.updateTimestamp",
+      "value": "1412134947454"
+    },
+    {
+      "id": 21,
+      "category": "currency",
+      "name": "GBP->USD",
+      "value": "0.618"
+    },
+    {
+      "id": 22,
+      "category": "currency",
+      "name": "USD->EUR.updateTimestamp",
+      "value": "1267126461300"
+    },
+    {
+      "id": 23,
+      "category": "currency",
+      "name": "USD->EUR",
+      "value": "1.355"
+    },
+    {
+      "id": 24,
+      "category": "currency",
+      "name": "GBP->EUR.updateTimestamp",
+      "value": "1267126461470"
+    },
+    {
+      "id": 25,
+      "category": "currency",
+      "name": "GBP->EUR",
+      "value": "0.878"
+    },
+    {
+      "id": 26,
+      "category": "stamps",
+      "name": "CatalogueBean",
+      "value": "22"
+    },
+    {
+      "id": 27,
+      "category": "stamps",
+      "name": "CatalogueBean_Reference",
+      "value": "25"
+    },
+    {
+      "id": 28,
+      "category": "currency",
+      "name": "CAD->USD.updateTimestamp",
+      "value": "1399012207773"
+    },
+    {
+      "id": 29,
+      "category": "currency",
+      "name": "CAD->USD",
+      "value": "1.096"
+    },
+    {
+      "id": 30,
+      "category": "currency",
+      "name": "USD->GBP.updateTimestamp",
+      "value": "1363233804427"
+    },
+    {
+      "id": 31,
+      "category": "currency",
+      "name": "USD->GBP",
+      "value": "1.494"
+    },
+    {
+      "id": 32,
+      "category": "currency",
+      "name": "GBP->GBP.updateTimestamp",
+      "value": "1363233703307"
+    },
+    {
+      "id": 33,
+      "category": "currency",
+      "name": "GBP->GBP",
+      "value": "1"
+    },
+    {
+      "id": 34,
+      "category": "stamps",
+      "name": "Grade",
+      "value": "1"
+    },
+    {
+      "id": 35,
+      "category": "currency",
+      "name": "GBP->CAD.updateTimestamp",
+      "value": "1296240460858"
+    },
+    {
+      "id": 36,
+      "category": "currency",
+      "name": "GBP->CAD",
+      "value": "0.631"
+    },
+    {
+      "id": 37,
+      "category": "currency",
+      "name": "USD->CAD.updateTimestamp",
+      "value": "1296240460963"
+    },
+    {
+      "id": 38,
+      "category": "currency",
+      "name": "USD->CAD",
+      "value": "1.005"
+    },
+    {
+      "id": 39,
+      "category": "stamps",
+      "name": "purchasePercentage",
+      "value": "0"
+    },
+    {
+      "id": 40,
+      "category": "stamps",
+      "name": "applyCatalogueImagePrefix",
+      "value": "true"
+    },
+    {
+      "id": 41,
+      "category": "currency",
+      "name": "CAD->GBP.updateTimestamp",
+      "value": "1360247961978"
+    },
+    {
+      "id": 42,
+      "category": "currency",
+      "name": "CAD->GBP",
+      "value": "1.564"
+    },
+    {
+      "id": 43,
+      "category": "stamps",
+      "name": "countryRef",
+      "value": "4653"
+    },
+    {
+      "id": 44,
+      "category": "stamps",
+      "name": "catalogueRef",
+      "value": "29"
+    },
+    {
+      "id": 46,
+      "category": "stamps",
+      "name": "condition",
+      "value": "1"
+    },
+    {
+      "id": 47,
+      "category": "stamps",
+      "name": "albumRef",
+      "value": "1325"
+    },
+    {
+      "id": 48,
+      "category": "stamps",
+      "name": "stampCollectionRef",
+      "value": "151"
+    },
+    {
+      "id": 49,
+      "category": "stamps",
+      "name": "grade",
+      "value": "1"
+    },
+    {
+      "id": 50,
+      "category": "stamps",
+      "name": "sellerRef",
+      "value": "4"
+    },
+    {
+      "id": 51,
+      "category": "stamps",
+      "name": "catalogueRefSecondary",
+      "value": "29"
+    },
+    {
+      "id": 52,
+      "category": "stamps",
+      "name": "conditionSecondary",
+      "value": "1"
+    }
+  ]
+}

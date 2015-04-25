@@ -1,0 +1,11 @@
+<template>
+  <require from='./nav-bar'></require>
+  <require from="./loading-indicator"></require>
+
+  <nav-bar router.bind="router"></nav-bar>
+
+  <div class="page-host">
+    <loading-indicator loading.bind="router.isNavigating"></loading-indicator>
+    <router-view></router-view>
+  </div>
+</template>

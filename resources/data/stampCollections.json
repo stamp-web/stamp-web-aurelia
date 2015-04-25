@@ -1,0 +1,17 @@
+{
+  "total": 3,
+  "stampCollections": [
+    {
+      "id": 1,
+      "name": "British Commonwealth"
+    },
+    {
+      "id": 100,
+      "name": "Germany and Areas"
+    },
+    {
+      "id": 151,
+      "name": "World Wide Collection"
+    }
+  ]
+}

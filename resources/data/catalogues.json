@@ -1,0 +1,103 @@
+{
+  "total": 13,
+  "catalogues": [
+    {
+      "id": 1,
+      "name": "Commonwealth & Empire Stamps",
+      "description": "",
+      "issue": 2004,
+      "type": 0,
+      "code": "GBP"
+    },
+    {
+      "id": 2,
+      "name": "Scott Standard Postage Catalogue (1900)",
+      "description": "",
+      "issue": 1990,
+      "type": 1,
+      "code": "USD"
+    },
+    {
+      "id": 21,
+      "name": "Scott Standard Postage Catalogue",
+      "description": "",
+      "issue": 2008,
+      "type": 1,
+      "code": "USD"
+    },
+    {
+      "id": 22,
+      "name": "Commonwealth & British Empire Stamps",
+      "description": "Covering 1840-1970",
+      "issue": 2012,
+      "type": 0,
+      "code": "GBP"
+    },
+    {
+      "id": 23,
+      "name": "Commonwealth Five Reigns Postage Stamp Catalogue",
+      "description": "Bridger and Kay 14th edition.",
+      "issue": 1980,
+      "type": 4,
+      "code": "GBP"
+    },
+    {
+      "id": 24,
+      "name": "The Canadian Revenue Stamp Catalogue",
+      "description": "25th Anniversary Edition.  Including wildlife conservation stamps.",
+      "issue": 1994,
+      "type": 4,
+      "code": "CAD"
+    },
+    {
+      "id": 25,
+      "name": "Classic Specialized Catalogue",
+      "issue": 2013,
+      "type": 1,
+      "code": "USD"
+    },
+    {
+      "id": 26,
+      "name": "Bale Palestine Specialized",
+      "description": "Specialized album for Palestine stamps",
+      "issue": 2012,
+      "type": 4,
+      "code": "GBP"
+    },
+    {
+      "id": 27,
+      "name": "Stanley Gibbons Japan and Korea (Part 18)",
+      "issue": 2008,
+      "type": 0,
+      "code": "GBP"
+    },
+    {
+      "id": 28,
+      "name": "Stanley Gibbons Balkans (Part 5)",
+      "issue": 2009,
+      "type": 0,
+      "code": "GBP"
+    },
+    {
+      "id": 29,
+      "name": "Deutschland-Spezial-Katalog (Part 2)",
+      "issue": 2011,
+      "type": 4,
+      "code": "EUR"
+    },
+    {
+      "id": 30,
+      "name": "Deutschland-Spezial 2011 (part 1)",
+      "issue": 2011,
+      "type": 2,
+      "code": "EUR"
+    },
+    {
+      "id": 31,
+      "name": "German Specialized",
+      "issue": 2007,
+      "type": 0,
+      "code": "EUR"
+    }
+  ]
+}

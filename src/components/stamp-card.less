@@ -1,0 +1,54 @@
+
+.stamp-card {
+  height: 255px;
+ /* width: 200px;*/
+  padding: 10px;
+  border: #b9def0 solid thin;
+  border-radius: 4px;
+  margin: auto;
+  font-size: 0.9em;
+  background-image: linear-gradient(to bottom, #ffffff 0%, #f3f3f4 100%);
+  background-repeat: repeat-x;
+
+
+  div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: auto;
+  }
+
+  .action-panel {
+    height: 39px;
+    width: 100%;
+    padding-top: 5px;
+  }
+  .card-header {
+    text-align: center;
+  }
+
+  .description {
+    text-align: center;
+    font-size:0.9em;
+    padding-bottom: 5px;
+  }
+
+  .stamp-thumbnail {
+    padding: 5px;
+    margin: auto;
+    height: 160px;
+    width: 160px;
+    background-color: black;
+    position: relative;
+    border-radius: 2px;
+    img {
+      max-width: 150px;
+      max-height: 150px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+  }
+
+}

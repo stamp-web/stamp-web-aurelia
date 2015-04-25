@@ -1,0 +1,124 @@
+{
+  "total": 25,
+  "sellers": [
+    {
+      "id": 1,
+      "description": "",
+      "name": "BC Stamps"
+    },
+    {
+      "id": 2,
+      "description": "",
+      "name": "Stanley Gibbons Ltd."
+    },
+    {
+      "id": 3,
+      "description": "",
+      "name": "APS Stamp Store"
+    },
+    {
+      "id": 4,
+      "description": "",
+      "name": "eBay"
+    },
+    {
+      "id": 5,
+      "description": "",
+      "name": "Bidstart"
+    },
+    {
+      "id": 6,
+      "description": "",
+      "name": "APS Circuit - India"
+    },
+    {
+      "id": 7,
+      "description": "",
+      "name": "APS Circuit - Australian States"
+    },
+    {
+      "id": 8,
+      "description": "Local dealer John Adler",
+      "name": "Adler Stamps"
+    },
+    {
+      "id": 9,
+      "description": "",
+      "name": "Dan Lemke"
+    },
+    {
+      "id": 10,
+      "description": "Tom Gontes is a seller from Canada who is selling off Geoffrey Flack's inventory.",
+      "name": "Tom Gontes (ex. Flack)"
+    },
+    {
+      "id": 11,
+      "description": "Stamp supplies and auction house.",
+      "name": "Golden Valley Stamps"
+    },
+    {
+      "id": 12,
+      "description": "",
+      "name": "APS Circuit - Mint Commonwealth"
+    },
+    {
+      "id": 13,
+      "name": "APS Circuit - British Commonwealth pre QEII"
+    },
+    {
+      "id": 14,
+      "name": "Kay Stamps"
+    },
+    {
+      "id": 15,
+      "description": "www.huntstamps.com",
+      "name": "Hunt & Company"
+    },
+    {
+      "id": 16,
+      "description": "New Hampshire",
+      "name": "1840 to 1950 Mostly Stamps"
+    },
+    {
+      "id": 17,
+      "description": "http://www.azstampcoin.com/",
+      "name": "A to Z Stamps"
+    },
+    {
+      "id": 20,
+      "description": "Republic of China",
+      "name": "China (Taiwan)"
+    },
+    {
+      "id": 21,
+      "description": "Some California guy",
+      "name": "Ed Dimmick"
+    },
+    {
+      "id": 22,
+      "description": "Dealer out of Pottsdown PA.  Met at Reading Stamp Bourse 2014.",
+      "name": "Bob Steiniger"
+    },
+    {
+      "id": 23,
+      "name": "NY Dealer"
+    },
+    {
+      "id": 24,
+      "description": "Another Pen Dealer",
+      "name": "Penn Valley Stamps"
+    },
+    {
+      "id": 25,
+      "name": "RWR Quality Stamps"
+    },
+    {
+      "id": 26,
+      "name": "Donation (from projects)"
+    },
+    {
+      "id": 27,
+      "name": "Germany Lot"
+    }
+  ]
+}
