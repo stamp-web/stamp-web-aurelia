@@ -7,23 +7,24 @@ var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
 
 gulp.task('less', function () {
-   gulp.src(paths.less)
-    .pipe(sourcemaps.init())
-    .pipe(less({
-      paths: [ path.join(__dirname, 'less', 'includes') ]
-    }))
-    .pipe(sourcemaps.write())
- //   .pipe(concat('components.css'))
-//    .pipe(minifyCSS())
-    .pipe(gulp.dest('./styles/components'));
-  return gulp.src(paths.appLess)
-    .pipe(sourcemaps.init())
-    .pipe(less({
-      paths: [ path.join(__dirname, 'less', 'includes') ]
-    }))
-    .pipe(sourcemaps.write())
+	/*   gulp.src(paths.less)
+	 .pipe(sourcemaps.init())
+	 .pipe(less({
+	 paths: [ path.join(__dirname, 'less', 'includes') ]
+	 }))
+	 .pipe(sourcemaps.write())
+	 //   .pipe(concat('components.css'))
+	 //    .pipe(minifyCSS())
+	 .pipe(gulp.dest('./styles/components'));
+	 */
+	return gulp.src(paths.appLess)
+		.pipe(sourcemaps.init())
+		.pipe(less({
+			paths: [path.join(__dirname, 'less', 'includes')]
+		}))
+		.pipe(sourcemaps.write())
 //    .pipe(concat('styles.css'))
 //    .pipe(minifyCSS())
-    .pipe(gulp.dest('./styles'));
+		.pipe(gulp.dest('./styles'));
 
 });

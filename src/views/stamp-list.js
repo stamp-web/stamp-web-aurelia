@@ -4,10 +4,10 @@ import {Countries} from '../services/countries';
 import {Stamps} from '../services/stamps';
 import {EventNames} from '../event-names';
 
-const logger = LogManager.getLogger('stamp-grid');
+const logger = LogManager.getLogger('stamp-list');
 
 @inject(EventAggregator, Stamps, Countries)
-export class StampGrid {
+export class StampList {
 
   stamps = [];
   countries = [];
