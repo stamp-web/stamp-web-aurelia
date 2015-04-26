@@ -1,7 +1,8 @@
 <link rel="stylesheet" type="text/css" href="/../../styles/views/stamp-list.css">
 <template>
+	<sort-dialog sort.bind="options.sort" sort-options.bind="sortColumns" dialog-id="exampleModal" ></sort-dialog>
 	<require from="../components/stamp-grid"></require>
-
+	<require from="../components/sort-dialog"></require>
 	<nav class="navbar navbar-default stamp-grid-nav">
 		<form class="navbar-form" role="search" submit.delegate="sendSearch()">
 			<div class="btn-toolbar" role="toolbar">
@@ -21,13 +22,36 @@
 				</div>
 				<div class="btn-group" role="group">
 					<button type="submit" class="btn btn-sm btn-default" title="Show as grid">
-						<span class="glyphicon glyphicon-th"></span>
+						<span class="glyphicon glyphicon-th" click.delegate="setViewMode('Grid')"></span>
 					</button>
 					<button type="submit" class="btn btn-sm btn-default" title="Show as list">
-						<span class="glyphicon glyphicon-th-list"></span>
+						<span class="glyphicon glyphicon-th-list" click.delegate="setViewMode('List')"></span>
 					</button>
 				</div>
 
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm dropdown-toggle sort-selector" data-toggle="dropdown">
+						<span class="selector-text">${options.sort.text | defaultValue:'Sort by'}</span>
+						<span class="caret"></span>
+					</button>
+
+					<ul class="dropdown-menu" role="menu">
+						<li repeat.for="sortCol of sortColumns" click.delegate="$parent.setSort(sortCol)">${sortCol.text}</li>
+					</ul>
+					<button class="btn btn-sm btn-default" click.delegate="toggleSortDirection()">
+						<span class="glyphicon ${options.sortDirection === 'asc' ? 'glyphicon-sort-by-alphabet' : 'glyphicon-sort-by-alphabet-alt'}"></span>
+					</button>
+					<button class="btn btn-sm btn-default ${options.sort ? '' : 'disabled'}" title="Clear sort" click.delegate="clearSort()">
+						<span class="glyphicon glyphicon-remove"></span>
+					</button>
+					<!--
+					<button class="btn btn-sm btn-default hidden" data-toggle="modal" data-target="#exampleModal" click.delegate="">
+						<span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+					</button>
+					-->
+				</div>
+
+			<!--
 				<div class="btn-group">
 					<button type="button" class="btn btn-default btn-sm"><span
 						class="glyphicon glyphicon glyphicon-plus"></span> New stamp
@@ -45,6 +69,7 @@
 						<li><a href="#">Separated link</a></li>
 					</ul>
 				</div>
+				-->
 
 				<div class="btn-group">
 					<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -58,10 +83,27 @@
 					</ul>
 				</div>
 
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm dropdown-toggle result-size-selector" data-toggle="dropdown">
+						<span class="selector-text">${options.$top | defaultValue:'Size'}</span>
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li repeat.for="size of pageSizes" click.delegate="$parent.setSize(size)">${size}</li>
+					</ul>
+				</div>
+
+				<div class="results-group">
+					Total: <span class="badge">${stamps.length}</span>
+				</div>
+
 			</div>
 		</form>
 
 	</nav>
-	<stamp-grid stamps.bind="stamps"></stamp-grid>
+	<div if.bind="gridMode" >
+		<stamp-grid stamps.bind="stamps"></stamp-grid>
+	</div>
+
 
 </template>

@@ -1,10 +1,47 @@
 .stamp-grid-nav {
-  top: 0px;
-  border-bottom: ridge 1px #efefef;
-  .form-control {
-    height: 30px;
-    font-size: 0.9em;
-  }
+	top: 0px;
+	border-bottom: ridge 1px #efefef;
+	margin-bottom: 5px;
+	border-radius: 0;
+	font-size: 0.9em;
+	.form-control {
+		height: 30px;
+		font-size: 0.9em;
+	}
+	.btn {
+		&.disabled {
+			opacity: 0.35;
+		}
+	}
 }
 
+.sort-selector {
+	width: 150px;
+	text-align: left;
+	.caret {
+		float: right;
+		top: 7px;
+		position: inherit;
+	}
+}
+
+.result-size-selector {
+	width: 65px;
+	text-align: left;
+	.caret {
+		float: right;
+		top: 7px;
+		position: inherit;
+	}
+}
+
+.dropdown-toggle {
+	margin-right: 2px;
+}
+
+.results-group {
+	float: right;
+	line-height: 30px;
+	position: relative;
+}
 
