@@ -28,6 +28,7 @@ export class BaseService {
 	parameters = {};
 
 	models = [];
+	total = 0;
 	lastCache = {
 		id: 0,
 		model: null
@@ -118,10 +119,6 @@ export class BaseService {
 		return null;
 	}
 
-	processResult(response) {
-
-	}
-
 	find(options) {
 		var q = new Promise((resolve, reject) => {
 			if (!this.loaded || !this.useCachedResult(options)) {
@@ -133,17 +130,19 @@ export class BaseService {
 				this.http.get(href).then(response => {
 					this.loaded = true;
 					if (response.statusCode === 200 && response.response) {
-						this.models = JSON.parse(response.response)[this.getCollectionName()];
+						var resp = JSON.parse(response.response);
+						this.models = resp[this.getCollectionName()];
+						this.total = resp.total;
 					}
 					this.eventBus.publish(EventNames.loadingFinished);
-					resolve(this.models);
+					resolve({models: this.models, total: this.total});
 				}).catch(reason => {
 					this.eventBus.publish(EventNames.loadingFinished);
 					reject(reason);
 				});
 
 			} else {
-				resolve(this.models);
+				resolve({models: this.models, total: this.total});
 			}
 		});
 		return q;
