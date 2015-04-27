@@ -1,8 +1,9 @@
-np# aurelia-skeleton-navigation
+np# stamp-web-aurelia
 
-This skeleton is part of the [Aurelia](http://www.aurelia.io/) platform. It sets up a standard navigation-style app using gulp to build your ES6 code with the Babel compiler. Karma/Protractor/Jasmine testing is also configured.
+## Build Status
 
-> To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [![Join the chat at https://gitter.im/aurelia/discuss](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aurelia/discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge).
+[![Build Status](http://drake-server.ddns.net:9000/jenkins/buildStatus/icon?job=stamp-aurelia)](http://drake-server.ddns.net:9000/jenkins/job/stamp-aurelia/)
+
 
 ## Running The App
 
