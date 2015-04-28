@@ -1,0 +1,39 @@
+<link rel="stylesheet" type="text/css" href="../../../styles/components/entity-lists/entity-list.css">
+<template>
+	<table class="table table-hover entity-list">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Actions</th>
+				<th>Count</th>
+				<th>Description</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="model of models">
+				<td>${model.name}</td>
+				<td>
+					<div class="btn-group actions">
+						<button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+						<button type="button" class="btn btn-default btn-sm" title="View stamps for ${model.name}">
+							<a href="#/stamp-list?${$parent.getSearchQuery(model)}">
+								<span class="glyphicon glyphicon-chevron-right"></span>
+							</a>
+						</button>
+					</div>
+				</td>
+				<td>${model.stampCount}</td>
+				<td>${model.description}</td>
+				<td>
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</template>

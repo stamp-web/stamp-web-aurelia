@@ -128,6 +128,10 @@ export class StampList {
 			}
 			this.search();
 		});
+		this.eventBus.subscribe(EventNames.search, options => {
+			this.options = _.merge(this.options, options);
+			this.search();
+		})
 	}
 
 	search() {

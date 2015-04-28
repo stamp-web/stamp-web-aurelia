@@ -119,6 +119,18 @@ export class BaseService {
 		return null;
 	}
 
+	count(options) {
+		var q = new Promise((resolve,reject) => {
+			var href = this.baseHref + '/rest/' + this.getResourceName() + '/!count?' + this.paramHelper.toParameters(options);
+			this.http.get(href).then(response => {
+				resolve(+response.response);
+			}).catch(reason => {
+				reject(reason);
+			});
+		});
+		return q;
+	}
+
 	find(options) {
 		var q = new Promise((resolve, reject) => {
 			if (!this.loaded || !this.useCachedResult(options)) {
