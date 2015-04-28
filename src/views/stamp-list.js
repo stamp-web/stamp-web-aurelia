@@ -60,10 +60,10 @@ export class StampList {
 	}
 
 	setSize(size) {
-		this.pageInfo.active = parseInt((this.pageInfo.active * this.options.$top) / size);
-		this.options.$skip = Math.max(0, size * this.pageInfo.active);
+		var active = parseInt((this.pageInfo.active * this.options.$top) / size);
+		this.options.$skip = Math.max(0, size * active);
 		this.options.$top = size;
-
+		this.pageInfo.active = active;
 		this.search();
 	}
 
