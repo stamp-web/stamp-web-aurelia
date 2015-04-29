@@ -1,50 +1,14 @@
+@import "app.less";
+
 body {
   margin: 0;
-}
-
-.splash {
-  text-align: center;
-  margin: 10% 0 0 0;
-  box-sizing: border-box;
-  border-radius: 3px;
-  padding: 10px;
-  box-shadow: 5px 2px 20px #434343;
-  border: thin #204d74 solid;
-  width: 300px;
-  height: 150px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%,0);
-}
-
-.splash .message {
-  font-size: 36px;
-  line-height: 36px;
-  text-shadow: rgba(0, 0, 0, 0.5) 0 0 3px;
-  margin-bottom: 5px;
-  /*    text-transform: uppercase;*/
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.splash .version {
-  font-size: 12px;
-  line-height: 18px;
-  /*    text-transform: uppercase;*/
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.splash .fa-refresh {
-  text-align: center;
-  display: inline-block;
-  font-size: 36px;
-  margin-top: 20px;
 }
 
 .page-host {
   position: absolute;
   left: 0;
   right: 0;
-  top: 50px;
+  top: @navbar-height;
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
@@ -58,10 +22,6 @@ section {
   margin: 12px 24px 0 6px;
 }
 
-.pictureDetail {
-  max-width: 425px;
-}
-
 .app-bar {
 /*  box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.75);*/
 	padding-top: 2px;
@@ -69,16 +29,21 @@ section {
 }
 
 .dropdown-menu {
+	color: @text-color;
+	background-color: @body-bg;
 	li {
-		padding-left: 10px;
-		padding-top: 5px;
-		padding-bottom: 5px;
+
+		padding-left: @panel-body-padding;
+		padding-top: calc( @panel-body-padding / 2.0);
+		padding-bottom: calc( @panel-body-padding / 2.0);
 		font-size: 0.85em;
 		&:hover {
-			background-color: #e7e7e7;
+			background-color: darken(@component-active-bg, 15%);
+			color: darken(@component-active-color, 10%);
 		}
 		&.selected {
-			background-color: #e2e2e2;
+			background-color: @component-active-bg;
+			color: @component-active-color;
 		}
 	}
 }

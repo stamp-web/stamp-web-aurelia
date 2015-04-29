@@ -21,6 +21,7 @@ System.config({
     "less": "github:aaike/jspm-less-plugin@0.0.5",
     "lodash": "npm:lodash@3.7.0",
     "nprogress": "github:rstacruz/nprogress@0.1.6",
+    "thomaspark/bootswatch": "github:thomaspark/bootswatch@3.3.4",
     "traceur": "github:jmcriffey/bower-traceur@0.0.88",
     "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.88",
     "github:aaike/jspm-less-plugin@0.0.5": {

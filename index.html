@@ -1,29 +1,29 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Stamp Web 4.1</title>
-    <link rel="stylesheet" type="text/css" href="jspm_packages/npm/font-awesome@4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="styles/styles.css">
-    <!--<link rel="stylesheet" type="text/css" href="styles/components.css">-->
-  </head>
-  <body aurelia-app="main">
-    <div class="splash">
-      <div class="message">Stamp Web</div>
-      <div class="version">Version 4.1</div>
-      <i class="fa fa-refresh fa-spin"></i>
-    </div>
+<head>
+	<title>Stamp Web 4.1</title>
+	<link rel="stylesheet" type="text/css" href="jspm_packages/npm/font-awesome@4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/styles/splash.css">
 
-    <script src="jspm_packages/system.js"></script>
-    <script src="config.js"></script>
-    <script>
-     System.config({
-       "paths": {
-         "*": "dist/*.js"
-       }
-     });
-   </script>
-    <script>
-      System.import('aurelia-bootstrapper');
-    </script>
-  </body>
+</head>
+<body aurelia-app="main">
+<div class="splash">
+	<div class="message">Stamp Web</div>
+	<div class="version">Version 4.1</div>
+	<i class="fa fa-refresh fa-spin"></i>
+</div>
+
+<script src="jspm_packages/system.js"></script>
+<script src="config.js"></script>
+<script>
+	System.config({
+		"paths": {
+			"*": "dist/*.js"
+		}
+	});
+</script>
+<script>
+	System.import('aurelia-bootstrapper');
+</script>
+</body>
 </html>

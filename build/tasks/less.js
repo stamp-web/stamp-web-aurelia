@@ -20,11 +20,12 @@ gulp.task('less', function () {
 	return gulp.src(paths.appLess)
 		.pipe(sourcemaps.init())
 		.pipe(less({
-			paths: [path.join(__dirname, 'less', 'includes')]
+			//paths: [path.join(__dirname, 'less', 'includes'),
+			//	paths: [ path.join("jspm_packages/github/thomaspark/bootswatch@3.3.4", paths.bootstrapTheme) ]
 		}))
 		.pipe(sourcemaps.write())
 //    .pipe(concat('styles.css'))
 //    .pipe(minifyCSS())
-		.pipe(gulp.dest('./styles'));
+		.pipe(gulp.dest(paths.lessOut));
 
 });

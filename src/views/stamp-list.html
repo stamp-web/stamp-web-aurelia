@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="../../styles/views/stamp-list.css">
+<link rel="stylesheet" type="text/css" href="../../resources/styles/views/stamp-list.css">
 <template>
 	<sort-dialog sort.bind="options.sort" sort-options.bind="sortColumns" dialog-id="exampleModal" ></sort-dialog>
 	<require from="../components/stamp-grid"></require>
@@ -25,7 +25,7 @@
 						<span class="glyphicon glyphicon-th" click.delegate="setViewMode('Grid')"></span>
 					</button>
 					<button type="submit" class="btn btn-sm btn-default" title="Show as list">
-						<span class="glyphicon glyphicon-th-list" click.delegate="setViewMode('List')"></span>
+						<span class="glyphicon glyphicon-list" click.delegate="setViewMode('List')"></span>
 					</button>
 				</div>
 

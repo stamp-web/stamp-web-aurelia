@@ -1,12 +1,20 @@
+@import "../app.less";
+
 .entity-type {
-	padding: 10px;
+	padding: @panel-body-padding;
 	.list-group-item {
 		&:hover {
-			background-color: darken(#efefef, 10%) ;
+			background-color: darken(@component-active-bg, 15%);
+			color: darken(@component-active-color, 10%);
 		}
 		&.selected {
-			background-color: #efefef;
+			background-color: @component-active-bg;
+			color: @component-active-color;
 		}
 	}
 }
 
+.manage-list {
+	padding-top: @panel-body-padding;
+
+}
