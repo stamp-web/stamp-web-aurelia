@@ -160,6 +160,10 @@ export class StampList {
 		}
 	}
 
+	closeFullSizeImage() {
+		this.imageShown = false;
+	}
+
 	search() {
 		var opts = this.buildOptions();
 		this.stampService.find(opts).then(result => {

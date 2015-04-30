@@ -105,8 +105,8 @@
 	<div show.bind="!gridMode">
 		<div> THIS IS A LIST</div>
 	</div>
-	<div class="sw-fullsize-image" if.bind="imageShown" click.delegate="imageShown = false">
-		<img src.bind="fullSizeImage">
+	<div class="sw-fullsize-image" if.bind="imageShown" click.delegate="closeFullSizeImage()">
+		<img src.bind="fullSizeImage" error.delegate="closeFullSizeImage()">
 	</div>
 	<nav class="navbar navbar-default stamp-list-footer">
 		<form class="navbar-form" role="footer">
