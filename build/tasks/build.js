@@ -5,31 +5,17 @@ var plumber = require('gulp-plumber');
 var to5 = require('gulp-babel');
 var sourcemaps = require('gulp-sourcemaps');
 var paths = require('../paths');
-var themes = require('../theme');
 var compilerOptions = require('../babel-options');
 var assign = Object.assign || require('object.assign');
 
-var replace = require('gulp-replace-task');
 
-gulp.task('setup-theme', function () {
-	return gulp.src('template/*')
-		.pipe(replace({
-			patterns: [
-				{
-					match: 'theme',
-					replacement: themes.bootstrapTheme
-				}
-			]
-		}))
-		.pipe(gulp.dest(paths.root));
-});
 
 // transpiles changed es6 files to SystemJS format
 // the plumber() call prevents 'pipe breaking' caused
 // by errors from other gulp plugins
 // https://www.npmjs.com/package/gulp-plumber
 gulp.task('build-system', function () {
-  return gulp.src(paths.source)
+  return gulp.src([paths.source])
     .pipe(plumber())
     .pipe(changed(paths.output, {extension: '.js'}))
     .pipe(sourcemaps.init())
@@ -49,12 +35,11 @@ gulp.task('build-html', function () {
 // in ./clean.js), then runs the build-system
 // and build-html tasks in parallel
 // https://www.npmjs.com/package/gulp-run-sequence
-gulp.task('build', function(callback) {
-  return runSequence(
-    'clean',
-	  'setup-theme',
-    'less',
-    ['build-system',  'build-html'],
-    callback
-  );
+gulp.task('build', function (callback) {
+	return runSequence(
+		'clean',
+		'setup-theme',
+		['less','build-system', 'build-html'],
+		callback
+	);
 });

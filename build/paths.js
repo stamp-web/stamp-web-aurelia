@@ -13,6 +13,8 @@ module.exports = {
 	output: 'dist/',
 	doc: './doc',
 	templates: 'templates',
+	generated: 'generated/',
+	temp: 'temp',
 	e2eSpecsSrc: 'test/e2e/src/*.js',
 	e2eSpecsDist: 'test/e2e/dist/'
 };

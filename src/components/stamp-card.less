@@ -1,10 +1,12 @@
-@import "../app.less";
+@import "../../generated/theme-variables.less";
+
+@thumbnail-size: 160px;
 
 .stamp-card {
 	height: 285px;
 	padding: @panel-body-padding;
 	border: @panel-inner-border solid thin;
-	border-radius: 4px;
+	border-radius: @thumbnail-border-radius;
 	margin: auto;
 	font-size: 0.9em;
 	//background-image: linear-gradient(to bottom, #ffffff 0%, #f3f3f4 100%);
@@ -19,9 +21,14 @@
 	}
 
 	.action-panel {
-		height: calc(@line-height-computed * 2.5);
-		width: 100%;
+		height: @line-height-computed * 2.5;
 		padding-top: 5px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: @padding-small-vertical;
+		left: 50%;
+		position: absolute;
+		transform: translate(-50%,0);
 	}
 	.card-header {
 		text-align: center;
@@ -30,20 +37,20 @@
 	.description {
 		text-align: center;
 		font-size: 0.9em;
-		padding-bottom: 5px;
+		padding-bottom: @padding-small-vertical;
 	}
 
 	.stamp-thumbnail {
 		padding: @thumbnail-padding;
 		margin: auto;
-		height: 160px;
-		width: 160px;
-		background-color: #232323;
+		height: @thumbnail-size;
+		width: @thumbnail-size;
+		background-color: @gray-dark;
 		position: relative;
 		border-radius: @thumbnail-border-radius;
 		img {
-			max-width: 150px;
-			max-height: 150px;
+			max-width: @thumbnail-padding - 10px;
+			max-height: @thumbnail-padding - 10px;
 			position: absolute;
 			top: 50%;
 			left: 50%;

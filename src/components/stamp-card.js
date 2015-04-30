@@ -1,9 +1,8 @@
-import {bindable,customElement,useShadowDOM,inject} from 'aurelia-framework';
+import {bindable,customElement,inject} from 'aurelia-framework';
 
 
 @customElement('stamp-card')
 @bindable('model')
-@useShadowDOM()
 export class StampCard {
 
   getCatalogueNumber() {

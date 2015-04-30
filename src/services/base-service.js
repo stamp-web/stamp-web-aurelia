@@ -20,7 +20,7 @@ class ParameterHelper {
 }
 
 
-@inject(HttpClient, ObjectUtilities, EventAggregator)
+@inject(HttpClient, EventAggregator)
 export class BaseService {
 
 	baseHref = "/stamp-webservices";

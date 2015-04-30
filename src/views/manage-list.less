@@ -1,14 +1,14 @@
-@import "../app.less";
+@import "../../generated/theme-variables.less";
 
 .entity-type {
 	padding: @panel-body-padding;
 	.list-group-item {
 		&:hover {
-			background-color: darken(@component-active-bg, 15%);
+			background-color: @table-bg-hover;
 			color: darken(@component-active-color, 10%);
 		}
 		&.selected {
-			background-color: @component-active-bg;
+			background-color: @table-bg-active;
 			color: @component-active-color;
 		}
 	}

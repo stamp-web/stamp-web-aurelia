@@ -1,4 +1,4 @@
-@import "app.less";
+@import "../generated/theme-variables.less";
 
 body {
   margin: 0;
@@ -20,6 +20,13 @@ section {
 
 .navbar-nav li.loader {
   margin: 12px 24px 0 6px;
+}
+
+.loader {
+	position: relative;
+	top: 50%;
+	transform: translate(0,-50%);
+	height: @navbar-height;
 }
 
 .app-bar {
