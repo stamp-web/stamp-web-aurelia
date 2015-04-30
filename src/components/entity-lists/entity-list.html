@@ -1,5 +1,7 @@
 <link rel="stylesheet" type="text/css" href="../../../resources/styles/components/entity-lists/entity-list.css">
 <template>
+	<require from="../../value-converters/stamp-count"></require>
+
 	<table class="table table-hover entity-list">
 		<thead>
 			<tr>
@@ -23,12 +25,12 @@
 						</button>
 						<button type="button" class="btn btn-default btn-sm" title="View stamps for ${model.name}">
 							<a href="#/stamp-list?${$parent.getSearchQuery(model)}">
-								<span class="glyphicon glyphicon-chevron-right"></span>
+								<i class="fa fa-search"></i>
 							</a>
 						</button>
 					</div>
 				</td>
-				<td>${model.stampCount}</td>
+				<td class="sw-stamp-count">${model.stampCount | stampCount}</td>
 				<td>${model.description}</td>
 				<td>
 

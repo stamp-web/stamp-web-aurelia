@@ -21,11 +21,11 @@
 
 				</div>
 				<div class="btn-group" role="group">
-					<button type="submit" class="btn btn-sm btn-default" title="Show as grid">
-						<span class="glyphicon glyphicon-th" click.delegate="setViewMode('Grid')"></span>
+					<button class="btn btn-sm btn-default" title="Show as grid" click.delegate="setViewMode('Grid')">
+						<span class="glyphicon glyphicon-th"></span>
 					</button>
-					<button type="submit" class="btn btn-sm btn-default" title="Show as list">
-						<span class="glyphicon glyphicon-list" click.delegate="setViewMode('List')"></span>
+					<button class="btn btn-sm btn-default" title="Show as list" click.delegate="setViewMode('List')">
+						<i class="fa fa-list-alt"></i>
 					</button>
 				</div>
 
@@ -102,8 +102,11 @@
 	<div if.bind="gridMode" >
 		<stamp-grid stamps.bind="stamps"></stamp-grid>
 	</div>
-	<div if.bind="listMode">
+	<div show.bind="!gridMode">
 		<div> THIS IS A LIST</div>
+	</div>
+	<div class="sw-fullsize-image" if.bind="imageShown" click.delegate="imageShown = false">
+		<img src.bind="fullSizeImage">
 	</div>
 	<nav class="navbar navbar-default stamp-list-footer">
 		<form class="navbar-form" role="footer">

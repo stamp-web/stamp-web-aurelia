@@ -1,9 +1,18 @@
 import {bindable,customElement,inject} from 'aurelia-framework';
-
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {EventNames} from '../event-names';
 
 @customElement('stamp-card')
+@inject(EventAggregator)
 @bindable('model')
+
 export class StampCard {
+
+	imageShown = false;
+
+	constructor(eventBus) {
+		this.eventBus = eventBus;
+	}
 
   getCatalogueNumber() {
     var s = "";
@@ -28,7 +37,7 @@ export class StampCard {
     return activeCN;
   }
 
-  imageNotFound() {
+  notFoundImage() {
     return StampCard.prototype.imageNotFoundFn;
   }
 
@@ -44,6 +53,12 @@ export class StampCard {
     }
     return null;
   }
+
+	showFullSizeImage() {
+		if( this.model.stampOwnerships && this.model.stampOwnerships.length > 0 && this.model.stampOwnerships[0].img ) {
+			this.eventBus.publish(EventNames.showImage, this.model);
+		}
+	}
 }
 
 

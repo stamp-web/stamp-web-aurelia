@@ -15,6 +15,8 @@ System.config({
     "aurelia-framework": "github:aurelia/framework@0.10.0",
     "aurelia-http-client": "github:aurelia/http-client@0.7.0",
     "aurelia-router": "github:aurelia/router@0.7.2",
+    "aurelia-task-queue": "github:aurelia/task-queue@0.3.0",
+    "aurelia-templating-resources": "github:aurelia/templating-resources@0.10.0",
     "bootstrap": "github:twbs/bootstrap@3.3.4",
     "css": "github:systemjs/plugin-css@0.1.10",
     "font-awesome": "npm:font-awesome@4.3.0",

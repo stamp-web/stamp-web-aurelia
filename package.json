@@ -1,22 +1,20 @@
 {
-  "name": "aurelia-skeleton-navigation",
-  "version": "0.12.0",
-  "description": "A starter kit for building a standard navigation-style app with Aurelia.",
+  "name": "stamp-web-aurelia",
+  "version": "4.1.0",
+  "description": "Stamp web application built with Aurelia.io",
   "keywords": [
-    "aurelia",
-    "navigation",
-    "skeleton"
+    "stamp"
   ],
   "homepage": "http://aurelia.io",
   "bugs": {
-    "url": "https://github.com/aurelia/skeleton-navigation/issues"
+    "url": "https://github.com/stamp-web/stamp-web-aurelia/issues"
   },
-  "license": "MIT",
-  "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
+  "license": "Apache 2.0",
+  "author": "Jason Drake <jadrake75@gmail.com> (http://www.drakeserver.com/)",
   "main": "dist/commonjs/index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/aurelia/skeleton-navigation"
+    "url": "http://github.com/stamp-web/stamp-web-aurelia"
   },
   "devDependencies": {
     "aurelia-tools": "^0.1.3",
@@ -24,7 +22,7 @@
     "conventional-changelog": "0.0.11",
     "del": "^1.1.0",
     "gulp": "^3.8.10",
-    "gulp-babel": "^5.0.0",
+    "gulp-babel": "^5.1.0",
     "gulp-bump": "^0.1.11",
     "gulp-changed": "^1.1.0",
     "gulp-concat": "^2.5.2",
@@ -39,7 +37,7 @@
     "jasmine-core": "^2.1.3",
     "jshint-stylish": "^1.0.0",
     "karma": "^0.12.28",
-    "karma-babel-preprocessor": "^5.0.1",
+    "karma-babel-preprocessor": "^5.1.0",
     "karma-chrome-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.5",
     "karma-jspm": "^1.1.4",
@@ -53,9 +51,10 @@
     "dependencies": {
       "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.11.0",
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.6.0",
-      "aurelia-framework": "github:aurelia/framework@^0.10.0",
+      "aurelia-framework": "github:aurelia/framework@0.10",
       "aurelia-http-client": "github:aurelia/http-client@^0.7.0",
       "aurelia-router": "github:aurelia/router@^0.7.0",
+      "aurelia-task-queue": "github:aurelia/task-queue@0.3.0",
       "bootstrap": "github:twbs/bootstrap@^3.3.4",
       "css": "github:systemjs/plugin-css@^0.1.9",
       "font-awesome": "npm:font-awesome@^4.3.0",

@@ -15,7 +15,8 @@ export class StampList {
 	countries = [];
 	heading = "Stamp List";
 	gridMode = true;
-	listMode = false;
+	imageShown = false;
+
 
 	sortColumns = [{
 		attr: 'number',
@@ -132,6 +133,31 @@ export class StampList {
 			this.options = _.merge(this.options, options);
 			this.search();
 		})
+		this.eventBus.subscribe(EventNames.showImage, stamp => {
+			this.handleFullSizeImage(stamp);
+		})
+	}
+
+	handleFullSizeImage(stamp) {
+		if (stamp && stamp.stampOwnerships && stamp.stampOwnerships.length > 0 ) {
+			this.imageShown = true;
+			var elm = $($.find('.sw-fullsize-image'));
+			elm.css( {
+				'max-width': '',
+				'max-height': ''
+			});
+			this.fullSizeImage = "http://drake-server.ddns.net:9001/Pictures/Stamps/" + stamp.stampOwnerships[0].img;
+			setTimeout(function() {
+				var container = $($.find('.page-host'));
+				elm.css( {
+					'max-width': container.width() + 'px',
+					'max-height': container.height() + 'px'
+				});
+			}, 50);
+
+
+
+		}
 	}
 
 	search() {
@@ -170,6 +196,8 @@ export class StampList {
 
 				});
 
+			}).catch(err => {
+				reject(err);
 			})
 		})
 	}
