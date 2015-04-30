@@ -1,4 +1,4 @@
-np# stamp-web-aurelia
+# stamp-web-aurelia
 
 ## Build Status
 
@@ -44,6 +44,15 @@ To run the app, follow these steps.
 ```html
 <script src="jspm_packages/github/webcomponents/webcomponentsjs@0.5.2/HTMLImports.js"></script>
 ```
+
+## Changing the theme
+
+Currently any of the bootswatch themes are supported.  To change a theme go to build/theme.js and change "bootstrapTheme" variable to the name of the theme desired and re-execute
+
+```
+gulp watch
+```
+
 
 ## Running The Unit Tests
 
