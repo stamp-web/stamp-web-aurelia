@@ -15,6 +15,9 @@ export class LoadingIndicator {
       this.eventBus = eventBus;
       this.loadingCount = 0;
       this.subscribe();
+		nprogress.configure( {
+			showSpinner: false
+		});
     }
 
     subscribe() {
