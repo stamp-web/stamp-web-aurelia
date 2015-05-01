@@ -1,13 +1,14 @@
 import {inject,LogManager} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {Countries} from '../services/countries';
+import {Router} from 'aurelia-router';
 import {Stamps} from '../services/stamps';
 import {EventNames} from '../event-names';
 import  _  from 'lodash';
 
 const logger = LogManager.getLogger('stamp-list');
 
-@inject(EventAggregator, Stamps, Countries)
+@inject(EventAggregator, Router, Stamps, Countries)
 export class StampList {
 
 	stamps = [];
@@ -44,11 +45,12 @@ export class StampList {
 		sortDirection: 'asc'
 	};
 
-	constructor(eventBus, stampService, countryService) {
+	constructor(eventBus, router, stampService, countryService) {
 		this.stampService = stampService;
 		this.countryService = countryService;
 		this.eventBus = eventBus;
 		this._ = _;
+		this.router = router;
 	}
 
 	generatePageModels(total, current) {
@@ -132,10 +134,10 @@ export class StampList {
 		this.eventBus.subscribe(EventNames.search, options => {
 			this.options = _.merge(this.options, options);
 			this.search();
-		})
+		});
 		this.eventBus.subscribe(EventNames.showImage, stamp => {
 			this.handleFullSizeImage(stamp);
-		})
+		});
 	}
 
 	handleFullSizeImage(stamp) {
@@ -193,6 +195,10 @@ export class StampList {
 			this.countryService.find().then(result => {
 				this.countries = result;
 				var opts = this.buildOptions();
+
+				// IS AN ENCLODED STRING NOT AN OBJECT  OData Utilities needed?
+				var $filter = this.getQuerystring("$filter");
+				console.log($filter);
 				this.stampService.find(opts).then(result => {
 					this.processStamps(result, opts);
 					logger.debug("StampGrid initialization time: " + ((new Date().getTime()) - t.getTime()) + "ms");
@@ -204,6 +210,19 @@ export class StampList {
 				reject(err);
 			})
 		})
+	}
+
+	// TODO NEED TO WORK ON THIS
+	getQuerystring(key, default_) {
+		if (default_==null) default_="";
+		key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+		key = key.replace("$","\\$");
+		var regex = new RegExp("[\\?&]"+key+"=([^&#]*)");
+		var qs = regex.exec(window.location.href);
+		if(qs == null)
+			return default_;
+		else
+			return qs[1];
 	}
 
 }

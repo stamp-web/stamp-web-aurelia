@@ -1,5 +1,6 @@
 import {inject,LogManager} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {Router} from 'aurelia-router';
 import {Countries} from '../services/countries';
 import {Albums} from '../services/albums';
 import {StampCollections} from '../services/stampCollections';
@@ -11,7 +12,7 @@ import  _  from 'lodash';
 
 const logger = LogManager.getLogger('stamp-list');
 
-@inject(EventAggregator, Countries, Albums, StampCollections, Sellers, Catalogues, Stamps)
+@inject(EventAggregator, Router, Countries, Albums, StampCollections, Sellers, Catalogues, Stamps)
 export class ManageList {
 
 	selectedModels = [];
@@ -25,21 +26,15 @@ export class ManageList {
 		{field: 'catalogueRef', label: 'Catalogues', service: undefined}
 	];
 
-	constructor(eventBus, countryService, albumService, stampCollectionService, sellerService, catalogueService, stampService) {
+	constructor(eventBus, router, countryService, albumService, stampCollectionService, sellerService, catalogueService, stampService) {
 		this.eventBus = eventBus;
+		this.router = router;
 		this.entityModels[_.findIndex(this.entityModels, { field: 'countryRef'})].service = countryService;
 		this.entityModels[_.findIndex(this.entityModels, { field: 'albumRef'})].service = albumService;
 		this.entityModels[_.findIndex(this.entityModels, { field: 'stampCollectionRef'})].service = stampCollectionService;
 		this.entityModels[_.findIndex(this.entityModels, { field: 'sellerRef'})].service = sellerService;
 		this.entityModels[_.findIndex(this.entityModels, { field: 'catalogueRef'})].service = catalogueService;
 		this.stampService = stampService;
-	}
-
-	viewStamps(model) {
-		this.eventBus.publish(EventNames.search, {
-			$filter: '(' + this.selectedEntity.field + ' eq ' + model.id + ')'
-		});
-
 	}
 
 	setEntity(entityType) {
@@ -68,6 +63,12 @@ export class ManageList {
 				};
 				getCount(entityType, model, this.stampService);
 			}
+		});
+	}
+
+	activate() {
+		this.eventBus.subscribe(EventNames.entityFilter, opts => {
+			this.router.navigate("/stamp-list?$filter="+ encodeURI(opts.$filter));
 		});
 	}
 

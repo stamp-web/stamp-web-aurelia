@@ -29,10 +29,8 @@
 						<button type="button" class="btn btn-default btn-sm">
 							<span class="glyphicon glyphicon-trash"></span>
 						</button>
-						<button type="button" class="btn btn-default btn-sm" title="View stamps for ${model.name}">
-							<a href="#/stamp-list?${$parent.getSearchQuery(model)}">
-								<i class="fa fa-search"></i>
-							</a>
+						<button type="button" class="btn btn-default btn-sm" title="View stamps for ${model.name}" click.delegate="$parent.viewStamps(model)">
+							<i class="fa fa-search"></i>
 						</button>
 					</div>
 				</td>
