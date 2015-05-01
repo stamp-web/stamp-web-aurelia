@@ -45,7 +45,13 @@ export class ManageList {
 	setEntity(entityType) {
 		var index = _.findIndex(this.entityModels, {field: entityType });
 		this.selectedEntity = this.entityModels[index];
-		this.entityModels[index].service.find({ $orderby: 'name asc'}).then(result => {
+		var opts = {
+			$orderby: 'name asc'
+		};
+		if( entityType === 'catalogueRef' ) {
+			opts.$orderby = 'issue desc';
+		}
+		this.entityModels[index].service.find(opts).then(result => {
 			this.selectedModels = result.models;
 			var count = 0;
 			for (var i = 0, len = this.selectedModels.length; i < len; i++) {
