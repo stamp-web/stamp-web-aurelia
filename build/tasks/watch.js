@@ -17,5 +17,6 @@ gulp.task('watch', ['serve'], function () {
 	gulp.watch(paths.style, browserSync.reload).on('change', reportChange);
 	gulp.watch(paths.less, ['less', browserSync.reload]).on('change', reportChange);
 	gulp.watch(paths.appLess, ['less', browserSync.reload]).on('change', reportChange);
-	gulp.watch(paths.templates, ['setup-theme', browserSync.reload]).on('change', reportChange);
+	gulp.watch('build/theme.js', ['setup-theme', browserSync.reload]).on('change', reportChange);
+	gulp.watch(paths.templates, ['setup-theme', 'less', browserSync.reload]).on('change', reportChange);
 });
