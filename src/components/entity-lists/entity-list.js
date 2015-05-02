@@ -1,6 +1,7 @@
 import {bindable,customElement,inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../event-names';
+import  _  from 'lodash';
 
 @customElement('entity-list')
 @bindable('models')
@@ -9,6 +10,7 @@ import {EventNames} from '../../event-names';
 export class EntityList {
 
 	hasIssue = false;
+	editingModel;
 
 	constructor(eventBus) {
 		this.eventBus = eventBus;
@@ -24,4 +26,9 @@ export class EntityList {
 		});
 
 	}
+
+	edit(model) {
+		this.editingModel = _.clone(model);
+	}
+
 }

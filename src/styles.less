@@ -31,7 +31,7 @@ section {
 
 .app-bar {
 /*  box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.75);*/
-	padding-top: 2px;
+	padding-top: 4px;
 	margin-bottom: 0px;
 }
 
@@ -58,8 +58,19 @@ section {
 
 #nprogress .bar {
 	background: @brand-success !important;
+	height: 4px;
 }
 
 #nprogress .peg {
 	box-shadow: 0 0 10px @brand-success, 0 0 5px @brand-success !important;
+}
+
+.modal {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.modal-open .modal {
+	overflow-y: hidden;
 }

@@ -46,6 +46,8 @@ export class ManageList {
 		if( entityType === 'catalogueRef' ) {
 			opts.$orderby = 'issue desc';
 		}
+		this._saveState();
+
 		this.entityModels[index].service.find(opts).then(result => {
 			this.selectedModels = result.models;
 			var count = 0;
@@ -66,10 +68,28 @@ export class ManageList {
 		});
 	}
 
+	_saveState() {
+		var obj = {
+			field: this.selectedEntity.field
+		};
+		localStorage.setItem("manage-entities", JSON.stringify(obj));
+	}
+
+	_restoreState() {
+		var entityCache = localStorage.getItem("manage-entities");
+		if( entityCache ) {
+			var cacheVal = JSON.parse(entityCache);
+			if( cacheVal.field ) {
+				this.setEntity(cacheVal.field);
+			}
+		}
+	}
+
 	activate() {
 		this.eventBus.subscribe(EventNames.entityFilter, opts => {
 			this.router.navigate("/stamp-list?$filter="+ encodeURI(opts.$filter));
 		});
+		this._restoreState();
 	}
 
 }

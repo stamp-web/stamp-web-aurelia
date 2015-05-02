@@ -1,29 +1,28 @@
 <link rel="stylesheet" type="text/css" href="../../../resources/styles/components/entity-lists/entity-list.css">
 <template>
 	<require from="../../value-converters/stamp-count"></require>
+	<require from="../editor-dialog"></require>
+
+	<editor-dialog title="Edit" model.bind="editingModel" dialog-id="editorDialog" ></editor-dialog>
+
 	<table class="table table-hover entity-list">
-		<colgroup>
-			<col>
-			<col>
-			<col>
-			<col>
-			<col>
-		</colgroup>
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th>Actions</th>
-				<th>Count</th>
+				<th if.bind="hasIssue">Issue</th>
+				<th class="sw-entitylist-name">Name</th>
+				<th class="sw-entitylist-actions">Actions</th>
+				<th class="sw-entitylist-count">Count</th>
+				<th if.bind="hasIssue">Currency</th>
 				<th>Description</th>
-				<th>&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr repeat.for="model of models">
+				<td if.bind="$parent.hasIssue">${model.issue}</td>
 				<td>${model.name}</td>
 				<td>
 					<div class="btn-group actions">
-						<button type="button" class="btn btn-default btn-sm">
+						<button type="button" class="btn btn-default btn-sm" click.delegate="$parent.edit(model)" data-toggle="modal" data-target="#editorDialog">
 							<span class="glyphicon glyphicon-pencil"></span>
 						</button>
 						<button type="button" class="btn btn-default btn-sm">
@@ -34,7 +33,8 @@
 						</button>
 					</div>
 				</td>
-				<td class="sw-stamp-count">${model.stampCount | stampCount}</td>
+				<td>${model.stampCount | stampCount}</td>
+				<td if.bind="$parent.hasIssue">${model.code}</td>
 				<td>${model.description}</td>
 				<td>
 
