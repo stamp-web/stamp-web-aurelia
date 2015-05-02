@@ -4,6 +4,8 @@ import {Countries} from '../services/countries';
 import {Router} from 'aurelia-router';
 import {Stamps} from '../services/stamps';
 import {EventNames} from '../event-names';
+import {LocationHelper} from '../util/location-helper';
+import {ODataParser} from '../util/odata-parser';
 import  _  from 'lodash';
 
 const logger = LogManager.getLogger('stamp-list');
@@ -38,7 +40,7 @@ export class StampList {
 	};
 
 	options = {
-		$filter: "(countryRef eq 4552)",
+		$filter: "",
 		$top: 250,
 		$skip: 0,
 		sort: this.sortColumns[0],
@@ -156,9 +158,6 @@ export class StampList {
 					'max-height': container.height() + 'px'
 				});
 			}, 50);
-
-
-
 		}
 	}
 
@@ -193,12 +192,17 @@ export class StampList {
 		this.subscribe();
 		return new Promise((resolve, reject) => {
 			this.countryService.find().then(result => {
-				this.countries = result;
+				this.countries = result.models;
+
+				var $filter = LocationHelper.getQueryParameter("$filter");
+				if( $filter ) {
+					this.options.$filter = decodeURI($filter);
+				} else if( result && result.total > 0 ) {
+					var indx = Math.floor(Math.random() * result.total);
+					this.options.$filter = "(countryRef eq " + this.countries[indx].id + ")";
+				}
 				var opts = this.buildOptions();
 
-				// IS AN ENCLODED STRING NOT AN OBJECT  OData Utilities needed?
-				var $filter = this.getQuerystring("$filter");
-				console.log($filter);
 				this.stampService.find(opts).then(result => {
 					this.processStamps(result, opts);
 					logger.debug("StampGrid initialization time: " + ((new Date().getTime()) - t.getTime()) + "ms");
@@ -210,19 +214,6 @@ export class StampList {
 				reject(err);
 			})
 		})
-	}
-
-	// TODO NEED TO WORK ON THIS
-	getQuerystring(key, default_) {
-		if (default_==null) default_="";
-		key = key.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-		key = key.replace("$","\\$");
-		var regex = new RegExp("[\\?&]"+key+"=([^&#]*)");
-		var qs = regex.exec(window.location.href);
-		if(qs == null)
-			return default_;
-		else
-			return qs[1];
 	}
 
 }
