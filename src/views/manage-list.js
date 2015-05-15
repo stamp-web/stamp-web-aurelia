@@ -10,6 +10,8 @@ import {Stamps} from '../services/stamps';
 import {EventNames} from '../event-names';
 import  _  from 'lodash';
 
+import 'resources/styles/views/manage-list.css!';
+
 const logger = LogManager.getLogger('stamp-list');
 
 @inject(EventAggregator, Router, Countries, Albums, StampCollections, Sellers, Catalogues, Stamps)

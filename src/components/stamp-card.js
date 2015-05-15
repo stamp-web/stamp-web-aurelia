@@ -1,17 +1,20 @@
 import {bindable,customElement,inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../event-names';
+import {Preferences} from '../services/preferences';
+import 'resources/styles/components/stamp-card.css!';
 
 @customElement('stamp-card')
-@inject(EventAggregator)
+@inject(EventAggregator, Preferences)
 @bindable('model')
 
 export class StampCard {
 
 	imageShown = false;
 
-	constructor(eventBus) {
+	constructor(eventBus, prefService) {
 		this.eventBus = eventBus;
+		this.prefService = prefService;
 	}
 
   getCatalogueNumber() {

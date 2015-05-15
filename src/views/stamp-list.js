@@ -8,6 +8,8 @@ import {LocationHelper} from '../util/location-helper';
 import {ODataParser} from '../util/odata-parser';
 import  _  from 'lodash';
 
+import "resources/styles/views/stamp-list.css!";
+
 const logger = LogManager.getLogger('stamp-list');
 
 @inject(EventAggregator, Router, Stamps, Countries)

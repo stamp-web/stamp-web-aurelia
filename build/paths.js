@@ -12,6 +12,7 @@ module.exports = {
 	lessOut: 'resources/styles',
 	output: 'dist/',
 	doc: './doc',
+	resources: 'resources/**',
 	templates: 'templates',
 	generated: 'generated/',
 	temp: 'temp',

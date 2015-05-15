@@ -2,6 +2,7 @@ System.config({
   "transpiler": "traceur",
   "paths": {
     "*": "*.js",
+	"resources/*.css": "resources/*.css",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js",
     "aurelia-skeleton-navigation/*": "dist/*.js"

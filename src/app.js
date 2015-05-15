@@ -3,6 +3,7 @@ import {Router} from 'aurelia-router';
 import 'bootstrap';
 import 'bootstrap/css/bootstrap.css!';
 import "theme";
+import "resources/styles/styles.css!";
 
 @inject(Router)
 export class App {

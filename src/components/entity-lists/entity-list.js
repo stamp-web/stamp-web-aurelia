@@ -3,6 +3,8 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../event-names';
 import  _  from 'lodash';
 
+import 'resources/styles/components/entity-lists/entity-list.css!';
+
 @customElement('entity-list')
 @bindable('models')
 @bindable('field')
