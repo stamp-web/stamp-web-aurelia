@@ -21,8 +21,8 @@ export class ManageList {
 	selectedEntity = undefined;
 
 	entityModels = [
-		{field: 'countryRef', label: 'Countries', service: undefined},
-		{field: 'albumRef', label: 'Albums', service: undefined},
+		{field: 'countryRef', label: 'Countries', service: undefined, editor: 'views/countries/country-editor'},
+		{field: 'albumRef', label: 'Albums', service: undefined, editor: 'views/albums/album-editor'},
 		{field: 'stampCollectionRef', label: 'Stamp Collections', service: undefined},
 		{field: 'sellerRef', label: 'Sellers', service: undefined},
 		{field: 'catalogueRef', label: 'Catalogues', service: undefined}
@@ -31,21 +31,21 @@ export class ManageList {
 	constructor(eventBus, router, countryService, albumService, stampCollectionService, sellerService, catalogueService, stampService) {
 		this.eventBus = eventBus;
 		this.router = router;
-		this.entityModels[_.findIndex(this.entityModels, { field: 'countryRef'})].service = countryService;
-		this.entityModels[_.findIndex(this.entityModels, { field: 'albumRef'})].service = albumService;
-		this.entityModels[_.findIndex(this.entityModels, { field: 'stampCollectionRef'})].service = stampCollectionService;
-		this.entityModels[_.findIndex(this.entityModels, { field: 'sellerRef'})].service = sellerService;
-		this.entityModels[_.findIndex(this.entityModels, { field: 'catalogueRef'})].service = catalogueService;
+		this.entityModels[_.findIndex(this.entityModels, {field: 'countryRef'})].service = countryService;
+		this.entityModels[_.findIndex(this.entityModels, {field: 'albumRef'})].service = albumService;
+		this.entityModels[_.findIndex(this.entityModels, {field: 'stampCollectionRef'})].service = stampCollectionService;
+		this.entityModels[_.findIndex(this.entityModels, {field: 'sellerRef'})].service = sellerService;
+		this.entityModels[_.findIndex(this.entityModels, {field: 'catalogueRef'})].service = catalogueService;
 		this.stampService = stampService;
 	}
 
 	setEntity(entityType) {
-		var index = _.findIndex(this.entityModels, {field: entityType });
+		var index = _.findIndex(this.entityModels, {field: entityType});
 		this.selectedEntity = this.entityModels[index];
 		var opts = {
 			$orderby: 'name asc'
 		};
-		if( entityType === 'catalogueRef' ) {
+		if (entityType === 'catalogueRef') {
 			opts.$orderby = 'issue desc';
 		}
 		this._saveState();
@@ -55,7 +55,7 @@ export class ManageList {
 			var count = 0;
 			for (var i = 0, len = this.selectedModels.length; i < len; i++) {
 				var model = this.selectedModels[i];
-				var getCount = function(entityType, model, stampService) {
+				var getCount = function (entityType, model, stampService) {
 					var opts = {
 						$filter: '(' + entityType + ' eq ' + model.id + ')'
 					};
@@ -79,9 +79,9 @@ export class ManageList {
 
 	_restoreState() {
 		var entityCache = localStorage.getItem("manage-entities");
-		if( entityCache ) {
+		if (entityCache) {
 			var cacheVal = JSON.parse(entityCache);
-			if( cacheVal.field ) {
+			if (cacheVal.field) {
 				this.setEntity(cacheVal.field);
 			}
 		}
@@ -89,8 +89,9 @@ export class ManageList {
 
 	activate() {
 		this.eventBus.subscribe(EventNames.entityFilter, opts => {
-			this.router.navigate("/stamp-list?$filter="+ encodeURI(opts.$filter));
+			this.router.navigate("/stamp-list?$filter=" + encodeURI(opts.$filter));
 		});
+
 		this._restoreState();
 	}
 

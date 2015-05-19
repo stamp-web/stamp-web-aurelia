@@ -3,9 +3,6 @@ import {bindable, noView, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from './event-names';
 
-
-console.log(EventNames);
-
 @noView
 @bindable("loading")
 @inject(EventAggregator)

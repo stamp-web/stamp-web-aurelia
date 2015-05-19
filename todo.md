@@ -7,4 +7,5 @@
 * The entity list table should be a component
 * stamp list is long.  Can we shorten it?  Perhaps sort functions can be a separate object?
 * move css to .js as static resources?
+* updateCountries in country-editor.html is not binding correctly
 

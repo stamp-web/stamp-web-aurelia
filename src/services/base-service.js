@@ -3,6 +3,7 @@ import {HttpClient} from 'aurelia-http-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {ObjectUtilities} from '../util/object-utilities';
 import {EventNames} from '../event-names';
+import  _  from 'lodash';
 
 class ParameterHelper {
 
@@ -120,7 +121,7 @@ export class BaseService {
 	}
 
 	count(options) {
-		var q = new Promise((resolve,reject) => {
+		var q = new Promise((resolve, reject) => {
 			var href = this.baseHref + '/rest/' + this.getResourceName() + '/!count?' + this.paramHelper.toParameters(options);
 			this.http.get(href).then(response => {
 				resolve(+response.response);
@@ -156,6 +157,19 @@ export class BaseService {
 			} else {
 				resolve({models: this.models, total: this.total});
 			}
+		});
+		return q;
+	}
+
+	save(model) {
+		var q = new Promise((resolve, reject) => {
+			console.log("save it....");
+			// good that worked, now lets merge the models...
+			var m = _.findWhere(this.models, {id: model.id});
+			if (m) {
+				_.merge(m, model);
+			}
+			resolve(m);
 		});
 		return q;
 	}

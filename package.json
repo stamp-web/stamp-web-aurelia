@@ -50,6 +50,7 @@
   "jspm": {
     "dependencies": {
       "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.11.0",
+      "aurelia-bs-modal": "github:pwkad/aurelia-bs-modal@master",
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.6.0",
       "aurelia-framework": "github:aurelia/framework@0.10",
       "aurelia-http-client": "github:aurelia/http-client@^0.7.0",

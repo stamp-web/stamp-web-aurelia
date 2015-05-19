@@ -1,7 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import 'bootstrap';
-import 'bootstrap/css/bootstrap.css!';
 import "theme";
 import "resources/styles/styles.css!";
 
@@ -16,6 +15,7 @@ export class App {
 				{route: 'stamp-list', moduleId: './views/stamp-list', nav: true, title: 'Stamps'},
 				{route: 'manage', moduleId: './views/manage-list', nav: true, title: 'Manage'},
 				{route: ['', 'welcome'], moduleId: './welcome', nav: true, title: 'Help'}
+				//{route: 'country-editor', moduleId: './views/countries/country-editor', nav: false, title: 'Country Editor'}
 			]);
 		});
 	}

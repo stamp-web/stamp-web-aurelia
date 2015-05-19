@@ -2,7 +2,7 @@ System.config({
   "transpiler": "traceur",
   "paths": {
     "*": "*.js",
-	"resources/*.css": "resources/*.css",
+    "resources/*.css": "resources/*.css",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js",
     "aurelia-skeleton-navigation/*": "dist/*.js"
@@ -12,6 +12,7 @@ System.config({
 System.config({
   "map": {
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.11.0",
+    "aurelia-bs-modal": "github:pwkad/aurelia-bs-modal@master",
     "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.6.0",
     "aurelia-framework": "github:aurelia/framework@0.10.0",
     "aurelia-http-client": "github:aurelia/http-client@0.7.0",
@@ -204,6 +205,11 @@ System.config({
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
     },
+    "github:pwkad/aurelia-bs-modal@master": {
+      "aurelia-bs-modal": "github:pwkad/aurelia-bs-modal@master",
+      "babel": "npm:babel-core@5.4.3",
+      "jquery": "github:components/jquery@2.1.4"
+    },
     "github:rstacruz/nprogress@0.1.6": {
       "css": "github:systemjs/plugin-css@0.1.10"
     },
@@ -213,7 +219,7 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0"
     },
     "github:twbs/bootstrap@3.3.4": {
-      "jquery": "github:components/jquery@2.1.3"
+      "jquery": "github:components/jquery@2.1.4"
     },
     "npm:amdefine@0.1.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
