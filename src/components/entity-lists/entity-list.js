@@ -43,8 +43,6 @@ export class EntityList {
 	}
 	edit(model) {
 		this.editingModel = _.clone(model);
-		this.editorContent=this.field.editor;
-
 	}
 
 }

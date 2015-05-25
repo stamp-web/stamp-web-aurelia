@@ -6,17 +6,14 @@ import "resources/styles/styles.css!";
 
 @inject(Router)
 export class App {
-	constructor(router) {
+	configureRouter(config, router){
+		config.title = 'Stamp Web';
+		config.map([
+			{route: 'stamp-list', name: 'stamp-list', moduleId: './views/stamp-list', nav: true, title: 'Stamps'},
+			{route: 'manage', moduleId: './views/manage-list', nav: true, title: 'Manage'},
+			{route: ['', 'welcome'], moduleId: './welcome', nav: true, title: 'Help'}
+		]);
 		this.router = router;
-		this.router.configure(config => {
-			config.title = 'Stamp Web';
-			config.map([
-
-				{route: 'stamp-list', moduleId: './views/stamp-list', nav: true, title: 'Stamps'},
-				{route: 'manage', moduleId: './views/manage-list', nav: true, title: 'Manage'},
-				{route: ['', 'welcome'], moduleId: './welcome', nav: true, title: 'Help'}
-				//{route: 'country-editor', moduleId: './views/countries/country-editor', nav: false, title: 'Country Editor'}
-			]);
-		});
 	}
+
 }

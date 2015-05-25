@@ -21,11 +21,12 @@ export class ManageList {
 	selectedEntity = undefined;
 
 	entityModels = [
-		{field: 'countryRef', label: 'Countries', service: undefined, editor: 'views/countries/country-editor'},
-		{field: 'albumRef', label: 'Albums', service: undefined, editor: 'views/albums/album-editor'},
-		{field: 'stampCollectionRef', label: 'Stamp Collections', service: undefined},
-		{field: 'sellerRef', label: 'Sellers', service: undefined},
-		{field: 'catalogueRef', label: 'Catalogues', service: undefined}
+		{field: 'countryRef', label: 'Countries', editTitle: 'Edit Country', service: undefined, editor: 'views/countries/country-editor'},
+		{field: 'albumRef', label: 'Albums', editTitle: 'Edit Album', service: undefined, editor: 'views/albums/album-editor'},
+		{field: 'stampCollectionRef', label: 'Stamp Collections', editTitle: 'Edit Stamp Collection',
+			service: undefined, editor: 'views/stamp-collections/stamp-collection-editor'},
+		{field: 'sellerRef', label: 'Sellers', editTitle: 'Edit Seller', service: undefined},
+		{field: 'catalogueRef', label: 'Catalogues', editTitle: 'Edit Catlaogue', service: undefined}
 	];
 
 	constructor(eventBus, router, countryService, albumService, stampCollectionService, sellerService, catalogueService, stampService) {
@@ -90,6 +91,7 @@ export class ManageList {
 	activate() {
 		this.eventBus.subscribe(EventNames.entityFilter, opts => {
 			this.router.navigate("/stamp-list?$filter=" + encodeURI(opts.$filter));
+			//this.router.navigate(this.router.generate('stamp-list', { $filter: opts.$filter }));
 		});
 
 		this._restoreState();
