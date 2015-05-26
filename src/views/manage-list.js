@@ -71,6 +71,10 @@ export class ManageList {
 		});
 	}
 
+	create() {
+		throw new Error("This is not implemented");
+	}
+
 	_saveState() {
 		var obj = {
 			field: this.selectedEntity.field

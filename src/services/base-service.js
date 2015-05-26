@@ -3,7 +3,10 @@ import {HttpClient} from 'aurelia-http-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {ObjectUtilities} from '../util/object-utilities';
 import {EventNames} from '../event-names';
+import {LogManager} from 'aurelia-framework';
 import  _  from 'lodash';
+
+const logger = LogManager.getLogger('services');
 
 class ParameterHelper {
 
@@ -85,7 +88,7 @@ export class BaseService {
 			return params._dc === a_params._dc;
 		};
 		if (this.models.length > 0 && ObjectUtilities.isEqual(this.monitoredParams(params), this.parameters) &&
-			((this.parameters === undefined && params === undefined) || (this.parameters !== undefined &&
+			(((!this.parameters || Object.keys(this.parameters).length === 0) && params === undefined) || (this.parameters !== undefined &&
 			params !== undefined && (cacheAndNew(params, this.parameters) || sameCache(params, this.parameters))))) {
 			return true;
 		}
@@ -135,6 +138,7 @@ export class BaseService {
 	find(options) {
 		var q = new Promise((resolve, reject) => {
 			if (!this.loaded || !this.useCachedResult(options)) {
+				logger.debug("[" + this.getCollectionName() + "] retrieving items");
 				this.eventBus.publish(EventNames.loadingStarted);
 				var href = this.baseHref + '/rest/' + this.getResourceName();
 				if (options) {
@@ -155,6 +159,7 @@ export class BaseService {
 				});
 
 			} else {
+				logger.debug("[" + this.getCollectionName() + "] Using cached result with " + this.total + " items.");
 				resolve({models: this.models, total: this.total});
 			}
 		});
