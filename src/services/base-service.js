@@ -129,7 +129,8 @@ export class BaseService {
 		var q = new Promise((resolve, reject) => {
 			var href = this.baseHref + '/rest/' + this.getResourceName() + '/!count?' + this.paramHelper.toParameters(options);
 			this.http.get(href).then(response => {
-				resolve(+response.response);
+				var retModel = JSON.parse(response.response);
+				resolve(+retModel.count);
 			}).catch(reason => {
 				reject(reason);
 			});

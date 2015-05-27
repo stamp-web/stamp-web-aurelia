@@ -158,14 +158,15 @@ export class ManageList {
 				var opts = {
 					$filter: '(' + fieldDef.field + ' eq ' + model.id + ')'
 				};
-				return that.stampService.count(opts).then(result => {
-					model.stampCount = +result;
+				return that.stampService.count(opts).then(count => {
+					model.stampCount = +count;
+					return model;
 				}).catch(issue => {
 					logger.error( issue );
 				});
-			})).then( function(  ) {
+			})).then( function( allModels ) {
 				that.eventBus.publish(EventNames.manageEntity, {
-					models : result.models,
+					models : allModels,
 					field: that.selectedEntity
 				})
 			}).catch( issue => {
