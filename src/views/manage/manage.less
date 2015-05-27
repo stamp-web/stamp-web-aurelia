@@ -1,0 +1,23 @@
+@import "../../../generated/theme-variables.less";
+
+.entity-type {
+	padding: @panel-body-padding;
+	.list-group-item {
+		&:hover {
+			background-color: @table-bg-hover;
+			color: darken(@component-active-color, 10%);
+		}
+		&.selected {
+			background-color: @table-bg-active;
+			color: @component-active-color;
+		}
+	}
+	.sw-create-action {
+		float: right;
+	}
+}
+
+.manage-list {
+	padding-top: @panel-body-padding;
+
+}
