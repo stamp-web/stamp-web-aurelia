@@ -4,7 +4,7 @@
 	padding: @panel-body-padding;
 	.list-group-item {
 		&:hover {
-			background-color: @table-bg-hover;
+			background-color: darken(@table-bg-hover, 15%);
 			color: darken(@component-active-color, 10%);
 		}
 		&.selected {
@@ -14,10 +14,13 @@
 	}
 	.sw-create-action {
 		float: right;
+		opacity: 0.2;
+		&:hover {
+			opacity: 1.0;
+		}
 	}
 }
 
 .manage-list {
 	padding-top: @panel-body-padding;
-
 }
