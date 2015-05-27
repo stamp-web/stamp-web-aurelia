@@ -45,6 +45,8 @@ export class BaseService {
 		this.eventBus = eventBus
 		this.http.configure(x => {
 			//       x.withHeader('Authorization', 'Basic ' + btoa(this.username + ":" + this.password));
+			x.withHeader('Accept', 'application/json');
+			x.withHeader('Content-Type', 'application/json');
 		});
 	}
 
@@ -167,15 +169,34 @@ export class BaseService {
 	}
 
 	save(model) {
-		var q = new Promise((resolve, reject) => {
-			console.log("save it....");
-			// good that worked, now lets merge the models...
-			var m = _.findWhere(this.models, {id: model.id});
-			if (m) {
-				_.merge(m, model);
-			}
-			resolve(m);
+		return new Promise((resolve, reject) => {
+			var href = this.baseHref + '/rest/' + this.getResourceName() + ((model.id > 0 ) ? "/" + model.id : "");
+			var body = JSON.stringify(model);
+			console.log(body);
+			this.http[(model.id > 0 ) ? 'put' : 'post'](href, body).then(response => {
+				if ( (response.statusCode === 200 || response.statusCode === 201) && response.response) {
+					var retModel = JSON.parse(response.response);
+					var m = _.findWhere(this.models, {id: retModel.id});
+					if (m) {
+						_.merge(m, retModel);
+					} else {
+						m = retModel;
+						var index = 0;
+						for (index = 0; index < this.models.length; index++) {
+							if (m.name  < this.models[index].name) {
+								break;
+							}
+						}
+						index = Math.max(index,this.models.length-1);
+						this.models.splice(index,0, m);
+					}
+					resolve(m);
+				} else {
+					reject( response );
+				}
+			}).catch(reason => {
+				reject(reason);
+			});
 		});
-		return q;
 	}
 }

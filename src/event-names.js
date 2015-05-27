@@ -5,6 +5,10 @@ export var EventNames = {
 	search: "search",
 	showImage: "showImage",
 	save: "save",
+	edit: 'edit',
+	create: 'create',
+	manageEntity: "manage-entity",
+	selectEntity: "select-entity",
 	entityFilter: "entity-filter",
 	loadingStarted: "loading-started",
 	loadingFinished: "loading-finished"

@@ -17,7 +17,6 @@ export class EntityList {
 
 	constructor(eventBus) {
 		this.eventBus = eventBus;
-		this.configureSubscriptions();
 	}
 
 	fieldChanged(newVal) {
@@ -30,19 +29,8 @@ export class EntityList {
 		});
 	}
 
-	configureSubscriptions() {
-		this.eventBus.subscribe(EventNames.save, model => {
-			if( this.field.service ) {
-				this.field.service.save(model).then(result => {
-					this.eventBus.publish(EventNames.close);
-				}).catch(err => {
-					this.eventBus.publish(EventNames.actionError, err.message);
-				});
-			}
-		});
-	}
 	edit(model) {
-		this.editingModel = _.clone(model);
+		this.eventBus.publish(EventNames.edit, { field: this.field, model: _.clone(model) });
 	}
 
 }
