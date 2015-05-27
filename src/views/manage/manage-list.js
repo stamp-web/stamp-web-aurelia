@@ -137,7 +137,7 @@ export class ManageList {
 	}
 
 	determineActivationStrategy(){
-		return activationStrategy.invokeLifecycle;
+		return activationStrategy.replace;
 	}
 
 	getSortCriteria(fieldDef) {

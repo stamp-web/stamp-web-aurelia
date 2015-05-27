@@ -26,6 +26,7 @@ export class EntityListManage {
 	}
 
 	activate(obj, instructions) {
+		this.models = [];
 		this.eventBus.publish( EventNames.selectEntity, instructions.route);
 	}
 
