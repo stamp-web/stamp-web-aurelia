@@ -7,27 +7,38 @@ import {EventNames} from '../../event-names';
 @bindable('field')
 export class EntityListManage {
 
+	subscriptions = [];
+
 	constructor(eventBus) {
 		this.eventBus = eventBus;
 		this.configureSubscriptions();
 	}
 
 	configureSubscriptions() {
-		this.eventBus.subscribe(EventNames.manageEntity, data => {
-			if( data ) {
-				if( data.models ) {
-					this.models = data.models;
+		this.subscriptions.push(
+			this.eventBus.subscribe(EventNames.manageEntity, data => {
+				if (data) {
+					if (data.models) {
+						this.models = data.models;
+					}
+					if (data.field) {
+						this.field = data.field;
+					}
 				}
-				if ( data.field ) {
-					this.field = data.field;
-				}
-			}
-		});
+			})
+		);
 	}
 
 	activate(obj, instructions) {
 		this.models = [];
-		this.eventBus.publish( EventNames.selectEntity, instructions.route);
+		var that = this;
+		that.eventBus.publish( EventNames.selectEntity, instructions.route);
+	}
+
+	detached() {
+		this.subscriptions.forEach(function(sub) {
+			sub();
+		});
 	}
 
 }
