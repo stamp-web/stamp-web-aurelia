@@ -7,7 +7,6 @@ import {EventNames} from '../event-names';
 @bindable('dialogId')
 @bindable('content')
 @bindable('title')
-@bindable('collection')
 @inject(EventAggregator)
 export class EditorDialog {
 

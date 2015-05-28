@@ -6,11 +6,23 @@
 		&:hover {
 			background-color: darken(@table-bg-hover, 15%);
 			color: darken(@component-active-color, 10%);
+			cursor: pointer;
 		}
 		&.selected {
 			background-color: @table-bg-active;
 			color: @component-active-color;
+			cursor: default;
 		}
+		div {
+			display: inline-block;
+			&:last-child {
+				float: right;
+			}
+			&:first-child {
+				width: calc(~"100% - 35px");
+			}
+		}
+
 	}
 	.sw-create-action {
 		float: right;

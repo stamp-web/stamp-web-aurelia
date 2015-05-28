@@ -19,6 +19,7 @@ export class ManageList {
 
 	selectedEntity = undefined;
 	entityModels = [];
+	subscriptions = [];
 
 	constructor(eventBus, countryService, albumService, stampCollectionService, sellerService, catalogueService, stampService) {
 		this.eventBus = eventBus;
@@ -68,7 +69,6 @@ export class ManageList {
 				service: catalogueService
 			}
 		];
-
 		this.configureSubscriptions();
 	}
 
@@ -110,18 +110,25 @@ export class ManageList {
 		}
 	}
 
+	detached() {
+		this.subscriptions.forEach(function(subscription) {
+			subscription();
+		})
+		this.subscriptions = [];
+	}
+
 	configureSubscriptions() {
-		this.eventBus.subscribe(EventNames.entityFilter, opts => {
+		this.subscriptions.push(this.eventBus.subscribe(EventNames.entityFilter, opts => {
 			this.router.navigate("/stamp-list?$filter=" + encodeURI(opts.$filter));
 			//this.router.navigate(this.router.generate('stamp-list', { $filter: opts.$filter }));
-		});
-		this.eventBus.subscribe(EventNames.selectEntity, collectionName => {
+		}));
+		this.subscriptions.push(this.eventBus.subscribe(EventNames.selectEntity, collectionName => {
 			var fieldDef = _.findWhere(this.entityModels, { collectionName: collectionName });
 			if( fieldDef ) {
 				this.processField( fieldDef );
 			}
-		});
-		this.eventBus.subscribe(EventNames.save, model => {
+		}));
+		this.subscriptions.push(this.eventBus.subscribe(EventNames.save, model => {
 			if( this.selectedEntity.service ) {
 				this.selectedEntity.service.save(model).then(result => {
 					this.eventBus.publish(EventNames.close);
@@ -129,11 +136,12 @@ export class ManageList {
 					this.eventBus.publish(EventNames.actionError, err.message);
 				});
 			}
-		});
-		this.eventBus.subscribe(EventNames.edit, config => {
+		}));
+		this.subscriptions.push(this.eventBus.subscribe(EventNames.edit, config => {
 			this.editingModel = config.model;
 			this.editorTitle = config.field.editTitle;
-		});
+			this.editorContent = config.field.editor;
+		}));
 	}
 
 	determineActivationStrategy(){
@@ -154,22 +162,21 @@ export class ManageList {
 		this.selectedEntity = fieldDef;
 		fieldDef.service.find(this.getSortCriteria(fieldDef)).then(result => {
 			var that = this;
+			that.eventBus.publish(EventNames.manageEntity, {
+				models : result.models,
+				field: that.selectedEntity
+			});
 			Promise.all(result.models.map(function(model) {
 				var opts = {
 					$filter: '(' + fieldDef.field + ' eq ' + model.id + ')'
 				};
-				return that.stampService.count(opts).then(count => {
+				that.stampService.count(opts).then(count => {
 					model.stampCount = +count;
 					return model;
 				}).catch(issue => {
 					logger.error( issue );
 				});
-			})).then( function( allModels ) {
-				that.eventBus.publish(EventNames.manageEntity, {
-					models : allModels,
-					field: that.selectedEntity
-				})
-			}).catch( issue => {
+			})).catch( issue => {
 				logger.error( issue );
 			});
 		});
@@ -178,16 +185,21 @@ export class ManageList {
 	setEntity(entityType) {
 		var index = _.findIndex(this.entityModels, {field: entityType});
 		if( index >= 0 ) {
-			this.router.navigate( this.entityModels[index].collectionName);
+			var collectionName = this.entityModels[index].collectionName;
+			if( this.router.currentInstruction && this.router.currentInstruction.fragment !== collectionName ) {
+				this.router.navigate( collectionName );
+			}
+
 		}
 	}
 
-	create() {
+	create(entity) {
 		var that = this;
 		setTimeout( function() {
 			that.editingModel = { };
-			that.editorTitle = that.selectedEntity.createTitle;
-		}, 150);
+			that.editorTitle = entity.createTitle;
+			that.editorContent = entity.editor;
+		}, 50);
 
 	}
 
