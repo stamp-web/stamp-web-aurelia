@@ -8,6 +8,7 @@ export var EventNames = {
 	edit: 'edit',
 	create: 'create',
 	manageEntity: "manage-entity",
+	entityDelete: "entity-delete",
 	selectEntity: "select-entity",
 	entityFilter: "entity-filter",
 	loadingStarted: "loading-started",

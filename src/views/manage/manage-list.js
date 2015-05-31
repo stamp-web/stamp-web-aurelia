@@ -142,6 +142,9 @@ export class ManageList {
 			this.editorTitle = config.field.editTitle;
 			this.editorContent = config.field.editor;
 		}));
+		this.subscriptions.push(this.eventBus.subscribe(EventNames.entityDelete, config => {
+
+		}));
 	}
 
 	determineActivationStrategy(){

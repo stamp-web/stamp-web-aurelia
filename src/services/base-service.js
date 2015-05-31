@@ -138,6 +138,21 @@ export class BaseService {
 		return q;
 	}
 
+	remove(model) {
+		return new Promise((resolve, reject) => {
+			var href = this.baseHref + '/rest/' + this.getResourceName() + ((model.id > 0 ) ? "/" + model.id : "");
+			this.http.delete(href).then(response => {
+				if ( response.statusCode === 204) {
+					resolve(true);
+				} else {
+					reject( response );
+				}
+			}).catch(reason => {
+				reject(reason);
+			});
+		});
+	}
+
 	find(options) {
 		var q = new Promise((resolve, reject) => {
 			if (!this.loaded || !this.useCachedResult(options)) {
@@ -173,7 +188,6 @@ export class BaseService {
 		return new Promise((resolve, reject) => {
 			var href = this.baseHref + '/rest/' + this.getResourceName() + ((model.id > 0 ) ? "/" + model.id : "");
 			var body = JSON.stringify(model);
-			console.log(body);
 			this.http[(model.id > 0 ) ? 'put' : 'post'](href, body).then(response => {
 				if ( (response.statusCode === 200 || response.statusCode === 201) && response.response) {
 					var retModel = JSON.parse(response.response);

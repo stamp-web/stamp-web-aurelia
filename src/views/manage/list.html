@@ -1,4 +1,41 @@
 <template>
-	<require from="../../components/entity-lists/entity-list"></require>
-	<entity-list models.bind="models" field.bind="field"></entity-list>
+	<require from="../../value-converters/stamp-count"></require>
+
+	<table class="table table-hover entity-list">
+		<thead>
+		<tr>
+			<th if.bind="hasIssue">Issue</th>
+			<th class="sw-entitylist-name">Name</th>
+			<th class="sw-entitylist-actions">Actions</th>
+			<th class="sw-entitylist-count">Count</th>
+			<th if.bind="hasIssue">Currency</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr repeat.for="model of models">
+			<td if.bind="$parent.hasIssue">${model.issue}</td>
+			<td>${model.name}</td>
+			<td>
+				<div class="btn-group actions">
+					<button type="button" class="btn btn-default btn-sm" click.delegate="$parent.edit(model)" data-toggle="modal" data-target="#editorDialog">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-sm" click.trigger="$parent.remove(model)">
+						<span class="glyphicon glyphicon-trash"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-sm" title="View stamps for ${model.name}" click.delegate="$parent.viewStamps(model)">
+						<i class="fa fa-search"></i>
+					</button>
+				</div>
+			</td>
+			<td>${model.stampCount | stampCount}</td>
+			<td if.bind="$parent.hasIssue">${model.code}</td>
+			<td>${model.description}</td>
+			<td>
+
+			</td>
+		</tr>
+		</tbody>
+	</table>
 </template>

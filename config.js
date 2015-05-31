@@ -19,6 +19,7 @@ System.config({
     "aurelia-router": "github:aurelia/router@0.8.1",
     "aurelia-task-queue": "github:aurelia/task-queue@0.4.0",
     "aurelia-templating-resources": "github:aurelia/templating-resources@0.11.1",
+    "bootbox": "npm:bootbox@4.4.0",
     "bootstrap": "github:twbs/bootstrap@3.3.4",
     "css": "github:systemjs/plugin-css@0.1.11",
     "font-awesome": "npm:font-awesome@4.3.0",
@@ -192,6 +193,9 @@ System.config({
     },
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
+    },
+    "npm:bootbox@4.4.0": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:buffer@3.2.2": {
       "base64-js": "npm:base64-js@0.0.8",
