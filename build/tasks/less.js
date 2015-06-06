@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
+var gutil = require('gulp-util');
 var paths = require('../paths');
 var minifyCSS = require('gulp-minify-css');
 var path = require('path');
@@ -17,12 +18,20 @@ gulp.task('less', function () {
 	 //    .pipe(minifyCSS())
 	 .pipe(gulp.dest('./styles/components'));
 	 */
+
+	var lessErrorHandler = function(err) {
+		gutil.log('### FAILURE in .less file');
+		gutil.log(err.message);
+		this.emit('end');
+	}
+
 	return gulp.src(paths.appLess)
 		.pipe(sourcemaps.init())
 		.pipe(less({
-			//paths: [path.join(__dirname, 'less', 'includes'),
-			//	paths: [ path.join("jspm_packages/github/thomaspark/bootswatch@3.3.4", paths.bootstrapTheme) ]
-		}))
+			sourceMap: {
+				sourceMapRootpath: paths.appLess
+			}
+		}).on('error', lessErrorHandler))
 		.pipe(sourcemaps.write())
 //    .pipe(concat('styles.css'))
 //    .pipe(minifyCSS())

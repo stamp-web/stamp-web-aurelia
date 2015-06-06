@@ -1,14 +1,14 @@
 import {inject,LogManager} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {Countries} from '../services/countries';
+import {Countries} from '../../services/countries';
 import {Router} from 'aurelia-router';
-import {Stamps} from '../services/stamps';
-import {EventNames} from '../event-names';
-import {LocationHelper} from '../util/location-helper';
-import {ODataParser} from '../util/odata-parser';
+import {Stamps} from '../../services/stamps';
+import {EventNames} from '../../event-names';
+import {LocationHelper} from '../../util/location-helper';
+import {ODataParser} from '../../util/odata-parser';
 import  _  from 'lodash';
 
-import "resources/styles/views/stamp-list.css!";
+import "resources/styles/views/stamps/stamp-list.css!";
 
 const logger = LogManager.getLogger('stamp-list');
 
@@ -21,7 +21,7 @@ export class StampList {
 	heading = "Stamp List";
 	gridMode = true;
 	imageShown = false;
-
+	createShown = false;
 
 	sortColumns = [{
 		attr: 'number',
@@ -95,6 +95,10 @@ export class StampList {
 	toggleSortDirection() {
 		this.options.sortDirection = (this.options.sortDirection === 'asc') ? 'desc' : 'asc';
 		this.search();
+	}
+
+	show() {
+		this.createShown = !this.createShown;
 	}
 
 	setViewMode(mode) {

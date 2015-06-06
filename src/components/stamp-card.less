@@ -4,10 +4,12 @@
 
 .stamp-card {
 	height: 285px;
+	width: 300px;
+	display: inline-block;
 	padding: @panel-body-padding;
 	border: @panel-inner-border solid thin;
 	border-radius: @thumbnail-border-radius;
-	margin: auto;
+	margin: 2px;
 	font-size: 0.9em;
 	//background-image: linear-gradient(to bottom, #ffffff 0%, #f3f3f4 100%);
 	background-repeat: repeat-x;
@@ -27,7 +29,7 @@
 		margin-right: auto;
 		margin-top: @padding-small-vertical;
 		left: 50%;
-		position: absolute;
+		position: relative;
 		transform: translate(-50%,0);
 	}
 	.card-header {

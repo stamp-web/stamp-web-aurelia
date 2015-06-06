@@ -23,11 +23,6 @@
 				<li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
 					<a href.bind="row.href">${row.title}</a>
 				</li>
-				<li>
-					 <span class="loader" show.bind="router.isNavigating">
-          				<i class="fa fa-spinner fa-spin fa-2x"></i>
-        			</span>
-				</li>
 			</ul>
 		</div>
 	</nav>

@@ -1,12 +1,12 @@
 <template>
 	<sort-dialog sort.bind="options.sort" sort-options.bind="sortColumns" dialog-id="exampleModal" ></sort-dialog>
-	<require from="../components/stamp-grid"></require>
-	<require from="../components/sort-dialog"></require>
+	<require from="../../components/stamp-grid"></require>
+	<require from="../../components/sort-dialog"></require>
 	<nav class="navbar navbar-default stamp-grid-nav">
 		<form class="navbar-form" role="search" submit.delegate="sendSearch()">
 			<div class="btn-toolbar" role="toolbar">
 				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-sm btn-default" title="New Stamp">
+					<button type="button" class="btn btn-sm btn-default" title="New Stamp" click.trigger="show('create-stamp')">
 						<span class="glyphicon glyphicon glyphicon-plus"></span>
 					</button>
 				</div>
@@ -98,10 +98,18 @@
 		</form>
 
 	</nav>
-	<div if.bind="gridMode" >
-		<stamp-grid stamps.bind="stamps"></stamp-grid>
+	<div if.bind="gridMode" class="container-fluid stamp-content" >
+
+		<div class="row">
+
+			<div class="col-md-12 col-lg-4" if.bind="createShown">
+				I am a stamp editor
+			</div>
+			<stamp-grid stamps.bind="stamps"></stamp-grid>
+		</div>
+
 	</div>
-	<div show.bind="!gridMode">
+	<div show.bind="!gridMode" class="container-fluid stamp-content">
 		<div> THIS IS A LIST</div>
 	</div>
 	<div class="sw-fullsize-image" if.bind="imageShown" click.delegate="closeFullSizeImage()">

@@ -34,7 +34,14 @@
 }
 
 .manage-list {
+	height: calc(~"100% - 56px");
 	padding-top: @panel-body-padding;
+	position: relative;
+	top: 56px;
+	overflow-y: auto;
+	.row {
+		height: inherit;
+	}
 	.actions {
 		width: 120px;
 	}
