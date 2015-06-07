@@ -1,3 +1,6 @@
+/**
+ * Referenced from https://gist.github.com/xmlking/e86e4f15ec32b12c4689
+ */
 export class EnumSymbol {
 
 	sym = Symbol.for(name);
