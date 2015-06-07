@@ -6,6 +6,7 @@ export var EventNames = {
 	showImage: "showImage",
 	save: "save",
 	edit: 'edit',
+	editStamp: 'edit-stamp',
 	create: 'create',
 	manageEntity: "manage-entity",
 	entityDelete: "entity-delete",

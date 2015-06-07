@@ -1,0 +1,36 @@
+<template>
+	<require from="../../value-converters/empty-text"></require>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Details</h3>
+		</div>
+		<div class="panel-body">
+			<div class="form-group form-group-sm has-feedback">
+				<label for="details-countryRef" class="col-sm-3 control-label">Country</label>
+				<div class="col-sm-9">
+					<select id="details-countryRef" disabled.bind="loading" class="country-selector form-control" value.bind="model.countryRef">
+						<option>Select a country</option>
+						<option repeat.for="country of countries" model.bind="country.id">${country.name}</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group form-group-sm has-feedback">
+				<label for="details-rate" class="col-sm-3 control-label">Denomination</label>
+				<div class="col-sm-3">
+					<input type="text" required aria-required="true" class="form-control" value.bind="model.rate | emptyText" id="details-rate" aria-describedby="rateStatus">
+					<!--
+					<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+					<span id="rateStatus" class="sr-only">(error)</span>
+					-->
+				</div>
+			</div>
+			<div class="form-group form-group-sm">
+				<label for="details-description" class="col-sm-3 control-label">Description</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="details-description" value.bind="model.description | emptyText" aria-describedby="descriptionStatus">
+				</div>
+			</div>
+		</div>
+	</div>
+
+</template>

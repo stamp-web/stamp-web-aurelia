@@ -1,0 +1,11 @@
+<template>
+	<require from="./stamp-details"></require>
+	<require from="../catalogue-numbers/cn-details"></require>
+	<div class="stamp-editor">
+		<form class="form-horizontal">
+			<sw-stamp-details model.bind="model"></sw-stamp-details>
+			<sw-catalogue-number-details model.bind="activeCatalogueNumber"></sw-catalogue-number-details>
+		</form>
+	</div>
+	<button click.trigger="save()">Save</button>
+</template>

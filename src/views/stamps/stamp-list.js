@@ -16,12 +16,13 @@ const logger = LogManager.getLogger('stamp-list');
 export class StampList {
 
 	stamps = [];
+	editingStamp = undefined;
 	stampCount = 0;
 	countries = [];
 	heading = "Stamp List";
 	gridMode = true;
 	imageShown = false;
-	createShown = false;
+	editorShown = false;
 
 	sortColumns = [{
 		attr: 'number',
@@ -97,8 +98,13 @@ export class StampList {
 		this.search();
 	}
 
-	show() {
-		this.createShown = !this.createShown;
+	toggleEditor(action) {
+		if( action === 'create-stamp') {
+			this.editingStamp = {
+				id: 0
+			};
+		}
+		this.editorShown = !this.editorShown;
 	}
 
 	setViewMode(mode) {
@@ -145,6 +151,11 @@ export class StampList {
 		});
 		this.eventBus.subscribe(EventNames.showImage, stamp => {
 			this.handleFullSizeImage(stamp);
+		});
+		this.eventBus.subscribe(EventNames.editStamp, stamp => {
+			"use strict";
+			this.editingStamp = stamp;
+			this.editorShown = true;
 		});
 	}
 

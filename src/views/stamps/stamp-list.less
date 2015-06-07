@@ -8,7 +8,7 @@
 	top: @grid-nav-height;
 	.row {
 		height: calc(~"100% - 60px");// @grid-nav-height;
-		overflow-y: auto; // remove if we want independent scrollers
+		//overflow-y: auto; // remove if we want independent scrollers
 	}
 }
 .stamp-grid-nav {
@@ -93,4 +93,16 @@
 		max-width: 100%;
 		max-height: 100%;
 	}
+}
+
+.sw-editor-container {
+	overflow-y: scroll;
+	height: 100%;
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: row;
+	-webkit-flex-direction: row;
+	-webkit-align-content: stretch;
+	align-content: stretch;
+	position: relative;
 }

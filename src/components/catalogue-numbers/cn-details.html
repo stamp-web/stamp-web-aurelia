@@ -1,0 +1,59 @@
+<template>
+	<require from="../../value-converters/empty-text"></require>
+	<require from="../../value-converters/as-currency"></require>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Active Catalogue Number</h3>
+		</div>
+		<div class="panel-body">
+			<div class="form-group form-group-sm has-feedback">
+				<label for="cn-catalogueRef" class="col-sm-3 control-label">Catalogue</label>
+				<div class="col-sm-9">
+					<select id="cn-catalogueRef" disabled.bind="loading" class="catalogue-selector form-control" value.bind="selectedCatalogue">
+						<option>Select a catalogue</option>
+						<option repeat.for="catalogue of catalogues" model.bind="catalogue">${catalogue.issue} - ${catalogue.name}</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group form-group-sm">
+				<label for="cn-condition" class="col-sm-3 control-label">Condition</label>
+				<div class="col-sm-4">
+					<select id="cn-condition" class="condition-selector form-control" value.bind="model.condition">
+						<option repeat.for="c of conditions" model.bind="c.ordinal">${c.description}</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group form-group-sm ">
+				<label for="cn-number" class="col-sm-3 control-label">Number</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="cn-number"  value.bind="model.number | emptyText" aria-describedby="numberStatus">
+					<!--
+					<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+					<span id="numberStatus" class="sr-only">(error)</span>
+					-->
+				</div>
+			</div>
+			<div class="form-group form-group-sm">
+				<label for="cn-value" class="col-sm-3 control-label">Value</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="cn-value" value.bind="model.value" aria-describedby="valueStatus">
+				</div>
+				<div class="col-sm-2" innerhtml="${selectedCatalogue | asCurrency:'code'}"></div>
+			</div>
+			<div class="checkbox">
+				<span class="col-sm-3"></span>
+				<label>
+					<input type="checkbox" checked.bind="model.unknown">
+					No value listed
+				</label>
+			</div>
+			<div class="checkbox">
+				<span class="col-sm-3"></span>
+				<label>
+					<input type="checkbox" checked.bind="model.unavailable">
+					No album space available
+				</label>
+			</div>
+		</div>
+	</div>
+</template>
