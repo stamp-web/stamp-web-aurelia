@@ -6,12 +6,14 @@ export var EventNames = {
 	showImage: "showImage",
 	save: "save",
 	edit: 'edit',
-	editStamp: 'edit-stamp',
+
 	create: 'create',
 	manageEntity: "manage-entity",
 	entityDelete: "entity-delete",
 	selectEntity: "select-entity",
 	entityFilter: "entity-filter",
 	loadingStarted: "loading-started",
-	loadingFinished: "loading-finished"
+	loadingFinished: "loading-finished",
+	stampEdit: 'stamp-edit',
+	stampRemove: 'stamp-remove'
 };

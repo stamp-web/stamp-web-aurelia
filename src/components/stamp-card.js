@@ -64,11 +64,11 @@ export class StampCard {
 	}
 
 	remove() {
-		throw new Error("Not implemented yet");
+		this.eventBus.publish(EventNames.stampRemove, this.model);
 	}
 
 	edit() {
-		this.eventBus.publish(EventNames.editStamp, this.model);
+		this.eventBus.publish(EventNames.stampEdit, this.model);
 	}
 }
 

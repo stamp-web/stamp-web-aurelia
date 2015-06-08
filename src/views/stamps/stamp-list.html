@@ -3,12 +3,16 @@
 	<require from="../../components/stamp-grid"></require>
 	<require from="../../components/sort-dialog"></require>
 	<require from="../../components/stamps/stamp-editor"></require>
+	<require from="../../components/stamps/stamp-table"></require>
 	<nav class="navbar navbar-default stamp-grid-nav">
 		<form class="navbar-form" role="search" submit.delegate="sendSearch()">
 			<div class="btn-toolbar" role="toolbar">
 				<div class="btn-group" role="group">
 					<button type="button" class="btn btn-sm btn-default" title="New Stamp" click.trigger="toggleEditor('create-stamp')">
 						<span class="glyphicon glyphicon glyphicon-plus"></span>
+					</button>
+					<button type="button" class="btn btn-sm btn-default" title="New Wantlist" click.trigger="toggleEditor('create-wantList')">
+						<i class="fa fa-check-square-o"></i>
 					</button>
 				</div>
 				<div class="btn-group" role="group">
@@ -25,7 +29,7 @@
 						<span class="glyphicon glyphicon-th"></span>
 					</button>
 					<button class="btn btn-sm btn-default" title="Show as list" click.delegate="setViewMode('List')">
-						<i class="fa fa-list-alt"></i>
+						<i class="fa fa-list"></i>
 					</button>
 				</div>
 
@@ -51,26 +55,6 @@
 					-->
 				</div>
 
-			<!--
-				<div class="btn-group">
-					<button type="button" class="btn btn-default btn-sm"><span
-						class="glyphicon glyphicon glyphicon-plus"></span> New stamp
-					</button>
-					<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
-							aria-expanded="false">
-						<span class="caret"></span>
-						<span class="sr-only"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">New stamp</a></li>
-						<li><a href="#">New wantlist stamp</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-					</ul>
-				</div>
-				-->
-
 				<div class="btn-group">
 					<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
 							aria-expanded="false">
@@ -92,25 +76,18 @@
 						<li repeat.for="size of pageSizes" click.delegate="$parent.setSize(size)">${size}</li>
 					</ul>
 				</div>
-
-
-
 			</div>
 		</form>
 
 	</nav>
-	<div if.bind="gridMode" class="container-fluid stamp-content" >
-
+	<div class="container-fluid stamp-content" >
 		<div class="row">
 			<div class="col-md-12 col-lg-4 sw-editor-container" if.bind="editorShown">
 				<stamp-editor model.bind="editingStamp"></stamp-editor>
 			</div>
-			<stamp-grid class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps"></stamp-grid>
+			<stamp-grid if.bind="gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps"></stamp-grid>
+			<stamp-table if.bind="!gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps"></stamp-table>
 		</div>
-
-	</div>
-	<div show.bind="!gridMode" class="container-fluid stamp-content">
-		<div> THIS IS A LIST</div>
 	</div>
 	<div class="sw-fullsize-image" if.bind="imageShown" click.delegate="closeFullSizeImage()">
 		<img src.bind="fullSizeImage" error.delegate="closeFullSizeImage()">

@@ -1,20 +1,37 @@
-import {customElement,bindable,inject,computedFrom} from 'aurelia-framework';
+import {customElement,bindable,inject,computedFrom,LogManager} from 'aurelia-framework';
 import {Stamps} from '../../services/stamps';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {EventNames} from '../../event-names';
+
 import 'resources/styles/components/stamps/stamps.css!';
 import  _  from 'lodash';
 
+const logger = LogManager.getLogger('stamp-editor');
+
 @customElement('stamp-editor')
 @bindable('model')
-@inject(Stamps)
+@inject(EventAggregator, Stamps)
 export class StampEditorComponent {
 
-	constructor(stampService) {
+	constructor(eventBus,stampService) {
+		this.eventBus = eventBus;
 		this.stampService = stampService;
 	}
 
 	save() {
 		"use strict";
-		console.log(this.model);
+		if( this.validate() ) {
+			this.stampService.save(this.model).then(stamp => {
+				this.eventBus.publish(EventNames.stampSaved, stamp);
+			}).catch(err => {
+				logger.error(err);
+			});
+		}
+	}
+
+	validate() {
+		"use strict";
+		return true;
 	}
 
 	/**

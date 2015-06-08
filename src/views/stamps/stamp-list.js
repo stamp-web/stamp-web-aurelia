@@ -6,6 +6,7 @@ import {Stamps} from '../../services/stamps';
 import {EventNames} from '../../event-names';
 import {LocationHelper} from '../../util/location-helper';
 import {ODataParser} from '../../util/odata-parser';
+import bootbox from 'bootbox';
 import  _  from 'lodash';
 
 import "resources/styles/views/stamps/stamp-list.css!";
@@ -23,6 +24,7 @@ export class StampList {
 	gridMode = true;
 	imageShown = false;
 	editorShown = false;
+	subscribers = [];
 
 	sortColumns = [{
 		attr: 'number',
@@ -99,9 +101,10 @@ export class StampList {
 	}
 
 	toggleEditor(action) {
-		if( action === 'create-stamp') {
+		if( action === 'create-stamp' || action === 'create-wantList') {
 			this.editingStamp = {
-				id: 0
+				id: 0,
+				wantList: (action === 'create-wantList')
 			};
 		}
 		this.editorShown = !this.editorShown;
@@ -139,24 +142,53 @@ export class StampList {
 	}
 
 	subscribe() {
-		this.eventBus.subscribe(EventNames.keywordSearch, options => {
+		this.subscribers.push(this.eventBus.subscribe(EventNames.keywordSearch, options => {
 			if( options.searchText) {
 				this.options.$filter = "(contains(description,'" + options.searchText + "'))";
 			}
 			this.search();
-		});
-		this.eventBus.subscribe(EventNames.search, options => {
+		}));
+		this.subscribers.push(this.eventBus.subscribe(EventNames.search, options => {
 			this.options = _.merge(this.options, options);
 			this.search();
-		});
-		this.eventBus.subscribe(EventNames.showImage, stamp => {
+		}));
+		this.subscribers.push(this.eventBus.subscribe(EventNames.showImage, stamp => {
 			this.handleFullSizeImage(stamp);
-		});
-		this.eventBus.subscribe(EventNames.editStamp, stamp => {
+		}));
+		this.subscribers.push(this.eventBus.subscribe(EventNames.stampEdit, stamp => {
 			"use strict";
 			this.editingStamp = stamp;
 			this.editorShown = true;
-		});
+		}));
+		this.subscribers.push(this.eventBus.subscribe(EventNames.stampRemove, stamp => {
+			"use strict";
+
+			var _remove = function (model) {
+				if( this.editingStamp && stamp.id === this.editingStamp.id ) { // remove editing stamp
+					this.editingStamp = null;
+					this.editorShown = false;
+				}
+				this.stampService.remove(model).then(result => {
+					var index = _.findIndex(this.stamps, {id: model.id});
+					this.stamps.splice(index, 1);
+				}).catch(err => {
+					console.log(err);
+				})
+			}
+			var self = this;
+			console.log("in stamps remove");
+			bootbox.confirm({
+				size: 'large',
+				className: 'sw-dialog-wrapper',
+				message: "Delete " + stamp.rate + ' - ' + stamp.description + "?",
+				callback: function (result) {
+					if (result === true) {
+						_remove.call(self, stamp);
+
+					}
+				}
+			});
+		}));
 	}
 
 	handleFullSizeImage(stamp) {
@@ -202,6 +234,11 @@ export class StampList {
 			}
 		}
 
+	}
+
+	detached(){
+		this.subscribers.forEach(sub => {sub();});
+		this.subscribers = [];
 	}
 
 	activate() {

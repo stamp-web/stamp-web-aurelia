@@ -96,7 +96,7 @@
 }
 
 .sw-editor-container {
-	overflow-y: scroll;
+	overflow-y: auto;
 	height: 100%;
 	display: flex;
 	display: -webkit-flex;
@@ -105,4 +105,14 @@
 	-webkit-align-content: stretch;
 	align-content: stretch;
 	position: relative;
+}
+
+.sw-dialog-wrapper {
+	.modal-body {
+		.bootbox-body {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+	}
 }

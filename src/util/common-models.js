@@ -13,21 +13,17 @@ export class EnumSymbol {
 		Object.freeze(this);
 	}
 
-
 	get display() {
 		return this.description || Symbol.keyFor(this.sym);
 	}
-
 
 	toString() {
 		return this.sym;
 	}
 
-
 	valueOf() {
 		return this.ordinal;
 	}
-
 }
 
 
@@ -71,4 +67,20 @@ export const Condition = new Enum({
 
 });
 
+export const Grade = new Enum({
+	XF: { ordinal: 0, description: 'Extra-Fine (XF)'},
+	VF: { ordinal: 1, description: 'Very-Fine (VF)'},
+	FVF: {ordinal: 2, description: 'Fine-Very-Fine (FVF)'},
+	F: { ordinal: 3, description: 'Fine (F)'},
+	VG: { ordinal: 4, description: 'Very-Good (VG)'},
+	D: {ordinal: 5, description: 'Damaged'},
+	CTS: { ordinal: 6, description: 'Cut to shape'}
+});
 
+export const CurrencyCode = new Enum({
+	USD: { ordinal: 0, description: 'USD'},
+	CAD: { ordinal: 1, description: 'CAD'},
+	AUD: { ordinal: 2, description: 'AUD'},
+	GBP: { ordinal: 3, description: 'GBP'},
+	JYP: { ordinal: 4, description: 'JYP'}
+})
