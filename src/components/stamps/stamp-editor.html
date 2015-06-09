@@ -3,9 +3,15 @@
 	<require from="../catalogue-numbers/cn-details"></require>
 	<div class="stamp-editor">
 		<form class="form-horizontal">
-			<sw-stamp-details model.bind="model"></sw-stamp-details>
+			<sw-stamp-details model.bind="duplicateModel"></sw-stamp-details>
 			<sw-catalogue-number-details model.bind="activeCatalogueNumber"></sw-catalogue-number-details>
 		</form>
+		<div class="editor-buttons">
+			<button type="button" class="btn btn-sm" click.trigger="save()">Save</button>
+			<button type="button" class="btn btn-sm" click.trigger="saveAndNew()" if.bind="createMode">Save and New</button>
+			<button type="button" class="btn btn-sm" click.trigger="cancel()">Cancel</button>
+		</div>
 	</div>
-	<button click.trigger="save()">Save</button>
+
+
 </template>

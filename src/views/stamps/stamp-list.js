@@ -24,6 +24,7 @@ export class StampList {
 	gridMode = true;
 	imageShown = false;
 	editorShown = false;
+	createWantList = false;
 	subscribers = [];
 
 	sortColumns = [{
@@ -106,8 +107,15 @@ export class StampList {
 				id: 0,
 				wantList: (action === 'create-wantList')
 			};
+			var toggle = (this.createWantList === this.editingStamp.wantList);
+			this.createWantList = this.editingStamp.wantList;
+			if( toggle ) {
+				this.editorShown = !this.editorShown;
+			}
 		}
-		this.editorShown = !this.editorShown;
+
+
+
 	}
 
 	setViewMode(mode) {
@@ -156,13 +164,15 @@ export class StampList {
 			this.handleFullSizeImage(stamp);
 		}));
 		this.subscribers.push(this.eventBus.subscribe(EventNames.stampEdit, stamp => {
-			"use strict";
 			this.editingStamp = stamp;
+			this.createWantList = stamp.wantList;
 			this.editorShown = true;
 		}));
+		this.subscribers.push(this.eventBus.subscribe(EventNames.stampEditorCancel,info => {
+			this.editingStamp = null;
+			this.editorShown = false;
+		}));
 		this.subscribers.push(this.eventBus.subscribe(EventNames.stampRemove, stamp => {
-			"use strict";
-
 			var _remove = function (model) {
 				if( this.editingStamp && stamp.id === this.editingStamp.id ) { // remove editing stamp
 					this.editingStamp = null;

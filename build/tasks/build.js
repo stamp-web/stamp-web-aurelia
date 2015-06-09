@@ -7,8 +7,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var paths = require('../paths');
 var compilerOptions = require('../babel-options');
 var assign = Object.assign || require('object.assign');
-
-
+var replace = require('gulp-replace-task');
+var themes = require('../theme');
 
 // transpiles changed es6 files to SystemJS format
 // the plumber() call prevents 'pipe breaking' caused
@@ -18,6 +18,18 @@ gulp.task('build-system', function () {
   return gulp.src([paths.source])
     .pipe(plumber())
     .pipe(changed(paths.output, {extension: '.js'}))
+	  .pipe(replace({
+		  patterns: [
+			  {
+				  match: 'theme',
+				  replacement: themes.bootstrapTheme
+			  },
+			  {
+				  match: 'pathToTheme',
+				  replacement: themes.pathToTheme
+			  }
+		  ]
+	  }))
     .pipe(sourcemaps.init())
     .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
     .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/' + paths.root }))
@@ -38,7 +50,6 @@ gulp.task('build-html', function () {
 gulp.task('build', function (callback) {
 	return runSequence(
 		'clean',
-		'setup-theme',
 		['less','build-system', 'build-html'],
 		callback
 	);

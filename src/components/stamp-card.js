@@ -2,19 +2,32 @@ import {bindable,customElement,inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../event-names';
 import {Preferences} from '../services/preferences';
+import  _  from 'lodash';
 import 'resources/styles/components/stamp-card.css!';
 
 @customElement('stamp-card')
 @inject(EventAggregator, Preferences)
 @bindable('model')
+@bindable('selection')
 
 export class StampCard {
 
 	imageShown = false;
+	select = false;
 
 	constructor(eventBus, prefService) {
 		this.eventBus = eventBus;
 		this.prefService = prefService;
+	}
+
+	modelChanged(newValue) {
+		if( newValue ) {
+			this.findActiveCatalogueNumber();
+		}
+	}
+
+	selectionChanged(newValue) {
+		this.select = (this.model && newValue === this.model.id );
 	}
 
 	getCatalogueNumber() {
@@ -26,16 +39,12 @@ export class StampCard {
 		return s;
 	}
 
+
 	findActiveCatalogueNumber() {
 		var activeCN = ( this.model.activeCatalogueNumber ) ? this.model.activeCatalogueNumber : undefined;
 		if (!activeCN) {
-			for (var i = 0, len = this.model.catalogueNumbers.length; i < len; i++) {
-				if (this.model.catalogueNumbers[i].active === true) {
-					this.model.activeCatalogueNumber = this.model.catalogueNumbers[i];
-					activeCN = this.model.activeCatalogueNumber;
-					break;
-				}
-			}
+			activeCN = _.findWhere(this.model.catalogueNumbers, { active: true });
+			this.model.activeCatalogueNumber = activeCN;
 		}
 		return activeCN;
 	}

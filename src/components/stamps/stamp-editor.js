@@ -13,15 +13,17 @@ const logger = LogManager.getLogger('stamp-editor');
 @inject(EventAggregator, Stamps)
 export class StampEditorComponent {
 
+	createMode = false;
+	duplicateModel;
+
 	constructor(eventBus,stampService) {
 		this.eventBus = eventBus;
 		this.stampService = stampService;
 	}
 
 	save() {
-		"use strict";
 		if( this.validate() ) {
-			this.stampService.save(this.model).then(stamp => {
+			this.stampService.save(this.duplicateModel).then(stamp => {
 				this.eventBus.publish(EventNames.stampSaved, stamp);
 			}).catch(err => {
 				logger.error(err);
@@ -29,9 +31,24 @@ export class StampEditorComponent {
 		}
 	}
 
+	cancel() {
+		this.eventBus.publish(EventNames.stampEditorCancel);
+	}
+	saveAndNew() {
+		this.save();
+	}
+
 	validate() {
-		"use strict";
 		return true;
+	}
+
+	modelChanged(newValue) {
+		this.createMode = (newValue && newValue.id <= 0);
+		if( newValue ) {
+			this.duplicateModel = _.clone(newValue,true);
+		} else {
+			this.duplicateModel = null;
+		}
 	}
 
 	/**
@@ -42,23 +59,23 @@ export class StampEditorComponent {
 	 *
 	 * @returns {Object} The active catalogue number.
 	 */
-	@computedFrom('model')
+	@computedFrom('duplicateModel')
 	get activeCatalogueNumber() {
-		if( !this.model ) {
+		if( !this.duplicateModel ) {
 			return undefined;
 		}
-		var activeNumber = this.model.activeCatalogueNumber;
+		var activeNumber = this.duplicateModel.activeCatalogueNumber;
 		if( !activeNumber ) {
-			if( !this.model.catalogueNumbers ) {
-				this.model.catalogueNumbers = [];
+			if( !this.duplicateModel.catalogueNumbers ) {
+				this.duplicateModel.catalogueNumbers = [];
 			} else {
-				activeNumber = _.findWhere(this.model.catalogueNumbers, { active: true });
+				activeNumber = _.findWhere(this.duplicateModel.catalogueNumbers, { active: true });
 			}
 			if( !activeNumber ) {
 				activeNumber = createCatalogueNumber();
-				this.model.catalogueNumbers.push(activeNumber);
+				this.duplicateModel.catalogueNumbers.push(activeNumber);
 			}
-			this.model.activeCatalogueNumber = activeNumber;
+			this.duplicateModel.activeCatalogueNumber = activeNumber;
 		}
 		return activeNumber;
 	}

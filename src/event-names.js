@@ -15,5 +15,6 @@ export var EventNames = {
 	loadingStarted: "loading-started",
 	loadingFinished: "loading-finished",
 	stampEdit: 'stamp-edit',
+	stampEditorCancel: 'stamp-edit-cancel',
 	stampRemove: 'stamp-remove'
 };

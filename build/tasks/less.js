@@ -6,6 +6,8 @@ var minifyCSS = require('gulp-minify-css');
 var path = require('path');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
+var replace = require('gulp-replace-task');
+var themes = require('../theme');
 
 gulp.task('less', function () {
 	/*   gulp.src(paths.less)
@@ -26,6 +28,18 @@ gulp.task('less', function () {
 	}
 
 	return gulp.src(paths.appLess)
+		.pipe(replace({
+			patterns: [
+				{
+					match: 'theme',
+					replacement: themes.bootstrapTheme
+				},
+				{
+					match: 'pathToTheme',
+					replacement: themes.pathToTheme
+				}
+			]
+		}))
 		.pipe(sourcemaps.init())
 		.pipe(less({
 			sourceMap: {

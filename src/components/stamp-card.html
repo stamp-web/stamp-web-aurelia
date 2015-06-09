@@ -2,9 +2,9 @@
   <require from="../value-converters/by-name"></require>
   <require from="../value-converters/rate-filter"></require>
 
-  <div class="stamp-card">
+  <div class="stamp-card ${(select) ? 'selected' : ''}">
     <div class="card-header">
-      ${getCatalogueNumber()} ${model.countryRef | byName:'countries' }
+      ${model.activeCatalogueNumber.number} ${model.countryRef | byName:'countries' }
     </div>
     <div class="description" title="${model.rate} - ${model.description}">
       ${model.rate | rateFilter} - ${model.description}

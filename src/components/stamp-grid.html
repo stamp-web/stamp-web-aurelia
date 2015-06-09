@@ -1,9 +1,8 @@
 <template>
 	<require from="../components/stamp-card"></require>
-
 	<div class="sw-stamp-grid">
 		<div class="scroller">
-			<stamp-card  repeat.for="stamp of stamps" model.bind="stamp"></stamp-card>
+			<stamp-card  repeat.for="stamp of stamps" model.bind="stamp" selection.bind="$parent.editId"></stamp-card>
 		</div>
 	</div>
 </template>

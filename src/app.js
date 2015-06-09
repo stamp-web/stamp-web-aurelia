@@ -1,7 +1,8 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
+
 import 'bootstrap';
-import "theme";
+import 'thomaspark/bootswatch/@@theme/bootstrap.css!';
 import "resources/styles/styles.css!";
 
 @inject(Router)
