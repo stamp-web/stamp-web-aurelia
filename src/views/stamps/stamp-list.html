@@ -9,27 +9,27 @@
 			<div class="btn-toolbar" role="toolbar">
 				<div class="btn-group" role="group">
 					<button type="button" class="btn btn-sm btn-default ${(editorShown && !createWantList)? 'active' : ''}" title="New Stamp" click.trigger="toggleEditor('create-stamp')">
-						<span class="glyphicon glyphicon ${(editorShown && !createWantList)? 'glyphicon-minus' :'glyphicon-plus'}"></span>
+						<span class="${(editorShown && !createWantList)? 'sw-icon-minus' :'sw-icon-plus'}"></span>
 					</button>
 					<button type="button" class="btn btn-sm btn-default ${(editorShown && createWantList)? 'active' : ''}" title="New Wantlist" click.trigger="toggleEditor('create-wantList')">
-						<i class="fa ${(editorShown && createWantList)? 'fa-minus' :'fa-check-square-o'}"></i>
+						<i class="fa ${(editorShown && createWantList)? 'sw-icon-minus' :'sw-icon-wantlist'}"></i>
 					</button>
 				</div>
 				<div class="btn-group" role="group">
 					<div class="form-group">
 						<input type="text" class="form-control" value.bind="searchText" placeholder="Search">
 						<button type="submit" class="btn btn-sm btn-default" title="Search">
-							<span class="glyphicon glyphicon-search"></span>
+							<span class="sw-icon-search"></span>
 						</button>
 					</div>
 
 				</div>
 				<div class="btn-group" role="group">
 					<button class="btn btn-sm btn-default" title="Show as grid" click.delegate="setViewMode('Grid')">
-						<span class="glyphicon glyphicon-th"></span>
+						<span class="sw-icon-gridview"></span>
 					</button>
 					<button class="btn btn-sm btn-default" title="Show as list" click.delegate="setViewMode('List')">
-						<i class="fa fa-list"></i>
+						<i class="sw-icon-list"></i>
 					</button>
 				</div>
 
@@ -43,10 +43,10 @@
 						<li repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${sortCol.text}</li>
 					</ul>
 					<button class="btn btn-sm btn-default" click.trigger="toggleSortDirection()">
-						<span class="glyphicon ${options.sortDirection === 'asc' ? 'glyphicon-sort-by-alphabet' : 'glyphicon-sort-by-alphabet-alt'}"></span>
+						<span class="${options.sortDirection === 'asc' ? 'sw-icon-sort-up' : 'sw-icon-sort-down'}"></span>
 					</button>
 					<button class="btn btn-sm btn-default ${options.sort ? '' : 'disabled'}" title="Clear sort" click.trigger="clearSort()">
-						<span class="glyphicon glyphicon-remove"></span>
+						<span class="sw-icon-cancel"></span>
 					</button>
 				</div>
 

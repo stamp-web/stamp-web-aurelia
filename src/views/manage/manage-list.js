@@ -32,7 +32,8 @@ export class ManageList {
 				editTitle: 'Edit Country',
 				createTitle: 'Create Country',
 				service: countryService,
-				editor: 'views/countries/country-editor'
+				editor: 'views/countries/country-editor',
+				icon: 'sw-icon-country'
 			},
 			{
 				field: 'albumRef',
@@ -41,7 +42,8 @@ export class ManageList {
 				editTitle: 'Edit Album',
 				createTitle: 'Create Album',
 				service: albumService,
-				editor: 'views/albums/album-editor'
+				editor: 'views/albums/album-editor',
+				icon: 'sw-icon-album'
 			},
 			{
 				field: 'stampCollectionRef',
@@ -50,7 +52,8 @@ export class ManageList {
 				editTitle: 'Edit Stamp Collection',
 				createTitle: 'Create Stamp Collection',
 				service: stampCollectionService,
-				editor: 'views/stamp-collections/stamp-collection-editor'
+				editor: 'views/stamp-collections/stamp-collection-editor',
+				icon: 'sw-icon-stampcollection'
 			},
 			{
 				field: 'sellerRef',
@@ -58,7 +61,9 @@ export class ManageList {
 				label: 'Sellers',
 				editTitle: 'Edit Seller',
 				createTitle: 'Create Seller',
-				service: sellerService
+				service: sellerService,
+				editor: 'views/sellers/seller-editor',
+				icon: 'sw-icon-seller'
 			},
 			{
 				field: 'catalogueRef',
@@ -66,7 +71,8 @@ export class ManageList {
 				label: 'Catalogues',
 				editTitle: 'Edit Catalogue',
 				createTitle: 'Create Catalogue',
-				service: catalogueService
+				service: catalogueService,
+				icon: 'sw-icon-catalogue'
 			}
 		];
 		this.configureSubscriptions();
@@ -140,6 +146,7 @@ export class ManageList {
 			this.editingModel = config.model;
 			this.editorTitle = config.field.editTitle;
 			this.editorContent = config.field.editor;
+			this.editorIcon = config.field.icon;
 		}));
 		this.subscriptions.push(this.eventBus.subscribe(EventNames.entityDelete, config => {
 
@@ -201,6 +208,7 @@ export class ManageList {
 			that.editingModel = { };
 			that.editorTitle = entity.createTitle;
 			that.editorContent = entity.editor;
+			that.editorIcon = entity.icon;
 		}, 50);
 
 	}

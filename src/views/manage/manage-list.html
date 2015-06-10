@@ -2,7 +2,7 @@
 
 	<require from="../../components/editor-dialog"></require>
 
-	<editor-dialog model.bind="editingModel" content.bind="editorContent" title.bind="editorTitle" dialog-id="editorDialog" ></editor-dialog>
+	<editor-dialog model.bind="editingModel" content.bind="editorContent" icon.bind="editorIcon" title.bind="editorTitle" dialog-id="editorDialog" ></editor-dialog>
 
 	<div class="container-fluid manage-list">
 		<div class="row">
@@ -10,11 +10,11 @@
 				<ul class="list-group entity-type">
 					<li class="list-group-item ${($parent.selectedEntity==entity) ? 'selected' : ''}" repeat.for="entity of entityModels">
 						<div click.trigger="$parent.setEntity(entity.field)">
-							${entity.label}
+							<span class="${entity.icon}"></span>${entity.label}
 						</div>
 						<div>
 							<button type="button" class="btn btn-default btn-xs sw-create-action" click.trigger="$parent.create(entity)" data-toggle="modal" data-target="#editorDialog">
-								<span class="glyphicon glyphicon-plus"></span>
+								<span class="sw-icon-plus"></span>
 							</button>
 						</div>
 

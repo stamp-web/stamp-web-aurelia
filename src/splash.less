@@ -1,37 +1,67 @@
+@import "@@pathToTheme/@@theme/variables.less";
+
+body {
+	background-color: #565656;
+	overflow-y: hidden;
+}
+
 .splash {
+	background-color: #eaeaea;
+	color: #232323;
 	text-align: center;
 	margin: 10% 0 0 0;
 	box-sizing: border-box;
-	border-radius: 3px;
 	padding: 10px;
 	box-shadow: 5px 2px 20px #434343;
+	border-radius: 8px;
 	border: 1px solid #dcdcdc;
 	width: 300px;
 	height: 150px;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%,0);
-}
-
-.splash .message {
-	font-size: 36px;
-	line-height: 36px;
-	text-shadow: rgba(0, 0, 0, 0.5) 0 0 3px;
-	margin-bottom: 5px;
-	/*    text-transform: uppercase;*/
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	.version {
+		font-size: 0.8em;
+		line-height: 18px;
+	}
+	.message {
+		font-size: 2.0em;
+		line-height: 36px;
+		text-shadow: rgba(0, 0, 0, 0.5) 0 0 3px;
+		margin-bottom: 5px;
+	}
+	.sw-icon-progress {
+		position: relative;
+		text-align: center;
+		margin-top: 20px;
+		font-size: 1.5em;
+	}
 }
 
-.splash .version {
-	font-size: 12px;
-	line-height: 18px;
-	/*    text-transform: uppercase;*/
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+.splash-spin {
+	-webkit-animation: splash-spin 2s infinite linear;
+	animation: splash-spin 2s infinite linear;
 }
 
-.splash .fa-refresh {
-	text-align: center;
-	display: inline-block;
-	font-size: 36px;
-	margin-top: 20px;
+@-webkit-keyframes splash-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}
+@keyframes splash-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
 }
