@@ -119,8 +119,7 @@ export class ManageList {
 
 	configureSubscriptions() {
 		this.subscriptions.push(this.eventBus.subscribe(EventNames.entityFilter, opts => {
-			this.router.navigate("/stamp-list?$filter=" + encodeURI(opts.$filter));
-			//this.router.navigate(this.router.generate('stamp-list', { $filter: opts.$filter }));
+			this.router.navigate(this.router.generate('stamp-list', { $filter: opts.$filter }));
 		}));
 		this.subscriptions.push(this.eventBus.subscribe(EventNames.selectEntity, collectionName => {
 			var fieldDef = _.findWhere(this.entityModels, { collectionName: collectionName });
