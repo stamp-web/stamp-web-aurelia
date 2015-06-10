@@ -15,33 +15,46 @@ export class CatalogueNumberDetailsComponent {
 
 	constructor(catalogueService) {
 		this.catalogueService = catalogueService;
-		this.loadCountries();
+		this.loadCatalogues();
 	}
 
 	modelChanged(newValue) {
-		"use strict";
-		if( newValue && newValue.catalogueRef) {
-			this.selectedCatalogue = _.findWhere(this.catalogues, { id : newValue.catalogueRef}, this);
+		this.setSelectedCatalogue(newValue);
+	}
+
+	/**
+	 * Since the catalogueRef may be in the model prior to the catalogues being loaded, this may be called
+	 * upon loading the catalogues to set the selected catalogue which mirrors the model.
+	 * @param m
+	 */
+	setSelectedCatalogue(m) {
+		if( m && m.catalogueRef ) {
+			this.selectedCatalogue = _.findWhere(this.catalogues, { id : m.catalogueRef}, this);
 		} else {
 			this.selectedCatalogue = null;
 		}
 	}
 
+	/**
+	 * Bind the catalogue number when it is visually changed.
+	 *
+	 * @param newValue
+	 * @param oldValue
+	 */
 	selectedCatalogueChanged(newValue, oldValue) {
-		"use strict";
 		if(newValue && newValue !== oldValue ) {
 			this.model.catalogueRef = newValue.id;
 		}
 	}
 
-	loadCountries() {
+	loadCatalogues() {
 		var self = this;
 		this.catalogueService.find().then( results => {
 			self.catalogues = _.sortByOrder(results.models,function(cn) {
-				"use strict";
 				return cn.issue;
 			}, [false]);
 			self.loading = false;
+			self.setSelectedCatalogue(self.model);
 		})
 	}
 }
