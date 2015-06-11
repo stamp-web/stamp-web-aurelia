@@ -105,7 +105,9 @@ export class StampList {
 		if( action === 'create-stamp' || action === 'create-wantList') {
 			this.editingStamp = {
 				id: 0,
-				wantList: (action === 'create-wantList')
+				wantList: (action === 'create-wantList'),
+				countryRef: -1,
+				catalogueNumbers: []
 			};
 			var toggle = (this.createWantList === this.editingStamp.wantList);
 			this.createWantList = this.editingStamp.wantList;

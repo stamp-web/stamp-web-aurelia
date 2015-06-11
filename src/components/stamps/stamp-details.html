@@ -9,7 +9,7 @@
 				<label for="details-countryRef" class="col-sm-3 control-label">Country</label>
 				<div class="col-sm-9">
 					<select id="details-countryRef" disabled.bind="loading" class="country-selector form-control" value.bind="model.countryRef">
-						<option>Select a country</option>
+						<option model.bind="-1">Select a country</option>
 						<option repeat.for="country of countries" model.bind="country.id">${country.name}</option>
 					</select>
 				</div>

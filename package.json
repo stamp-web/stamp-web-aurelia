@@ -51,6 +51,7 @@
   },
   "jspm": {
     "dependencies": {
+      "aurelia-binding": "github:aurelia/binding@^0.7.3",
       "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.13.1",
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.8.1",
       "aurelia-framework": "github:aurelia/framework@^0.12.0",

@@ -1,4 +1,6 @@
 export var EventNames = {
+	checkExists: 'check-exists',
+	conflictExists: 'conflict-exists',
 	close: "close-dialog",
 	actionError: "action-error",
 	keywordSearch: "keywordSearch",

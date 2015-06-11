@@ -11,6 +11,7 @@ System.config({
 
 System.config({
   "map": {
+    "aurelia-binding": "github:aurelia/binding@0.7.3",
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.13.1",
     "aurelia-bs-modal": "github:pwkad/aurelia-bs-modal@master",
     "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.8.1",
@@ -32,7 +33,7 @@ System.config({
     "github:aaike/jspm-less-plugin@0.0.5": {
       "less.js": "github:distros/less@2.4.0"
     },
-    "github:aurelia/binding@0.7.2": {
+    "github:aurelia/binding@0.7.3": {
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.8.1",
       "aurelia-metadata": "github:aurelia/metadata@0.6.0",
       "aurelia-task-queue": "github:aurelia/task-queue@0.5.0",
@@ -61,7 +62,7 @@ System.config({
       "aurelia-logging": "github:aurelia/logging@0.5.0"
     },
     "github:aurelia/framework@0.12.0": {
-      "aurelia-binding": "github:aurelia/binding@0.7.2",
+      "aurelia-binding": "github:aurelia/binding@0.7.3",
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.8.1",
       "aurelia-loader": "github:aurelia/loader@0.7.0",
       "aurelia-logging": "github:aurelia/logging@0.5.0",
@@ -104,12 +105,12 @@ System.config({
       "core-js": "npm:core-js@0.9.15"
     },
     "github:aurelia/templating-binding@0.12.0": {
-      "aurelia-binding": "github:aurelia/binding@0.7.2",
+      "aurelia-binding": "github:aurelia/binding@0.7.3",
       "aurelia-logging": "github:aurelia/logging@0.5.0",
       "aurelia-templating": "github:aurelia/templating@0.12.1"
     },
     "github:aurelia/templating-resources@0.12.1": {
-      "aurelia-binding": "github:aurelia/binding@0.7.2",
+      "aurelia-binding": "github:aurelia/binding@0.7.3",
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.8.1",
       "aurelia-logging": "github:aurelia/logging@0.5.0",
       "aurelia-task-queue": "github:aurelia/task-queue@0.5.0",
@@ -124,7 +125,7 @@ System.config({
       "aurelia-templating": "github:aurelia/templating@0.12.1"
     },
     "github:aurelia/templating@0.12.1": {
-      "aurelia-binding": "github:aurelia/binding@0.7.2",
+      "aurelia-binding": "github:aurelia/binding@0.7.3",
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.8.1",
       "aurelia-html-template-element": "github:aurelia/html-template-element@0.2.0",
       "aurelia-loader": "github:aurelia/loader@0.7.0",

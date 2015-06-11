@@ -1,4 +1,7 @@
-import {customElement,bindable,inject} from 'aurelia-framework';
+import {customElement,bindable,inject,computedFrom} from 'aurelia-framework';
+import {ObserverLocator} from 'aurelia-binding';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {EventNames} from '../../event-names';
 import {Catalogues} from '../../services/catalogues';
 import {Condition} from '../../util/common-models';
 import  _  from 'lodash';
@@ -6,45 +9,61 @@ import  _  from 'lodash';
 @customElement('sw-catalogue-number-details')
 @bindable('model')
 @bindable('selectedCatalogue')
-@inject(Catalogues)
+@inject(EventAggregator,ObserverLocator,Catalogues)
 export class CatalogueNumberDetailsComponent {
 
 	catalogues = [];
 	conditions = Condition.symbols();
 	loading = true;
+	selectedCatalogue;
 
-	constructor(catalogueService) {
+	_modelSubscribers = [];
+	_subscribers = [];
+
+	constructor(eventBus, observer, catalogueService) {
 		this.catalogueService = catalogueService;
+		this.eventBus = eventBus;
+		this.observer = observer;
 		this.loadCatalogues();
 	}
 
+	attached() {
+		this._subscribers.push(this.eventBus.subscribe(EventNames.conflictExists,this.handleConflictExists.bind(this)));
+	}
+
+	handleConflictExists(data) {
+		throw new Error("Not implemented yet");
+	}
+
+	detached() {
+		this._subscribers.forEach(sub => {
+			sub();
+		});
+	}
+
 	modelChanged(newValue) {
-		this.setSelectedCatalogue(newValue);
+		this._modelSubscribers.forEach(sub => {
+			sub();
+		});
+		this._modelSubscribers = [];
+		this._modelSubscribers.push(this.observer.getObserver(newValue,'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
+		this._modelSubscribers.push(this.observer.getObserver(newValue,'condition').subscribe(this.existencePropertyChanged.bind(this)));
+		this._modelSubscribers.push(this.observer.getObserver(newValue,'number').subscribe(this.existencePropertyChanged.bind(this)));
 	}
 
-	/**
-	 * Since the catalogueRef may be in the model prior to the catalogues being loaded, this may be called
-	 * upon loading the catalogues to set the selected catalogue which mirrors the model.
-	 * @param m
-	 */
-	setSelectedCatalogue(m) {
-		if( m && m.catalogueRef ) {
-			this.selectedCatalogue = _.findWhere(this.catalogues, { id : m.catalogueRef}, this);
-		} else {
-			this.selectedCatalogue = null;
+	existencePropertyChanged(newValue) {
+		this.sendExistsVerfication();
+	}
+
+	catalogueChanged(newValue,oldValue) {
+		if( newValue > 0 ) {
+			this.selectedCatalogue = _.findWhere(this.catalogues, { id: +newValue });
+			this.sendExistsVerfication();
 		}
 	}
 
-	/**
-	 * Bind the catalogue number when it is visually changed.
-	 *
-	 * @param newValue
-	 * @param oldValue
-	 */
-	selectedCatalogueChanged(newValue, oldValue) {
-		if(newValue && newValue !== oldValue ) {
-			this.model.catalogueRef = newValue.id;
-		}
+	sendExistsVerfication() {
+		this.eventBus.publish(EventNames.checkExists, { model: this.model });
 	}
 
 	loadCatalogues() {
@@ -54,7 +73,6 @@ export class CatalogueNumberDetailsComponent {
 				return cn.issue;
 			}, [false]);
 			self.loading = false;
-			self.setSelectedCatalogue(self.model);
 		})
 	}
 }

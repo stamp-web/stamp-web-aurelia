@@ -1,5 +1,7 @@
 import {customElement,bindable,inject,computedFrom,LogManager} from 'aurelia-framework';
+import {ObserverLocator} from 'aurelia-binding';
 import {Stamps} from '../../services/stamps';
+import {Preferences} from '../../services/preferences';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../event-names';
 
@@ -8,17 +10,62 @@ import  _  from 'lodash';
 
 const logger = LogManager.getLogger('stamp-editor');
 
+const PreferredValues = [
+	{ key: 'countryRef', category: 'stamps', type: Number },
+	{ key: 'catalogueRef', category: 'stamps', type: Number, model: 'activeCatalogueNumber' },
+	{ key: 'condition', category: 'stamps', type: Number, model: 'activeCatalogueNumber' }
+];
+
+
 @customElement('stamp-editor')
 @bindable('model')
-@inject(EventAggregator, Stamps)
+@inject(EventAggregator, Stamps, Preferences)
 export class StampEditorComponent {
 
 	createMode = false;
+	preferences = [];
 	duplicateModel;
 
-	constructor(eventBus,stampService) {
+	constructor(eventBus,stampService, preferenceService) {
 		this.eventBus = eventBus;
 		this.stampService = stampService;
+		this.preferenceService = preferenceService;
+
+	}
+
+	attached() {
+		this.setPreferences();
+	}
+
+	setPreferences() {
+		var self = this;
+		this.preferenceService.find().then(results => {
+			self.preferences = results.models;
+			self.processPreferences();
+		})
+	}
+
+	processPreferences() {
+		if( this.preferences.length > 0 && this.model.id <= 0 ) {
+			PreferredValues.forEach(function(pref) {
+				var prefValue = _.findWhere(this.preferences, { name: pref.key, category: pref.category});
+				if( prefValue ) {
+					var value = prefValue.value;
+					if( pref.type === Number ) {
+						value = +value;
+					}
+					var m = this.duplicateModel;
+					if( pref.model === "activeCatalogueNumber" ) {
+						m = this.activeCatalogueNumber;
+					}
+					if( m ) {
+						m[pref.key] = value;
+					} else {
+						logger.error("The model was not defined");
+					}
+				}
+			}, this);
+		}
 	}
 
 	save() {
@@ -49,6 +96,7 @@ export class StampEditorComponent {
 		} else {
 			this.duplicateModel = null;
 		}
+
 	}
 
 	/**

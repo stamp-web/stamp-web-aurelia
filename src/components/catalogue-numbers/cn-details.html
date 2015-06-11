@@ -9,9 +9,9 @@
 			<div class="form-group form-group-sm has-feedback">
 				<label for="cn-catalogueRef" class="col-sm-3 control-label">Catalogue</label>
 				<div class="col-sm-9">
-					<select id="cn-catalogueRef" disabled.bind="loading" class="catalogue-selector form-control" value.bind="selectedCatalogue">
-						<option>Select a catalogue</option>
-						<option repeat.for="catalogue of catalogues" model.bind="catalogue">${catalogue.issue} - ${catalogue.name}</option>
+					<select id="cn-catalogueRef" disabled.bind="loading" class="catalogue-selector form-control" value.bind="model.catalogueRef">
+						<option model.bind="-1">Select a catalogue</option>
+						<option repeat.for="catalogue of catalogues" model.bind="catalogue.id">${catalogue.issue} - ${catalogue.name}</option>
 					</select>
 				</div>
 			</div>
@@ -38,7 +38,9 @@
 				<div class="col-sm-2">
 					<input type="text" class="form-control" id="cn-value" value.bind="model.value" aria-describedby="valueStatus">
 				</div>
-				<div class="col-sm-2" innerhtml="${selectedCatalogue | asCurrency:'code'}"></div>
+				<div class="col-sm-2">
+					<div innerhtml="${selectedCatalogue | asCurrency:'code'}"></div>
+				</div>
 			</div>
 			<div class="checkbox">
 				<span class="col-sm-3"></span>
