@@ -108,9 +108,10 @@ export class StampList extends EventManaged {
                 id: 0,
                 wantList: (action === 'create-wantList'),
                 countryRef: -1,
-                catalogueNumbers: []
+                catalogueNumbers: [],
+                stampOwnerships: []
             };
-            var toggle = (this.createWantList === this.editingStamp.wantList);
+            var toggle = (this.createWantList === this.editingStamp.wantList || !this.editorShown);
             this.createWantList = this.editingStamp.wantList;
             if (toggle) {
                 this.editorShown = !this.editorShown;

@@ -11,9 +11,31 @@ const logger = LogManager.getLogger('stamp-editor');
 
 const PreferredValues = [
     {key: 'countryRef', category: 'stamps', type: Number},
-    {key: 'catalogueRef', category: 'stamps', type: Number, model: 'activeCatalogueNumber'},
-    {key: 'condition', category: 'stamps', type: Number, model: 'activeCatalogueNumber'}
+    {key: 'catalogueRef', category: 'stamps', type: Number, model: ['activeCatalogueNumber']},
+    {key: 'condition', category: 'stamps', type: Number, model: ['activeCatalogueNumber', 'ownership']},
+    {key: 'albumRef', category: 'stamps', type: Number, model: ['ownership']},
+    {key: 'sellerRef', category: 'stamps', type: Number, model: ['ownership']},
+    {key: 'grade', category: 'stamps', type: Number, model: ['ownership']}
 ];
+
+function createCatalogueNumber() {
+    return {
+        id: 0,
+        catalogueRef: -1,
+        value: 0.0,
+        number: '',
+        active: true,
+        unknown: false
+    };
+}
+
+function createOwnership() {
+    return {
+        id: 0,
+        albumRef: -1,
+        code: CurrencyCode.USD.description
+    };
+}
 
 
 @customElement('stamp-editor')
@@ -86,7 +108,8 @@ export class StampEditorComponent extends EventManaged {
     }
 
     processPreferences() {
-        if (this.preferences.length > 0 && this.model.id <= 0) {
+        if (this.preferences.length > 0 && this.duplicateModel.id <= 0) {
+
             PreferredValues.forEach(function (pref) {
                 var prefValue = _.findWhere(this.preferences, {name: pref.key, category: pref.category});
                 if (prefValue) {
@@ -95,10 +118,18 @@ export class StampEditorComponent extends EventManaged {
                         value = +value;
                     }
                     var m = this.duplicateModel;
-                    if (pref.model === "activeCatalogueNumber") {
-                        m = this.activeCatalogueNumber;
-                    }
-                    if (m) {
+                    if (pref.model) {
+                        pref.model.forEach(function (key) {
+                            if (key === "activeCatalogueNumber") {
+                                m = this.activeCatalogueNumber;
+                            } else if (key === "ownership") {
+                                m = this.ownership;
+                            }
+                            if (m) {
+                                m[pref.key] = value;
+                            }
+                        }, this);
+                    } else if (m) {
                         m[pref.key] = value;
                     } else {
                         logger.error("The model was not defined");
@@ -140,6 +171,28 @@ export class StampEditorComponent extends EventManaged {
 
     }
 
+    @computedFrom('duplicateModel')
+    get ownership() {
+        if (!this.duplicateModel) {
+            return undefined;
+        }
+        var owners = this.duplicateModel.stampOwnerships;
+        var owner;
+        if( this.duplicateModel.wantList === false ) {
+            if (!owners) {
+                this.duplicateModel.stampOwnerships = [];
+                owner = createOwnership();
+                this.duplicateModel.stampOwnerships.push(owner);
+            } else if (this.duplicateModel.stampOwnerships.length > 0) {
+                owner = _.first(this.duplicateModel.stampOwnerships);
+            } else {
+                owner = createOwnership();
+                this.duplicateModel.stampOwnerships.push(owner);
+            }
+        }
+        return owner;
+    }
+
     /**
      * Will lazily retrieve the active catalogue number from the stamp model.  If one does not exist
      * will create the catalogue numbers array and create an initial catalogue number to put in it.
@@ -168,23 +221,4 @@ export class StampEditorComponent extends EventManaged {
         }
         return activeNumber;
     }
-}
-
-function createCatalogueNumber() {
-    return {
-        id: 0,
-        catalogueRef: -1,
-        value: 0.0,
-        number: '',
-        active: true,
-        unknown: false
-    };
-}
-
-function createOwnership() {
-    return {
-        id: 0,
-        albumRef: -1,
-        code: CurrencyCode.USD.description
-    };
 }

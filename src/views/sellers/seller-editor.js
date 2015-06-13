@@ -4,7 +4,6 @@ import {bindable} from 'aurelia-framework';
 export class sellerEditor {
 
     activate(options) {
-        console.log(arguments);
         this.model = options;
     }
 }

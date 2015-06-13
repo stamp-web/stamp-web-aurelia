@@ -1,10 +1,12 @@
 <template>
 	<require from="./stamp-details"></require>
 	<require from="../catalogue-numbers/cn-details"></require>
+    <require from="../ownerships/ownership-editor"></require>
 	<div class="stamp-editor">
 		<form class="form-horizontal">
 			<stamp-details model.bind="duplicateModel"></stamp-details>
 			<catalogue-number-details model.bind="activeCatalogueNumber"></catalogue-number-details>
+            <ownership-editor if.bind="!model.wantList" model.bind="ownership"></ownership-editor>
 		</form>
 		<div class="editor-buttons">
 			<button type="button" class="btn btn-sm" click.trigger="save()">Save</button>

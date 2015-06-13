@@ -1,0 +1,51 @@
+<template>
+    <require from="../../value-converters/empty-text"></require>
+    <require from="../../value-converters/as-currency"></require>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Owning Details</h4>
+        </div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm has-feedback">
+                <label for="owner-albumRef" class="col-sm-3 control-label">Album</label>
+                <div class="col-sm-9">
+                    <select id="owner-albumRef" disabled.bind="loading" class="album-selector form-control" value.bind="model.albumRef">
+                        <option model.bind="-1">Select an album</option>
+                        <option repeat.for="album of albums" model.bind="album.id">${album.name}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-condition" class="col-sm-3 control-label">Condition</label>
+                <div class="col-sm-4">
+                    <select id="owner-condition" class="condition-selector form-control" value.bind="model.condition">
+                        <option repeat.for="c of conditions" model.bind="c.ordinal">${c.description}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-grade" class="col-sm-3 control-label">Grade</label>
+                <div class="col-sm-4">
+                    <select id="owner-grade" class="grade-selector form-control" value.bind="model.grade">
+                        <option repeat.for="g of grades" model.bind="c.ordinal">${g.description}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-sellerRef" class="col-sm-3 control-label">Sellers</label>
+                <div class="col-sm-9">
+                    <select id="owner-sellerRef" disabled.bind="loading" class="seller-selector form-control" value.bind="model.sellerRef">
+                        <option model.bind="-1">Select a seller</option>
+                        <option repeat.for="seller of sellers" model.bind="seller.id">${seller.name}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-img" class="col-sm-3 control-label">Image Path</label>
+                <div class="col-sm-9">
+                    <input type="text" required aria-required="true" class="form-control" value.bind="model.img | emptyText" id="owner-img">
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -54,12 +54,8 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         });
         this._modelSubscribers = [];
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
-        this._modelSubscribers.push(this.observer.getObserver(newValue, 'condition').subscribe(this.existencePropertyChanged.bind(this)));
-        this._modelSubscribers.push(this.observer.getObserver(newValue, 'number').subscribe(this.existencePropertyChanged.bind(this)));
-    }
-
-    existencePropertyChanged() {
-        this.sendExistsVerfication();
+        this._modelSubscribers.push(this.observer.getObserver(newValue, 'condition').subscribe(this.sendExistsVerfication.bind(this)));
+        this._modelSubscribers.push(this.observer.getObserver(newValue, 'number').subscribe(this.sendExistsVerfication.bind(this)));
     }
 
     catalogueChanged(newValue) {
@@ -78,10 +74,10 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     loadCatalogues() {
         var self = this;
-        this.catalogueService.find().then(results => {
-            self.catalogues = _.sortByOrder(results.models, function (cn) {
-                return cn.issue;
-            }, [false]);
+        this.catalogueService.find({
+            $orderby: 'issue desc'
+        }).then(results => {
+            self.catalogues = results.models;
             self.loading = false;
         });
     }

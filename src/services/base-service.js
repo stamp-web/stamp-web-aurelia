@@ -55,17 +55,10 @@ export class BaseService {
         var reservedKeys = ['$filter', '$top', '$orderby', '$skip'];
         if (params) {
             var keys = Object.keys(params);
-            var setKey = function(k, j) {
-                if (keys[j] === k) {
-                    p[j] = params[k];
-                }
-            };
-            var len = keys.length;
-            for (var i = 0; i < len; i++) {
-                reservedKeys.forEach(setKey);
-            }
+            _.forEach(_.union(keys, reservedKeys), function (key) {
+                p[key] = reservedKeys[key];
+            });
         }
-
         return p;
     }
 

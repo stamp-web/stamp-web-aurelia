@@ -38,7 +38,9 @@ export class StampDetailsComponent extends EventManaged {
 
     loadCountries() {
         var self = this;
-        this.countryService.find().then(results => {
+        this.countryService.find({
+            $orderby: 'name asc'
+        }).then(results => {
             self.countries = results.models;
             self.loading = false;
         });
