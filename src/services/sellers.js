@@ -6,9 +6,9 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 @inject(HttpClient, EventAggregator)
 export class Sellers extends BaseService {
 
-  constructor(http, eventBus) {
-    super(http, eventBus);
-  }
+    constructor(http, eventBus) {
+        super(http, eventBus);
+    }
 
     getResourceName() {
         return "sellers";

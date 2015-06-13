@@ -50,7 +50,7 @@ gulp.task('build-html', function () {
 gulp.task('build', function (callback) {
 	return runSequence(
 		'clean',
-		['less','build-system', 'build-html'],
+		['less','build-system', 'build-html','lint'],
 		callback
 	);
 });

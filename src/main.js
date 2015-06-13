@@ -4,15 +4,14 @@ import {ConsoleAppender} from 'aurelia-logging-console';
 LogManager.addAppender(new ConsoleAppender());
 LogManager.setLevel(LogManager.logLevel.info);
 
-if( window.location.href.indexOf('debug=true') >= 0 ) {
-	LogManager.setLevel(LogManager.logLevel.debug);
+if (window.location.href.indexOf('debug=true') >= 0) {
+    LogManager.setLevel(LogManager.logLevel.debug);
 }
 
 export function configure(aurelia) {
-	aurelia.use
-		.standardConfiguration()
-		.developmentLogging()
-		.plugin('./global-resources/index') // install our app's resources
-
-	aurelia.start().then(a => a.setRoot());
+    aurelia.use
+        .standardConfiguration()
+       // .developmentLogging()
+        .plugin('./global-resources/index');
+    aurelia.start().then(a => a.setRoot());
 }

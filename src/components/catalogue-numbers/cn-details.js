@@ -1,78 +1,88 @@
-import {customElement,bindable,inject,computedFrom} from 'aurelia-framework';
+import {customElement, bindable, inject} from 'aurelia-framework';
 import {ObserverLocator} from 'aurelia-binding';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventNames} from '../../event-names';
+import {EventNames} from '../../events/event-names';
+import {EventManaged} from '../../events/event-managed';
 import {Catalogues} from '../../services/catalogues';
 import {Condition} from '../../util/common-models';
-import  _  from 'lodash';
+import _ from 'lodash';
 
-@customElement('sw-catalogue-number-details')
+import 'resources/styles/components/catalogue-numbers/cn-details.css!';
+
+@customElement('catalogue-number-details')
 @bindable('model')
 @bindable('selectedCatalogue')
-@inject(EventAggregator,ObserverLocator,Catalogues)
-export class CatalogueNumberDetailsComponent {
+@inject(EventAggregator, ObserverLocator, Catalogues)
+export class CatalogueNumberDetailsComponent extends EventManaged {
 
-	catalogues = [];
-	conditions = Condition.symbols();
-	loading = true;
-	selectedCatalogue;
+    catalogues = [];
+    icon;
+    conversionModel;
+    conditions = Condition.symbols();
+    loading = true;
+    selectedCatalogue;
 
-	_modelSubscribers = [];
-	_subscribers = [];
+    _modelSubscribers = [];
 
-	constructor(eventBus, observer, catalogueService) {
-		this.catalogueService = catalogueService;
-		this.eventBus = eventBus;
-		this.observer = observer;
-		this.loadCatalogues();
-	}
+    constructor(eventBus, observer, catalogueService) {
+        super(eventBus);
+        this.catalogueService = catalogueService;
+        this.observer = observer;
+        this.loadCatalogues();
+    }
 
-	attached() {
-		this._subscribers.push(this.eventBus.subscribe(EventNames.conflictExists,this.handleConflictExists.bind(this)));
-	}
+    attached() {
+        this.subscribe(EventNames.conflictExists, this.handleConflictExists.bind(this));
+    }
 
-	handleConflictExists(data) {
-		throw new Error("Not implemented yet");
-	}
 
-	detached() {
-		this._subscribers.forEach(sub => {
-			sub();
-		});
-	}
+    handleConflictExists(data) {
+        if (data) {
+            console.log(data);
+            this.icon = (data.convert) ? 'sw-convert sw-icon-exchange' : 'sw-warning sw-icon-attention';
+            this.conversionModel = data.conversionModel;
+        }
+    }
 
-	modelChanged(newValue) {
-		this._modelSubscribers.forEach(sub => {
-			sub();
-		});
-		this._modelSubscribers = [];
-		this._modelSubscribers.push(this.observer.getObserver(newValue,'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
-		this._modelSubscribers.push(this.observer.getObserver(newValue,'condition').subscribe(this.existencePropertyChanged.bind(this)));
-		this._modelSubscribers.push(this.observer.getObserver(newValue,'number').subscribe(this.existencePropertyChanged.bind(this)));
-	}
+    convert() {
+        this.eventBus.publish(EventNames.convert, this.conversionModel);
+    }
 
-	existencePropertyChanged(newValue) {
-		this.sendExistsVerfication();
-	}
+    modelChanged(newValue) {
+        this._modelSubscribers.forEach(sub => {
+            sub();
+        });
+        this._modelSubscribers = [];
+        this._modelSubscribers.push(this.observer.getObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
+        this._modelSubscribers.push(this.observer.getObserver(newValue, 'condition').subscribe(this.existencePropertyChanged.bind(this)));
+        this._modelSubscribers.push(this.observer.getObserver(newValue, 'number').subscribe(this.existencePropertyChanged.bind(this)));
+    }
 
-	catalogueChanged(newValue,oldValue) {
-		if( newValue > 0 ) {
-			this.selectedCatalogue = _.findWhere(this.catalogues, { id: +newValue });
-			this.sendExistsVerfication();
-		}
-	}
+    existencePropertyChanged() {
+        this.sendExistsVerfication();
+    }
 
-	sendExistsVerfication() {
-		this.eventBus.publish(EventNames.checkExists, { model: this.model });
-	}
+    catalogueChanged(newValue) {
+        if (newValue > 0) {
+            this.selectedCatalogue = _.findWhere(this.catalogues, {id: +newValue});
+            this.sendExistsVerfication();
+        }
+    }
 
-	loadCatalogues() {
-		var self = this;
-		this.catalogueService.find().then( results => {
-			self.catalogues = _.sortByOrder(results.models,function(cn) {
-				return cn.issue;
-			}, [false]);
-			self.loading = false;
-		})
-	}
+    sendExistsVerfication() {
+        if (this.model.catalogueRef > 0 && this.model.number && this.model.number !== '') {
+            this.icon = '';
+            this.eventBus.publish(EventNames.checkExists, {model: this.model});
+        }
+    }
+
+    loadCatalogues() {
+        var self = this;
+        this.catalogueService.find().then(results => {
+            self.catalogues = _.sortByOrder(results.models, function (cn) {
+                return cn.issue;
+            }, [false]);
+            self.loading = false;
+        });
+    }
 }

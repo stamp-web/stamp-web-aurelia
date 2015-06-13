@@ -27,10 +27,14 @@
 				<label for="cn-number" class="col-sm-3 control-label">Number</label>
 				<div class="col-sm-2">
 					<input type="text" class="form-control" id="cn-number"  value.bind="model.number | emptyText" aria-describedby="numberStatus">
+
 					<!--
 					<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
 					<span id="numberStatus" class="sr-only">(error)</span>
 					-->
+				</div>
+				<div class="col-sm-1">
+					<span class="control-label sw-conversion ${icon}" click.trigger="convert()" disabled.bind="conversionModel !== undefined"></span>
 				</div>
 			</div>
 			<div class="form-group form-group-sm">
@@ -39,7 +43,7 @@
 					<input type="text" class="form-control" id="cn-value" value.bind="model.value" aria-describedby="valueStatus">
 				</div>
 				<div class="col-sm-2">
-					<div innerhtml="${selectedCatalogue | asCurrency:'code'}"></div>
+					<div class="sw-currency-label control-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></div>
 				</div>
 			</div>
 			<div class="checkbox">

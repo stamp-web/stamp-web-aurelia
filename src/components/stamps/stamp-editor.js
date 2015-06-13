@@ -1,141 +1,190 @@
-import {customElement,bindable,inject,computedFrom,LogManager} from 'aurelia-framework';
-import {ObserverLocator} from 'aurelia-binding';
+import {customElement, bindable, inject, computedFrom, LogManager} from 'aurelia-framework';
+import {CurrencyCode} from '../../util/common-models';
 import {Stamps} from '../../services/stamps';
 import {Preferences} from '../../services/preferences';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventNames} from '../../event-names';
-
-import 'resources/styles/components/stamps/stamps.css!';
-import  _  from 'lodash';
+import {EventNames} from '../../events/event-names';
+import {EventManaged} from '../../events/event-managed';
+import _ from 'lodash';
 
 const logger = LogManager.getLogger('stamp-editor');
 
 const PreferredValues = [
-	{ key: 'countryRef', category: 'stamps', type: Number },
-	{ key: 'catalogueRef', category: 'stamps', type: Number, model: 'activeCatalogueNumber' },
-	{ key: 'condition', category: 'stamps', type: Number, model: 'activeCatalogueNumber' }
+    {key: 'countryRef', category: 'stamps', type: Number},
+    {key: 'catalogueRef', category: 'stamps', type: Number, model: 'activeCatalogueNumber'},
+    {key: 'condition', category: 'stamps', type: Number, model: 'activeCatalogueNumber'}
 ];
 
 
 @customElement('stamp-editor')
 @bindable('model')
 @inject(EventAggregator, Stamps, Preferences)
-export class StampEditorComponent {
+export class StampEditorComponent extends EventManaged {
 
-	createMode = false;
-	preferences = [];
-	duplicateModel;
+    createMode = false;
+    preferences = [];
+    duplicateModel;
 
-	constructor(eventBus,stampService, preferenceService) {
-		this.eventBus = eventBus;
-		this.stampService = stampService;
-		this.preferenceService = preferenceService;
 
-	}
+    constructor(eventBus, stampService, preferenceService) {
+        super(eventBus);
+        this.stampService = stampService;
+        this.preferenceService = preferenceService;
+    }
 
-	attached() {
-		this.setPreferences();
-	}
+    attached() {
+        this.setPreferences();
+        this.subscribe(EventNames.checkExists, this.checkExists.bind(this));
+        this.subscribe(EventNames.convert, this.convertToStamp.bind(this));
+    }
 
-	setPreferences() {
-		var self = this;
-		this.preferenceService.find().then(results => {
-			self.preferences = results.models;
-			self.processPreferences();
-		})
-	}
+    convertToStamp(m) {
+        if (this.duplicateModel.id === 0 && m && this.createMode === true) {
+            this.duplicateModel = m;
+            this.duplicateModel.stampOwnership = [];
+            this.duplicateModel.stampOwnership.push(createOwnership());
+        }
+    }
 
-	processPreferences() {
-		if( this.preferences.length > 0 && this.model.id <= 0 ) {
-			PreferredValues.forEach(function(pref) {
-				var prefValue = _.findWhere(this.preferences, { name: pref.key, category: pref.category});
-				if( prefValue ) {
-					var value = prefValue.value;
-					if( pref.type === Number ) {
-						value = +value;
-					}
-					var m = this.duplicateModel;
-					if( pref.model === "activeCatalogueNumber" ) {
-						m = this.activeCatalogueNumber;
-					}
-					if( m ) {
-						m[pref.key] = value;
-					} else {
-						logger.error("The model was not defined");
-					}
-				}
-			}, this);
-		}
-	}
+    checkExists() {
+        _.debounce(function (self) {
+            if (self.duplicateModel.countryRef > 0 && self.duplicateModel.activeCatalogueNumber) {
+                var cn = self.duplicateModel.activeCatalogueNumber;
+                if (cn.catalogueRef > 0 && cn.number && cn.number !== '') {
+                    var opts = {
+                        $filter: '((countryRef eq ' + self.duplicateModel.countryRef + ') and (catalogueRef eq ' + cn.catalogueRef + ') and (number eq \'' + cn.number + '\'))'
+                    };
+                    self.stampService.find(opts).then(results => {
+                        if (results.models.length > 0) {
+                            self.processExistenceResults(results.models);
+                        }
+                    });
+                }
+            }
+        }, 500)(this);
+    }
 
-	save() {
-		if( this.validate() ) {
-			this.stampService.save(this.duplicateModel).then(stamp => {
-				this.eventBus.publish(EventNames.stampSaved, stamp);
-			}).catch(err => {
-				logger.error(err);
-			});
-		}
-	}
+    processExistenceResults(models) {
+        _.remove(models, {id: this.duplicateModel.id});
+        if (models.length > 0) {
+            var index = _.findIndex(models, {wantList: true});
+            var wantList = ( index >= 0 );
+            var obj = {
+                convert: wantList,
+                conversionModel: ( index >= 0 ) ? models[index] : undefined
+            };
+            this.eventBus.publish(EventNames.conflictExists, obj);
+        }
+    }
 
-	cancel() {
-		this.eventBus.publish(EventNames.stampEditorCancel);
-	}
-	saveAndNew() {
-		this.save();
-	}
+    setPreferences() {
+        var self = this;
+        this.preferenceService.find().then(results => {
+            self.preferences = results.models;
+            self.processPreferences();
+        });
+    }
 
-	validate() {
-		return true;
-	}
+    processPreferences() {
+        if (this.preferences.length > 0 && this.model.id <= 0) {
+            PreferredValues.forEach(function (pref) {
+                var prefValue = _.findWhere(this.preferences, {name: pref.key, category: pref.category});
+                if (prefValue) {
+                    var value = prefValue.value;
+                    if (pref.type === Number) {
+                        value = +value;
+                    }
+                    var m = this.duplicateModel;
+                    if (pref.model === "activeCatalogueNumber") {
+                        m = this.activeCatalogueNumber;
+                    }
+                    if (m) {
+                        m[pref.key] = value;
+                    } else {
+                        logger.error("The model was not defined");
+                    }
+                }
+            }, this);
+        }
+    }
 
-	modelChanged(newValue) {
-		this.createMode = (newValue && newValue.id <= 0);
-		if( newValue ) {
-			this.duplicateModel = _.clone(newValue,true);
-		} else {
-			this.duplicateModel = null;
-		}
+    save() {
+        if (this.validate()) {
+            this.stampService.save(this.duplicateModel).then(stamp => {
+                this.eventBus.publish(EventNames.stampSaved, stamp);
+            }).catch(err => {
+                logger.error(err);
+            });
+        }
+    }
 
-	}
+    cancel() {
+        this.eventBus.publish(EventNames.stampEditorCancel);
+    }
 
-	/**
-	 * Will lazily retrieve the active catalogue number from the stamp model.  If one does not exist
-	 * will create the catalogue numbers array and create an initial catalogue number to put in it.
-	 *
-	 * This will be a computed property on model.  It will only calculate if model is updated.
-	 *
-	 * @returns {Object} The active catalogue number.
-	 */
-	@computedFrom('duplicateModel')
-	get activeCatalogueNumber() {
-		if( !this.duplicateModel ) {
-			return undefined;
-		}
-		var activeNumber = this.duplicateModel.activeCatalogueNumber;
-		if( !activeNumber ) {
-			if( !this.duplicateModel.catalogueNumbers ) {
-				this.duplicateModel.catalogueNumbers = [];
-			} else {
-				activeNumber = _.findWhere(this.duplicateModel.catalogueNumbers, { active: true });
-			}
-			if( !activeNumber ) {
-				activeNumber = createCatalogueNumber();
-				this.duplicateModel.catalogueNumbers.push(activeNumber);
-			}
-			this.duplicateModel.activeCatalogueNumber = activeNumber;
-		}
-		return activeNumber;
-	}
+    saveAndNew() {
+        this.save();
+    }
+
+    validate() {
+        return true;
+    }
+
+    modelChanged(newValue) {
+        this.createMode = (newValue && newValue.id <= 0);
+        if (newValue) {
+            this.duplicateModel = _.clone(newValue, true);
+        } else {
+            this.duplicateModel = null;
+        }
+
+    }
+
+    /**
+     * Will lazily retrieve the active catalogue number from the stamp model.  If one does not exist
+     * will create the catalogue numbers array and create an initial catalogue number to put in it.
+     *
+     * This will be a computed property on model.  It will only calculate if model is updated.
+     *
+     * @returns {Object} The active catalogue number.
+     */
+    @computedFrom('duplicateModel')
+    get activeCatalogueNumber() {
+        if (!this.duplicateModel) {
+            return undefined;
+        }
+        var activeNumber = this.duplicateModel.activeCatalogueNumber;
+        if (!activeNumber) {
+            if (!this.duplicateModel.catalogueNumbers) {
+                this.duplicateModel.catalogueNumbers = [];
+            } else {
+                activeNumber = _.findWhere(this.duplicateModel.catalogueNumbers, {active: true});
+            }
+            if (!activeNumber) {
+                activeNumber = createCatalogueNumber();
+                this.duplicateModel.catalogueNumbers.push(activeNumber);
+            }
+            this.duplicateModel.activeCatalogueNumber = activeNumber;
+        }
+        return activeNumber;
+    }
 }
 
 function createCatalogueNumber() {
-	return {
-		id: 0,
-		catalogueRef: -1,
-		value: 0.0,
-		number: '',
-		active: true,
-		unknown: false
-	};
-};
+    return {
+        id: 0,
+        catalogueRef: -1,
+        value: 0.0,
+        number: '',
+        active: true,
+        unknown: false
+    };
+}
+
+function createOwnership() {
+    return {
+        id: 0,
+        albumRef: -1,
+        code: CurrencyCode.USD.description
+    };
+}

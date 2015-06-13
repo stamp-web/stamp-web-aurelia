@@ -1,6 +1,7 @@
 export var EventNames = {
 	checkExists: 'check-exists',
 	conflictExists: 'conflict-exists',
+	convert: 'convert',
 	close: "close-dialog",
 	actionError: "action-error",
 	keywordSearch: "keywordSearch",

@@ -1,6 +1,4 @@
-import {bindable,customElement,inject} from 'aurelia-framework';
-import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventNames} from '../event-names';
+import {bindable, customElement} from 'aurelia-framework';
 
 import 'resources/styles/components/stamp-grid.css!';
 

@@ -1,7 +1,7 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
 body {
-	background-color: #565656;
+	background-color: @gray-light;
 	overflow-y: hidden;
 }
 
@@ -12,15 +12,40 @@ body {
 	margin: 10% 0 0 0;
 	box-sizing: border-box;
 	padding: 10px;
-	box-shadow: 5px 2px 20px #434343;
+	box-shadow: 10px 4px 30px @gray-dark;
 	border-radius: 8px;
 	border: 1px solid #dcdcdc;
 	width: 300px;
-	height: 150px;
+	height: 160px;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%,0);
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	.content {
+		padding-top: 20px;
+		width: 240px;
+		display: inline-block;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+	}
+	.banner-splash {
+		padding-top: 30px;
+		padding-left: 20px;
+		width: 90px;
+		display: inline-block;
+		position: absolute;
+		height: 100%;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		> div {
+			background: url('../images/stamp-web-64x64.png') no-repeat;
+			height: 100%;
+		}
+	}
 	.version {
 		font-size: 0.8em;
 		line-height: 18px;

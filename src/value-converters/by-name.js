@@ -9,23 +9,23 @@ import {StampCollections} from '../services/stampCollections';
 @valueConverter("byName")
 export class byNameValueConverter {
 
-  constructor(countryService, catalogueService, albumService, stampCollectionService) {
-    this.services = {
-      countries : countryService,
-      catalogues : catalogueService,
-      albums : albumService,
-      stampCollectionService : stampCollectionService
-    };
-  }
-
-  toView(value, serviceName) {
-    if( value && value > 0 ) {
-      var model = this.services[serviceName].getById(value);
-      if( model ) {
-        return model.name;
-      }
-
+    constructor(countryService, catalogueService, albumService, stampCollectionService) {
+        this.services = {
+            countries: countryService,
+            catalogues: catalogueService,
+            albums: albumService,
+            stampCollectionService: stampCollectionService
+        };
     }
-    return "";
-  }
+
+    toView(value, serviceName) {
+        if (value && value > 0) {
+            var model = this.services[serviceName].getById(value);
+            if (model) {
+                return model.name;
+            }
+
+        }
+        return "";
+    }
 }

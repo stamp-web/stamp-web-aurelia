@@ -6,12 +6,12 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 @inject(HttpClient, EventAggregator)
 export class Stamps extends BaseService {
 
-  constructor(http, eventBus) {
-    super(http, eventBus);
-  }
+    constructor(http, eventBus) {
+        super(http, eventBus);
+    }
 
-  getResourceName() {
-    return "stamps";
-  }
+    getResourceName() {
+        return "stamps";
+    }
 
 }
