@@ -1,4 +1,5 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
+import {Validation} from 'aurelia-validation';
 import {ObserverLocator} from 'aurelia-binding';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
@@ -12,7 +13,7 @@ import 'resources/styles/components/catalogue-numbers/cn-details.css!';
 @customElement('catalogue-number-details')
 @bindable('model')
 @bindable('selectedCatalogue')
-@inject(EventAggregator, ObserverLocator, Catalogues)
+@inject(EventAggregator, ObserverLocator, Validation, Catalogues)
 export class CatalogueNumberDetailsComponent extends EventManaged {
 
     catalogues = [];
@@ -24,15 +25,27 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     _modelSubscribers = [];
 
-    constructor(eventBus, observer, catalogueService) {
+    constructor(eventBus, observer, validation, catalogueService) {
         super(eventBus);
         this.catalogueService = catalogueService;
         this.observer = observer;
+        this.validatorDI = validation;
         this.loadCatalogues();
     }
 
     attached() {
         this.subscribe(EventNames.conflictExists, this.handleConflictExists.bind(this));
+    }
+
+    setupValidation(validation) {
+        this.validation = validation.on(this.model)
+            .ensure('number')
+            .isNotEmpty()
+            .hasMinLength(1)
+            .hasMaxLength(25)
+            .ensure('catalogueRef')
+            .isNotEmpty()
+            .isGreaterThan(0);
     }
 
 
@@ -56,6 +69,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'condition').subscribe(this.sendExistsVerfication.bind(this)));
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'number').subscribe(this.sendExistsVerfication.bind(this)));
+        this.setupValidation(this.validatorDI);
     }
 
     catalogueChanged(newValue) {

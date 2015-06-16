@@ -69,10 +69,25 @@ section {
 
 .form-group {
 	label {
+        font-weight: normal;
+        &.required {
+            font-weight: bold;
+        }
 		&:after {
 			content: ": "
 		}
 	}
+}
+
+.form-horizontal {
+    font-size: 12px;
+}
+
+.form-group-sm .form-control {
+    height: 26px;
+    padding: 2px 10px;
+    font-size: 12px;
+    line-height: 1.25;
 }
 
 .panel-title {

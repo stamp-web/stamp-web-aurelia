@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var paths = require('../paths');
 
-gulp.task('lint', function () {
+gulp.task('eslint', function () {
 	return gulp.src([paths.source])
 		// eslint() attaches the lint output to the eslint property of the file object so it can be used by other modules.
 		.pipe(eslint({
@@ -14,6 +14,6 @@ gulp.task('lint', function () {
 		//.pipe(eslint.failOnError());
 });
 
-gulp.task('default', ['lint'], function () {
+gulp.task('default', ['eslint'], function () {
 	// This will only run if the lint task is successful...
 });

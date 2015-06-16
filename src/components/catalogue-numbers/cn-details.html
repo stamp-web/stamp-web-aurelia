@@ -1,15 +1,17 @@
 <template>
 	<require from="../../value-converters/empty-text"></require>
 	<require from="../../value-converters/as-currency"></require>
-	<div class="panel panel-default">
+	<!-- <div class="panel panel-default" validate.bind="validation">
+	-->
+    <div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">Active Catalogue Number</h4>
 		</div>
 		<div class="panel-body">
-			<div class="form-group form-group-sm has-feedback">
+			<div class="form-group form-group-sm">
 				<label for="cn-catalogueRef" class="col-sm-3 control-label">Catalogue</label>
 				<div class="col-sm-9">
-					<select id="cn-catalogueRef" disabled.bind="loading" class="catalogue-selector form-control" value.bind="model.catalogueRef">
+					<select id="cn-catalogueRef" disabled.bind="loading" validate="catalogueRef" class="catalogue-selector form-control" value.bind="model.catalogueRef">
 						<option model.bind="-1">Select a catalogue</option>
 						<option repeat.for="catalogue of catalogues" model.bind="catalogue.id">${catalogue.issue} - ${catalogue.name}</option>
 					</select>
@@ -23,24 +25,25 @@
 					</select>
 				</div>
 			</div>
-			<div class="form-group form-group-sm ">
+			<div class="form-group form-group-sm has-feedback">
 				<label for="cn-number" class="col-sm-3 control-label">Number</label>
 				<div class="col-sm-2">
-					<input type="text" class="form-control" id="cn-number"  value.bind="model.number | emptyText" aria-describedby="numberStatus">
-
-					<!--
-					<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-					<span id="numberStatus" class="sr-only">(error)</span>
-					-->
+					<input type="text" class="form-control" id="cn-number" validate="number" value.bind="model.number" aria-describedby="inputNumberStatus">
 				</div>
 				<div class="col-sm-1">
 					<span class="control-label sw-conversion ${icon}" click.trigger="convert()" disabled.bind="conversionModel !== undefined"></span>
 				</div>
+                <!--
+                <div>
+                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                    <span id="inputNumberStatus" class="sr-only"></span>
+                </div>
+                -->
 			</div>
 			<div class="form-group form-group-sm">
 				<label for="cn-value" class="col-sm-3 control-label">Value</label>
 				<div class="col-sm-2">
-					<input type="text" class="form-control" id="cn-value" value.bind="model.value" aria-describedby="valueStatus">
+					<input type="text" class="form-control" id="cn-value" value.bind="model.value" >
 				</div>
 				<div class="col-sm-2">
 					<div class="sw-currency-label control-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></div>
