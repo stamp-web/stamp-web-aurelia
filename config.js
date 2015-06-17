@@ -11,6 +11,7 @@ System.config({
 
 System.config({
   "map": {
+    "arshaw/xdate": "github:arshaw/xdate@0.8.1",
     "aurelia-binding": "github:aurelia/binding@0.7.3",
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.13.1",
     "aurelia-bs-modal": "github:pwkad/aurelia-bs-modal@master",
@@ -23,6 +24,7 @@ System.config({
     "bootstrap": "github:twbs/bootstrap@3.3.4",
     "core-js": "npm:core-js@0.9.17",
     "css": "github:systemjs/plugin-css@0.1.12",
+    "eternicode/bootstrap-datepicker": "github:eternicode/bootstrap-datepicker@1.4.0",
     "font-awesome": "npm:font-awesome@4.3.0",
     "less": "github:aaike/jspm-less-plugin@0.0.5",
     "lodash": "npm:lodash@3.9.3",

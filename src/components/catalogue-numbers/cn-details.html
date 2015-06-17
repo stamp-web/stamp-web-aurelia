@@ -41,9 +41,9 @@
                 -->
 			</div>
 			<div class="form-group form-group-sm">
-				<label for="cn-value" class="col-sm-3 control-label">Value</label>
+				<label for="cn-value" class="col-sm-3 control-label"  disabled.bind="model.unknown">Value</label>
 				<div class="col-sm-2">
-					<input type="text" class="form-control" id="cn-value" value.bind="model.value" >
+					<input type="text" class="form-control" id="cn-value" disabled.bind="model.unknown" value.bind="model.value" >
 				</div>
 				<div class="col-sm-2">
 					<div class="sw-currency-label control-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></div>
@@ -51,16 +51,16 @@
 			</div>
 			<div class="checkbox">
 				<span class="col-sm-3"></span>
-				<label>
-					<input type="checkbox" checked.bind="model.unknown">
-					No value listed
-				</label>
+                <label class="col-sm-9">
+                    <input type="checkbox" checked.bind="model.unknown">
+                    <span>No value listed</span>
+                </label>
 			</div>
 			<div class="checkbox">
 				<span class="col-sm-3"></span>
-				<label>
-					<input type="checkbox" checked.bind="model.unavailable">
-					No album space available
+                <label class="col-sm-9">
+					<input type="checkbox" checked.bind="model.nospace">
+					<span>No album space available</span>
 				</label>
 			</div>
 		</div>

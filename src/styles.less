@@ -1,120 +1,149 @@
 @import "@@pathToTheme/@@theme/variables.less";
+// needed for datepicker3 compilation
+@import "../node_modules/bootstrap/less/mixins/buttons.less";
+@import "../node_modules/bootstrap-datepicker/less/datepicker3.less";
 
 html {
-	height: 100%;
+    height: 100%;
 }
+
 body {
-	margin: 0;
-	height: inherit;
+    margin: 0;
+    height: inherit;
 }
 
 // auto-hide the splash screen when shown
 .splash {
-	display: none;
+    display: none;
 }
 
 .page-host {
-	position: relative;
-	height: inherit;
-	overflow-x: hidden;
-	overflow-y: hidden;
+    position: relative;
+    height: inherit;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 section {
-	margin: 0 20px;
+    margin: 0 20px;
 }
 
 .app-bar {
-	/*  box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.75);*/
-	padding-top: 4px;
-	margin-bottom: 0px;
+    /*  box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.75);*/
+    padding-top: 4px;
+    margin-bottom: 0px;
 }
 
 .dropdown-menu {
-	color: @text-color;
-	background-color: @body-bg;
-	li {
+    color: @text-color;
+    background-color: @body-bg;
+    li {
 
-		padding-left: @panel-body-padding;
-		padding-top: calc(@panel-body-padding / 2.0);
-		padding-bottom: calc(@panel-body-padding / 2.0);
-		font-size: 0.85em;
-		&:hover {
-			background-color: darken(@component-active-bg, 15%);
-			color: darken(@component-active-color, 10%);
-		}
-		&.selected {
-			background-color: @component-active-bg;
-			color: @component-active-color;
-		}
-	}
+        padding-left: @panel-body-padding;
+        padding-top: calc(@panel-body-padding / 2.0);
+        padding-bottom: calc(@panel-body-padding / 2.0);
+        font-size: 0.85em;
+        &:hover {
+            background-color: darken(@component-active-bg, 15%);
+            color: darken(@component-active-color, 10%);
+        }
+        &.selected {
+            background-color: @component-active-bg;
+            color: @component-active-color;
+        }
+    }
 }
 
-#nprogress .bar {
-	background: @brand-success !important;
-	height: 4px;
-}
+#nprogress {
+    .bar {
+        background: @brand-success !important;
+        height: 4px;
+    }
 
-#nprogress .peg {
-	box-shadow: 0 0 10px @brand-success, 0 0 5px @brand-success !important;
+    .peg {
+        box-shadow: 0 0 10px @brand-success, 0 0 5px @brand-success !important;
+    }
 }
 
 .modal-open .modal {
-	overflow-y: hidden;
+    overflow-y: hidden;
 }
 
 .modal-lg {
-	max-width: 600px;
+    max-width: 600px;
 }
 
 .form-group {
-	label {
+    label {
         font-weight: normal;
         &.required {
             font-weight: bold;
         }
-		&:after {
-			content: ": "
-		}
-	}
+        &:after {
+            content: ": "
+        }
+    }
 }
 
 .form-horizontal {
     font-size: 12px;
+    .checkbox {
+        padding-top: 0;
+        input[type="checkbox"] {
+            margin-left: 0;
+        }
+        label {
+            padding-left: 10px;
+            input {
+                position: relative;
+                display: inline-block;
+            }
+            span {
+                position: relative;
+                top: -2px;
+
+            }
+        }
+    }
 }
 
-.form-group-sm .form-control {
-    height: 26px;
-    padding: 2px 10px;
-    font-size: 12px;
-    line-height: 1.25;
+.form-group-sm {
+    textarea.form-control {
+        height: 100%;
+    }
+
+    .form-control {
+        height: 26px;
+        padding: 2px 10px;
+        font-size: 12px;
+        line-height: 1.25;
+    }
 }
 
 .panel-title {
-	font-size: 1.1em;
+    font-size: 1.1em;
 }
 
 .flex {
-	display: flex;
-	display: -webkit-flex;
-	flex-grow: 1;
-	align-self: stretch;
+    display: flex;
+    display: -webkit-flex;
+    flex-grow: 1;
+    align-self: stretch;
 }
 
 .flex-col {
-	display: flex;
-	display: -webkit-flex;
-	flex: 1 100%;
-	flex-flow: column nowrap;
+    display: flex;
+    display: -webkit-flex;
+    flex: 1 100%;
+    flex-flow: column nowrap;
 }
 
 .flex-down {
-	display: flex;
-	-webkit-flex: 2;
-	flex: 2;
+    display: flex;
+    -webkit-flex: 2;
+    flex: 2;
 }
 
-
 .sw-warning {
-	color: @brand-warning;
+    color: @brand-warning;
 }

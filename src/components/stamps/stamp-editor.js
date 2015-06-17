@@ -33,7 +33,8 @@ function createOwnership() {
     return {
         id: 0,
         albumRef: -1,
-        code: CurrencyCode.USD.description
+        code: CurrencyCode.USD.description,
+        purchased: '2004-09-29T12:00:00-05:00'
     };
 }
 
@@ -141,6 +142,7 @@ export class StampEditorComponent extends EventManaged {
 
     save() {
         if (this.validate()) {
+            console.log(this.duplicateModel);
             this.stampService.save(this.duplicateModel).then(stamp => {
                 this.eventBus.publish(EventNames.stampSaved, stamp);
             }).catch(err => {

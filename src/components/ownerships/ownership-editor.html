@@ -1,7 +1,7 @@
 <template>
     <require from="../../value-converters/empty-text"></require>
-    <require from="../../value-converters/as-currency"></require>
-    <div class="panel panel-default">
+    <require from="../../value-converters/json-dateformat"></require>
+    <div class="panel panel-default sw-ownership-editor">
         <div class="panel-heading">
             <h4 class="panel-title">Owning Details</h4>
         </div>
@@ -27,12 +27,12 @@
                 <label for="owner-grade" class="col-sm-3 control-label">Grade</label>
                 <div class="col-sm-4">
                     <select id="owner-grade" class="grade-selector form-control" value.bind="model.grade">
-                        <option repeat.for="g of grades" model.bind="c.ordinal">${g.description}</option>
+                        <option repeat.for="g of grades" model.bind="g.ordinal">${g.description}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label for="owner-sellerRef" class="col-sm-3 control-label">Sellers</label>
+                <label for="owner-sellerRef" class="col-sm-3 control-label">Seller</label>
                 <div class="col-sm-9">
                     <select id="owner-sellerRef" disabled.bind="loading" class="seller-selector form-control" value.bind="model.sellerRef">
                         <option model.bind="-1">Select a seller</option>
@@ -41,9 +41,35 @@
                 </div>
             </div>
             <div class="form-group form-group-sm">
+                <label for="owner-purchased" class="col-sm-3 control-label">Purchased</label>
+                <div class="input-group date col-sm-3">
+                    <input id="owner-purchased" type="text" class="form-control" value.bind="model.purchased | jsonDateFormat">
+                        <span class="input-group-addon"><span class="sw-icon-calendar"></span></span>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
                 <label for="owner-img" class="col-sm-3 control-label">Image Path</label>
                 <div class="col-sm-9">
                     <input type="text" required aria-required="true" class="form-control" value.bind="model.img | emptyText" id="owner-img">
+                </div>
+            </div>
+            <div class="checkbox">
+                <span class="col-sm-3"></span>
+                <label class="col-sm-9">
+                    <input type="checkbox" checked.bind="model.cert">
+                    <span>Certified or validated</span>
+                </label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-certImg" class="col-sm-3 control-label" disabled.bind="!model.cert">Certificate</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" disabled.bind="!model.cert" value.bind="model.certImg | emptyText" id="owner-certImg">
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-notes" class="col-sm-3 control-label">Notes</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" value.bind="model.notes | emptyText" id="owner-notes" rows="3"></textarea>
                 </div>
             </div>
         </div>
