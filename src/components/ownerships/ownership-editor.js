@@ -7,8 +7,6 @@ import {Sellers} from '../../services/sellers';
 import {Condition, Grade} from '../../util/common-models';
 
 import 'resources/styles/components/ownerships/ownership-editor.css!';
-import datePicker from 'eternicode/bootstrap-datepicker/js/bootstrap-datepicker';
-import XDate from 'arshaw/xdate';
 
 const logger = LogManager.getLogger('ownership-editor');
 
@@ -35,18 +33,6 @@ export class OwnershipEditor extends EventManaged {
         this.subscribe(EventNames.updateImagePath, function(path) {
             this.model.img = path;
         });
-        var self = this;
-        if( datePicker ) {
-            $('.input-group.date').datepicker({
-                format: "mm/dd/yyyy",
-                todayHighlight: true,
-                todayBtn: "linked",
-                autoclose: true
-            }).on('changeDate', function(e) {
-                var purchased = (e.date) ? e.date : null;
-                self.model.purchased = purchased;
-            });
-        }
     }
 
     loadDependentModels() {

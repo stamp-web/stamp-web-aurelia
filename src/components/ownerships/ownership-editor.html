@@ -1,6 +1,6 @@
 <template>
     <require from="../../value-converters/empty-text"></require>
-    <require from="../../value-converters/json-dateformat"></require>
+    <require from="../../widgets/date-picker"></require>
     <div class="panel panel-default sw-ownership-editor">
         <div class="panel-heading">
             <h4 class="panel-title">Owning Details</h4>
@@ -43,8 +43,7 @@
             <div class="form-group form-group-sm">
                 <label for="owner-purchased" class="col-sm-3 control-label">Purchased</label>
                 <div class="input-group date col-sm-3">
-                    <input id="owner-purchased" type="text" class="form-control" value.bind="model.purchased | jsonDateFormat">
-                        <span class="input-group-addon"><span class="sw-icon-calendar"></span></span>
+                    <date-picker id="owner-purchased" value.bind="model.purchased"></date-picker>
                 </div>
             </div>
             <div class="form-group form-group-sm">
