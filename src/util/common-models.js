@@ -91,3 +91,15 @@ export const CurrencyCode = new Enum({
     GBP: {ordinal: 3, description: 'GBP'},
     JYP: {ordinal: 4, description: 'JYP'}
 });
+
+export const CatalogueType = new Enum({
+    STANLEY_GIBBONS: { ordinal: 0, description: 'Stanley Gibbons'},
+    SCOTT: { ordinal: 1, description: 'Scott Publishing'},
+    MICHEL: {ordinal: 2, description: 'Michel'},
+    FACIT: {ordinal: 3, description: 'Facit'},
+    OTHER: {ordinal: 4, description: 'Other'},
+    DARNELL: {ordinal: 5, description: 'Darnell'},
+    BRIDGER_AND_KAY: {ordinal: 6, description: 'Bridger and Kay'},
+    VAN_DAM: {ordinal: 7, description: 'Van Dam'},
+    JSCA: {ordinal: 8, description: 'JSCA Specialized'}
+});
