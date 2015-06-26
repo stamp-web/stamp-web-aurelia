@@ -153,6 +153,7 @@ export class StampList extends EventManaged {
     }
 
     setupSubscriptions() {
+        var self = this;
         this.subscribe(EventNames.keywordSearch, options => {
             if (options.searchText) {
                 this.options.$filter = "(contains(description,'" + options.searchText + "'))";
@@ -167,13 +168,13 @@ export class StampList extends EventManaged {
             this.handleFullSizeImage(stamp);
         });
         this.subscribe(EventNames.stampEdit, stamp => {
-            this.editingStamp = stamp;
-            this.createWantList = stamp.wantList;
-            this.editorShown = true;
+            self.editingStamp = stamp;
+            self.createWantList = stamp.wantList;
+            self.editorShown = true;
         });
         this.subscribers.push(this.eventBus.subscribe(EventNames.stampEditorCancel, function() {
-            this.editingStamp = null;
-            this.editorShown = false;
+            self.editingStamp = null;
+            self.editorShown = false;
         }));
         this.subscribe(EventNames.stampRemove, stamp => {
             var _remove = function (model) {
