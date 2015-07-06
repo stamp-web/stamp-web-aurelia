@@ -6,6 +6,7 @@ import {Stamps} from '../../services/stamps';
 import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
+
 import bootbox from 'bootbox';
 import _ from 'lodash';
 
@@ -189,7 +190,6 @@ export class StampList extends EventManaged {
                     console.log(err);
                 });
             };
-            var self = this;
             bootbox.confirm({
                 size: 'large',
                 className: 'sw-dialog-wrapper',
