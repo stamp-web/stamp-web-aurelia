@@ -3,6 +3,7 @@
 .dropdown-menu {
     color: @text-color;
     background-color: @body-bg;
+    z-index: -1;
     li {
 
         padding-left: @panel-body-padding;
@@ -21,10 +22,12 @@
 }
 
 .dropdown {
+    display: inline-block;
     &.open {
         z-index: 1000;
     }
 }
+
 
 .form-group {
     label {
@@ -73,3 +76,6 @@
     }
 }
 
+.navbar {
+    z-index: 990;
+}

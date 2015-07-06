@@ -34,14 +34,17 @@
 				</div>
 
 				<div class="btn-group">
-					<button type="button" class="btn btn-default btn-sm dropdown-toggle sort-selector" data-toggle="dropdown">
-						<span class="selector-text">${options.sort.text | defaultValue:'Sort by'}</span>
-						<span class="caret"></span>
-					</button>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle sort-selector" data-toggle="dropdown">
+                            <span class="selector-text">${options.sort.text | defaultValue:'Sort by'}</span>
+                            <span class="caret"></span>
+                        </button>
 
-					<ul class="dropdown-menu" role="menu">
-						<li repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${sortCol.text}</li>
-					</ul>
+                        <ul class="dropdown-menu" role="menu">
+                            <li repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${sortCol.text}</li>
+                        </ul>
+                    </div>
+
 					<button class="btn btn-sm btn-default" click.trigger="toggleSortDirection()">
 						<span class="${options.sortDirection === 'asc' ? 'sw-icon-sort-up' : 'sw-icon-sort-down'}"></span>
 					</button>
@@ -51,25 +54,30 @@
 				</div>
 
 				<div class="btn-group">
-					<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
-							aria-expanded="false">
-						Filter <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li>All stamps</li>
-						<li>Only owned stamps</li>
-						<li>Only wantlist stamps</li>
-					</ul>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
+                            Filter <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>All stamps</li>
+                            <li>Only owned stamps</li>
+                            <li>Only wantlist stamps</li>
+                        </ul>
+                    </div>
+
 				</div>
 
 				<div class="btn-group">
-					<button type="button" class="btn btn-default btn-sm dropdown-toggle result-size-selector" data-toggle="dropdown">
-						<span class="selector-text">${options.$top | defaultValue:'Size'}</span>
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu">
-						<li repeat.for="size of pageSizes" click.delegate="$parent.setSize(size)">${size}</li>
-					</ul>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle result-size-selector" data-toggle="dropdown">
+                            <span class="selector-text">${options.$top | defaultValue:'Size'}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li repeat.for="size of pageSizes" click.delegate="$parent.setSize(size)">${size}</li>
+                        </ul>
+                    </div>
 				</div>
 			</div>
 		</form>
