@@ -7,19 +7,10 @@ var path = require('path');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
 var replace = require('gulp-replace-task');
-var themes = require('../theme');
 
 gulp.task('less', function () {
-	/*   gulp.src(paths.less)
-	 .pipe(sourcemaps.init())
-	 .pipe(less({
-	 paths: [ path.join(__dirname, 'less', 'includes') ]
-	 }))
-	 .pipe(sourcemaps.write())
-	 //   .pipe(concat('components.css'))
-	 //    .pipe(minifyCSS())
-	 .pipe(gulp.dest('./styles/components'));
-	 */
+    gulp.src(paths.bootswatch + require('../theme').bootstrapTheme + '/*.css')
+        .pipe(gulp.dest(paths.lessOut));
 
 	var lessErrorHandler = function(err) {
 		gutil.log('### FAILURE in .less file');
@@ -32,11 +23,11 @@ gulp.task('less', function () {
 			patterns: [
 				{
 					match: 'theme',
-					replacement: themes.bootstrapTheme
+					replacement: require('../theme').bootstrapTheme
 				},
 				{
 					match: 'pathToTheme',
-					replacement: themes.pathToTheme
+					replacement: require('../theme').pathToTheme
 				}
 			]
 		}))

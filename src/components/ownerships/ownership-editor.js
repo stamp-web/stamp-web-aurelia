@@ -1,4 +1,5 @@
 import {customElement, bindable, inject, LogManager} from 'aurelia-framework';
+import {Validation} from 'aurelia-validation';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
@@ -12,7 +13,7 @@ const logger = LogManager.getLogger('ownership-editor');
 
 @customElement('ownership-editor')
 @bindable('model')
-@inject(EventAggregator, Albums, Sellers)
+@inject(EventAggregator, Validation, Albums, Sellers)
 export class OwnershipEditor extends EventManaged {
 
     loading = true;
@@ -23,8 +24,9 @@ export class OwnershipEditor extends EventManaged {
     sellers = [];
 
 
-    constructor(eventBus, albumService, sellerService) {
+    constructor(eventBus, validator, albumService, sellerService) {
         super(eventBus);
+        this.validatorDI = validator;
         this.albumService = albumService;
         this.sellerService = sellerService;
         this.loadDependentModels();

@@ -1,4 +1,5 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
+import {Validation} from 'aurelia-validation';
 import {ObserverLocator} from 'aurelia-binding';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
@@ -7,7 +8,7 @@ import {Countries} from '../../services/countries';
 
 @customElement('stamp-details')
 @bindable('model')
-@inject(EventAggregator, ObserverLocator, Countries)
+@inject(EventAggregator, ObserverLocator, Validation, Countries)
 export class StampDetailsComponent extends EventManaged {
 
     countries = [];
@@ -15,9 +16,10 @@ export class StampDetailsComponent extends EventManaged {
 
     _modelSubscribers = [];
 
-    constructor(eventBus, observer, countryService) {
+    constructor(eventBus, observer, validator, countryService) {
         super(eventBus);
         this.observer = observer;
+        this.validatorDI = validator;
         this.countryService = countryService;
         this.loadCountries();
     }
@@ -27,12 +29,13 @@ export class StampDetailsComponent extends EventManaged {
             sub();
         });
         this._modelSubscribers = [];
-        this._modelSubscribers.push(this.observer.getObserver(newValue, 'countryRef').subscribe(this.sendExistsVerfication.bind(this)));
+        this._modelSubscribers.push(this.observer.getObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
     }
 
-    sendExistsVerfication() {
+    countrySelected() {
         if (this.model.countryRef > 0) {
             this.eventBus.publish(EventNames.checkExists, {model: this.model});
+            this.eventBus.publish(EventNames.calculateImagePath, { model: this.model});
         }
     }
 

@@ -67,22 +67,27 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         });
         this._modelSubscribers = [];
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
-        this._modelSubscribers.push(this.observer.getObserver(newValue, 'condition').subscribe(this.sendExistsVerfication.bind(this)));
-        this._modelSubscribers.push(this.observer.getObserver(newValue, 'number').subscribe(this.sendExistsVerfication.bind(this)));
+        this._modelSubscribers.push(this.observer.getObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
+        this._modelSubscribers.push(this.observer.getObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
         this.setupValidation(this.validatorDI);
     }
 
     catalogueChanged(newValue) {
         if (newValue > 0) {
             this.selectedCatalogue = _.findWhere(this.catalogues, {id: +newValue});
-            this.sendExistsVerfication();
+            this.sendNotifications();
         }
     }
 
-    sendExistsVerfication() {
-        if (this.model.catalogueRef > 0 && this.model.number && this.model.number !== '') {
-            this.icon = '';
-            this.eventBus.publish(EventNames.checkExists, {model: this.model});
+    sendNotifications() {
+        if( this.model.number && this.model.number !== '' ) {
+            if (this.model.catalogueRef > 0) {
+                this.icon = '';
+                this.eventBus.publish(EventNames.checkExists, {model: this.model});
+            }
+            if( this.model.id <= 0 && this.model.condition >= 0 ) {
+                this.eventBus.publish(EventNames.calculateImagePath, { model: this.model});
+            }
         }
     }
 

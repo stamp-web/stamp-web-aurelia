@@ -1,4 +1,5 @@
 export var EventNames = {
+    calculateImagePath: 'calculate-image-path',
 	checkExists: 'check-exists',
 	conflictExists: 'conflict-exists',
 	convert: 'convert',

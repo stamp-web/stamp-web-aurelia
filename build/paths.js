@@ -5,6 +5,7 @@ var appRoot = 'src/';
 module.exports = {
 	root: appRoot,
 	source: appRoot + '**/*.js',
+    bootswatch: 'node_modules/bootswatch/',
 	html: appRoot + '**/*.html',
 	style: 'resources/styles/**/*.css',
 	less: appRoot + 'components/**/*.less',

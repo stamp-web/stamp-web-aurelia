@@ -1,6 +1,7 @@
 import {customElement, bindable, inject, computedFrom, LogManager} from 'aurelia-framework';
 import {CurrencyCode} from '../../util/common-models';
 import {Stamps} from '../../services/stamps';
+import {Countries} from '../../services/countries';
 import {Preferences} from '../../services/preferences';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
@@ -34,30 +35,35 @@ function createOwnership() {
         id: 0,
         albumRef: -1,
         code: CurrencyCode.USD.description,
-        purchased: '2004-09-29T12:00:00-05:00'
+        purchased: '2004-09-29T12:00:00-05:00',
+        pricePaid: 0.0
     };
 }
 
 
 @customElement('stamp-editor')
 @bindable('model')
-@inject(EventAggregator, Stamps, Preferences)
+@inject(EventAggregator, Stamps, Countries, Preferences)
 export class StampEditorComponent extends EventManaged {
 
     createMode = false;
+    usedInlineImagePath = false;
     preferences = [];
     duplicateModel;
 
 
-    constructor(eventBus, stampService, preferenceService) {
+
+    constructor(eventBus, stampService, countryService, preferenceService) {
         super(eventBus);
         this.stampService = stampService;
+        this.countryService = countryService;
         this.preferenceService = preferenceService;
     }
 
     attached() {
         this.setPreferences();
         this.subscribe(EventNames.checkExists, this.checkExists.bind(this));
+        this.subscribe(EventNames.calculateImagePath, this.calculateImagePath.bind(this));
         this.subscribe(EventNames.convert, this.convertToStamp.bind(this));
     }
 
@@ -67,6 +73,28 @@ export class StampEditorComponent extends EventManaged {
             this.duplicateModel.stampOwnership = [];
             this.duplicateModel.stampOwnership.push(createOwnership());
         }
+    }
+
+
+    calculateImagePath() {
+        _.debounce(function (self) {
+            var m = self.duplicateModel;
+            if( self.createMode === true && m.wantList === false && m.stampOwnerships && m.stampOwnerships.length > 0 ) {
+                var cn = m.activeCatalogueNumber;
+                if( m.countryRef > 0 && cn.number !== '') {
+                    var country = self.countryService.getById( m.countryRef );
+                    if( country ) {
+                        var path = country.name + '/';
+                        if( !self.usedInlineImagePath && (cn.condition === 2 || cn.condition === 3) ) {
+                            path += 'used/';
+                        }
+                        path += cn.number + '.jpg';
+                        var owner = _.first(m.stampOwnerships);
+                        owner.img = path;
+                    }
+                }
+            }
+        }, 500)(this);
     }
 
     checkExists() {
@@ -109,40 +137,42 @@ export class StampEditorComponent extends EventManaged {
     }
 
     processPreferences() {
-        if (this.preferences.length > 0 && this.duplicateModel.id <= 0) {
-
-            PreferredValues.forEach(function (pref) {
-                var prefValue = _.findWhere(this.preferences, {name: pref.key, category: pref.category});
-                if (prefValue) {
-                    var value = prefValue.value;
-                    if (pref.type === Number) {
-                        value = +value;
+        if (this.preferences.length > 0) {
+            var p = _.findWhere(this.preferences, { name: 'usedInlineImagePath', category: 'stamps'});
+            this.usedInlineImagePath = ( p && p.value === 'true');
+            if( this.duplicateModel.id <= 0 ) {
+                PreferredValues.forEach(function (pref) {
+                    var prefValue = _.findWhere(this.preferences, {name: pref.key, category: pref.category});
+                    if (prefValue) {
+                        var value = prefValue.value;
+                        if (pref.type === Number) {
+                            value = +value;
+                        }
+                        var m = this.duplicateModel;
+                        if (pref.model) {
+                            pref.model.forEach(function (key) {
+                                if (key === "activeCatalogueNumber") {
+                                    m = this.activeCatalogueNumber;
+                                } else if (key === "ownership") {
+                                    m = this.ownership;
+                                }
+                                if (m) {
+                                    m[pref.key] = value;
+                                }
+                            }, this);
+                        } else if (m) {
+                            m[pref.key] = value;
+                        } else {
+                            logger.error("The model was not defined");
+                        }
                     }
-                    var m = this.duplicateModel;
-                    if (pref.model) {
-                        pref.model.forEach(function (key) {
-                            if (key === "activeCatalogueNumber") {
-                                m = this.activeCatalogueNumber;
-                            } else if (key === "ownership") {
-                                m = this.ownership;
-                            }
-                            if (m) {
-                                m[pref.key] = value;
-                            }
-                        }, this);
-                    } else if (m) {
-                        m[pref.key] = value;
-                    } else {
-                        logger.error("The model was not defined");
-                    }
-                }
-            }, this);
+                }, this);
+            }
         }
     }
 
     save() {
         if (this.validate()) {
-            console.log(this.duplicateModel);
             this.stampService.save(this.duplicateModel).then(stamp => {
                 this.eventBus.publish(EventNames.stampSaved, stamp);
             }).catch(err => {

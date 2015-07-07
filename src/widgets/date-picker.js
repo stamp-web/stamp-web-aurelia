@@ -46,7 +46,7 @@ export class DatePickerCustomComponent {
         var elm = $(this.element).find(this.getSelector());
         if (newValue !== oldValue) {
             var d = '';
-            if (newValue !== null) {
+            if (newValue) {
                 try {
                     // If you have dates with a time they fail to resolve in the picker correct.
                     d = new XDate(newValue).toString("MM/dd/yyyy");

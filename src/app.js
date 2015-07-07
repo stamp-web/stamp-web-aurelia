@@ -2,12 +2,13 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 
 import 'bootstrap';
-import 'thomaspark/bootswatch/@@theme/bootstrap.css!';
+import 'resources/styles/bootstrap.css!';
 import "resources/styles/styles.css!";
 import "resources/styles/theme/bootstrap-overrides.css!";
 
 @inject(Router)
 export class App {
+
     configureRouter(config, router) {
         config.title = 'Stamp Web';
         config.map([
