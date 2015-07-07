@@ -171,10 +171,10 @@ export class StampEditorComponent extends EventManaged {
         }
     }
 
-    save() {
+    save(keepOpen) {
         if (this.validate()) {
             this.stampService.save(this.duplicateModel).then(stamp => {
-                this.eventBus.publish(EventNames.stampSaved, stamp);
+                this.eventBus.publish(EventNames.stampSaved, { stamp : stamp, remainOpen: keepOpen });
             }).catch(err => {
                 logger.error(err);
             });
@@ -186,7 +186,7 @@ export class StampEditorComponent extends EventManaged {
     }
 
     saveAndNew() {
-        this.save();
+        this.save(true);
     }
 
     validate() {

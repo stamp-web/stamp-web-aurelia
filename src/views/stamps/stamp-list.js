@@ -177,6 +177,12 @@ export class StampList extends EventManaged {
             self.editingStamp = null;
             self.editorShown = false;
         }));
+        this.subscribers.push(this.eventBus.subscribe(EventNames.stampSaved, result => {
+            if( !result.remainOpen) {
+                self.editorShown = false;
+            }
+            // TODO Need to toggle editor without toggling
+        }));
         this.subscribe(EventNames.stampRemove, stamp => {
             var _remove = function (model) {
                 if (this.editingStamp && stamp.id === this.editingStamp.id) { // remove editing stamp
