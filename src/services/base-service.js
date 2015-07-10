@@ -51,12 +51,13 @@ export class BaseService {
     }
 
     monitoredParams(params) {
-        var p = {};
-        var reservedKeys = ['$filter', '$top', '$orderby', '$skip'];
+        let p = {};
+        let reservedKeys = ['$filter', '$top', '$orderby', '$skip'];
         if (params) {
-            var keys = Object.keys(params);
-            _.forEach(_.union(keys, reservedKeys), function (key) {
-                p[key] = reservedKeys[key];
+            _.forEach(reservedKeys, function(key) {
+                if( key in params ) {
+                    p[key] = params[key];
+                }
             });
         }
         return p;
@@ -125,7 +126,7 @@ export class BaseService {
         var q = new Promise((resolve, reject) => {
             var href = this.baseHref + '/rest/' + this.getResourceName() + '/!count?' + this.paramHelper.toParameters(options);
             this.http.get(href).then(response => {
-                var retModel = JSON.parse(response.response);
+                var retModel = response.content;
                 resolve(+retModel.count);
             }).catch(reason => {
                 reject(reason);
@@ -150,31 +151,33 @@ export class BaseService {
     }
 
     find(options) {
+        var self = this;
         var q = new Promise((resolve, reject) => {
-            if (!this.loaded || !this.useCachedResult(options)) {
-                logger.debug("[" + this.getCollectionName() + "] retrieving items");
-                this.eventBus.publish(EventNames.loadingStarted);
-                var href = this.baseHref + '/rest/' + this.getResourceName();
+            if (!self.loaded || !self.useCachedResult(options)) {
+                logger.debug("[" + self.getCollectionName() + "] retrieving items");
+                self.eventBus.publish(EventNames.loadingStarted);
+                var href = self.baseHref + '/rest/' + self.getResourceName();
                 if (options) {
-                    href += '?' + this.paramHelper.toParameters(options);
+                    href += '?' + self.paramHelper.toParameters(options);
                 }
-                this.http.get(href).then(response => {
-                    this.loaded = true;
+                self.http.get(href).then(response => {
+                    self.loaded = true;
                     if (response.statusCode === 200 && response.response) {
-                        var resp = JSON.parse(response.response);
-                        this.models = resp[this.getCollectionName()];
-                        this.total = resp.total;
+                        var resp = response.content;
+                        self.models = resp[self.getCollectionName()];
+                        self.total = resp.total;
                     }
-                    this.eventBus.publish(EventNames.loadingFinished);
-                    resolve({models: this.models, total: this.total});
+                    self.eventBus.publish(EventNames.loadingFinished);
+                    self.parameters = options;
+                    resolve({models: self.models, total: self.total});
                 }).catch(reason => {
-                    this.eventBus.publish(EventNames.loadingFinished);
+                    self.eventBus.publish(EventNames.loadingFinished);
                     reject(reason);
                 });
 
             } else {
-                logger.debug("[" + this.getCollectionName() + "] Using cached result with " + this.total + " items.");
-                resolve({models: this.models, total: this.total});
+                logger.debug("[" + self.getCollectionName() + "] Using cached result with " + self.total + " items.");
+                resolve({models: self.models, total: self.total});
             }
         });
         return q;
@@ -186,7 +189,7 @@ export class BaseService {
             var body = JSON.stringify(model);
             this.http[(model.id > 0 ) ? 'put' : 'post'](href, body).then(response => {
                 if ((response.statusCode === 200 || response.statusCode === 201) && response.response) {
-                    var retModel = JSON.parse(response.response);
+                    var retModel = response.content;
                     var m = _.findWhere(this.models, {id: retModel.id});
                     if (m) {
                         _.merge(m, retModel);

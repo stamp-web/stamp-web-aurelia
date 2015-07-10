@@ -174,7 +174,7 @@ export class StampEditorComponent extends EventManaged {
     save(keepOpen) {
         if (this.validate()) {
             this.stampService.save(this.duplicateModel).then(stamp => {
-                this.eventBus.publish(EventNames.stampSaved, { stamp : stamp, remainOpen: keepOpen });
+                this.eventBus.publish(EventNames.stampSaved, { stamp: stamp, remainOpen: keepOpen });
             }).catch(err => {
                 logger.error(err);
             });

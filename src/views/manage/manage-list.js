@@ -76,7 +76,7 @@ export class ManageList {
                 icon: 'sw-icon-catalogue'
             }
         ];
-        this.configureSubscriptions();
+
     }
 
     configureRouter(config, router) {
@@ -117,7 +117,11 @@ export class ManageList {
         }
     }
 
-    detached() {
+    activate() {
+        this.configureSubscriptions();
+    }
+
+    deactivate() {
         this.subscriptions.forEach(function (subscription) {
             subscription();
         });
@@ -169,6 +173,9 @@ export class ManageList {
     }
 
     processField(fieldDef) {
+        if(this.selectedEntity === fieldDef) {
+            return;
+        }
         this.selectedEntity = fieldDef;
         fieldDef.service.find(this.getSortCriteria(fieldDef)).then(result => {
             var that = this;
@@ -176,19 +183,17 @@ export class ManageList {
                 models: result.models,
                 field: that.selectedEntity
             });
-            Promise.all(result.models.map(function (model) {
-                var opts = {
-                    $filter: '(' + fieldDef.field + ' eq ' + model.id + ')'
-                };
-                that.stampService.count(opts).then(count => {
-                    model.stampCount = +count;
-                    return model;
-                }).catch(issue => {
-                    logger.error(issue);
+            if( result.models.length > 0 && typeof result.models[0].stampCount === 'undefined') {
+                fieldDef.service.countStamps().then( countResults => {
+                    _.forEach( countResults, function( r ) {
+                        var entity = _.findWhere(result.models, { id: +r.id});
+                        if( entity ) {
+                            entity.stampCount = +r.count;
+                        }
+                    });
                 });
-            })).catch(issue => {
-                logger.error(issue);
-            });
+            }
+
         });
     }
 
