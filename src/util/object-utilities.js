@@ -1,5 +1,8 @@
 export var ObjectUtilities = {
     isEqual: function (objA, objB) {
+        if( !objA || !objB ) {
+            return (!objA && !objB);
+        }
         var aKeys = Object.keys(objA);
         var bKeys = Object.keys(objB);
         if (aKeys.length !== bKeys.length) {
