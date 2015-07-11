@@ -7,6 +7,7 @@ import {EventManaged} from '../../events/event-managed';
 import {Catalogues} from '../../services/catalogues';
 import {Condition} from '../../util/common-models';
 import _ from 'lodash';
+import $ from 'jquery';
 
 import 'resources/styles/components/catalogue-numbers/cn-details.css!';
 
@@ -18,6 +19,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     catalogues = [];
     icon;
+    conflictMessage;
     conversionModel;
     conditions = Condition.symbols();
     loading = true;
@@ -51,9 +53,22 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     handleConflictExists(data) {
         if (data) {
-            console.log(data);
             this.icon = (data.convert) ? 'sw-convert sw-icon-exchange' : 'sw-warning sw-icon-attention';
+            this.conflictMessage = (data.convert) ?
+                'Click to convert the wanted stamp using the existing country, catalogue and number.' :
+                'A stamp with this country, catalogue and number already exists.';
             this.conversionModel = data.conversionModel;
+            this.playConflict();
+        }
+    }
+
+    playConflict() {
+        var audioElm = $('audio#sw-exist-sound');
+        if( audioElm.length > 0 ) {
+            var audio = audioElm[0];
+            if( audio.readyState >= 4 ) {
+                audio.play();
+            }
         }
     }
 
