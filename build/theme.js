@@ -1,4 +1,4 @@
 module.exports = {
-	bootstrapTheme: 'spacelab',
+	bootstrapTheme: 'custom',
 	pathToTheme: 'node_modules/bootswatch'
 }

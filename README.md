@@ -1,5 +1,8 @@
 # stamp-web-aurelia
 
+stamp-web-aurelia is the web front-end for managing collections of stamps and leverages the REST interfaces of stamp-web-services.
+
+
 ## Build Status
 
 [![Build Status](http://drake-server.ddns.net:9000/jenkins/buildStatus/icon?job=stamp-aurelia)](http://drake-server.ddns.net:9000/jenkins/job/stamp-aurelia/)
@@ -50,7 +53,7 @@ To run the app, follow these steps.
 Currently any of the bootswatch themes are supported.  To change a theme go to build/theme.js and change "bootstrapTheme" variable to the name of the theme desired and re-execute
 
 ```
-gulp watch
+gulp build
 ```
 
 
@@ -93,7 +96,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
   ```shell
   gulp watch
   ```
-  
+
 5. In another console run the E2E-Tests
 
   ```shell

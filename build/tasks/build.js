@@ -51,6 +51,7 @@ gulp.task('build', function (callback) {
 	return runSequence(
 		'clean',
 		['less','build-system', 'build-html','eslint'],
+        'theme-generate',
 		callback
 	);
 });

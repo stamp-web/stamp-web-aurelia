@@ -1,13 +1,17 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
-.sw-convert {
-	color: @brand-success;
-    cursor: pointer;
-}
 
 .sw-conversion {
 	font-size: 1.2em;
 	position: absolute;
+    &.sw-convert {
+        color: @brand-info;
+        cursor: pointer;
+    }
+
+    &.sw-warning {
+        color: @brand-warning;
+    }
 }
 
 .sw-currency-label {

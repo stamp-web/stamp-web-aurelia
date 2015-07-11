@@ -16,6 +16,7 @@ module.exports = {
 	resources: 'resources/**',
 	templates: 'templates',
 	generated: 'generated/',
+    theme: 'theme',
 	temp: 'temp',
 	e2eSpecsSrc: 'test/e2e/src/*.js',
 	e2eSpecsDist: 'test/e2e/dist/'

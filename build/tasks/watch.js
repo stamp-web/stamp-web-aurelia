@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var paths = require('../paths');
 var browserSync = require('browser-sync');
+var path = require('path');
 
 // outputs changes to files to the console
 function reportChange(event) {
@@ -12,9 +13,9 @@ function reportChange(event) {
 // reportChange method. Also, by depending on the
 // serve task, it will instantiate a browserSync session
 gulp.task('watch', ['serve'], function () {
-	gulp.watch(paths.source, ['build-system','eslint', browserSync.reload]).on('change', reportChange);
-	gulp.watch(paths.html, ['build-html', browserSync.reload]).on('change', reportChange);
-	gulp.watch(paths.less, ['less', browserSync.reload]).on('change', reportChange);
-	gulp.watch(paths.appLess, ['less', browserSync.reload]).on('change', reportChange);
-	gulp.watch('build/theme.js', ['less', browserSync.reload]).on('change', reportChange);
+	gulp.watch(path.join(__dirname, '../../' + paths.source), ['build-system','eslint', browserSync.reload]).on('change', reportChange);
+	gulp.watch(path.join(__dirname, '../../' + paths.html), ['build-html', browserSync.reload]).on('change', reportChange);
+	gulp.watch(path.join(__dirname, '../../' + paths.appLess), ['less', browserSync.reload]).on('change', reportChange);
+	gulp.watch('../theme.js', ['less', browserSync.reload]).on('change', reportChange);
+    gulp.watch(path.join(__dirname, '../../' + paths.theme + '/*.less'), ['theme-generate', browserSync.reload]).on('change', reportChange);
 });

@@ -9,8 +9,6 @@ var concat = require('gulp-concat');
 var replace = require('gulp-replace-task');
 
 gulp.task('less', function () {
-    gulp.src(paths.bootswatch + require('../theme').bootstrapTheme + '/*.css')
-        .pipe(gulp.dest(paths.lessOut));
 
 	var lessErrorHandler = function(err) {
 		gutil.log('### FAILURE in .less file');
@@ -18,7 +16,7 @@ gulp.task('less', function () {
 		this.emit('end');
 	}
 
-	return gulp.src(paths.appLess)
+	return gulp.src(path.join(__dirname, '../../' + paths.appLess))
 		.pipe(replace({
 			patterns: [
 				{
@@ -31,15 +29,19 @@ gulp.task('less', function () {
 				}
 			]
 		}))
+
 		.pipe(sourcemaps.init())
 		.pipe(less({
-			sourceMap: {
-				sourceMapRootpath: paths.appLess
+            paths: [
+                path.join(__dirname, '../../'),
+            ],
+            sourceMap: {
+				sourceMapRootpath: path.join(__dirname, '../../' + paths.appLess)
 			}
 		}).on('error', lessErrorHandler))
 		.pipe(sourcemaps.write())
-//    .pipe(concat('styles.css'))
-//    .pipe(minifyCSS())
-		.pipe(gulp.dest(paths.lessOut));
+     //   .pipe(concat('stamp-web-min.css'))
+     //   .pipe(minifyCSS())
+		.pipe(gulp.dest(path.join(__dirname, '../../' + paths.lessOut)));
 
 });

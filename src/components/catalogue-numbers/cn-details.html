@@ -1,9 +1,7 @@
 <template>
 	<require from="../../value-converters/empty-text"></require>
 	<require from="../../value-converters/as-currency"></require>
-	<!-- <div class="panel panel-default" validate.bind="validation">
-	-->
-    <div class="panel panel-default">
+	<div class="panel panel-default" validate.bind="validation">
 		<div class="panel-heading">
 			<h4 class="panel-title">Active Catalogue Number</h4>
 		</div>
@@ -37,12 +35,7 @@
                         <source src="resources/sound/ring.mp3" type="audio/mpeg">
                     </audio>
 				</div>
-                <!--
-                <div>
-                    <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                    <span id="inputNumberStatus" class="sr-only"></span>
-                </div>
-                -->
+                <span id="inputNumberStatus" class="sr-only"></span>
 			</div>
 			<div class="form-group form-group-sm">
 				<label for="cn-value" class="col-sm-3 control-label"  disabled.bind="model.unknown">Value</label>

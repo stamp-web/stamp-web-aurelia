@@ -4,7 +4,6 @@ import {Router} from 'aurelia-router';
 import 'bootstrap';
 import 'resources/styles/bootstrap.css!';
 import "resources/styles/styles.css!";
-import "resources/styles/theme/bootstrap-overrides.css!";
 
 @inject(Router)
 export class App {
