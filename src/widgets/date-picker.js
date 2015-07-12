@@ -1,76 +1,49 @@
-import {customElement, bindable, inject, LogManager} from 'aurelia-framework';
-import datePicker from 'eternicode/bootstrap-datepicker/js/bootstrap-datepicker';
-import XDate from 'arshaw/xdate';
-
+import {inject, customElement, bindable} from 'aurelia-framework';
+import moment from 'moment';
+import {datepicker} from 'eonasdan/bootstrap-datetimepicker';
+import 'eonasdan/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css!';
 import 'resources/styles/widgets/date-picker.css!';
 
-const logger = LogManager.getLogger("date-picker");
-
 @customElement('date-picker')
-@bindable('value')
-@bindable('id')
 @inject(Element)
-export class DatePickerCustomComponent {
+@bindable("value")
+@bindable({
+    name: "format",
+    defaultValue: "MM/DD/YYYY"
+})
+export class DatePicker {
 
     constructor(element) {
         this.element = element;
     }
 
+    icons = {
+        time: 'sw-icon-time',
+        date: 'sw-icon-calendar',
+        up: 'sw-icon-up',
+        down: 'sw-icon-down',
+        previous: 'sw-icon-previous',
+        next: 'sw-icon-next',
+        today: 'sw-icon-target',
+        clear: 'sw-icon-trash',
+        close: 'sw-icon-cancel'
+    }
+
     attached() {
-        this.configure();
-    }
-
-    configure() {
-        var self = this;
-        if (datePicker) {
-            $(this.element).find(this.getSelector()).datepicker({
-                format: "mm/dd/yyyy",
-                todayHighlight: true,
-                startDate: new Date("01/01/1840"),
-                endDate: new Date("01/01/2050"),
-                container: 'body',
-                todayBtn: "linked",
-                autoclose: true
-            }).on('changeDate', function (e) {
-                var d = (e.date) ? e.date : null;
-                self.setModelValue(d);
+        console.log(datepicker);
+        this.datePicker = $(this.element).find('.input-group.date')
+            .datetimepicker({
+                // set to true to not dismiss dialog
+                //debug: true,
+                ignoreReadonly: true,
+                format: this.format,
+                showClose: true,
+                showTodayButton: true,
+                icons: this.icons
             });
-        }
+
+        this.datePicker.on("dp.change", (e) => {
+            this.value = moment(e.date).format(this.format);
+        });
     }
-
-    getSelector() {
-        return '.input-append.date-picker';
-    }
-
-    valueChanged(newValue, oldValue) {
-        var elm = $(this.element).find(this.getSelector());
-        if (newValue !== oldValue) {
-            var d = '';
-            if (newValue) {
-                try {
-                    // If you have dates with a time they fail to resolve in the picker correct.
-                    d = new XDate(newValue).toString("MM/dd/yyyy");
-                    d = new Date(d + " 00:00:00");
-                } catch (err) {
-                    logger.error("Unable to parse " + newValue);
-                }
-            }
-            if (d instanceof Date && !isNaN(d.valueOf())) {
-                logger.debug("Setting the value for date picker: " + d);
-                elm.datepicker('update', d);
-                elm.datepicker('hide');
-            }
-        }
-    }
-
-    setModelValue(d) {
-        if (d instanceof Date && !isNaN(d.valueOf())) {
-            this.value = new XDate(d).toString("yyyy-MM-dd'T'HH:mm:sszzz");
-        } else if (d === null) {
-            this.value = null;
-        }
-        logger.debug("Setting model value: " + this.value);
-    }
-
-
 }

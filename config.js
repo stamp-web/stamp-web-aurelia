@@ -2,6 +2,7 @@ System.config({
   "transpiler": "traceur",
   "paths": {
     "*": "*.js",
+    "src/*": "src/*.js",
     "resources/*.css": "resources/*.css",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js",
@@ -11,7 +12,6 @@ System.config({
 
 System.config({
   "map": {
-    "arshaw/xdate": "github:arshaw/xdate@0.8.1",
     "aurelia-binding": "github:aurelia/binding@0.8.1",
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.14.0",
     "aurelia-bs-modal": "github:pwkad/aurelia-bs-modal@master",
@@ -26,11 +26,13 @@ System.config({
     "components/jquery": "github:components/jquery@2.1.4",
     "core-js": "npm:core-js@0.9.18",
     "css": "github:systemjs/plugin-css@0.1.13",
+    "eonasdan/bootstrap-datetimepicker": "github:eonasdan/bootstrap-datetimepicker@4.14.30",
     "eternicode/bootstrap-datepicker": "github:eternicode/bootstrap-datepicker@1.4.0",
     "font-awesome": "npm:font-awesome@4.3.0",
     "jquery": "github:components/jquery@2.1.4",
     "less": "github:aaike/jspm-less-plugin@0.0.5",
     "lodash": "npm:lodash@3.10.0",
+    "moment": "github:moment/moment@2.10.3",
     "nprogress": "github:rstacruz/nprogress@0.1.6",
     "polymer/mutationobservers": "github:polymer/mutationobservers@0.4.2",
     "thomaspark/bootswatch": "github:thomaspark/bootswatch@3.3.5",

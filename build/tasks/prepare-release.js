@@ -6,6 +6,8 @@ var fs = require('fs');
 var bump = require('gulp-bump');
 var args = require('../args');
 
+//TODO : Will need to use path
+
 // utilizes the bump plugin to bump the
 // semver for the repo
 gulp.task('bump-version', function(){

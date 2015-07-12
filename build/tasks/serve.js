@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var path = require('path');
+var paths = require('../paths');
 var browserSync = require('browser-sync');
 
 // this task utilizes the browsersync plugin
@@ -10,7 +11,7 @@ gulp.task('serve', ['build'], function(done) {
     open: false,
     port: 9000,
     server: {
-      baseDir: [path.join(__dirname, '../../')],
+      baseDir: [paths.baseDir],
       middleware: function (req, res, next) {
         res.setHeader('Access-Control-Allow-Origin', '*');
         next();

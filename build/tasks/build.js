@@ -5,6 +5,7 @@ var plumber = require('gulp-plumber');
 var to5 = require('gulp-babel');
 var sourcemaps = require('gulp-sourcemaps');
 var paths = require('../paths');
+var path = require('path');
 var compilerOptions = require('../babel-options');
 var assign = Object.assign || require('object.assign');
 var replace = require('gulp-replace-task');
@@ -32,7 +33,7 @@ gulp.task('build-system', function () {
 	  }))
     .pipe(sourcemaps.init())
     .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
-    .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/' + paths.root }))
+    .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/src'}))
     .pipe(gulp.dest(paths.output))
 });
 
@@ -50,7 +51,8 @@ gulp.task('build-html', function () {
 gulp.task('build', function (callback) {
 	return runSequence(
 		'clean',
-		['less','build-system', 'build-html','eslint'],
+		['less', 'build-system', 'build-html','eslint'],
+
         'theme-generate',
 		callback
 	);

@@ -1,17 +1,24 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
-.input-group.date {
-    padding-left: 15px !important;
-    .input-group-addon {
-        padding: 0 4px;
+.sw-ownership-editor {
+    .input-group[class*="col-"] {
+        padding-left: @panel-body-padding;
+        .input-group-addon {
+            padding: 0 4px;
+        }
+    }
+
+    .form-control {
+        &.price-paid {
+            width: 75px;
+            margin-right: 5px;
+        }
+    }
+
+    .checkbox input[type="checkbox"] {
+        margin-left: 0;
     }
 }
 
-.form-control {
-    &.price-paid {
-        width: 75px;
-        margin-right: 5px;
-    }
-}
 
 

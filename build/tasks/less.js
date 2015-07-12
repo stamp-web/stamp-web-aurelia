@@ -16,7 +16,7 @@ gulp.task('less', function () {
 		this.emit('end');
 	}
 
-	return gulp.src(path.join(__dirname, '../../' + paths.appLess))
+	return gulp.src(paths.appLess)
 		.pipe(replace({
 			patterns: [
 				{
@@ -33,15 +33,15 @@ gulp.task('less', function () {
 		.pipe(sourcemaps.init())
 		.pipe(less({
             paths: [
-                path.join(__dirname, '../../'),
+                paths.baseDir,
             ],
             sourceMap: {
-				sourceMapRootpath: path.join(__dirname, '../../' + paths.appLess)
+				sourceMapRootpath:paths.appLess
 			}
 		}).on('error', lessErrorHandler))
 		.pipe(sourcemaps.write())
      //   .pipe(concat('stamp-web-min.css'))
      //   .pipe(minifyCSS())
-		.pipe(gulp.dest(path.join(__dirname, '../../' + paths.lessOut)));
+		.pipe(gulp.dest(paths.lessOut));
 
 });

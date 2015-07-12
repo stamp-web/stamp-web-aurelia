@@ -1,10 +1,12 @@
 <template>
     <require from="../../value-converters/empty-text"></require>
     <require from="../../widgets/date-picker"></require>
+    <require from="../../value-converters/date-formatter"></require>
     <div class="panel panel-default sw-ownership-editor">
         <div class="panel-heading">
             <h4 class="panel-title">Owning Details</h4>
         </div>
+
         <div class="panel-body">
             <div class="form-group form-group-sm has-feedback">
                 <label for="owner-albumRef" class="col-sm-3 control-label">Album</label>
@@ -42,7 +44,7 @@
             </div>
             <div class="form-group form-group-sm">
                 <label for="owner-pricePaid" class="col-sm-3 control-label">Price paid</label>
-                <div class="input-group date col-sm-9">
+                <div class="input-group col-sm-9">
                     <input type="text" class="form-control price-paid" id="owner-pricePaid" value.bind="model.pricePaid">
                     <select id="owner-code" class="currency-selector form-control" value.bind="model.code">
                         <option repeat.for="cur of codes" model.bind="cur.ordinal">${cur.description}</option>
@@ -51,8 +53,8 @@
             </div>
             <div class="form-group form-group-sm">
                 <label for="owner-purchased" class="col-sm-3 control-label">Purchased</label>
-                <div class="input-group date col-sm-3">
-                    <date-picker id="owner-purchased" value.bind="model.purchased"></date-picker>
+                <div class="input-group col-sm-3">
+                    <date-picker id="owner-purchased" value.two-way="model.purchased | dateFormatter"></date-picker>
                 </div>
             </div>
             <div class="form-group form-group-sm">

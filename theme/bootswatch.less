@@ -110,3 +110,28 @@
 // Progress bars ==============================================================
 
 // Containers =================================================================
+
+// DatePickers ================================================================
+
+body .datepicker {
+    table tr td {
+        &.day:hover, &.day.focused {
+            background: @table-bg-hover;  // change date picker background on hover
+        }
+    }
+    thead tr:first-child th, // hover on back/forward
+    tfoot tr th {
+        &:hover {
+            background: @table-bg-hover;
+        }
+    }
+}
+
+body .picker-switch table tbody td { // bottom buttons
+    span {
+        &:hover, &:focus {
+            background: @table-bg-hover;
+        }
+    }
+}
+
