@@ -1,0 +1,68 @@
+<template>
+    <div class="user-settings container">
+        <form class="form-horizontal">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Editing Defaults</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group form-group-sm">
+                        <label for="settings-albumRef" class="col-sm-3 control-label">Album</label>
+                        <div class="col-sm-9">
+                            <select id="settings-albumRef" disabled.bind="loading" class="album-selector form-control" value.bind="model.stamps.albumRef">
+                                <option model.bind="-1">Select an album</option>
+                                <option repeat.for="album of albums" model.bind="album.id">${album.name}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-countryRef" class="col-sm-3 control-label">Country</label>
+                        <div class="col-sm-9">
+                            <select id="settings-countryRef" disabled.bind="loading" class="country-selector form-control" value.bind="model.stamps.countryRef">
+                                <option model.bind="-1">Select a country</option>
+                                <option repeat.for="country of countries" model.bind="country.id">${country.name}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-sellerRef" class="col-sm-3 control-label">Seller</label>
+                        <div class="col-sm-9">
+                            <select id="settings-sellerRef" disabled.bind="loading" class="seller-selector form-control" value.bind="model.stamps.sellerRef">
+                                <option model.bind="-1">Select a seller</option>
+                                <option repeat.for="seller of sellers" model.bind="seller.id">${seller.name}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-catalogueRef" class="col-sm-3 control-label">Catalogue</label>
+                        <div class="col-sm-9">
+                            <select id="settings-catalogueRef" disabled.bind="loading" class="catalogue-selector form-control" value.bind="model.stamps.catalogueRef">
+                                <option model.bind="-1">Select a catalogue</option>
+                                <option repeat.for="catalogue of catalogues" model.bind="catalogue.id">${catalogue.issue} - ${catalogue.name}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-condition" class="col-sm-3 control-label">Condition</label>
+                        <div class="col-sm-4">
+                            <select id="settings-condition" class="condition-selector form-control" value.bind="model.stamps.condition">
+                                <option repeat.for="c of conditions" model.bind="c.ordinal">${c.description}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-grade" class="col-sm-3 control-label">Grade</label>
+                        <div class="col-sm-4">
+                            <select id="settings-grade" class="grade-selector form-control" value.bind="model.stamps.grade">
+                                <option repeat.for="g of grades" model.bind="g.ordinal">${g.description}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="editor-buttons">
+            <button type="button" class="btn btn-sm btn-default" click.trigger="save()">Save</button>
+        </div>
+    </div>
+</template>

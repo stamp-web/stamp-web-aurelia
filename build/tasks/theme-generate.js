@@ -17,7 +17,7 @@ gulp.task('theme-generate', function () {
             sourceMap: {
                 sourceMapFileInline: false,
                 sourceMapRootpath: '/theme',
-                debug: true
+                debug: false
             }
         }).on('error', function (error) {
             gutil.log(gutil.colors.red(error.message));
