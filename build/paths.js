@@ -7,7 +7,7 @@ module.exports = {
     baseDir: basePath,
 	root: path.join(basePath,appRoot),
 	source: path.join(basePath,appRoot + '**/*.js'),
-    bootswatch: path.join(basePath,'node_modules/bootswatch/'),
+    bootstrap: path.join(basePath, 'node_modules/bootstrap'),
 	html: path.join(basePath,appRoot + '**/*.html'),
 	style: path.join(basePath,'resources/styles/**/*.css'),
 	less: path.join(basePath,appRoot + 'components/**/*.less'),

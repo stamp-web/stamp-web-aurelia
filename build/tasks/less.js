@@ -10,12 +10,6 @@ var replace = require('gulp-replace-task');
 
 gulp.task('less', function () {
 
-	var lessErrorHandler = function(err) {
-		gutil.log('### FAILURE in .less file');
-		gutil.log(err.message);
-		this.emit('end');
-	}
-
 	return gulp.src(paths.appLess)
 		.pipe(replace({
 			patterns: [
@@ -38,10 +32,16 @@ gulp.task('less', function () {
             sourceMap: {
 				sourceMapRootpath:paths.appLess
 			}
-		}).on('error', lessErrorHandler))
+		})
+            .on('error', function (error) {
+                gutil.log(gutil.colors.red(error.message));
+                this.emit('end');
+            }))
+
 		.pipe(sourcemaps.write())
-     //   .pipe(concat('stamp-web-min.css'))
-     //   .pipe(minifyCSS())
-		.pipe(gulp.dest(paths.lessOut));
+        .pipe(gulp.dest(paths.lessOut))
+        .pipe(concat('stamp-web-min.css'))
+        .pipe(minifyCSS())
+        .pipe(gulp.dest(paths.lessOut));
 
 });

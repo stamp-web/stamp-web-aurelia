@@ -1,4 +1,4 @@
 module.exports = {
-	bootstrapTheme: 'custom',
-	pathToTheme: 'node_modules/bootswatch'
+	bootstrapTheme: '',
+	pathToTheme: 'theme'
 }
