@@ -50,12 +50,16 @@ To run the app, follow these steps.
 
 ## Changing the theme
 
-Currently any of the bootswatch themes are supported.  To change a theme go to build/theme.js and change "bootstrapTheme" variable to the name of the theme desired and re-execute
+Bootswatch is no longer used as the theme provider, although it was used to create the initial stamp-web theme.  This theme is now located in the theme
+folder and build using the command:
 
 ```
-gulp build
+gulp generate-theme
 ```
 
+Since the output is bootstrap.css and bootstrap-min.css in theory you could simply copy over a bootswatch theme and use this instead.
+The bootstrap-overrides.less is used to override styles/classes used by the bootstrap primary theme.  This file was originally taken from the
+custom folder of bootswatch and has since been modified further.  The variables.less defines the color and theme variables.
 
 ## Running The Unit Tests
 
