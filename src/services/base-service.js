@@ -94,7 +94,9 @@ export class BaseService {
         return false;
     }
 
-;
+    getDefaultSearchOptions() {
+        return {};
+    }
 
 
     getResourceName() {
@@ -153,12 +155,13 @@ export class BaseService {
     find(options) {
         var self = this;
         var q = new Promise((resolve, reject) => {
-            if (!self.loaded || !self.useCachedResult(options)) {
+            var opts = _.extend({}, self.getDefaultSearchOptions(), options);
+            if (!self.loaded || !self.useCachedResult(opts)) {
                 logger.debug("[" + self.getCollectionName() + "] retrieving items");
                 self.eventBus.publish(EventNames.loadingStarted);
                 var href = self.baseHref + '/rest/' + self.getResourceName();
-                if (options) {
-                    href += '?' + self.paramHelper.toParameters(options);
+                if (opts) {
+                    href += '?' + self.paramHelper.toParameters(opts);
                 }
                 self.http.get(href).then(response => {
                     self.loaded = true;
@@ -168,7 +171,7 @@ export class BaseService {
                         self.total = resp.total;
                     }
                     self.eventBus.publish(EventNames.loadingFinished);
-                    self.parameters = options;
+                    self.parameters = opts;
                     resolve({models: self.models, total: self.total});
                 }).catch(reason => {
                     self.eventBus.publish(EventNames.loadingFinished);

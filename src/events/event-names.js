@@ -18,6 +18,7 @@ export var EventNames = {
     entityFilter: "entity-filter",
     loadingStarted: "loading-started",
     loadingFinished: "loading-finished",
+    preferenceChanged: "preference-changed",
     stampEdit: 'stamp-edit',
     stampEditorCancel: 'stamp-edit-cancel',
     stampRemove: 'stamp-remove',

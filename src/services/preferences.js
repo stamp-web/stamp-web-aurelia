@@ -10,6 +10,12 @@ export class Preferences extends BaseService {
         super(http, eventBus);
     }
 
+    getDefaultSearchOptions() {
+        return {
+            $orderby: 'name asc'
+        };
+    }
+
     getResourceName() {
         return "preferences";
     }

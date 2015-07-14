@@ -10,6 +10,12 @@ export class EntityManaged extends BaseService {
         super(http, eventBus);
     }
 
+    getDefaultSearchOptions() {
+        return {
+            $orderby: 'name asc'
+        };
+    }
+
     countStamps() {
         var q = new Promise((resolve, reject) => {
             let href = this.baseHref + '/rest/' + this.getResourceName() + '/!countStamps';

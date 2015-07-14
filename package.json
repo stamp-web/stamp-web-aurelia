@@ -59,6 +59,7 @@
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.9.0",
       "aurelia-framework": "github:aurelia/framework@^0.13.2",
       "aurelia-http-client": "github:aurelia/http-client@^0.10.0",
+      "aurelia-i18next": "github:zewa666/aurelia-i18next@master",
       "aurelia-loader-default": "github:aurelia/loader-default@0.9.0",
       "aurelia-router": "github:aurelia/router@^0.10.1",
       "aurelia-validation": "github:aurelia/validation@0.2.7",

@@ -10,6 +10,12 @@ export class Catalogues extends EntityManaged {
         super(http, eventBus);
     }
 
+    getDefaultSearchOptions() {
+        return {
+            $orderby: 'issue desc'
+        };
+    }
+
     getResourceName() {
         return "catalogues";
     }

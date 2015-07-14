@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<path d="M20,100H1.5C0.7,100,0,99.3,0,98.5v-97C0,0.7,0.7,0,1.5,0H20c0.8,0,1.5,0.7,1.5,1.5v97C21.5,99.3,20.8,100,20,100z
+	 M44.4,98.5v-97c0-0.8-0.7-1.5-1.5-1.5H24.4c-0.8,0-1.5,0.7-1.5,1.5v97c0,0.8,0.7,1.5,1.5,1.5h18.5C43.7,100,44.4,99.3,44.4,98.5z
+	 M99.9,91.4L65.1,0.9C64.8,0.1,64-0.3,63.2,0L46,6.6c-0.8,0.3-1.2,1.2-0.9,1.9l34.8,90.5c0.3,0.8,1.2,1.2,1.9,0.9L99,93.4
+	C99.8,93.1,100.2,92.2,99.9,91.4z"/>
+<path fill="#FFFFFF" d="M17.1,17.5H4.3v-11h12.8V17.5z M17.1,21H4.3v1h12.8V21z M17.1,90.5H4.3v1.9h12.8V90.5z M40.1,6.5H27.2v11
+	h12.8V6.5z M40.1,21H27.2v1h12.8V21z M40.1,90.5H27.2v1.9h12.8V90.5z M62.9,7l-12,4.6l3.9,10.3l12-4.6L62.9,7z M68.1,20.6l-12,4.6
+	l0.4,1l12-4.6L68.1,20.6z M93,85.5l-12,4.6l0.7,1.7l12-4.6L93,85.5z"/>
 <g>
-	<path d="M20,100H1.5C0.7,100,0,99.3,0,98.5v-97C0,0.7,0.7,0,1.5,0H20c0.8,0,1.5,0.7,1.5,1.5v97C21.5,99.3,20.8,100,20,100z"/>
-	<rect x="4.3" y="6.5" fill="#FFFFFF" width="12.8" height="11"/>
-	<rect x="4.3" y="21" fill="#FFFFFF" width="12.8" height="1"/>
-	<rect x="4.3" y="90.5" fill="#FFFFFF" width="12.8" height="1.9"/>
 </g>
 <g>
-	<path d="M42.9,100H24.4c-0.8,0-1.5-0.7-1.5-1.5v-97c0-0.8,0.7-1.5,1.5-1.5h18.5c0.8,0,1.5,0.7,1.5,1.5v97
-		C44.4,99.3,43.7,100,42.9,100z"/>
-	<rect x="27.2" y="6.5" fill="#FFFFFF" width="12.8" height="11"/>
-	<rect x="27.2" y="21" fill="#FFFFFF" width="12.8" height="1"/>
-	<rect x="27.2" y="90.5" fill="#FFFFFF" width="12.8" height="1.9"/>
 </g>
 <g>
-	<path d="M99,93.4L81.8,100c-0.8,0.3-1.6-0.1-1.9-0.9L45.1,8.6c-0.3-0.8,0.1-1.6,0.9-1.9L63.2,0c0.8-0.3,1.6,0.1,1.9,0.9l34.8,90.5
-		C100.2,92.2,99.8,93.1,99,93.4z"/>
-	<rect x="52.4" y="9" transform="matrix(0.9335 -0.3585 0.3585 0.9335 -1.2818 22.065)" fill="#FFFFFF" width="12.8" height="11"/>
-	
-		<rect x="55.9" y="22.9" transform="matrix(0.9335 -0.3585 0.3585 0.9335 -4.2566 23.8889)" fill="#FFFFFF" width="12.8" height="1"/>
-	
-		<rect x="80.9" y="87.8" transform="matrix(0.9335 -0.3585 0.3585 0.9335 -25.9897 37.2135)" fill="#FFFFFF" width="12.8" height="1.9"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
 </g>
 </svg>

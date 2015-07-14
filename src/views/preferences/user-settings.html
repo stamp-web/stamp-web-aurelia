@@ -3,47 +3,56 @@
         <form class="form-horizontal">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Editing Defaults</h4>
+                    <h4 class="panel-title">${'settings.editor'|t}</h4>
                 </div>
                 <div class="panel-body">
                     <div class="form-group form-group-sm">
-                        <label for="settings-albumRef" class="col-sm-3 control-label">Album</label>
-                        <div class="col-sm-9">
-                            <select id="settings-albumRef" disabled.bind="loading" class="album-selector form-control" value.bind="model.stamps.albumRef">
-                                <option model.bind="-1">Select an album</option>
-                                <option repeat.for="album of albums" model.bind="album.id">${album.name}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <label for="settings-countryRef" class="col-sm-3 control-label">Country</label>
+                        <label for="settings-countryRef" class="col-sm-3 control-label">${'settings.country'|t}</label>
                         <div class="col-sm-9">
                             <select id="settings-countryRef" disabled.bind="loading" class="country-selector form-control" value.bind="model.stamps.countryRef">
-                                <option model.bind="-1">Select a country</option>
+                                <option model.bind="-1">${'settings.country-select'|t}</option>
                                 <option repeat.for="country of countries" model.bind="country.id">${country.name}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label for="settings-sellerRef" class="col-sm-3 control-label">Seller</label>
+                        <label for="settings-albumRef" class="col-sm-3 control-label">${'settings.album'|t}</label>
+                        <div class="col-sm-9">
+                            <select id="settings-albumRef" disabled.bind="loading" class="album-selector form-control" value.bind="model.stamps.albumRef">
+                                <option model.bind="-1">${'settings.album-select'|t}</option>
+                                <option repeat.for="album of albums" model.bind="album.id">${album.name}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-stampCollectionRef" class="col-sm-3 control-label">${'settings.stampCollection'|t}</label>
+                        <div class="col-sm-9">
+                            <select id="settings-stampCollectionRef" disabled.bind="loading" class="stampCollection-selector form-control" value.bind="model.stamps.stampCollectionRef">
+                                <option model.bind="-1">${'settings.stampCollection-select'|t}</option>
+                                <option repeat.for="stampCollection of stampCollections" model.bind="stampCollection.id">${stampCollection.name}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-sellerRef" class="col-sm-3 control-label">${'settings.seller'|t}</label>
                         <div class="col-sm-9">
                             <select id="settings-sellerRef" disabled.bind="loading" class="seller-selector form-control" value.bind="model.stamps.sellerRef">
-                                <option model.bind="-1">Select a seller</option>
+                                <option model.bind="-1">${'settings.seller-select'|t}</option>
                                 <option repeat.for="seller of sellers" model.bind="seller.id">${seller.name}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label for="settings-catalogueRef" class="col-sm-3 control-label">Catalogue</label>
+                        <label for="settings-catalogueRef" class="col-sm-3 control-label">${'settings.catalogue'|t}</label>
                         <div class="col-sm-9">
                             <select id="settings-catalogueRef" disabled.bind="loading" class="catalogue-selector form-control" value.bind="model.stamps.catalogueRef">
-                                <option model.bind="-1">Select a catalogue</option>
+                                <option model.bind="-1">${'settings.catalogue-select'|t}</option>
                                 <option repeat.for="catalogue of catalogues" model.bind="catalogue.id">${catalogue.issue} - ${catalogue.name}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label for="settings-condition" class="col-sm-3 control-label">Condition</label>
+                        <label for="settings-condition" class="col-sm-3 control-label">${'settings.condition'|t}</label>
                         <div class="col-sm-4">
                             <select id="settings-condition" class="condition-selector form-control" value.bind="model.stamps.condition">
                                 <option repeat.for="c of conditions" model.bind="c.ordinal">${c.description}</option>
@@ -51,18 +60,89 @@
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label for="settings-grade" class="col-sm-3 control-label">Grade</label>
+                        <label for="settings-grade" class="col-sm-3 control-label">${'settings.grade'|t}</label>
                         <div class="col-sm-4">
                             <select id="settings-grade" class="grade-selector form-control" value.bind="model.stamps.grade">
                                 <option repeat.for="g of grades" model.bind="g.ordinal">${g.description}</option>
                             </select>
                         </div>
                     </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-currencyCode" class="col-sm-3 control-label">${'settings.currencyCode'|t}</label>
+                        <div class="col-sm-4">
+                            <select id="settings-currencyCode" class="currency-selector form-control" value.bind="model.currency.CurrencyCode">
+                                <option repeat.for="cur of codes" model.bind="cur.description">${cur.description}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">${'settings.reference'|t}</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group form-group-sm">
+                        <label for="settings-catalogueRefSecondary" class="col-sm-3 control-label">${'settings.catalogue-secondary'|t}</label>
+                        <div class="col-sm-9">
+                            <select id="settings-catalogueRefSecondary" disabled.bind="loading" class="catalogue-selector form-control" value.bind="model.stamps.catalogueRefSecondary">
+                                <option model.bind="-1">${'settings.catalogue-select'|t}</option>
+                                <option repeat.for="catalogue of catalogues" model.bind="catalogue.id">${catalogue.issue} - ${catalogue.name}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-conditionSecondary" class="col-sm-3 control-label">${'settings.condition-secondary'|t}</label>
+                        <div class="col-sm-4">
+                            <select id="settings-conditionSecondary" class="condition-selector form-control" value.bind="model.stamps.conditionSecondary">
+                                <option repeat.for="c of conditions" model.bind="c.ordinal">${c.description}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">${'settings.server'|t}</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group form-group-sm">
+                        <label for="settings-imagePath" class="col-sm-3 control-label">${'settings.imagePath'|t}</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value.bind="model.stamps.imagePath" id="settings-imagePath">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">${'settings.user'|t}</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group form-group-sm">
+                        <label for="settings-pageSize" class="col-sm-3 control-label">${'settings.pageSize'|t}</label>
+                        <div class="col-sm-2">
+                            <select id="settings-pageSize" class="pageSize-selector form-control" value.bind="model.stamps.pageSize">
+                                <option repeat.for="size of pageSizes" model.bind="size">${size}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="settings-applyCatalogueImagePrefix" class="col-sm-3 control-label">${'settings.applyCatalogueImagePrefix'|t}</label>
+                        <span class="col-sm-9">
+                            <input type="checkbox" checked.bind="model.stamps.applyCatalogueImagePrefix" id="settings-applyCatalogueImagePrefix">
+                            <span>${'settings.applyCatalogueImagePrefix-hint'|t}</span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </form>
         <div class="editor-buttons">
-            <button type="button" class="btn btn-sm btn-default" click.trigger="save()">Save</button>
+            <button type="button" disabled.bind="!valid" class="btn btn-sm btn-default" click.trigger="save()">${'actions.save'|t}</button>
+            <button type="button" disabled.bind="!valid" class="btn btn-sm btn-default" click.trigger="reset()">${'actions.reset'|t}</button>
         </div>
     </div>
 </template>

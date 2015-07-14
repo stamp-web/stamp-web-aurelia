@@ -1,0 +1,31 @@
+{
+    "settings": {
+        "album": "Album",
+        "album-select": "Select an album",
+        "applyCatalogueImagePrefix": "Use catalogue prefix",
+        "applyCatalogueImagePrefix-hint": "Apply the catalogue prefix to the image name",
+        "catalogue": "Catalogue",
+        "catalogue-secondary": "Catalogue",
+        "catalogue-select": "Select a catalogue",
+        "condition": "Condition",
+        "condition-secondary": "Condition",
+        "country": "Country",
+        "country-select": "Select a country",
+        "currencyCode": "Currency",
+        "editor": "Editing Defaults",
+        "grade": "Grade",
+        "imagePath": "Image server location",
+        "pageSize": "Paging size",
+        "reference": "Catalogue Reference Defaults",
+        "seller": "Seller",
+        "seller-select": "Select a seller",
+        "server": "Server Settings",
+        "stampCollection": "Stamp collection",
+        "stampCollection-select": "Select a stamp collection",
+        "user": "User Settings"
+    },
+    "actions": {
+        "save": "Save",
+        "reset": "Reset"
+    }
+}

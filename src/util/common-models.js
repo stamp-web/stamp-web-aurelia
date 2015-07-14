@@ -87,9 +87,11 @@ export const Grade = new Enum({
 export const CurrencyCode = new Enum({
     USD: {ordinal: 0, description: 'USD'},
     CAD: {ordinal: 1, description: 'CAD'},
-    AUD: {ordinal: 2, description: 'AUD'},
+    EUR: {ordinal: 2, description: 'EUR'},
     GBP: {ordinal: 3, description: 'GBP'},
-    JYP: {ordinal: 4, description: 'JYP'}
+    AUD: {ordinal: 4, description: 'AUD'},
+    JYP: {ordinal: 5, description: 'JYP'}
+
 });
 
 export const CatalogueType = new Enum({

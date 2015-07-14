@@ -14,6 +14,17 @@ export function configure(aurelia) {
         .standardConfiguration()
         //.developmentLogging()
         .plugin('./global-resources/index')
+        .plugin('aurelia-i18next', (instance) => {
+            instance.setup({
+                resGetPath: 'locale/__lng__/__ns__.json',
+                lng: 'en',
+                attributes: ['t', 'i18n'],
+                getAsync: true,
+                sendMissing: false,
+                fallbackLng: 'en',
+                debug: true
+            });
+        })
         .plugin('aurelia-validation', (config) => {
             config.useDebounceTimeout(250);
             config.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);
