@@ -1,12 +1,15 @@
 import {inject, LogManager} from 'aurelia-framework';
-
+import {ObserverLocator} from 'aurelia-binding';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {EventNames} from '../../events/event-names';
 import {Countries} from '../../services/countries';
 import {Albums} from '../../services/albums';
 import {Sellers} from '../../services/sellers';
 import {Catalogues} from '../../services/catalogues';
 import {StampCollections} from '../../services/stampCollections';
 import {Preferences} from '../../services/preferences';
-import {Condition, Grade} from '../../util/common-models';
+import {Condition, Grade, CurrencyCode} from '../../util/common-models';
+import {ObjectUtilities} from '../../util/object-utilities';
 
 import _ from 'lodash';
 
@@ -14,7 +17,7 @@ import 'resources/styles/views/preferences/user-settings.css!';
 
 const logger = LogManager.getLogger('user-settings');
 
-@inject(Preferences, Countries, Albums, Sellers, Catalogues, StampCollections)
+@inject(ObserverLocator, EventAggregator, Preferences, Countries, Albums, Sellers, Catalogues, StampCollections)
 export class UserSettings {
 
     countries = [];
@@ -24,7 +27,9 @@ export class UserSettings {
     stampCollections = [];
     preferences = [];
     conditions = Condition.symbols();
+    codes = CurrencyCode.symbols();
     grades = Grade.symbols();
+    pageSizes = [100, 250, 500, 1000, 2500, 5000];
 
     model = {};
 
@@ -34,14 +39,24 @@ export class UserSettings {
         { name: 'albumRef', category: 'stamps', type: Number},
         { name: 'sellerRef', category: 'stamps', type: Number },
         { name: 'catalogueRef', category: 'stamps', type: Number },
+        { name: 'catalogueRefSecondary', category: 'stamps', type: Number },
         { name: 'condition', category: 'stamps', type: Number },
-        { name: 'grade', category: 'stamps', type: Number }
+        { name: 'conditionSecondary', category: 'stamps', type: Number },
+        { name: 'grade', category: 'stamps', type: Number },
+        { name: 'pageSize', category: 'stamps', type: Number, defaultValue: 100 },
+        { name: 'CurrencyCode', category: 'currency', type: String, defaultValue: 'USD' },
+        { name: 'imagePath', category: 'stamps', type: String },
+        { name: 'applyCatalogueImagePrefix', category: 'stamps', type: Boolean, defaultValue: true }
     ]
 
     servicesLoaded = 0;
+    modelSubscribers = [];
     loading = false;
+    valid = false;
 
-    constructor(preferenceService, countryService, albumService, sellerService, catalogueService, stampCollectionService) {
+    constructor(observer, eventBus, preferenceService, countryService, albumService, sellerService, catalogueService, stampCollectionService) {
+        this.observer = observer;
+        this.eventBus = eventBus;
         this.preferenceService = preferenceService;
         this.countryService = countryService;
         this.albumService = albumService;
@@ -52,6 +67,12 @@ export class UserSettings {
 
     activate() {
         this.loadServices();
+    }
+
+    deactivate() {
+        this.modelSubscribers.forEach(sub => {
+            sub();
+        });
     }
 
     save() {
@@ -73,12 +94,44 @@ export class UserSettings {
                         id: 0
                     };
                 }
-                self.preferenceService.save(pref);
+                self.preferenceService.save(pref).then( modifiedPref => {
+                    self.eventBus.publish( EventNames.preferenceChanged, modifiedPref);
+                })
             });
         });
+        self.stateReset();
     }
 
-    checkloadingState() {
+    stateReset() {
+        this.modelClone = {};
+        _.forEach(Object.keys(this.model), function(key) {
+            this.modelClone[key] = _.clone(this.model[key]);
+        }, this);
+        this.validate();
+    }
+
+    reset() {
+        _.forEach(Object.keys(this.model), function(key) {
+            _.extend(this.model[key], this.modelClone[key]);
+        }, this)
+        this.validate();
+    }
+
+    validate() {
+        let value = true;
+        let keys = Object.keys(this.model);
+        for(let i = 0; i < keys.length; i++ ) {
+            let key = keys[i];
+            if( !ObjectUtilities.isEqual(this.model[key], this.modelClone[key])) {
+                value = false;
+                break;
+            }
+        }
+        this.valid = !value;
+    }
+
+    processResults(collectionName, results) {
+        this[collectionName] = results.models;
         this.servicesLoaded++;
         if(this.servicesLoaded >= 6 ) {
             this.loading = false;
@@ -87,54 +140,54 @@ export class UserSettings {
 
     processPreferences() {
         let self = this;
-        _.forEach(self.preferenceKeys, function(prefKey) {
+        _.forEach(self.preferenceKeys, function (prefKey) {
             let pref = self.preferenceService.getByNameAndCategory(prefKey.name, prefKey.category);
-            if( pref ) {
-                if( !self.model[prefKey.category]) {
-                    self.model[prefKey.category] = {};
-                }
-                self.model[prefKey.category][prefKey.name] = (prefKey.type === Number) ? +pref.value : pref.value;
+            if (!pref) {
+                pref = {
+                    value: (prefKey.defaulValue) ? prefKey.defaultValue.toString() : undefined
+                };
             }
+            if (!self.model[prefKey.category]) {
+                self.model[prefKey.category] = {};
+            }
+            let value;
+            switch (prefKey.type) {
+                case Number:
+                    value = +pref.value;
+                    break;
+                case Boolean:
+                    value = pref.value === "true";
+                    break;
+                default:
+                    value = pref.value;
+            }
+            self.model[prefKey.category][prefKey.name] = value;
+            self.modelSubscribers.push(self.observer.getObserver(self.model[prefKey.category], prefKey.name).subscribe(self.validate.bind(self)));
         });
+        self.stateReset();
     }
 
     loadServices() {
         let self = this;
         this.loading = true;
         this.preferenceService.find().then(result => {
-            self.preferences = result.models;
+            self.processResults('preferences', result);
             self.processPreferences();
-            self.checkloadingState();
         });
-        this.countryService.find({
-            $orderby: 'name asc'
-        }).then(result => {
-            self.countries = result.models;
-            self.checkloadingState();
+        this.countryService.find().then(result => {
+            self.processResults('countries', result);
         });
-        this.albumService.find({
-            $orderby: 'name asc'
-        }).then(result => {
-            self.albums = result.models;
-            self.checkloadingState();
+        this.albumService.find().then(result => {
+            self.processResults('albums', result);
         });
-        this.sellerService.find({
-            $orderby: 'name asc'
-        }).then(result => {
-            self.sellers = result.models;
-            self.checkloadingState();
+        this.sellerService.find().then(result => {
+            self.processResults('sellers', result);
         });
-        this.stampCollectionService.find({
-            $orderby: 'name asc'
-        }).then(result => {
-            self.stampCollections = result.models;
-            self.checkloadingState();
+        this.stampCollectionService.find().then(result => {
+            self.processResults('stampCollections', result);
         });
-        this.catalogueService.find({
-            $orderby: 'issue desc'
-        }).then(result => {
-            self.catalogues = result.models;
-            self.checkloadingState();
+        this.catalogueService.find().then(result => {
+            self.processResults('catalogues', result);
         });
     }
 }

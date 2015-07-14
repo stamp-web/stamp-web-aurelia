@@ -25,7 +25,8 @@
         "user": "User Settings"
     },
     "actions": {
-        "save": "Save",
-        "reset": "Reset"
+        "canel": "Cancel",
+        "reset": "Reset",
+        "save": "Save"
     }
 }
