@@ -16,11 +16,13 @@
 
 		<div class="collapse navbar-collapse" id="collapsible-header">
 			<ul class="nav navbar-nav">
-				<li class="hidden-xs">
-					<a href="#/settings"><span class="sw-icon-settings" aria-hidden="true"
-							 title="Manage user preferences"></span></a>
+				<li role="presentation">
+					<a href="#/settings">
+                        <span class="hidden-xs sw-icon-settings" aria-hidden="true" title="${'nav.settings'|t}"></span>
+                        <span class="visible-xs"> ${'nav.settings'|t}</span>
+                    </a>
 				</li>
-				<li repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
+				<li role="presentation" repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
 					<a href.bind="row.href">${row.title}</a>
 				</li>
 			</ul>

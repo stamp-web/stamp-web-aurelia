@@ -1,8 +1,28 @@
 {
+    "nav": {
+        "settings": "Manage settings"
+    },
+    "editor": {
+        "album": "Album",
+        "album-select": "Select an album",
+        "catalogue": "Catalogue",
+        "catalogue-select": "Select a catalogue",
+        "condition": "Condition",
+        "country": "Country",
+        "country-select": "Select a country",
+        "createStamp-hint": "Create a stamp",
+        "createWantlist-hint": "Create a wanted stamp",
+        "currencyCode": "Currency",
+        "description": "Description",
+        "details-title": "Details",
+        "rate": "Denomination",
+        "switchToCreate-hint": "Switch to create stamp"
+
+    },
     "settings": {
         "album": "Album",
         "album-select": "Select an album",
-        "applyCatalogueImagePrefix": "Use catalogue prefix",
+        "applyCatalogueImagePrefix": "Use Catalogue Prefix",
         "applyCatalogueImagePrefix-hint": "Apply the catalogue prefix to the image name",
         "catalogue": "Catalogue",
         "catalogue-secondary": "Catalogue",
@@ -14,13 +34,13 @@
         "currencyCode": "Currency",
         "editor": "Editing Defaults",
         "grade": "Grade",
-        "imagePath": "Image server location",
-        "pageSize": "Paging size",
+        "imagePath": "Image Server Location",
+        "pageSize": "Paging Size",
         "reference": "Catalogue Reference Defaults",
         "seller": "Seller",
         "seller-select": "Select a seller",
         "server": "Server Settings",
-        "stampCollection": "Stamp collection",
+        "stampCollection": "Stamp Collection",
         "stampCollection-select": "Select a stamp collection",
         "user": "User Settings"
     },

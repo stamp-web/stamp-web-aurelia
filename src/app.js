@@ -19,8 +19,8 @@ export class App {
                 title: 'Stamps'
             },
             {route: 'manage', moduleId: './views/manage/manage-list', nav: true, title: 'Manage'},
-            {route: 'settings', moduleId: './views/preferences/user-settings', nav: false, title: 'Settings'},
-            {route: ['', 'welcome'], moduleId: './welcome', nav: true, title: 'Help'}
+            {route: 'settings', moduleId: './views/preferences/user-settings', nav: false, title: 'Settings'}
+           // {route: ['', 'welcome'], moduleId: './welcome', nav: true, title: 'Help'}
         ]);
         this.router = router;
     }

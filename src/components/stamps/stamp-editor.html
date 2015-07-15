@@ -3,11 +3,14 @@
 	<require from="../catalogue-numbers/cn-details"></require>
     <require from="../ownerships/ownership-editor"></require>
 	<div class="stamp-editor" if.bind="duplicateModel">
-		<form class="form-horizontal">
-			<stamp-details model.bind="duplicateModel"></stamp-details>
-			<catalogue-number-details model.bind="activeCatalogueNumber"></catalogue-number-details>
-            <ownership-editor if.bind="!duplicateModel.wantList" model.bind="ownership"></ownership-editor>
-		</form>
+        <div>
+            <form class="form-horizontal">
+                <stamp-details model.bind="duplicateModel"></stamp-details>
+                <catalogue-number-details model.bind="activeCatalogueNumber"></catalogue-number-details>
+                <ownership-editor if.bind="!duplicateModel.wantList" model.bind="ownership"></ownership-editor>
+            </form>
+        </div>
+
 		<div class="editor-buttons">
 			<button type="button" class="btn btn-sm btn-default" click.trigger="save()">Save</button>
 			<button type="button" class="btn btn-sm btn-default" click.trigger="saveAndNew()" if.bind="createMode">Save and New</button>

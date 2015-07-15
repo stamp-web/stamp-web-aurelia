@@ -96,7 +96,7 @@ export class UserSettings {
                 }
                 self.preferenceService.save(pref).then( modifiedPref => {
                     self.eventBus.publish( EventNames.preferenceChanged, modifiedPref);
-                })
+                });
             });
         });
         self.stateReset();
@@ -113,7 +113,7 @@ export class UserSettings {
     reset() {
         _.forEach(Object.keys(this.model), function(key) {
             _.extend(this.model[key], this.modelClone[key]);
-        }, this)
+        }, this);
         this.validate();
     }
 

@@ -14,6 +14,16 @@ import "resources/styles/views/stamps/stamp-list.css!";
 
 const logger = LogManager.getLogger('stamp-list');
 
+function createStamp(wantList) {
+    return {
+        id: 0,
+        wantList: wantList,
+        countryRef: -1,
+        catalogueNumbers: [],
+        stampOwnerships: []
+    };
+}
+
 @inject(EventAggregator, Router, Stamps, Countries)
 export class StampList extends EventManaged {
 
@@ -105,21 +115,13 @@ export class StampList extends EventManaged {
 
     toggleEditor(action) {
         if (action === 'create-stamp' || action === 'create-wantList') {
-            this.editingStamp = {
-                id: 0,
-                wantList: (action === 'create-wantList'),
-                countryRef: -1,
-                catalogueNumbers: [],
-                stampOwnerships: []
-            };
+            this.editingStamp = createStamp((action === 'create-wantList'));
             var toggle = (this.createWantList === this.editingStamp.wantList || !this.editorShown);
             this.createWantList = this.editingStamp.wantList;
             if (toggle) {
                 this.editorShown = !this.editorShown;
             }
         }
-
-
     }
 
     setViewMode(mode) {
@@ -164,6 +166,10 @@ export class StampList extends EventManaged {
         this.subscribe(EventNames.search, options => {
             this.options = _.merge(this.options, options);
             this.search();
+        });
+        this.subscribe(EventNames.stampCreate, function() {
+            self.editingStamp = createStamp(false /* Not a wantlist */);
+            self.editorShown = true;
         });
         this.subscribe(EventNames.showImage, stamp => {
             this.handleFullSizeImage(stamp);
@@ -213,19 +219,21 @@ export class StampList extends EventManaged {
     handleFullSizeImage(stamp) {
         if (stamp && stamp.stampOwnerships && stamp.stampOwnerships.length > 0) {
             this.imageShown = true;
-            var elm = $($.find('.sw-fullsize-image'));
+            let elm = $($.find('.sw-fullsize-image'));
             elm.css({
                 'max-width': '',
                 'max-height': ''
             });
             this.fullSizeImage = "http://drake-server.ddns.net:9001/Pictures/Stamps/" + stamp.stampOwnerships[0].img;
-            setTimeout(function () {
-                var container = $($.find('.page-host'));
-                elm.css({
-                    'max-width': container.width() + 'px',
-                    'max-height': container.height() + 'px'
-                });
-            }, 50);
+            _.debounce(function () {
+                let container = $($.find('.stamp-content'));
+                elm = $($.find('.sw-fullsize-image'));
+                elm.css('height', +container.height());
+                elm.css('max-width', +container.width() );
+                elm.css('max-height', +container.height());
+
+                console.log(container.height());
+            }, 50)(this);
         }
     }
 

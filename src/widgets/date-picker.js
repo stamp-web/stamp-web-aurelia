@@ -1,6 +1,6 @@
 import {inject, customElement, bindable} from 'aurelia-framework';
 import moment from 'moment';
-import {datepicker} from 'eonasdan/bootstrap-datetimepicker';
+import {datepicker} from 'eonasdan/bootstrap-datetimepicker';  //eslint-disable-line no-unused-vars
 import 'eonasdan/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css!';
 import 'resources/styles/widgets/date-picker.css!';
 
@@ -30,7 +30,6 @@ export class DatePicker {
     }
 
     attached() {
-        console.log(datepicker);
         this.datePicker = $(this.element).find('.input-group.date')
             .datetimepicker({
                 // set to true to not dismiss dialog

@@ -1,5 +1,6 @@
 export var EventNames = {
     calculateImagePath: 'calculate-image-path',
+    changeEditMode: 'change-edit-mode',
     checkExists: 'check-exists',
     conflictExists: 'conflict-exists',
     convert: 'convert',
@@ -19,6 +20,7 @@ export var EventNames = {
     loadingStarted: "loading-started",
     loadingFinished: "loading-finished",
     preferenceChanged: "preference-changed",
+    stampCreate: 'stamp-create',
     stampEdit: 'stamp-edit',
     stampEditorCancel: 'stamp-edit-cancel',
     stampRemove: 'stamp-remove',

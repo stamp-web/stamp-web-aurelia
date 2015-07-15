@@ -6,6 +6,9 @@ import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import {Countries} from '../../services/countries';
 
+import $ from 'jquery';
+import _ from 'lodash';
+
 @customElement('stamp-details')
 @bindable('model')
 @inject(EventAggregator, ObserverLocator, Validation, Countries)
@@ -13,7 +16,7 @@ export class StampDetailsComponent extends EventManaged {
 
     countries = [];
     loading = true;
-
+    editing = false;
     _modelSubscribers = [];
 
     constructor(eventBus, observer, validator, countryService) {
@@ -30,6 +33,12 @@ export class StampDetailsComponent extends EventManaged {
         });
         this._modelSubscribers = [];
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
+        this.editing = newValue.id > 0;
+        if( this.model.id <= 0 ) {
+            _.debounce(function () {
+                $('#details-rate').focus();
+            })(this);
+        }
     }
 
     countrySelected() {
@@ -37,6 +46,10 @@ export class StampDetailsComponent extends EventManaged {
             this.eventBus.publish(EventNames.checkExists, {model: this.model});
             this.eventBus.publish(EventNames.calculateImagePath, { model: this.model});
         }
+    }
+
+    changeEditMode(mode) {
+        this.eventBus.publish(EventNames.changeEditMode, mode);
     }
 
     loadCountries() {

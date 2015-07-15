@@ -1,23 +1,34 @@
 <template>
 	<require from="../../value-converters/empty-text"></require>
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title">Details</h4>
+		<div class="panel-heading panel-heading-with-actions">
+			<h4 class="panel-title">${'editor.details-title'|t}</h4>
+            <div class="panel-actions btn-group">
+                <button class="btn btn-xs btn-default ${(model.wantList) ? '' : 'active'}" show.bind="!editing" type="button" click.trigger="changeEditMode('stamp')" title="${'editor.createStamp-hint'|t}">
+                    <span class="sw-icon-stamp"></span>
+                </button>
+                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" if.bind="!editing" type="button" click.trigger="changeEditMode('wantList')" title="${'editor.createWantlist-hint'|t}">
+                    <span class="sw-icon-wantlist"></span>
+                </button>
+                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" show.bind="editing" type="button" click.trigger="changeEditMode('create')" title="${'editor.createStamp-hint'|t}">
+                    <span class="sw-icon-plus"></span>
+                </button>
+            </div>
 		</div>
 		<div class="panel-body">
 			<div class="form-group form-group-sm has-feedback">
-				<label for="details-countryRef" class="col-sm-3 control-label">Country</label>
+				<label for="details-countryRef" class="col-sm-3 control-label">${'editor.country'|t}</label>
 				<div class="col-sm-9">
-					<select id="details-countryRef" disabled.bind="loading" class="country-selector form-control" value.bind="model.countryRef">
-						<option model.bind="-1">Select a country</option>
+					<select id="details-countryRef" tabindex="1" disabled.bind="loading" class="country-selector form-control" value.bind="model.countryRef">
+						<option model.bind="-1">${'editor.country-select'|t}</option>
 						<option repeat.for="country of countries" model.bind="country.id">${country.name}</option>
 					</select>
 				</div>
 			</div>
 			<div class="form-group form-group-sm has-feedback">
-				<label for="details-rate" class="col-sm-3 control-label">Denomination</label>
+				<label for="details-rate" class="col-sm-3 control-label">${'editor.rate'|t}</label>
 				<div class="col-sm-3">
-					<input type="text" required aria-required="true" class="form-control" value.bind="model.rate | emptyText" id="details-rate" aria-describedby="rateStatus">
+					<input type="text" tabindex="2" required aria-required="true" class="form-control" value.bind="model.rate | emptyText" id="details-rate" aria-describedby="rateStatus">
 					<!--
 					<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
 					<span id="rateStatus" class="sr-only">(error)</span>
@@ -25,9 +36,9 @@
 				</div>
 			</div>
 			<div class="form-group form-group-sm">
-				<label for="details-description" class="col-sm-3 control-label">Description</label>
+				<label for="details-description" class="col-sm-3 control-label">${'editor.description'|t}</label>
 				<div class="col-sm-9">
-					<input type="text" class="form-control" id="details-description" value.bind="model.description | emptyText" aria-describedby="descriptionStatus">
+					<input type="text" tabindex="3" class="form-control" id="details-description" value.bind="model.description | emptyText" aria-describedby="descriptionStatus">
 				</div>
 			</div>
 		</div>

@@ -22,10 +22,10 @@
     },
     {
       "uid": "0dd3238eec394a5008706629afe4a431",
-      "css": "books",
-      "code": 59422,
+      "css": "stamp-collection",
+      "code": 59429,
       "src": "custom_icons",
-      "selected": false,
+      "selected": true,
       "svg": {
         "path": "M200 1000H15C7 1000 0 993 0 985V15C0 7 7 0 15 0H200C208 0 215 7 215 15V985C215 993 208 1000 200 1000ZM429 1000H244C236 1000 229 993 229 985V15C229 7 236 0 244 0H429C437 0 444 7 444 15V985C444 993 437 1000 429 1000ZM990 934L818 1000C810 1003 802 999 799 991L451 86C448 78 452 70 460 67L632 0C640-3 648 1 651 9L999 914C1002 922 998 931 990 934Z",
         "width": 1000
@@ -37,9 +37,9 @@
     {
       "uid": "98f1d582197d7180516329eb178b31c2",
       "css": "stamp",
-      "code": 59423,
+      "code": 59402,
       "src": "custom_icons",
-      "selected": false,
+      "selected": true,
       "svg": {
         "path": "M920 80V920H80V80H920M970 0H30C13 0 0 13 0 30V970C0 987 13 1000 30 1000H970C987 1000 1000 987 1000 970V30C1000 13 987 0 970 0L970 0ZM867 133V866H133V133H867M887 113H113V886H886V113L887 113Z",
         "width": 1000
@@ -106,12 +106,6 @@
       "uid": "c8585e1e5b0467f28b70bce765d5840c",
       "css": "copy",
       "code": 59400,
-      "src": "fontawesome"
-    },
-    {
-      "uid": "04ff8d6592fe548b332b27ed87ce397a",
-      "css": "stampcollection",
-      "code": 59402,
       "src": "fontawesome"
     },
     {

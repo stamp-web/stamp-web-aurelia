@@ -8,11 +8,8 @@
 		<form class="navbar-form" role="search" submit.delegate="sendSearch()">
 			<div class="btn-toolbar" role="toolbar">
 				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-sm btn-default ${(editorShown && !createWantList)? 'active' : ''}" title="New Stamp" click.trigger="toggleEditor('create-stamp')">
-						<span class="${(editorShown && !createWantList)? 'sw-icon-minus' :'sw-icon-plus'}"></span>
-					</button>
-					<button type="button" class="btn btn-sm btn-default ${(editorShown && createWantList)? 'active' : ''}" title="New Wantlist" click.trigger="toggleEditor('create-wantList')">
-						<i class="fa ${(editorShown && createWantList)? 'sw-icon-minus' :'sw-icon-wantlist'}"></i>
+					<button type="button" class="btn btn-sm btn-default ${(editorShown)? 'active' : ''}" title="New Stamp" click.trigger="toggleEditor('create-stamp')">
+						<span class="${(editorShown)? 'sw-icon-minus' :'sw-icon-plus'}"></span>
 					</button>
 				</div>
 				<div class="btn-group" role="group">

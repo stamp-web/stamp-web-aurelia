@@ -51,8 +51,6 @@ export class StampEditorComponent extends EventManaged {
     preferences = [];
     duplicateModel;
 
-
-
     constructor(eventBus, stampService, countryService, preferenceService) {
         super(eventBus);
         this.stampService = stampService;
@@ -65,6 +63,20 @@ export class StampEditorComponent extends EventManaged {
         this.subscribe(EventNames.checkExists, this.checkExists.bind(this));
         this.subscribe(EventNames.calculateImagePath, this.calculateImagePath.bind(this));
         this.subscribe(EventNames.convert, this.convertToStamp.bind(this));
+        this.subscribe(EventNames.changeEditMode, this.changeEditMode.bind(this));
+    }
+
+    changeEditMode(mode) {
+        if( this.createMode === true && (mode === 'wantList' || mode === 'stamp') ) {
+            this.duplicateModel.wantList = !this.duplicateModel.wantList;
+            this.duplicateModel.stampOwnership = [];
+            if( !this.duplicateModel.wantList ) {
+                this.duplicateModel.stampOwnership.push(createOwnership());
+            }
+        } else if ( this.createMode === false && mode === 'create' ) {
+            this.eventBus.publish(EventNames.stampCreate);
+        }
+
     }
 
     convertToStamp(m) {
@@ -197,6 +209,9 @@ export class StampEditorComponent extends EventManaged {
         this.createMode = (newValue && newValue.id <= 0);
         if (newValue) {
             this.duplicateModel = _.clone(newValue, true);
+            if( this.preferenceService.loaded ) {
+                this.processPreferences();
+            }
         } else {
             this.duplicateModel = null;
         }
