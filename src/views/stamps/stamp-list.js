@@ -167,6 +167,13 @@ export class StampList extends EventManaged {
             this.options = _.merge(this.options, options);
             this.search();
         });
+        this.subscribe(EventNames.pageChanged, page => {
+            this.setPage(page);
+        });
+        this.subscribe(EventNames.pageRefreshed, page => {
+            this.options._ul = (new Date()).getTime();
+            this.setPage(page);
+        });
         this.subscribe(EventNames.stampCreate, function() {
             self.editingStamp = createStamp(false /* Not a wantlist */);
             self.editorShown = true;
@@ -231,8 +238,6 @@ export class StampList extends EventManaged {
                 elm.css('height', +container.height());
                 elm.css('max-width', +container.width() );
                 elm.css('max-height', +container.height());
-
-                console.log(container.height());
             }, 50)(this);
         }
     }

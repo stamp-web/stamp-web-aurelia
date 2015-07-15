@@ -2,7 +2,7 @@ import {inject, customElement, bindable} from 'aurelia-framework';
 import moment from 'moment';
 import {datepicker} from 'eonasdan/bootstrap-datetimepicker';  //eslint-disable-line no-unused-vars
 import 'eonasdan/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css!';
-import 'resources/styles/widgets/date-picker.css!';
+import 'resources/styles/widgets/date-picker/date-picker.css!';
 
 @customElement('date-picker')
 @inject(Element)

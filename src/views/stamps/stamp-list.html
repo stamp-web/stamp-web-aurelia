@@ -4,6 +4,7 @@
 	<require from="../../components/sort-dialog"></require>
 	<require from="../../components/stamps/stamp-editor"></require>
 	<require from="../../components/stamps/stamp-table"></require>
+    <require from="../../widgets/paging/paging-toolbar"></require>
 	<nav class="navbar navbar-default stamp-grid-nav">
 		<form class="navbar-form" role="search" submit.delegate="sendSearch()">
 			<div class="btn-toolbar" role="toolbar">
@@ -94,21 +95,8 @@
 	</div>
 	<nav class="navbar navbar-default stamp-list-footer">
 		<form class="navbar-form" role="footer">
-			<ul class="pagination">
-				<li>
-					<a click.delegate="setPage(pageInfo.active - 1)" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					</a>
-				</li>
-				<li repeat.for="page of _.range(pageInfo.total)" class="${($parent.pageInfo.active == $index) ? 'active' :''}"><a click.delegate="$parent.setPage($index)">${page+1}</a></li>
-				<li>
-					<a click.delegate="setPage(pageInfo.active + 1)" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					</a>
-				</li>
-			</ul>
+            <paging-toolbar page.bind="pageInfo.active" total.bind="pageInfo.total"></paging-toolbar>
 			<div class="btn-toolbar" role="toolbar">
-
 				<div class="results-group">
 					Total: <span class="badge">${pageInfo.active * options.$top + 1} - ${pageInfo.active * options.$top + stamps.length}</span> of <span class="badge">${stampCount}</span>
 				</div>

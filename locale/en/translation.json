@@ -48,5 +48,8 @@
         "canel": "Cancel",
         "reset": "Reset",
         "save": "Save"
+    },
+    "paging-toolbar": {
+        "page": "Page"
     }
 }

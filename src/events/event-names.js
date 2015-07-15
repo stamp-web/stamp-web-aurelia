@@ -19,10 +19,16 @@ export var EventNames = {
     entityFilter: "entity-filter",
     loadingStarted: "loading-started",
     loadingFinished: "loading-finished",
+    pageChanged: "page-changed",
+    pageRefreshed: "page-refreshed",
     preferenceChanged: "preference-changed",
     stampCreate: 'stamp-create',
     stampEdit: 'stamp-edit',
     stampEditorCancel: 'stamp-edit-cancel',
     stampRemove: 'stamp-remove',
     stampSaved: 'stamp-saved'
+};
+
+export var KeyCodes = {
+    ENTER_VK: 13
 };

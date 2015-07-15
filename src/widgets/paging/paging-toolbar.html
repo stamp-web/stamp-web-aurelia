@@ -1,0 +1,30 @@
+<template>
+    <require from="../../value-converters/zero-based"></require>
+    <div class="paging-component">
+        <div class="btn-group" role="group">
+            <button class="btn btn-xs btn-default first-page" title="Show the first page" click.trigger="selectPage(0)" disabled.bind="page < 1">
+                <span class="sw-icon-to-start"></span>
+            </button>
+            <button class="btn btn-xs btn-default back-page mirror-icon" aria-label="Previous" title="Show the previous page" click.trigger="selectPage(page - 1)" disabled.bind="page < 1">
+                <span class="sw-icon-forward mirror-icon"></span>
+            </button>
+        </div>
+
+        <div class="current-page">
+            ${'paging-toolbar.page'|t} <input type="number" size="3" class="enter-page" min="0" max.bind="total" name="pageValue" pattern="/^\d+$/" change.delegate="validatePage()"
+                        keyup.delegate="filterKey($event)" disabled.bind="total < 1" value.bind="page | zeroBased" /> of ${total}
+        </div>
+        <div class="btn-group" role="group">
+            <button class="btn btn-xs btn-default next-page" aria-label="Next" title="Show the next page" click.trigger="selectPage(page + 1)" disabled.bind="page + 1 >= total">
+                <span class="sw-icon-forward"></span>
+            </button>
+            <button class="btn btn-xs btn-default last-page" title="Show the last page" click.trigger="selectPage(total-1)" disabled.bind="page + 1 >= total">
+                <span class="sw-icon-to-end"></span>
+            </button>
+        </div>
+
+        <button class="btn btn-xs btn-default refresh-page" title="Refresh the page" click.trigger="refresh()" disabled.bind="total < 1">
+            <span class="sw-icon-refresh"></span>
+        </button>
+    </div>
+</template>
