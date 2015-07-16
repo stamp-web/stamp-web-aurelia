@@ -19,7 +19,7 @@
 			<div class="form-group form-group-sm has-feedback">
 				<label for="details-countryRef" class="col-sm-3 control-label">${'editor.country'|t}</label>
 				<div class="col-sm-9">
-					<select id="details-countryRef" tabindex="1" disabled.bind="loading" class="country-selector form-control" value.bind="model.countryRef">
+					<select id="details-countryRef" tabindex="50" disabled.bind="loading" class="country-selector form-control" value.bind="model.countryRef">
 						<option model.bind="-1">${'editor.country-select'|t}</option>
 						<option repeat.for="country of countries" model.bind="country.id">${country.name}</option>
 					</select>
@@ -28,7 +28,7 @@
 			<div class="form-group form-group-sm has-feedback">
 				<label for="details-rate" class="col-sm-3 control-label">${'editor.rate'|t}</label>
 				<div class="col-sm-3">
-					<input type="text" tabindex="2" required aria-required="true" class="form-control" value.bind="model.rate | emptyText" id="details-rate" aria-describedby="rateStatus">
+					<input type="text" tabindex="51" required aria-required="true" class="form-control" value.bind="model.rate | emptyText" id="details-rate" aria-describedby="rateStatus">
 					<!--
 					<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
 					<span id="rateStatus" class="sr-only">(error)</span>
@@ -38,7 +38,7 @@
 			<div class="form-group form-group-sm">
 				<label for="details-description" class="col-sm-3 control-label">${'editor.description'|t}</label>
 				<div class="col-sm-9">
-					<input type="text" tabindex="3" class="form-control" id="details-description" value.bind="model.description | emptyText" aria-describedby="descriptionStatus">
+					<input type="text" tabindex="52" class="form-control" id="details-description" value.bind="model.description | emptyText" aria-describedby="descriptionStatus">
 				</div>
 			</div>
 		</div>
