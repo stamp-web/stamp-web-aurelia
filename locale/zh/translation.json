@@ -1,0 +1,55 @@
+{
+    "nav": {
+        "settings": "设置"
+    },
+    "editor": {
+        "album": "集邮册",
+        "album-select": "选择集邮册",
+        "catalogue": "分类目录",
+        "catalogue-select": "选择分类目录",
+        "condition": "使用状态",
+        "country": "国家",
+        "country-select": "选择国家",
+        "createStamp-hint": "创建邮票",
+        "createWantlist-hint": "创建希望收藏的邮票",
+        "currencyCode": "货币",
+        "description": "描述",
+        "details-title": "详细描述",
+        "rate": "面值",
+        "switchToCreate-hint": "切换到创建邮票"
+
+    },
+    "settings": {
+        "album": "集邮册",
+        "album-select": "选择集邮册",
+        "applyCatalogueImagePrefix": "使用分类目录前缀",
+        "applyCatalogueImagePrefix-hint": "使用分类目录作为图片名称的前缀",
+        "catalogue": "分类目录",
+        "catalogue-secondary": "分类目录",
+        "catalogue-select": "选择分类目录",
+        "condition": "使用状态",
+        "condition-secondary": "使用状态",
+        "country": "国家",
+        "country-select": "选择国家",
+        "currencyCode": "货币",
+        "editor": "编辑默认",
+        "grade": "等级/品级",
+        "imagePath": "图片服务器位置",
+        "pageSize": "分页大小",
+        "reference": "默认参考分类目录",
+        "seller": "卖家",
+        "seller-select": "选择卖家",
+        "server": "服务器设置",
+        "stampCollection": "收藏",
+        "stampCollection-select": "选择收藏",
+        "user": "用户设置"
+    },
+    "actions": {
+        "canel": "取消",
+        "reset": "重置",
+        "save": "保存"
+    },
+    "paging-toolbar": {
+        "page": "分页"
+    }
+}
