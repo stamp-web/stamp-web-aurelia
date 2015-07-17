@@ -19,7 +19,7 @@
 				<label for="cn-condition" class="col-sm-3 control-label">Condition</label>
 				<div class="col-sm-4">
 					<select id="cn-condition" tabindex="75" class="condition-selector form-control" value.bind="model.condition">
-						<option repeat.for="c of conditions" model.bind="c.ordinal">${c.description}</option>
+						<option repeat.for="c of conditions" model.bind="c.ordinal">${'condition.' + c.description|t}</option>
 					</select>
 				</div>
 			</div>

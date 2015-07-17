@@ -9,7 +9,7 @@ import "resources/styles/styles.css!";
 export class App {
 
     configureRouter(config, router) {
-        config.title = 'Stamp Web';
+        config.title = 'nav.title';
         config.map([
             {
                 route: 'stamp-list',

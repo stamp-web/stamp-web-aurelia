@@ -1,6 +1,9 @@
 {
     "nav": {
-        "settings": "Manage settings"
+        "manage": "Manage",
+        "settings": "Manage settings",
+        "stamps": "Stamps",
+        "title": "Stamp Web"
     },
     "editor": {
         "album": "Album",
@@ -51,5 +54,29 @@
     },
     "paging-toolbar": {
         "page": "Page"
+    },
+    "condition": {
+        "MLH": "Mint",
+        "MNH": "Mint (NH)",
+        "MNG": "Mint no gum",
+        "U": "Used",
+        "CTO": "Cancel to order"
+    },
+    "currencyCode": {
+        "USD": "USD",
+        "EUR": "EUR",
+        "CAD": "CAD",
+        "GBP": "GBP",
+        "AUD": "AUD",
+        "JYP": "JYP"
+    },
+    "grade": {
+        "XF": "Extra-Fine (XF)",
+        "VF": "Very-Fine (VF)",
+        "FVF": "Fine-Very-Fine (FVF)",
+        "F": "Fine (F)",
+        "VG": "Very-Good (VG)",
+        "D": "Damaged",
+        "CTS": "Cut to shape"
     }
 }

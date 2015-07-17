@@ -66,22 +66,22 @@ export class Enum {
 
 export const Condition = new Enum({
 
-    MINT: {ordinal: 0, description: 'Mint'},
-    MINT_NH: {ordinal: 1, description: 'Mint (NH)'},
-    MING_NG: {ordinal: 4, description: 'Mint no gum'},
-    USED: {ordinal: 2, description: 'Used'},
-    CTO: {ordinal: 3, description: 'Cancel to order'}
+    MINT: {ordinal: 0, description: 'MLH'},
+    MINT_NH: {ordinal: 1, description: 'MNH'},
+    MING_NG: {ordinal: 4, description: 'MNG'},
+    USED: {ordinal: 2, description: 'U'},
+    CTO: {ordinal: 3, description: 'CTO'}
 
 });
 
 export const Grade = new Enum({
-    XF: {ordinal: 0, description: 'Extra-Fine (XF)'},
-    VF: {ordinal: 1, description: 'Very-Fine (VF)'},
-    FVF: {ordinal: 2, description: 'Fine-Very-Fine (FVF)'},
-    F: {ordinal: 3, description: 'Fine (F)'},
-    VG: {ordinal: 4, description: 'Very-Good (VG)'},
-    D: {ordinal: 5, description: 'Damaged'},
-    CTS: {ordinal: 6, description: 'Cut to shape'}
+    XF: {ordinal: 0, description: 'XF'},
+    VF: {ordinal: 1, description: 'VF'},
+    FVF: {ordinal: 2, description: 'FVF'},
+    F: {ordinal: 3, description: 'F'},
+    VG: {ordinal: 4, description: 'VG'},
+    D: {ordinal: 5, description: 'D'},
+    CTS: {ordinal: 6, description: 'CTS'}
 });
 
 export const CurrencyCode = new Enum({

@@ -10,7 +10,7 @@
 			</button>
 			<a class="navbar-brand" href="#">
 				<i class="sw-icon-home"></i>
-				<span>${router.title}</span>
+				<span>${router.title|t}</span>
 			</a>
 		</div>
 
@@ -23,7 +23,7 @@
                     </a>
 				</li>
 				<li role="presentation" repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
-					<a href.bind="row.href">${row.title}</a>
+					<a href.bind="row.href">${row.title|t}</a>
 				</li>
 			</ul>
 		</div>

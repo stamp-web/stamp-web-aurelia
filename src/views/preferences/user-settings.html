@@ -1,4 +1,5 @@
 <template>
+    <require from="../../value-converters/empty-text"></require>
     <div class="user-settings container">
         <form class="form-horizontal">
             <div class="panel panel-default">
@@ -55,7 +56,7 @@
                         <label for="settings-condition" class="col-sm-3 control-label">${'settings.condition'|t}</label>
                         <div class="col-sm-4">
                             <select id="settings-condition" class="condition-selector form-control" value.bind="model.stamps.condition">
-                                <option repeat.for="c of conditions" model.bind="c.ordinal">${c.description}</option>
+                                <option repeat.for="c of conditions" model.bind="c.ordinal">${'condition.' + c.description |t}</option>
                             </select>
                         </div>
                     </div>
@@ -63,7 +64,7 @@
                         <label for="settings-grade" class="col-sm-3 control-label">${'settings.grade'|t}</label>
                         <div class="col-sm-4">
                             <select id="settings-grade" class="grade-selector form-control" value.bind="model.stamps.grade">
-                                <option repeat.for="g of grades" model.bind="g.ordinal">${g.description}</option>
+                                <option repeat.for="g of grades" model.bind="g.ordinal">${'grade.' + g.description | t}</option>
                             </select>
                         </div>
                     </div>
@@ -71,7 +72,7 @@
                         <label for="settings-currencyCode" class="col-sm-3 control-label">${'settings.currencyCode'|t}</label>
                         <div class="col-sm-4">
                             <select id="settings-currencyCode" class="currency-selector form-control" value.bind="model.currency.CurrencyCode">
-                                <option repeat.for="cur of codes" model.bind="cur.description">${cur.description}</option>
+                                <option repeat.for="cur of codes" model.bind="cur.description">${'currencyCode.' + cur.description | t}</option>
                             </select>
                         </div>
                     </div>
@@ -96,7 +97,7 @@
                         <label for="settings-conditionSecondary" class="col-sm-3 control-label">${'settings.condition-secondary'|t}</label>
                         <div class="col-sm-4">
                             <select id="settings-conditionSecondary" class="condition-selector form-control" value.bind="model.stamps.conditionSecondary">
-                                <option repeat.for="c of conditions" model.bind="c.ordinal">${c.description}</option>
+                                <option repeat.for="c of conditions" model.bind="c.ordinal">${'condition.' + c.description |t}</option>
                             </select>
                         </div>
                     </div>

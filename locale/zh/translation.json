@@ -1,6 +1,9 @@
 {
     "nav": {
-        "settings": "设置"
+        "manage": "Manage",
+        "settings": "设置",
+        "stamps": "Stamps",
+        "title": "Stamp Web"
     },
     "editor": {
         "album": "集邮册",
@@ -17,7 +20,6 @@
         "details-title": "详细描述",
         "rate": "面值",
         "switchToCreate-hint": "切换到创建邮票"
-
     },
     "settings": {
         "album": "集邮册",
@@ -51,5 +53,29 @@
     },
     "paging-toolbar": {
         "page": "分页"
+    },
+    "condition": {
+        "MLH": "Mint",
+        "MNH": "Mint (NH)",
+        "MNG": "Mint no gum",
+        "U": "Used",
+        "CTO": "Cancel to order"
+    },
+    "currencyCode": {
+        "USD": "USD",
+        "EUR": "EUR",
+        "CAD": "CAD",
+        "GBP": "GBP",
+        "AUD": "AUD",
+        "JYP": "JYP"
+    },
+    "grade": {
+        "XF": "Extra-Fine (XF)",
+        "VF": "Very-Fine (VF)",
+        "FVF": "Fine-Very-Fine (FVF)",
+        "F": "Fine (F)",
+        "VG": "Very-Good (VG)",
+        "D": "Damaged",
+        "CTS": "Cut to shape"
     }
 }

@@ -21,7 +21,7 @@
                 <label for="owner-condition" class="col-sm-3 control-label">Condition</label>
                 <div class="col-sm-4">
                     <select id="owner-condition" tabindex="101" class="condition-selector form-control" value.bind="model.condition">
-                        <option repeat.for="c of conditions" model.bind="c.ordinal">${c.description}</option>
+                        <option repeat.for="c of conditions" model.bind="c.ordinal">${'condition.' + c.description|t}</option>
                     </select>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 <label for="owner-grade" class="col-sm-3 control-label">Grade</label>
                 <div class="col-sm-4">
                     <select id="owner-grade" tabindex="102" class="grade-selector form-control" value.bind="model.grade">
-                        <option repeat.for="g of grades" model.bind="g.ordinal">${g.description}</option>
+                        <option repeat.for="g of grades" model.bind="g.ordinal">${'grade.' + g.description|t}</option>
                     </select>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 <div class="input-group col-sm-9">
                     <input type="text" tabindex="111" class="form-control price-paid" id="owner-pricePaid" value.bind="model.pricePaid">
                     <select id="owner-code" tabindex="112" class="currency-selector form-control" value.bind="model.code">
-                        <option repeat.for="cur of codes" model.bind="cur.ordinal">${cur.description}</option>
+                        <option repeat.for="cur of codes" model.bind="cur.ordinal">${'currencyCode.' + cur.description|t}</option>
                     </select>
                 </div>
             </div>
