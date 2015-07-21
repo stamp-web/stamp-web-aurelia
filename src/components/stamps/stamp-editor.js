@@ -7,6 +7,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import _ from 'lodash';
+import moment from 'moment';
 
 const logger = LogManager.getLogger('stamp-editor');
 
@@ -35,7 +36,7 @@ function createOwnership() {
         id: 0,
         albumRef: -1,
         code: CurrencyCode.USD.description,
-        purchased: '2004-09-29T12:00:00-05:00',
+        purchased: moment(new Date()).format('YYYY-MM-DDT00:00:00Z'),
         pricePaid: 0.0
     };
 }

@@ -24,6 +24,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
     conditions = Condition.symbols();
     loading = true;
     selectedCatalogue;
+    showWarning = false;
 
     _modelSubscribers = [];
 
@@ -58,6 +59,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
                 'Click to convert the wanted stamp using the existing country, catalogue and number.' :
                 'A stamp with this country, catalogue and number already exists.';
             this.conversionModel = data.conversionModel;
+            this.showWarning = true;
             this.playConflict();
         }
     }
@@ -84,6 +86,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
+        this.showWarning = false;
         this.setupValidation(this.validatorDI);
     }
 
@@ -98,6 +101,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         if( this.model.number && this.model.number !== '' ) {
             if (this.model.catalogueRef > 0) {
                 this.icon = '';
+                this.showWarning = false;
                 this.eventBus.publish(EventNames.checkExists, {model: this.model});
             }
             if( this.model.id <= 0 && this.model.condition >= 0 ) {
