@@ -69,6 +69,7 @@ export const Condition = new Enum({
     MINT: {ordinal: 0, description: 'MLH'},
     MINT_NH: {ordinal: 1, description: 'MNH'},
     MING_NG: {ordinal: 4, description: 'MNG'},
+    MINT_HH: {ordinal: 5, description: 'MHH'},
     USED: {ordinal: 2, description: 'U'},
     CTO: {ordinal: 3, description: 'CTO'}
 
