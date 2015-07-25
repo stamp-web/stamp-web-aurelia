@@ -52,6 +52,11 @@ export class StampEditorComponent extends EventManaged {
     preferences = [];
     duplicateModel;
 
+    /* Session cached values (overriding preference values) */
+    cachedValues = {
+        purchased: null
+    };
+
     constructor(eventBus, stampService, countryService, preferenceService) {
         super(eventBus);
         this.stampService = stampService;
@@ -187,6 +192,9 @@ export class StampEditorComponent extends EventManaged {
     save(keepOpen) {
         if (this.validate()) {
             this.stampService.save(this.duplicateModel).then(stamp => {
+                if( this.duplicateModel.id <= 0 ) {
+                    this.cacheSessionValues(this.duplicateModel);
+                }
                 this.eventBus.publish(EventNames.stampSaved, { stamp: stamp, remainOpen: keepOpen });
                 if( keepOpen) {
                     this.resetModel();
@@ -194,6 +202,13 @@ export class StampEditorComponent extends EventManaged {
             }).catch(err => {
                 logger.error(err);
             });
+        }
+    }
+
+    cacheSessionValues(m) {
+        let owner = (m.stampOwnerships && m.stampOwnerships.length > 0 ) ? m.stampOwnerships[0] : undefined;
+        if( owner && owner.id <= 0 ) {
+            this.cachedValues.purchased = (owner.purchased) ? owner.purchased : null;
         }
     }
 
@@ -213,13 +228,12 @@ export class StampEditorComponent extends EventManaged {
         this.duplicateModel.id = 0;
         this.duplicateModel.rate = "";
         this.duplicateModel.description = "";
-        this.resetCatalogueNumber();
-        this.resetOwnership();
+        this.resetCatalogueNumber(this.activeCatalogueNumber);
+        this.resetOwnership(this.ownership);
         this.model = this.duplicateModel;
     }
 
-    resetCatalogueNumber() {
-        let cn = this.activeCatalogueNumber
+    resetCatalogueNumber(cn) {
         cn.id = 0;
         cn.number = "";
         cn.unknown = false;
@@ -227,11 +241,11 @@ export class StampEditorComponent extends EventManaged {
         cn.value = 0;
     }
 
-    resetOwnership() {
-        let owner = this.ownership;
+    resetOwnership(owner) {
         if( owner ) {
             owner.notes = undefined;
             owner.cert = false;
+            owner.img = undefined;
             owner.certImg = undefined;
             owner.defects = 0;
             owner.deception = 0;
@@ -244,6 +258,12 @@ export class StampEditorComponent extends EventManaged {
             this.duplicateModel = _.clone(newValue, true);
             if( this.preferenceService.loaded ) {
                 this.processPreferences();
+            }
+            if( this.createMode ) { // set session purchased date
+                let owner = this.ownership;
+                if( owner && this.cachedValues.purchased ) {
+                    owner.purchased = this.cachedValues.purchased;
+                }
             }
         } else {
             this.duplicateModel = null;
