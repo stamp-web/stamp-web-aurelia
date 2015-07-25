@@ -188,6 +188,9 @@ export class StampEditorComponent extends EventManaged {
         if (this.validate()) {
             this.stampService.save(this.duplicateModel).then(stamp => {
                 this.eventBus.publish(EventNames.stampSaved, { stamp: stamp, remainOpen: keepOpen });
+                if( keepOpen) {
+                    this.resetModel();
+                }
             }).catch(err => {
                 logger.error(err);
             });
@@ -204,6 +207,35 @@ export class StampEditorComponent extends EventManaged {
 
     validate() {
         return true;
+    }
+
+    resetModel() {
+        this.duplicateModel.id = 0;
+        this.duplicateModel.rate = "";
+        this.duplicateModel.description = "";
+        this.resetCatalogueNumber();
+        this.resetOwnership();
+        this.model = this.duplicateModel;
+    }
+
+    resetCatalogueNumber() {
+        let cn = this.activeCatalogueNumber
+        cn.id = 0;
+        cn.number = "";
+        cn.unknown = false;
+        cn.nospace = false;
+        cn.value = 0;
+    }
+
+    resetOwnership() {
+        let owner = this.ownership;
+        if( owner ) {
+            owner.notes = undefined;
+            owner.cert = false;
+            owner.certImg = undefined;
+            owner.defects = 0;
+            owner.deception = 0;
+        }
     }
 
     modelChanged(newValue) {
