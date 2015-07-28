@@ -87,6 +87,8 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
         this.showWarning = false;
+        this.icon = ''; // clear exists icon
+        this.conversionModel = undefined; // clear conversion context
         this.setupValidation(this.validatorDI);
     }
 
