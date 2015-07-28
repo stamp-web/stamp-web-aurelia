@@ -19,10 +19,13 @@ export class dateFormatterValueConverter {
     }
 
     fromView(value) {
-        if( value ) {
+        if (value) {
+            if( value === 'Invalid date') { // this will force the text to be "" for invalid dates
+                return null;
+            }
             try {
                 value = moment(new Date(value)).format('YYYY-MM-DDTHH:mm:ssZ');
-            } catch( dateErr ) {
+            } catch (dateErr) {
                 logger.warn("invalid value from view: " + value, dateErr);
             }
         }

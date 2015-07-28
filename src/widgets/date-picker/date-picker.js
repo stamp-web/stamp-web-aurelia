@@ -8,6 +8,10 @@ import 'resources/styles/widgets/date-picker/date-picker.css!';
 @inject(Element)
 @bindable("value")
 @bindable({
+    name: "clearable",
+    defaultValue: "false"
+})
+@bindable({
     name: "format",
     defaultValue: "MM/DD/YYYY"
 })
@@ -29,7 +33,18 @@ export class DatePicker {
         close: 'sw-icon-cancel'
     }
 
+    clear() {
+        var picker = $(this.element).find('.input-group.date').data("DateTimePicker");
+        picker.clear();
+        picker.hide();
+    }
+
+    clearableChanged(newValue) {
+        this.clearing = (newValue === 'true');
+    }
+
     attached() {
+
         this.datePicker = $(this.element).find('.input-group.date')
             .datetimepicker({
                 // set to true to not dismiss dialog

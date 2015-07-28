@@ -190,7 +190,7 @@ export class StampEditorComponent extends EventManaged {
     }
 
     save(keepOpen) {
-        if (this.validate()) {
+        if (this.validate() && this.preprocess()) {
             this.stampService.save(this.duplicateModel).then(stamp => {
                 if( this.duplicateModel.id <= 0 ) {
                     this.cacheSessionValues(this.duplicateModel);
@@ -221,6 +221,14 @@ export class StampEditorComponent extends EventManaged {
     }
 
     validate() {
+        return true;
+    }
+
+    preprocess() {
+        var owner = this.ownership;
+        if( owner.purchased === "") { // remove date objects from model if cleared to avoid server format issues
+            delete owner.purchased;
+        }
         return true;
     }
 
