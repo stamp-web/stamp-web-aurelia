@@ -66,32 +66,32 @@ export class Enum {
 
 export const Condition = new Enum({
 
-    MINT: {ordinal: 0, description: 'MLH'},
-    MINT_NH: {ordinal: 1, description: 'MNH'},
-    MING_NG: {ordinal: 4, description: 'MNG'},
-    MINT_HH: {ordinal: 5, description: 'MHH'},
-    USED: {ordinal: 2, description: 'U'},
-    CTO: {ordinal: 3, description: 'CTO'}
+    MINT: {ordinal: 0, description: 'condition.MLH'},
+    MINT_NH: {ordinal: 1, description: 'condition.MNH'},
+    MING_NG: {ordinal: 4, description: 'condition.MNG'},
+    MINT_HH: {ordinal: 5, description: 'condition.MHH'},
+    USED: {ordinal: 2, description: 'condition.U'},
+    CTO: {ordinal: 3, description: 'condition.CTO'}
 
 });
 
 export const Grade = new Enum({
-    XF: {ordinal: 0, description: 'XF'},
-    VF: {ordinal: 1, description: 'VF'},
-    FVF: {ordinal: 2, description: 'FVF'},
-    F: {ordinal: 3, description: 'F'},
-    VG: {ordinal: 4, description: 'VG'},
-    D: {ordinal: 5, description: 'D'},
-    CTS: {ordinal: 6, description: 'CTS'}
+    XF: {ordinal: 0, description: 'grade.XF'},
+    VF: {ordinal: 1, description: 'grade.VF'},
+    FVF: {ordinal: 2, description: 'grade.FVF'},
+    F: {ordinal: 3, description: 'grade.F'},
+    VG: {ordinal: 4, description: 'grade.VG'},
+    D: {ordinal: 5, description: 'grade.D'},
+    CTS: {ordinal: 6, description: 'grade.CTS'}
 });
 
 export const CurrencyCode = new Enum({
-    USD: {ordinal: 0, description: 'USD'},
-    CAD: {ordinal: 1, description: 'CAD'},
-    EUR: {ordinal: 2, description: 'EUR'},
-    GBP: {ordinal: 3, description: 'GBP'},
-    AUD: {ordinal: 4, description: 'AUD'},
-    JYP: {ordinal: 5, description: 'JYP'}
+    USD: {ordinal: 0, description: 'currencyCode.USD'},
+    CAD: {ordinal: 1, description: 'currencyCode.CAD'},
+    EUR: {ordinal: 2, description: 'currencyCode.EUR'},
+    GBP: {ordinal: 3, description: 'currencyCode.GBP'},
+    AUD: {ordinal: 4, description: 'currencyCode.AUD'},
+    JYP: {ordinal: 5, description: 'currencyCode.JYP'}
 
 });
 
@@ -105,4 +105,33 @@ export const CatalogueType = new Enum({
     BRIDGER_AND_KAY: {ordinal: 6, description: 'Bridger and Kay'},
     VAN_DAM: {ordinal: 7, description: 'Van Dam'},
     JSCA: {ordinal: 8, description: 'JSCA Specialized'}
+});
+
+export const Defects = new Enum({
+    THIN: {ordinal: 2, description: 'defects.THIN'},
+    TORN: {ordinal: 4, description: 'defects.TORN'},
+    TONED_PAPER: {ordinal: 8, description: 'defects.TONED_PAPER'},
+    CREASED: {ordinal: 16, description: 'defects.CREASED'},
+    SCUFFED: {ordinal: 32, description: 'defects.SCUFFED'},
+    PINHOLE: {ordinal: 64, description: 'defects.PINHOLE'},
+    SHORT_PERF: {ordinal: 128, description: 'defects.SHORT_PERF'},
+    STUNTED_PERF: {ordinal: 256, description: 'defects.STUNTED_PERF'},
+    CLIPPED: {ordinal: 512, description: 'defects.CLIPPED'},
+    FADING: {ordinal: 1024, description: 'defects.FADING'},
+    BLEEDING: {ordinal: 2048, description: 'defects.BLEEDING'},
+    INK_STAIN: {ordinal: 4096, description: 'defects.INK_STAIN'},
+    CHANGELING: {ordinal: 8192, description: 'defects.CHANGELING'},
+    CRACKED_GUM: {ordinal: 16384, description: 'defects.CRACKED_GUM'},
+    TONED_GUM: {ordinal: 32768, description: 'defects.TONED_GUM'},
+    HEAVILY_HINGED: {ordinal: 65536, description: 'defects.HEAVILY_HINGED'}
+});
+
+export const Deceptions = new Enum({
+    FAKE_CANCEL: {ordinal: 2, description: 'deceptions.FAKE_CANCEL'},
+    FAKE_OVERPRINT: {ordinal: 4, description: 'deceptions.FAKE_OVERPRINT'},
+    FISCAL_REMOVED: {ordinal: 8, description: 'deceptions.FISCAL_REMOVED'},
+    FORGERY: {ordinal: 16, description: 'deceptions.FORGERY'},
+    FORGERY_POSSIBLE: {ordinal: 32, description: 'deceptions.FORGERY_POSSIBLE'},
+    REPAIRED: {ordinal: 64, description: 'deceptions.REPAIRED'},
+    REPRINT: {ordinal: 128, description: 'deceptions.REPRINT'}
 });

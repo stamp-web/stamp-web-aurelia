@@ -9,7 +9,7 @@
   "bugs": {
     "url": "https://github.com/stamp-web/stamp-web-aurelia/issues"
   },
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "author": "Jason Drake <jadrake75@gmail.com> (http://www.drakeserver.com/)",
   "main": "dist/commonjs/index.js",
   "repository": {
@@ -74,7 +74,8 @@
       "lodash": "npm:lodash@^3.10.0",
       "moment": "github:moment/moment@2.10.3",
       "nprogress": "github:rstacruz/nprogress@^0.1.6",
-      "polymer/mutationobservers": "github:polymer/mutationobservers@^0.4.2"
+      "polymer/mutationobservers": "github:polymer/mutationobservers@^0.4.2",
+      "select2/select2": "github:select2/select2@^4.0.0"
     },
     "devDependencies": {
       "traceur": "github:jmcriffey/bower-traceur@0.0.88",

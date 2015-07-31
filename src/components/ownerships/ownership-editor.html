@@ -1,7 +1,10 @@
 <template>
     <require from="../../value-converters/empty-text"></require>
     <require from="../../widgets/date-picker/date-picker"></require>
+    <require from="../../widgets/select-picker/select-picker"></require>
     <require from="../../value-converters/date-formatter"></require>
+    <require from="../../value-converters/bitwise-to-array"></require>
+
     <div class="panel panel-default sw-ownership-editor">
         <div class="panel-heading">
             <h4 class="panel-title">Owning Details</h4>
@@ -11,35 +14,49 @@
             <div class="form-group form-group-sm has-feedback">
                 <label for="owner-albumRef" class="col-sm-3 control-label">Album</label>
                 <div class="col-sm-9">
-                    <select id="owner-albumRef" tabindex="100" disabled.bind="loading" class="album-selector form-control" value.bind="model.albumRef">
-                        <option model.bind="-1">Select an album</option>
-                        <option repeat.for="album of albums" model.bind="album.id">${album.name}</option>
-                    </select>
+                    <select-picker items.bind="albums" class="album-selector" disabled.bind="loading"  value.two-way="model.albumRef"
+                        config.bind="{ id: 'owner-albumRef', tabIndex: 100, name: 'albumRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.album-select' }">
+                    </select-picker>
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label for="owner-condition" class="col-sm-3 control-label">Condition</label>
+                <label for="owner-condition" class="col-sm-3 control-label">${'editor.condition'|t}</label>
                 <div class="col-sm-4">
-                    <select id="owner-condition" tabindex="101" class="condition-selector form-control" value.bind="model.condition">
-                        <option repeat.for="c of conditions" model.bind="c.ordinal">${'condition.' + c.description|t}</option>
-                    </select>
+                    <select-picker class="condition-selector" items.bind="conditions" value.two-way="model.condition"
+                                   config.bind="{ id: 'owner-condition', tabIndex: 101, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
+                    </select-picker>
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label for="owner-grade" class="col-sm-3 control-label">Grade</label>
+                <label for="owner-grade" class="col-sm-3 control-label">${'editor.grade'|t}</label>
                 <div class="col-sm-4">
-                    <select id="owner-grade" tabindex="102" class="grade-selector form-control" value.bind="model.grade">
-                        <option repeat.for="g of grades" model.bind="g.ordinal">${'grade.' + g.description|t}</option>
-                    </select>
+                    <select-picker class="grade-selector" items.bind="grades" value.two-way="model.grade"
+                                   config.bind="{ id: 'owner-grade', tabIndex: 102, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.grade-select' }">
+                    </select-picker>
                 </div>
             </div>
             <div class="form-group form-group-sm">
-                <label for="owner-sellerRef" class="col-sm-3 control-label">Seller</label>
+                <label for="owner-defects" class="col-sm-3 control-label">${'editor.defects'|t}</label>
                 <div class="col-sm-9">
-                    <select id="owner-sellerRef" tabindex="110" disabled.bind="loading" class="seller-selector form-control" value.bind="model.sellerRef">
-                        <option model.bind="-1">Select a seller</option>
-                        <option repeat.for="seller of sellers" model.bind="seller.id">${seller.name}</option>
-                    </select>
+                    <select-picker items.bind="defects" value.two-way="model.defects | bitwiseToArray:defects.length"
+                                   config.bind="{ id: 'owner-defects', tabIndex: 104, name: 'defects', labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, multiple: true, caption: 'editor.defects-select' }">
+                    </select-picker>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-defects" class="col-sm-3 control-label">${'editor.deceptions'|t}</label>
+                <div class="col-sm-9">
+                    <select-picker items.bind="deceptions" value.two-way="model.deception | bitwiseToArray:deceptions.length"
+                                   config.bind="{ id: 'owner-deceptions', tabIndex: 107, name: 'deceptions', labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, multiple: true, caption: 'editor.deceptions-select' }">
+                    </select-picker>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-sellerRef" class="col-sm-3 control-label">${'editor.seller'|t}</label>
+                <div class="col-sm-9">
+                    <select-picker items.bind="sellers" class="seller-selector" disabled.bind="loading"  value.two-way="model.sellerRef"
+                                   config.bind="{ id: 'owner-sellerRef', tabIndex: 110, name: 'sellerRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.seller-select' }">
+                    </select-picker>
                 </div>
             </div>
             <div class="form-group form-group-sm">
@@ -47,7 +64,7 @@
                 <div class="input-group col-sm-9">
                     <input type="text" tabindex="111" class="form-control price-paid" id="owner-pricePaid" value.bind="model.pricePaid">
                     <select id="owner-code" tabindex="112" class="currency-selector form-control" value.bind="model.code">
-                        <option repeat.for="cur of codes" model.bind="cur.ordinal">${'currencyCode.' + cur.description|t}</option>
+                        <option repeat.for="cur of codes" model.bind="cur.ordinal">${cur.description|t}</option>
                     </select>
                 </div>
             </div>

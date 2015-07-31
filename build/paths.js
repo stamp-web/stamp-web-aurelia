@@ -12,6 +12,7 @@ module.exports = {
 	style: path.join(basePath,'resources/styles/**/*.css'),
 	less: path.join(basePath,appRoot + 'components/**/*.less'),
 	appLess: path.join(basePath,appRoot + '**/*.less'),
+    locale: path.join(basePath,'locale'),
 	lessOut: path.join(basePath,'resources/styles'),
 	output: path.join(basePath,'dist/'),
 	doc: path.join(basePath,'./doc'),

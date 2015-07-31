@@ -4,7 +4,7 @@ import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import {Albums} from '../../services/albums';
 import {Sellers} from '../../services/sellers';
-import {Condition, Grade, CurrencyCode} from '../../util/common-models';
+import {Condition, Grade, CurrencyCode, Defects, Deceptions} from '../../util/common-models';
 
 import 'resources/styles/components/ownerships/ownership-editor.css!';
 
@@ -20,6 +20,8 @@ export class OwnershipEditor extends EventManaged {
     conditions = Condition.symbols();
     grades = Grade.symbols();
     codes = CurrencyCode.symbols();
+    defects = Defects.symbols();
+    deceptions = Deceptions.symbols();
     sellers = [];
 
 

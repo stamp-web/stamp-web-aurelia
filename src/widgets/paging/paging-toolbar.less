@@ -8,8 +8,24 @@ paging-toolbar {
     div >div {
         display: inline-block;
     }
-    .btn {
+    .paging-button {
         padding: @padding-xs-horizontal / 2;
+        color: @pagination-color;
+        background-color: @pagination-bg;
+        border-color: @pagination-border;
+        &:disabled {
+            color: @pagination-disabled-color;
+            background-color: @pagination-disabled-bg;
+            border-color: @pagination-disabled-border;
+        }
+        &:hover {
+            color: @pagination-active-color;
+            background-color: @pagination-active-bg;
+            border-color: @pagination-active-border;
+            &:disabled {
+                color: @pagination-disabled-color;
+            }
+        }
     }
     .current-page {
         position: relative;

@@ -1,5 +1,6 @@
 <template>
 	<require from="../../value-converters/empty-text"></require>
+    <require from="../../widgets/select-picker/select-picker"></require>
 	<div class="panel panel-default">
 		<div class="panel-heading panel-heading-with-actions">
 			<h4 class="panel-title">${'editor.details-title'|t}</h4>
@@ -19,10 +20,7 @@
 			<div class="form-group form-group-sm has-feedback">
 				<label for="details-countryRef" class="col-sm-3 control-label">${'editor.country'|t}</label>
 				<div class="col-sm-9">
-					<select id="details-countryRef" tabindex="50" disabled.bind="loading" class="country-selector form-control" value.bind="model.countryRef">
-						<option model.bind="-1">${'editor.country-select'|t}</option>
-						<option repeat.for="country of countries" model.bind="country.id">${country.name}</option>
-					</select>
+                    <select-picker items.bind="countries" disabled.bind="loading"  value.two-way="model.countryRef" config.bind="{ id: 'details-countryRef',labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
 				</div>
 			</div>
 			<div class="form-group form-group-sm has-feedback">
