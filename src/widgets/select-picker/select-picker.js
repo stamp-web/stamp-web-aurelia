@@ -1,4 +1,4 @@
-import {inject, customElement, bindable} from 'aurelia-framework';
+import {inject, customElement, bindable, LogManager} from 'aurelia-framework';
 import {I18N} from 'aurelia-i18next';
 import $ from 'jquery';
 import _ from 'lodash';
@@ -6,6 +6,8 @@ import select2 from 'select2/select2'; //eslint-disable-line no-unused-vars
 
 import "select2/select2@4.0.0/css/select2.css!";
 import 'resources/styles/widgets/select-picker/select-picker.css!';
+
+const logger = LogManager.getLogger('select-picker');
 
 @customElement('select-picker')
 @bindable('items')
@@ -23,6 +25,7 @@ import 'resources/styles/widgets/select-picker/select-picker.css!';
 @inject(Element, I18N)
 export class Select2Picker {
 
+    firedCollectionChanged = false;
 
     constructor(element, i18n) {
         this.element = element;
@@ -116,11 +119,32 @@ export class Select2Picker {
      */
     attached() {
         _.debounce(self => {
-            if (self.value) {
-                self.valueChanged(self.value, []);
+            if (self.value !== undefined && self.items && self.items.length > 0 ) { // the cached collections may not have been loaded yet
+                self.valueChanged(self.value, undefined);
             }
-        }, 250)(this);
+        }, 125)(this);
     }
+
+    /**
+     * Will listen for a change in the collection and if the new collection has content will fire a value change event
+     * Should only fire on load.
+     *
+     * @param newValue
+     * @param oldValue
+     */
+    itemsChanged(newValue, oldValue) { //eslint-disable-line no-unused-vars
+        if( newValue && newValue.length > 0 ) {
+            _.debounce(self => {
+                self.valueChanged(self.value, undefined);
+                if( self.firedCollectionChanged ) {
+                    logger.debug("Collections was changed after initial binding");
+                }
+                self.firedCollectionChanged = true;
+            })(this);
+
+        }
+    }
+
 
     valueChanged(newValue, oldValue) {
         if (newValue === undefined) {
@@ -143,8 +167,8 @@ export class Select2Picker {
             if (isNaN(newValueInt)) {
                 throw new Error('Item Id must be null or an integer!');
             }
-            if (newValueInt !== Number(oldValue)) {
-                this.select2.select2('val', newValueInt);
+            if (newValueInt === 0 || newValueInt !== Number(oldValue)) { // oldValue may be 0 on initialization
+                this.select2.select2('val', newValue);
                 if (this.value !== newValueInt) {
                     this.value = newValueInt;
                 }
