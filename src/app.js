@@ -12,7 +12,7 @@ export class App {
         config.title = 'nav.title';
         config.map([
             {
-                route: 'stamp-list',
+                route: ['', 'stamp-list'],
                 name: 'stamp-list',
                 moduleId: './views/stamps/stamp-list',
                 nav: true,
