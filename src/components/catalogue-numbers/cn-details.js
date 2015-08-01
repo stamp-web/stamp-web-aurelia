@@ -118,9 +118,6 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
             $orderby: 'issue desc'
         }).then(results => {
             self.catalogues = results.models;
-            _.each(self.catalogues, catalogue => {
-                catalogue.displayName = catalogue.issue + " - " + catalogue.name;
-            });
             self.loading = false;
         });
     }

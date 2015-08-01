@@ -3,6 +3,8 @@ import {HttpClient} from "aurelia-http-client";
 import {EntityManaged} from "services/entity-managed";
 import {EventAggregator} from 'aurelia-event-aggregator';
 
+import _ from 'lodash';
+
 @inject(HttpClient, EventAggregator)
 export class Catalogues extends EntityManaged {
 
@@ -18,6 +20,12 @@ export class Catalogues extends EntityManaged {
 
     getResourceName() {
         return "catalogues";
+    }
+
+    _postfind(models) {
+        _.each(models, catalogue => {
+            catalogue.displayName = catalogue.issue + " - " + catalogue.name;
+        });
     }
 
 }

@@ -152,6 +152,10 @@ export class BaseService {
         });
     }
 
+    _postfind(models) { //eslint-disable-line no-unused-vars
+        // do nothing
+    }
+
     find(options) {
         var self = this;
         var q = new Promise((resolve, reject) => {
@@ -168,6 +172,7 @@ export class BaseService {
                     if (response.statusCode === 200 && response.response) {
                         var resp = response.content;
                         self.models = resp[self.getCollectionName()];
+                        self._postfind(self.models);
                         self.total = resp.total;
                     }
                     self.eventBus.publish(EventNames.loadingFinished);
