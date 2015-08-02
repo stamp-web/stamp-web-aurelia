@@ -122,5 +122,9 @@
         "FORGERY_POSSIBLE": "Possible forgery",
         "REPAIRED": "Repaired",
         "REPRINT": "Reprint"
+    },
+    "userLocale": {
+        "en": "English (en)",
+        "zh": "Chinese (zh)"
     }
 }

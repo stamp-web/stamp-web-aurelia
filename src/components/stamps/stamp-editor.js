@@ -77,9 +77,11 @@ export class StampEditorComponent extends EventManaged {
     changeEditMode(mode) {
         if( this.createMode === true && (mode === 'wantList' || mode === 'stamp') ) {
             this.duplicateModel.wantList = !this.duplicateModel.wantList;
-            this.duplicateModel.stampOwnership = [];
             if( !this.duplicateModel.wantList ) {
-                this.duplicateModel.stampOwnership.push(createOwnership());
+                this.duplicateModel.stampOwnerships = [];
+                this.duplicateModel.stampOwnerships.push(createOwnership());
+            } else {
+                delete this.duplicateModel.stampOwnerships;
             }
         } else if ( this.createMode === false && mode === 'create' ) {
             this.eventBus.publish(EventNames.stampCreate);
@@ -90,9 +92,9 @@ export class StampEditorComponent extends EventManaged {
     convertToStamp(m) {
         if (this.duplicateModel.id === 0 && m && this.createMode === true) {
             this.duplicateModel = m;
-            this.duplicateModel.stampOwnership = [];
+            this.duplicateModel.stampOwnerships = [];
             this.duplicateModel.wantList = false;
-            this.duplicateModel.stampOwnership.push(createOwnership());
+            this.duplicateModel.stampOwnerships.push(createOwnership());
         }
     }
 

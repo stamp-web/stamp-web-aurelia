@@ -92,7 +92,11 @@ export const CurrencyCode = new Enum({
     GBP: {ordinal: 3, description: 'currencyCode.GBP'},
     AUD: {ordinal: 4, description: 'currencyCode.AUD'},
     JYP: {ordinal: 5, description: 'currencyCode.JYP'}
+});
 
+export const UserLocale = new Enum({
+    en: {ordinal: 0, description: 'userLocale.en'},
+    zh: {ordinal: 1, description: 'userLocale.zh'}
 });
 
 export const CatalogueType = new Enum({
