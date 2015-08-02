@@ -8,7 +8,7 @@ import {Sellers} from '../../services/sellers';
 import {Catalogues} from '../../services/catalogues';
 import {StampCollections} from '../../services/stampCollections';
 import {Preferences} from '../../services/preferences';
-import {Condition, Grade, CurrencyCode} from '../../util/common-models';
+import {Condition, Grade, CurrencyCode, UserLocale} from '../../util/common-models';
 import {ObjectUtilities} from '../../util/object-utilities';
 
 import _ from 'lodash';
@@ -29,6 +29,7 @@ export class UserSettings {
     conditions = Condition.symbols();
     codes = CurrencyCode.symbols();
     grades = Grade.symbols();
+    locales = UserLocale.symbols();
     pageSizes = [100, 250, 500, 1000, 2500, 5000];
 
     model = {};
@@ -46,6 +47,7 @@ export class UserSettings {
         { name: 'pageSize', category: 'stamps', type: Number, defaultValue: 100 },
         { name: 'CurrencyCode', category: 'currency', type: String, defaultValue: 'USD' },
         { name: 'imagePath', category: 'stamps', type: String },
+        { name: 'locale', category: 'user', type: String, defaultValue: 'en' },
         { name: 'applyCatalogueImagePrefix', category: 'stamps', type: Boolean, defaultValue: true }
     ]
 
@@ -141,10 +143,11 @@ export class UserSettings {
     processPreferences() {
         let self = this;
         _.forEach(self.preferenceKeys, function (prefKey) {
+
             let pref = self.preferenceService.getByNameAndCategory(prefKey.name, prefKey.category);
             if (!pref) {
                 pref = {
-                    value: (prefKey.defaulValue) ? prefKey.defaultValue.toString() : undefined
+                    value: (prefKey.defaultValue) ? prefKey.defaultValue.toString() : undefined
                 };
             }
             if (!self.model[prefKey.category]) {
@@ -161,6 +164,7 @@ export class UserSettings {
                 default:
                     value = pref.value;
             }
+
             self.model[prefKey.category][prefKey.name] = value;
             self.modelSubscribers.push(self.observer.getObserver(self.model[prefKey.category], prefKey.name).subscribe(self.validate.bind(self)));
         });

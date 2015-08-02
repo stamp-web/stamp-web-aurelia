@@ -62,10 +62,10 @@
                     </div>
                     <div class="form-group form-group-sm">
                         <label for="settings-currencyCode" class="col-sm-3 control-label">${'settings.currencyCode'|t}</label>
-                        <div class="col-sm-4">
-                            <select id="settings-currencyCode" class="currency-selector form-control" value.bind="model.currency.CurrencyCode">
-                                <option repeat.for="cur of codes" model.bind="cur.description">${cur.description | t}</option>
-                            </select>
+                        <div class="col-sm-2">
+                            <select-picker class="currency-selector" items.bind="codes" value.two-way="model.currency.CurrencyCode"
+                                           config.bind="{ id: 'settings-currencyCode', valueType: 'String', labelProperty: 'description', valueProperty: 'keyName', filterSearch: false, caption: 'settings.currencyCode-select' }">
+                            </select-picker>
                         </div>
                     </div>
                 </div>
@@ -108,12 +108,19 @@
                     </div>
                 </div>
             </div>
-
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">${'settings.user'|t}</h4>
                 </div>
                 <div class="panel-body">
+                    <div class="form-group form-group-sm">
+                        <label for="settings-locale" class="col-sm-3 control-label">${'settings.preferredLocale'|t}</label>
+                        <div class="col-sm-2">
+                            <select-picker class="locale-selector" items.bind="locales" value.two-way="model.user.locale"
+                                           config.bind="{ id: 'settings-locale', valueType: 'String', labelProperty: 'description', valueProperty: 'keyName', filterSearch: false, caption: 'settings.locale-select' }">
+                            </select-picker>
+                        </div>
+                    </div>
                     <div class="form-group form-group-sm">
                         <label for="settings-pageSize" class="col-sm-3 control-label">${'settings.pageSize'|t}</label>
                         <div class="col-sm-2">

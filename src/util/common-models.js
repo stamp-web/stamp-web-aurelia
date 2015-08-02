@@ -6,6 +6,7 @@ export class EnumSymbol {
     sym = Symbol.for(name);
     ordinal:number;
     description:string;
+    keyName:string;
 
     constructor(name:string, {ordinal, description}) {
         if (!Object.is(ordinal, undefined)) {
@@ -14,6 +15,7 @@ export class EnumSymbol {
         if (description) {
             this.description = description;
         }
+        this.keyName = name;
         Object.freeze(this);
     }
 
@@ -35,7 +37,7 @@ export class Enum {
     constructor(enumLiterals) {
         for (let key in enumLiterals) {
             if (!enumLiterals[key]) {
-                throw new TypeError('each enum should have been initialized with atleast empty {} value');
+                throw new TypeError('each enum should have been initialized with at least empty {} value');
             }
             this[key] = new EnumSymbol(key, enumLiterals[key]);
         }

@@ -19,6 +19,10 @@ const logger = LogManager.getLogger('select-picker');
     defaultValue: 'id'
 })
 @bindable({
+    name: 'valueType',
+    defaultValue: 'Number'
+})
+@bindable({
     name: 'labelProperty',
     defaultValue: 'name'
 })
@@ -55,6 +59,9 @@ export class Select2Picker {
         }
         if( this.config.labelProperty ) {
             this.labelProperty = this.config.labelProperty;
+        }
+        if( this.config.valueType ) {
+            this.valueType = this.config.valueType;
         }
 
         if( this.config.id ) {
@@ -95,7 +102,13 @@ export class Select2Picker {
                     }
                     self.valueChanged(newArr, self.value);
                 } else {
-                    self.valueChanged(-1, self.value);
+                    let newValue = "";
+                    switch(self.valueType) {
+                        case Number:
+                            newValue = -1;
+                            break;
+                    }
+                    self.valueChanged(newValue, self.value);
                 }
 
             }
@@ -145,6 +158,16 @@ export class Select2Picker {
         }
     }
 
+    selectAndFire(newValue, finalNewValue) {
+        if( !finalNewValue ) {
+            finalNewValue = newValue;
+        }
+        this.select2.select2('val', newValue);
+        if( this.value !== finalNewValue ) {
+            this.value = finalNewValue;
+        }
+        this.element.dispatchEvent(new Event("change"));
+    }
 
     valueChanged(newValue, oldValue) {
         if (newValue === undefined) {
@@ -155,24 +178,21 @@ export class Select2Picker {
                 oldValue = [];
             }
             if( _.xor(oldValue, newValue).length > 0 ) {
-                this.select2.select2('val', newValue);
-                if( this.value !== newValue ) {
-                    this.value = newValue;
-                }
-                this.element.dispatchEvent(new Event("change"));
+                this.selectAndFire(newValue);
             }
         } else {
-            var newValueInt = parseInt(Number(newValue), 10);
-
-            if (isNaN(newValueInt)) {
-                throw new Error('Item Id must be null or an integer!');
+            if( this.valueType === "String" ) {
+                this.selectAndFire(newValue);
             }
-            if (newValueInt === 0 || newValueInt !== Number(oldValue)) { // oldValue may be 0 on initialization
-                this.select2.select2('val', newValue);
-                if (this.value !== newValueInt) {
-                    this.value = newValueInt;
+            if( this.valueType === "Number" ) {
+                var newValueInt = parseInt(Number(newValue), 10);
+                if (isNaN(newValueInt)) {
+                    throw new Error('Item Id must be null or an integer!');
                 }
-                this.element.dispatchEvent(new Event("change"));
+                if (newValueInt === 0 || newValueInt !== Number(oldValue)) { // oldValue may be 0 on initialization
+                    this.selectAndFire(newValue, newValueInt);
+                }
+
             }
         }
     }
