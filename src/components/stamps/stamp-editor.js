@@ -9,6 +9,8 @@ import {EventManaged} from '../../events/event-managed';
 import _ from 'lodash';
 import moment from 'moment';
 
+import 'resources/styles/components/stamps/stamps.css!';
+
 const logger = LogManager.getLogger('stamp-editor');
 
 const PreferredValues = [
@@ -89,6 +91,7 @@ export class StampEditorComponent extends EventManaged {
         if (this.duplicateModel.id === 0 && m && this.createMode === true) {
             this.duplicateModel = m;
             this.duplicateModel.stampOwnership = [];
+            this.duplicateModel.wantList = false;
             this.duplicateModel.stampOwnership.push(createOwnership());
         }
     }
@@ -226,7 +229,7 @@ export class StampEditorComponent extends EventManaged {
 
     preprocess() {
         var owner = this.ownership;
-        if( owner.purchased === "") { // remove date objects from model if cleared to avoid server format issues
+        if( owner && owner.purchased === "") { // remove date objects from model if cleared to avoid server format issues
             delete owner.purchased;
         }
         return true;
