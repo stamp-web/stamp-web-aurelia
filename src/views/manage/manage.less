@@ -33,6 +33,31 @@
 	}
 }
 
+.manage-list-toolbar {
+    .col-sm-2, .col-sm-4 {
+        padding-right: 0;
+    }
+    .input-group {
+        &> input {
+            width: auto;
+        }
+        &>button {
+            width: 32px;
+            padding-left: 6px;
+            height: 26px;
+            font-size: @font-size-small;
+        }
+    }
+    label {
+        text-align: right;
+        float: right;
+        vertical-align: middle;
+        display: inline-block;
+        position: relative;
+        top: 5px;
+    }
+}
+
 .manage-list {
 	height: calc(~"100% - 56px");
 	padding-top: @panel-body-padding;

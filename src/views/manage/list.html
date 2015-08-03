@@ -1,6 +1,26 @@
 <template>
 	<require from="../../value-converters/stamp-count"></require>
+    <require from="../../value-converters/filter-by-name"></require>
 
+    <div class="manage-list-toolbar">
+        <form class="form-horizontal">
+            <div class="form-group form-group-sm">
+                <div class="col-sm-2 hidden-xs">
+                    <label for="filter-text">${'manage.filter'|t}</label>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="input-group">
+                        <input id="filter-text" class="form-control" placeholder="${'manage.filterPlaceholder'|t}" type="text" value.bind="filterText">
+                        <button class="input-group-addon btn-sm btn btn-default" disabled.bind="filterText===''" click.delegate="clear()">
+                            <span class="sw-icon-cancel"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
 	<table class="table table-hover entity-list">
 		<thead>
 		<tr>
@@ -13,7 +33,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr repeat.for="model of models">
+		<tr repeat.for="model of models | filterByName:filterText">
 			<td if.bind="$parent.hasIssue">${model.issue}</td>
 			<td>${model.name}</td>
 			<td>

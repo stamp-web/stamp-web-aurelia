@@ -66,6 +66,10 @@
         "stampCollection-select": "Select a stamp collection",
         "user": "User Settings"
     },
+    "manage": {
+        "filter": "Filter",
+        "filterPlaceholder": "Filter results..."
+    },
     "actions": {
         "canel": "Cancel",
         "reset": "Reset",

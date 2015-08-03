@@ -12,6 +12,7 @@ const logger = LogManager.getLogger('manage-list-table');
 export class EntityListManage {
 
     subscriptions = [];
+    filterText = "";
     hasIssue = false;
     editingModel;
 
@@ -69,6 +70,10 @@ export class EntityListManage {
                 }
             }
         });
+    }
+
+    clear() {
+        this.filterText = "";
     }
 
     activate(obj, instructions) {
