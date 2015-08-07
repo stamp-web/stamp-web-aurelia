@@ -2,7 +2,7 @@
 	<require from="./stamp-details"></require>
 	<require from="../catalogue-numbers/cn-details"></require>
     <require from="../ownerships/ownership-editor"></require>
-	<div class="stamp-editor" if.bind="duplicateModel">
+	<div class="stamp-editor" if.bind="duplicateModel && loaded">
         <div>
             <form class="form-horizontal">
                 <stamp-details model.bind="duplicateModel"></stamp-details>

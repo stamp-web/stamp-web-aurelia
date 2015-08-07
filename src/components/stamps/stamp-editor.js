@@ -1,7 +1,8 @@
 import {customElement, bindable, inject, computedFrom, LogManager} from 'aurelia-framework';
-import {CurrencyCode} from '../../util/common-models';
+import {CurrencyCode, CatalogueHelper} from '../../util/common-models';
 import {Stamps} from '../../services/stamps';
 import {Countries} from '../../services/countries';
+import {Catalogues} from '../../services/catalogues';
 import {Preferences} from '../../services/preferences';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
@@ -46,32 +47,58 @@ function createOwnership() {
 
 @customElement('stamp-editor')
 @bindable('model')
-@inject(EventAggregator, Stamps, Countries, Preferences)
+@inject(EventAggregator, Stamps, Countries, Catalogues, Preferences)
 export class StampEditorComponent extends EventManaged {
 
     createMode = false;
     usedInlineImagePath = false;
+    useCataloguePrefix = false;
     preferences = [];
     duplicateModel;
+    loaded = false;
 
     /* Session cached values (overriding preference values) */
     cachedValues = {
         purchased: null
     };
 
-    constructor(eventBus, stampService, countryService, preferenceService) {
+    constructor(eventBus, stampService, countryService, catalogueService, preferenceService) {
         super(eventBus);
         this.stampService = stampService;
         this.countryService = countryService;
+        this.catalogueService = catalogueService;
         this.preferenceService = preferenceService;
     }
 
     attached() {
         this.setPreferences();
+        this.loadServices();
         this.subscribe(EventNames.checkExists, this.checkExists.bind(this));
         this.subscribe(EventNames.calculateImagePath, this.calculateImagePath.bind(this));
         this.subscribe(EventNames.convert, this.convertToStamp.bind(this));
         this.subscribe(EventNames.changeEditMode, this.changeEditMode.bind(this));
+    }
+
+    /**
+     * These services are used by the image path generation.  It is in all likelihood that they are already
+     * initialized, however to ensure this, we'll call find with the default search options - this should return
+     * the cached result.  This will trigger the loaded flag which is used by the template to display the content
+     */
+    loadServices() {
+        let self = this;
+        let loadCount = 0;
+        let loaded = () => {
+            loadCount++;
+            if (loadCount >= 2) {
+                self.loaded = true;
+            }
+        };
+        this.countryService.find(this.countryService.getDefaultSearchOptions()).then(() => {
+            loaded();
+        });
+        this.catalogueService.find(this.catalogueService.getDefaultSearchOptions()).then(() => {
+            loaded();
+        });
     }
 
     changeEditMode(mode) {
@@ -101,18 +128,21 @@ export class StampEditorComponent extends EventManaged {
 
     calculateImagePath() {
         _.debounce(function (self) {
-            var m = self.duplicateModel;
+            let m = self.duplicateModel;
             if( self.createMode === true && m.wantList === false && m.stampOwnerships && m.stampOwnerships.length > 0 ) {
-                var cn = m.activeCatalogueNumber;
+                let cn = m.activeCatalogueNumber;
                 if( m.countryRef > 0 && cn.number !== '') {
-                    var country = self.countryService.getById( m.countryRef );
+                    let country = self.countryService.getById( m.countryRef );
                     if( country ) {
-                        var path = country.name + '/';
+                        let path = country.name + '/';
                         if( !self.usedInlineImagePath && (cn.condition === 2 || cn.condition === 3) ) {
                             path += 'used/';
                         }
+                        if( self.useCataloguePrefix === true && cn.catalogueRef > 0 ) {
+                            path += CatalogueHelper.getImagePrefix(self.catalogueService.getById( cn.catalogueRef ));
+                        }
                         path += cn.number + '.jpg';
-                        var owner = _.first(m.stampOwnerships);
+                        let owner = _.first(m.stampOwnerships);
                         owner.img = path;
                     }
                 }
@@ -123,9 +153,9 @@ export class StampEditorComponent extends EventManaged {
     checkExists() {
         _.debounce(function (self) {
             if (self.duplicateModel.countryRef > 0 && self.duplicateModel.activeCatalogueNumber) {
-                var cn = self.duplicateModel.activeCatalogueNumber;
+                let cn = self.duplicateModel.activeCatalogueNumber;
                 if (cn.catalogueRef > 0 && cn.number && cn.number !== '') {
-                    var opts = {
+                    let opts = {
                         $filter: '((countryRef eq ' + self.duplicateModel.countryRef + ') and (catalogueRef eq ' + cn.catalogueRef + ') and (number eq \'' + cn.number + '\'))'
                     };
                     self.stampService.find(opts).then(results => {
@@ -141,9 +171,9 @@ export class StampEditorComponent extends EventManaged {
     processExistenceResults(models) {
         _.remove(models, {id: this.duplicateModel.id});
         if (models.length > 0) {
-            var index = _.findIndex(models, {wantList: true});
-            var wantList = ( index >= 0 );
-            var obj = {
+            let index = _.findIndex(models, {wantList: true});
+            let wantList = ( index >= 0 );
+            let obj = {
                 convert: wantList,
                 conversionModel: ( index >= 0 ) ? models[index] : undefined
             };
@@ -152,7 +182,7 @@ export class StampEditorComponent extends EventManaged {
     }
 
     setPreferences() {
-        var self = this;
+        let self = this;
         this.preferenceService.find().then(results => {
             self.preferences = results.models;
             self.processPreferences();
@@ -161,17 +191,20 @@ export class StampEditorComponent extends EventManaged {
 
     processPreferences() {
         if (this.preferences.length > 0) {
-            var p = _.findWhere(this.preferences, { name: 'usedInlineImagePath', category: 'stamps'});
+            let p = _.findWhere(this.preferences, { name: 'usedInlineImagePath', category: 'stamps'});
             this.usedInlineImagePath = ( p && p.value === 'true');
+            let catPrefix = _.findWhere(this.preferences, { name: 'applyCatalogueImagePrefix', category: 'stamps'});
+            this.useCataloguePrefix = ( catPrefix && catPrefix.value === 'true');
+
             if( this.duplicateModel.id <= 0 ) {
                 PreferredValues.forEach(function (pref) {
-                    var prefValue = _.findWhere(this.preferences, {name: pref.key, category: pref.category});
+                    let prefValue = _.findWhere(this.preferences, {name: pref.key, category: pref.category});
                     if (prefValue) {
-                        var value = prefValue.value;
+                        let value = prefValue.value;
                         if (pref.type === Number) {
                             value = +value;
                         }
-                        var m = this.duplicateModel;
+                        let m = this.duplicateModel;
                         if (pref.model) {
                             pref.model.forEach(function (key) {
                                 if (key === "activeCatalogueNumber") {
@@ -230,7 +263,7 @@ export class StampEditorComponent extends EventManaged {
     }
 
     preprocess() {
-        var owner = this.ownership;
+        let owner = this.ownership;
         if( owner && owner.purchased === "") { // remove date objects from model if cleared to avoid server format issues
             delete owner.purchased;
         }
@@ -289,8 +322,8 @@ export class StampEditorComponent extends EventManaged {
         if (!this.duplicateModel) {
             return undefined;
         }
-        var owners = this.duplicateModel.stampOwnerships;
-        var owner;
+        let owners = this.duplicateModel.stampOwnerships;
+        let owner;
         if( this.duplicateModel.wantList === false ) {
             if (!owners) {
                 this.duplicateModel.stampOwnerships = [];
@@ -319,7 +352,7 @@ export class StampEditorComponent extends EventManaged {
         if (!this.duplicateModel) {
             return undefined;
         }
-        var activeNumber = this.duplicateModel.activeCatalogueNumber;
+        let activeNumber = this.duplicateModel.activeCatalogueNumber;
         if (!activeNumber) {
             if (!this.duplicateModel.catalogueNumbers) {
                 this.duplicateModel.catalogueNumbers = [];

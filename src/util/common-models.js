@@ -141,3 +141,17 @@ export const Deceptions = new Enum({
     REPAIRED: {ordinal: 64, description: 'deceptions.REPAIRED'},
     REPRINT: {ordinal: 128, description: 'deceptions.REPRINT'}
 });
+
+export var CatalogueHelper = function() {
+    return {
+        getImagePrefix: catalogue => {
+            let prefix = "";
+            switch( catalogue.type ) {
+                case 1:
+                    prefix = "sc";
+                    break;
+            }
+            return prefix;
+        }
+    };
+}();
