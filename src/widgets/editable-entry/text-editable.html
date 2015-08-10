@@ -1,0 +1,8 @@
+<template>
+    <span show.bind="!editing" click.trigger="startEdit()" tabindex="0" focus.trigger="startEdit()">
+        <content select=""></content>
+    </span>
+    <span show.bind="editing" >
+        <compose model.bind="value" view-model="${editor}"></compose>
+    </span>
+</template>

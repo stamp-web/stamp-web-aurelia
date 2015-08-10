@@ -1,0 +1,8 @@
+<template>
+    <require from="../../widgets/select-picker/select-picker"></require>
+    <select-picker class="condition-selector" id="select-picker" items.bind="conditions" value.two-way="model"
+                   keyup.delegate="handleKeys($event)"
+                   blur.trigger="cancel()"
+                   config.bind="{ id: 'cn-condition', tabIndex: 0, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
+    </select-picker>
+</template>
