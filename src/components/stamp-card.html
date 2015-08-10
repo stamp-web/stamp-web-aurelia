@@ -2,7 +2,7 @@
   <require from="../value-converters/by-name"></require>
   <require from="../value-converters/rate-filter"></require>
 
-  <div class="stamp-card ${(select) ? 'selected' : ''}">
+  <div class="stamp-card ${(selected) ? 'selected' : ''}" click.trigger="select()">
     <div class="card-header">
       ${model.activeCatalogueNumber.number} ${model.countryRef | byName:'countries' }
     </div>

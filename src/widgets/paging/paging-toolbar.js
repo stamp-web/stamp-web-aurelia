@@ -67,7 +67,7 @@ export class pagingToolbarComponent {
     }
 
     filterKey($event) {
-        if( $event.keyCode === KeyCodes.ENTER_VK && this.isValid()) {
+        if( $event.keyCode === KeyCodes.VK_ENTER && this.isValid()) {
             this.selectPage(parseInt($($event.target).val()) - 1);
         }
     }

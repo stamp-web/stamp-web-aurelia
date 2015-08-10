@@ -1,0 +1,48 @@
+<template>
+    <require from="../../value-converters/by-name"></require>
+    <require from="../../value-converters/as-enum"></require>
+    <require from="../../value-converters/as-currency-formatted"></require>
+
+    <section class="sw-catalogue-number-table">
+        <div class="sw-catalogue-number-content">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        <button type="button" class="btn btn-default btn-xs" show.bind='modelCopy' title="${'actions.add-cn'|t}" click.delegate="add()">
+                            <span class="sw-icon-plus"></span>
+                        </button>
+                    </th>
+                    <th>${'editor.catalogue' | t}</th>
+                    <th>${'editor.condition' | t}</th>
+                    <th>${'editor.catalogue-number' | t}</th>
+                    <th>${'editor.catalogue-value' | t}</th>
+                    <th>${'editor.actions' | t}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr repeat.for="number of modelCopy.catalogueNumbers" class="cn-row">
+                    <td><span if.bind="number.active" class="sw-icon-key"></span></td>
+                    <td class="col-md-3">${number.catalogueRef | byName:'catalogues' }</td>
+                    <td class="col-md-2">${number.condition | asEnum:'Condition' | t}</td>
+                    <td class="col-md-2">${number.number}</td>
+                    <td class="col-md-2">${number.value | asCurrencyFormatted:number.currencyCode}</td>
+                    <td class="col-md-2">
+                        <div class="btn-group actions">
+                            <button type="button" class="btn btn-default btn-xs" title="${'actions.make-active'|t}" show.bind="!number.active" click.delegate="$parent.makeActive(number)">
+                                <span class="sw-icon-target"></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-xs" title="${'actions.edit-cn'|t}" click.delegate="$parent.edit(number, $index)">
+                                <span class="sw-icon-edit"></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-xs" title="${'actions.remove-cn'|t}" show.bind="!number.active" click.trigger="$parent.remove(number)">
+                                <span class="sw-icon-trash"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</template>

@@ -80,7 +80,7 @@ export class Select2Picker {
         this.select2 = $select.select2(options);
 
         let tabIndex = this.config.tabIndex;
-        if( !tabIndex ) {
+        if( typeof tabIndex === 'undefined' ) {
             tabIndex = -1;
         }
         $select.attr('tabindex', -1);

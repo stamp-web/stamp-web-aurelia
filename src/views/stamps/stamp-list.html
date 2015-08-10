@@ -22,15 +22,28 @@
                 </div>
 
                 <div class="btn-group" role="group">
-					<button class="btn btn-sm btn-default" title="Show as grid" click.delegate="setViewMode('Grid')">
+					<button class="btn btn-sm btn-default ${ gridMode ? 'active' : ''}" title="Show as grid" click.delegate="setViewMode('Grid')">
 						<span class="sw-icon-gridview"></span>
 					</button>
-					<button class="btn btn-sm btn-default" title="Show as list" click.delegate="setViewMode('List')">
-						<i class="sw-icon-list"></i>
+					<button class="btn btn-sm btn-default ${ listMode ? 'active' : ''}" title="Show as list" click.delegate="setViewMode('List')">
+						<span class="sw-icon-list"></span>
 					</button>
 				</div>
 
+                <div class="btn-group" role="group">
+                    <button class="btn btn-sm btn-default ${ referenceMode ? 'active' : ''}" disabled.bind="listMode" title="Show reference catalogue numbers" click.delegate="toggleCatalogueNumbers()">
+                        <span class="sw-icon-references"></span>
+                    </button>
+                </div>
+
 				<div class="btn-group">
+
+					<button class="btn btn-sm btn-default" click.trigger="toggleSortDirection()">
+						<span class="${options.sortDirection === 'asc' ? 'sw-icon-sort-up' : 'sw-icon-sort-down'}"></span>
+					</button>
+					<button class="btn btn-sm btn-default ${options.sort ? '' : 'disabled'}" title="Clear sort" click.trigger="clearSort()">
+						<span class="sw-icon-cancel"></span>
+					</button>
                     <div class="dropdown">
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle sort-selector" data-toggle="dropdown">
                             <span class="selector-text">${options.sort.text | defaultValue:'Sort by'}</span>
@@ -41,13 +54,6 @@
                             <li repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${sortCol.text}</li>
                         </ul>
                     </div>
-
-					<button class="btn btn-sm btn-default" click.trigger="toggleSortDirection()">
-						<span class="${options.sortDirection === 'asc' ? 'sw-icon-sort-up' : 'sw-icon-sort-down'}"></span>
-					</button>
-					<button class="btn btn-sm btn-default ${options.sort ? '' : 'disabled'}" title="Clear sort" click.trigger="clearSort()">
-						<span class="sw-icon-cancel"></span>
-					</button>
 				</div>
 
 				<div class="btn-group">
@@ -85,7 +91,9 @@
 			<div class="col-md-12 col-lg-4 sw-editor-container" if.bind="editorShown">
 				<stamp-editor model.bind="editingStamp"></stamp-editor>
 			</div>
-			<stamp-grid if.bind="gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps" edit-id.bind="editingStamp.id"></stamp-grid>
+			<stamp-grid if.bind="gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps"
+                        edit-id.bind="editingStamp.id" show-catalogue-numbers.bind="referenceMode">
+            </stamp-grid>
 			<stamp-table if.bind="!gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps"></stamp-table>
 		</div>
 	</div>

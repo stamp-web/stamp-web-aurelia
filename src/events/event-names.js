@@ -12,6 +12,10 @@ export var EventNames = {
     save: "save",
     edit: 'edit',
 
+    editorCancel: 'editor-cancel',
+
+    deleteSuccessful: "delete-completed",
+
     create: 'create',
     manageEntity: "manage-entity",
     entityDelete: "entity-delete",
@@ -22,13 +26,16 @@ export var EventNames = {
     pageChanged: "page-changed",
     pageRefreshed: "page-refreshed",
     preferenceChanged: "preference-changed",
+    saveSuccessful: "save-completed",
     stampCreate: 'stamp-create',
     stampEdit: 'stamp-edit',
     stampEditorCancel: 'stamp-edit-cancel',
     stampRemove: 'stamp-remove',
-    stampSaved: 'stamp-saved'
+    stampSaved: 'stamp-saved',
+    stampSelect: 'stamp-select'
 };
 
 export var KeyCodes = {
-    ENTER_VK: 13
+    VK_ENTER: 13,
+    VK_ESCAPE: 27
 };

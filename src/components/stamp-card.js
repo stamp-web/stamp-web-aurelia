@@ -13,7 +13,7 @@ import 'resources/styles/components/stamp-card.css!';
 export class StampCard {
 
     imageShown = false;
-    select = false;
+    selected = false;
 
     constructor(eventBus, prefService) {
         this.eventBus = eventBus;
@@ -27,7 +27,7 @@ export class StampCard {
     }
 
     selectionChanged(newValue) {
-        this.select = (this.model && newValue === this.model.id );
+        this.selected = (this.model && newValue === this.model.id );
     }
 
     getCatalogueNumber() {
@@ -74,6 +74,10 @@ export class StampCard {
 
     remove() {
         this.eventBus.publish(EventNames.stampRemove, this.model);
+    }
+
+    select() {
+        this.eventBus.publish(EventNames.stampSelect, this.model);
     }
 
     edit() {

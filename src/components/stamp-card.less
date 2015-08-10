@@ -14,9 +14,19 @@
 	//background-image: linear-gradient(to bottom, #ffffff 0%, #f3f3f4 100%);
 	background-repeat: repeat-x;
 	color: @text-color;
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &:last-child {
+        margin-right: 0;
+    }
+
 	&.selected {
 		border: @input-border-focus 2px solid;
 	}
+
 	div {
 		white-space: nowrap;
 		overflow: hidden;

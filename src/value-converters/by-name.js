@@ -22,7 +22,7 @@ export class byNameValueConverter {
         if (value && value > 0) {
             var model = this.services[serviceName].getById(value);
             if (model) {
-                return model.name;
+                return (model.displayName) ? model.displayName : model.name;
             }
 
         }

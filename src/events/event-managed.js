@@ -11,11 +11,21 @@ export class EventManaged {
     }
 
     subscribe(key, func) {
-        this._subscribers.push(this.eventBus.subscribe(key, func));
+        if (!this._subscribers[key]) {
+            this._subscribers[key] = [];
+        }
+        this._subscribers[key].push(this.eventBus.subscribe(key, func));
     }
 
     detached() {
-        this._subscribers.forEach(sub => {
+        let self = this;
+        self._subscribers.forEach(key => {
+            self.unsubscribe(key);
+        });
+    }
+
+    unsubscribe(key) {
+        this._subscribers[key].forEach(sub => {
             sub();
         });
     }

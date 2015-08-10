@@ -69,6 +69,7 @@
       "core-js": "npm:core-js@^0.9.18",
       "css": "github:systemjs/plugin-css@^0.1.9",
       "eonasdan/bootstrap-datetimepicker": "github:eonasdan/bootstrap-datetimepicker@^4.14.30",
+      "gooy/aurelia-compiler": "github:gooy/aurelia-compiler@0.0.5",
       "jquery": "github:components/jquery@2.1.4",
       "less": "github:aaike/jspm-less-plugin@^0.0.5",
       "lodash": "npm:lodash@^3.10.0",

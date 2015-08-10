@@ -6,9 +6,12 @@
         "title": "Stamp Web"
     },
     "editor": {
+        "actions": "Actions",
         "album": "Album",
         "album-select": "Select an album",
         "catalogue": "Catalogue",
+        "catalogue-value": "Value",
+        "catalogue-number": "Number",
         "catalogue-select": "Select a catalogue",
         "catalogue-type": "Catalogue Type",
         "catalogue-type-select": "Select a catalogue type",
@@ -35,6 +38,9 @@
         "stamp-collection": "Stamp collection",
         "stamp-collection-select": "Select a stamp collection",
         "switchToCreate-hint": "Switch to create stamp"
+    },
+    "prompts": {
+        "delete-catalogue-number": "Delete catalogue number __number__?"
     },
     "settings": {
         "album": "Album",
@@ -71,9 +77,15 @@
         "filterPlaceholder": "Filter results..."
     },
     "actions": {
+        "add-cn": "Add a new catalogue number",
         "canel": "Cancel",
+        "cancel-changes" : "Cancel edit",
+        "edit-cn": "Edit catalogue number",
+        "make-active": "Set as active catalogue number",
+        "remove-cn": "Delete catalogue number",
         "reset": "Reset",
-        "save": "Save"
+        "save": "Save",
+        "save-changes" : "Save edit"
     },
     "paging-toolbar": {
         "page": "Page"

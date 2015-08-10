@@ -64,6 +64,17 @@ export class Enum {
         return this[Symbol.keyFor(sym.sym)] === sym;
     }
 
+    get(ordinal) {
+        let self = this;
+        let symbol;
+        this.keys().forEach( k => {
+            if( self[k].ordinal === ordinal ) {
+                symbol = self[k];
+            }
+        });
+        return symbol;
+    }
+
 }
 
 export const Condition = new Enum({

@@ -29,6 +29,7 @@ export function configure(aurelia) {
             config.useDebounceTimeout(250);
             config.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);
         });
+    aurelia.globalizeResources('widgets/select-picker/select-picker');
 
     aurelia.start().then(a => a.setRoot('app', document.body));
 

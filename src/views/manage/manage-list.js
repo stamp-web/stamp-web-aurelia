@@ -155,6 +155,7 @@ export class ManageList {
             this.editorIcon = config.field.icon;
         }));
         this.subscriptions.push(this.eventBus.subscribe(EventNames.entityDelete, function() {
+            throw new Error("Not implemented yet");
         }));
     }
 

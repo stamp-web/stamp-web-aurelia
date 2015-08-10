@@ -109,7 +109,7 @@ export class BaseService {
 
     getById(id) {
         if (!this.loaded) {
-            throw new Error("Requires the service to be loaded first.");
+            throw new Error('Requires ' + this.getCollectionName() + ' to be loaded first.');
         }
         if (this.lastCache.id === +id) {
             return this.lastCache.model;
@@ -138,10 +138,16 @@ export class BaseService {
     }
 
     remove(model) {
+        var self = this;
         return new Promise((resolve, reject) => {
-            var href = this.baseHref + '/rest/' + this.getResourceName() + ((model.id > 0 ) ? "/" + model.id : "");
-            this.http.delete(href).then(response => {
+            if( model.id <= 0 ) {
+                reject("Can not delete a non-persisted item from " + self.getCollectionName());
+                return;
+            }
+            var href = self.baseHref + '/rest/' + this.getResourceName() + "/" + model.id;
+            self.http.delete(href).then(response => {
                 if (response.statusCode === 204) {
+                    self.eventBus.publish(EventNames.deleteSuccessful, { type: self.getCollectionName(), id: model.id});
                     resolve(true);
                 } else {
                     reject(response);
@@ -154,6 +160,20 @@ export class BaseService {
 
     _postfind(models) { //eslint-disable-line no-unused-vars
         // do nothing
+    }
+
+    updateLocalEntry(model) {
+        if( this.loaded && this.models.length > 0 ) {
+            let m = _.findWhere(this.models, { id: model.id });
+            if(m) {
+                _.merge(m, model);
+                // Not sure if this is a good idea or not.
+                this.eventBus.publish(EventNames.saveSuccessful, { type: this.getCollectionName(), model: m});
+            } else {
+                logger.debug("Could not locate id " + model.id + " in " + this.getCollectionName());
+            }
+
+        }
     }
 
     find(options) {
@@ -192,26 +212,28 @@ export class BaseService {
     }
 
     save(model) {
+        let self = this;
         return new Promise((resolve, reject) => {
-            var href = this.baseHref + '/rest/' + this.getResourceName() + ((model.id > 0 ) ? "/" + model.id : "");
+            var href = this.baseHref + '/rest/' + self.getResourceName() + ((model.id > 0 ) ? "/" + model.id : "");
             var body = JSON.stringify(model);
             this.http[(model.id > 0 ) ? 'put' : 'post'](href, body).then(response => {
                 if ((response.statusCode === 200 || response.statusCode === 201) && response.response) {
                     var retModel = response.content;
-                    var m = _.findWhere(this.models, {id: retModel.id});
+                    var m = _.findWhere(self.models, {id: retModel.id});
                     if (m) {
                         _.merge(m, retModel);
                     } else {
                         m = retModel;
                         var index = 0;
-                        for (index = 0; index < this.models.length; index++) {
-                            if (m.name < this.models[index].name) {
+                        for (index = 0; index < self.models.length; index++) {
+                            if (m.name < self.models[index].name) {
                                 break;
                             }
                         }
-                        index = Math.max(index, this.models.length - 1);
-                        this.models.splice(index, 0, m);
+                        index = Math.max(index, self.models.length - 1);
+                        self.models.splice(index, 0, m);
                     }
+                    self.eventBus.publish(EventNames.saveSuccessful, { type: self.getCollectionName(), model: m});
                     resolve(m);
                 } else {
                     reject(response);

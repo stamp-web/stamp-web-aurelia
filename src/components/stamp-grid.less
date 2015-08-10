@@ -20,4 +20,16 @@ stamp-grid {
 		height: 100%;
 		overflow-y: auto; // if we want it to scroll only
 	}
+    .with-references {
+        height: calc(~"100% - 170px");
+    }
+}
+
+.sw-reference-catalogue-numbers {
+    height: 170px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border: @panel-inner-border solid thin;
+    border-radius: 0 0 @thumbnail-border-radius @thumbnail-border-radius;
 }

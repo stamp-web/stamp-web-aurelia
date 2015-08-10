@@ -37,6 +37,7 @@ export class StampList extends EventManaged {
     editorShown = false;
     createWantList = false;
     subscribers = [];
+    referenceMode = false;
 
     sortColumns = [{
         attr: 'number',
@@ -130,6 +131,9 @@ export class StampList extends EventManaged {
         this.listMode = !m;
     }
 
+    toggleCatalogueNumbers() {
+        this.referenceMode = !this.referenceMode;
+    }
 
     sendSearch() {
         var options = {
@@ -186,16 +190,27 @@ export class StampList extends EventManaged {
             self.createWantList = stamp.wantList;
             self.editorShown = true;
         });
-        this.subscribers.push(this.eventBus.subscribe(EventNames.stampEditorCancel, function() {
+        this.subscribe(EventNames.stampEditorCancel, function() {
             self.editingStamp = null;
             self.editorShown = false;
-        }));
-        this.subscribers.push(this.eventBus.subscribe(EventNames.stampSaved, result => {
+        });
+        this.subscribe(EventNames.stampSaved, result => {
             if( !result.remainOpen) {
                 self.editorShown = false;
             }
             // TODO Need to toggle editor without toggling
-        }));
+        });
+
+        this.subscribe(EventNames.saveSuccessful, obj => {
+            if( obj && obj.type === self.stampService.getCollectionName() ) {
+                let stamp = obj.model;
+                // need to check whether it is filtered...
+                let current = _.findIndex(this.stamps, { id: stamp.id });
+                if( current >= 0 ) {
+                    this.stamps[current] = stamp;
+                }
+            }
+        });
         this.subscribe(EventNames.stampRemove, stamp => {
             var _remove = function (model) {
                 if (this.editingStamp && stamp.id === this.editingStamp.id) { // remove editing stamp
