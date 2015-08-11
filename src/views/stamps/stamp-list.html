@@ -5,8 +5,10 @@
 	<require from="../../components/stamps/stamp-editor"></require>
 	<require from="../../components/stamps/stamp-table"></require>
     <require from="../../widgets/paging/paging-toolbar"></require>
+    <require from="../../widgets/select-picker/select-picker"></require>
+
 	<nav class="navbar navbar-default stamp-grid-nav">
-		<form class="navbar-form" role="search" submit.delegate="sendSearch()">
+		<form class="navbar-form" role="search">
 			<div class="btn-toolbar" role="toolbar">
 				<div class="btn-group" role="group">
 					<button type="button" class="btn btn-sm btn-default ${(editorShown)? 'active' : ''}" title="New Stamp" click.trigger="toggleEditor('create-stamp')">
@@ -15,9 +17,12 @@
 				</div>
 
                 <div class="btn-group input-group quick-search">
-                    <input type="text" class="form-control" value.bind="searchText" placeholder="Search">
-                    <button type="submit" class="btn btn-sm btn-default" title="Search">
+                    <input type="text" class="form-control" value.two-way="searchText" placeholder="Search">
+                    <button class="btn btn-sm btn-default" title="Search" click.delegate="sendSearch()">
                         <span class="sw-icon-search"></span>
+                    </button>
+                    <button class="btn btn-sm btn-default" title="Clear search" click.delegate="clearSearch()">
+                        <span class="sw-icon-cancel"></span>
                     </button>
                 </div>
 
@@ -58,14 +63,12 @@
 
 				<div class="btn-group">
                     <div class="dropdown">
-                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
-                                aria-expanded="false">
-                            Filter <span class="caret"></span>
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="selector-text">${stampFilter.description|t | defaultValue:'filters.filter'|t}</span>
+                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li>All stamps</li>
-                            <li>Only owned stamps</li>
-                            <li>Only wantlist stamps</li>
+                            <li repeat.for="filter of filters" click.trigger="$parent.setFilter($index)">${filter.description|t}</li>
                         </ul>
                     </div>
 

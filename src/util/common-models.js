@@ -153,6 +153,13 @@ export const Deceptions = new Enum({
     REPRINT: {ordinal: 128, description: 'deceptions.REPRINT'}
 });
 
+export const StampFilter = new Enum({
+    ALL: {ordinal: 0, description: 'filters.ALL_STAMPS'},
+    ONLY_OWNED: {ordinal: 1, description: 'filters.ONLY_OWNED'},
+    ONLY_WANTLIST: {ordinal: 2, description: 'filters.ONLY_WANTLIST'}
+});
+
+
 export var CatalogueHelper = function() {
     return {
         getImagePrefix: catalogue => {

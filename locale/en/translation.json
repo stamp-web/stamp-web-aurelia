@@ -39,6 +39,12 @@
         "stamp-collection-select": "Select a stamp collection",
         "switchToCreate-hint": "Switch to create stamp"
     },
+    "filters": {
+        "filter": "Filter",
+        "ALL_STAMPS": "All stamps",
+        "ONLY_OWNED": "Only owned stamps",
+        "ONLY_WANTLIST": "Only wantlist stamps"
+    },
     "prompts": {
         "delete-catalogue-number": "Delete catalogue number __number__?"
     },

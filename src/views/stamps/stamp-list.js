@@ -6,6 +6,8 @@ import {Stamps} from '../../services/stamps';
 import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
+import {StampFilter} from '../../util/common-models';
+import {ODataParser, Operation, Predicate} from '../../util/odata-parser';
 
 import bootbox from 'bootbox';
 import _ from 'lodash';
@@ -50,6 +52,12 @@ export class StampList extends EventManaged {
         text: 'Price paid'
     }];
 
+    filters = StampFilter.symbols();
+    stampFilter = StampFilter.ALL;
+
+
+    currentFilters = [];
+
     pageSizes = [100, 250, 500, 1000, 2500, 5000];
 
     pageInfo = {
@@ -88,6 +96,32 @@ export class StampList extends EventManaged {
         this.options.$skip = Math.max(0, size * active);
         this.options.$top = size;
         this.pageInfo.active = active;
+        this.search();
+    }
+
+    setFilter(ordinal) {
+        var index = _.findIndex(this.currentFilters, { subject: 'wantList'});
+        if( index >= 0 ) {
+            this.currentFilters.splice(index, 1);
+        }
+        this.stampFilter = StampFilter.get(ordinal);
+
+        let the_filter = new Predicate({
+            subject: 'wantList'
+        });
+        switch(ordinal) {
+            case 1:
+                the_filter.value = 0;
+                break;
+            case 2:
+                the_filter.value = 1;
+                break;
+            default:
+                the_filter = null;
+        }
+        if( the_filter ) {
+            this.currentFilters.push(the_filter);
+        }
         this.search();
     }
 
@@ -135,23 +169,43 @@ export class StampList extends EventManaged {
         this.referenceMode = !this.referenceMode;
     }
 
+    clearSearch() {
+        this.searchText = "";
+        this.sendSearch();
+    }
+
     sendSearch() {
-        var options = {
-            searchText: this.searchText
-        };
-        this.eventBus.publish(EventNames.keywordSearch, options);
+        for( let i = 0; i < this.currentFilters.length; i++ ) {
+            if( this.currentFilters[i].subject.startsWith('description' /*'contains(description'*/)) {
+                this.currentFilters.splice(i, 1);
+                break;
+            }
+        }
+        if( this.searchText && this.searchText !== "") {
+            this.currentFilters.unshift( new Predicate({
+                subject: 'description',
+                value: this.searchText
+            })/*Predicate.contains( 'description', this.searchText )*/);
+        }
+        this.search();
     }
 
     buildOptions() {
-        var cOpts = this.options;
-        var opts = {};
+        let cOpts = this.options;
+        let opts = {};
 
         if (cOpts.sort && cOpts.sortDirection) {
             opts.$orderby = cOpts.sort.attr + " " + cOpts.sortDirection;
         }
         opts.$top = cOpts.$top > -1 ? cOpts.$top : 100;
-        if (cOpts.$filter) {
-            opts.$filter = cOpts.$filter;
+        if( this.currentFilters && this.currentFilters.length > 0 ) {
+            let current = [];
+            this.currentFilters.forEach( f => {
+                current.push( f );
+            });
+            let predicate = (current.length > 1) ? Predicate.logical(Operation.AND, current) : this.currentFilters[0];
+            opts.$filter = predicate.serialize();
+            logger.debug("$filter=" + opts.$filter);
         }
         if (cOpts.$skip) {
             opts.$skip = cOpts.$skip;
@@ -161,12 +215,7 @@ export class StampList extends EventManaged {
 
     setupSubscriptions() {
         var self = this;
-        this.subscribe(EventNames.keywordSearch, options => {
-            if (options.searchText) {
-                this.options.$filter = "(contains(description,'" + options.searchText + "'))";
-            }
-            this.search();
-        });
+
         this.subscribe(EventNames.search, options => {
             this.options = _.merge(this.options, options);
             this.search();
@@ -292,6 +341,7 @@ export class StampList extends EventManaged {
 
     activate() {
         var t = new Date();
+        var self = this;
         this.setupSubscriptions();
         return new Promise((resolve, reject) => {
             this.countryService.find().then(result => {
@@ -299,10 +349,17 @@ export class StampList extends EventManaged {
 
                 var $filter = LocationHelper.getQueryParameter("$filter");
                 if ($filter) {
-                    this.options.$filter = decodeURI($filter);
+                    let f = ODataParser.parse(decodeURI($filter));
+                    if (f) {
+                        self.currentFilters = ODataParser.flatten(f);
+                        logger.debug(self.currentFilters);
+                    }
                 } else if (result && result.total > 0) {
                     var indx = Math.floor(Math.random() * result.total);
-                    this.options.$filter = "(countryRef eq " + this.countries[indx].id + ")";
+                    self.currentFilters.push(new Predicate({
+                        subject: 'countryRef',
+                        value: self.countries[indx].id
+                    }));
                 }
                 var opts = this.buildOptions();
 
