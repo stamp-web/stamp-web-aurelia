@@ -205,10 +205,15 @@ export class StampList extends EventManaged {
             if( obj && obj.type === self.stampService.getCollectionName() ) {
                 let stamp = obj.model;
                 // need to check whether it is filtered...
-                let current = _.findIndex(this.stamps, { id: stamp.id });
-                if( current >= 0 ) {
-                    this.stamps[current] = stamp;
+                let index = _.findIndex(this.stamps, { id: stamp.id });
+                if( index >= 0 ) {
+                    this.stamps[index] = stamp;
                 }
+            }
+        });
+        this.subscribe(EventNames.deleteSuccessful, obj => {
+            if (obj && obj.type === self.stampService.getCollectionName()) {
+                _.remove(this.stamps, {id: obj.id});
             }
         });
         this.subscribe(EventNames.stampRemove, stamp => {
