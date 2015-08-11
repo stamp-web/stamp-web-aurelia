@@ -119,6 +119,9 @@ export class CatalogueNumberReferences {
 
     save(num) {
         let self = this;
+        if( num.id <= 0 ) {
+            this.modelCopy.catalogueNumbers.push(num);
+        }
         self.stampService.save(this.modelCopy).then( stamp => { //eslint-disable-line no-unused-vars
             self.cancel(num);
         });
@@ -130,7 +133,6 @@ export class CatalogueNumberReferences {
             number: "",
             value: 0
         };
-        this.modelCopy.catalogueNumbers.push(num);
         this.edit(num, -1, true);
     }
 
