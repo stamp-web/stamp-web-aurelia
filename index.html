@@ -14,10 +14,28 @@
 	</div>
 	<div class="content">
 		<div class="message">Stamp Web</div>
-		<div class="version">Version 4.1</div>
+		<div class="version">Version 5.0.0</div>
 		<div class="sw-icon-progress splash-spin"></div>
+        <div class="build-version"></div>
 	</div>
 </div>
+<script type="application/javascript">
+    var req = new XMLHttpRequest()
+    req.onreadystatechange=function(){
+        if (req.readyState==4){
+            if (req.status==200){
+                var value = JSON.parse(req.responseText);
+                document.querySelector(".build-version").innerHTML = "Build " + value['buildTime'];
+            }
+            else{
+                console.log("Unable to obtain build information");
+            }
+        }
+    }
+    req.open("GET","/stamp-webservices/build-number.json");
+    req.send();
+
+</script>
 <script src="jspm_packages/github/polymer/mutationobservers@0.4.2/MutationObserver.js"></script>
 <script src="jspm_packages/system.js"></script>
 <script src="config.js"></script>
