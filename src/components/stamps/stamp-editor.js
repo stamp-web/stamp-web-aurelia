@@ -125,6 +125,7 @@ export class StampEditorComponent extends EventManaged {
             this.duplicateModel.wantList = false;
             this.duplicateModel.stampOwnerships.push(createOwnership());
             this.processPreferences(true);
+            this.calculateImagePath();
         }
     }
 

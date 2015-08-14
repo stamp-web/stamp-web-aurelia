@@ -64,7 +64,7 @@
                 <div class="input-group col-sm-9">
                     <input type="text" tabindex="111" class="form-control price-paid" id="owner-pricePaid" value.bind="model.pricePaid">
                     <select id="owner-code" tabindex="112" class="currency-selector form-control" value.bind="model.code">
-                        <option repeat.for="cur of codes" model.bind="cur.ordinal">${cur.description|t}</option>
+                        <option repeat.for="cur of codes" model.bind="cur.keyName">${cur.description|t}</option>
                     </select>
                 </div>
             </div>
