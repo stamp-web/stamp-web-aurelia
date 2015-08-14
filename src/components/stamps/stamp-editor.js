@@ -38,9 +38,11 @@ function createOwnership() {
     return {
         id: 0,
         albumRef: -1,
-        code: CurrencyCode.USD.description,
+        code: CurrencyCode.USD.keyName,
         purchased: moment(new Date()).format('YYYY-MM-DDT00:00:00Z'),
-        pricePaid: 0.0
+        pricePaid: 0.0,
+        defects: 0,
+        deception: 0
     };
 }
 
