@@ -106,21 +106,21 @@ export class StampList extends EventManaged {
         }
         this.stampFilter = StampFilter.get(ordinal);
 
-        let the_filter = new Predicate({
+        let theFilter = new Predicate({
             subject: 'wantList'
         });
         switch(ordinal) {
             case 1:
-                the_filter.value = 0;
+                theFilter.value = 0;
                 break;
             case 2:
-                the_filter.value = 1;
+                theFilter.value = 1;
                 break;
             default:
-                the_filter = null;
+                theFilter = null;
         }
-        if( the_filter ) {
-            this.currentFilters.push(the_filter);
+        if( theFilter ) {
+            this.currentFilters.push(theFilter);
         }
         this.search();
     }

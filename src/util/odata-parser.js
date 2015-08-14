@@ -3,6 +3,42 @@ import _ from 'lodash';
 
 const logger = LogManager.getLogger('odata');
 
+export const Operation = {
+    EQUALS: 'eq',
+    NOT_EQUALS: 'ne',
+    OR: 'or',
+    AND: 'and',
+    IS_NULL: 'is null',
+    LESS_THAN: 'lt',
+    LESS_THAN_EQUALS: 'le',
+    GREATER_THAN: 'gt',
+    GREATER_THAN_EQUALS: 'ge',
+    /**
+     * Whether a defined operation is unary or binary.  Will return true
+     * if the operation only supports a subject with no value.
+     *
+     * @param {String} op the operation to check.
+     * @return {Boolean} whether the operation is an unary operation.
+     */
+    isUnary: function (op) {
+        var value = false;
+        if (op === Operation.IS_NULL) {
+            value = true;
+        }
+        return value;
+    },
+    /**
+     * Whether a defined operation is a logical operator or not.
+     *
+     * @param {String} op the operation to check.
+     * @return {Boolean} whether the operation is a logical operation.
+     */
+    isLogical: function (op) {
+        return (op === Operation.AND || op === Operation.OR);
+    }
+};
+
+
 function ODataParserFn() {
 
     var REGEX = {
@@ -103,42 +139,6 @@ function ODataParserFn() {
 }
 
 export var ODataParser = new ODataParserFn();
-
-export const Operation = {
-    EQUALS: 'eq',
-    NOT_EQUALS: 'ne',
-    OR: 'or',
-    AND: 'and',
-    IS_NULL: 'is null',
-    LESS_THAN: 'lt',
-    LESS_THAN_EQUALS: 'le',
-    GREATER_THAN: 'gt',
-    GREATER_THAN_EQUALS: 'ge',
-    /**
-     * Whether a defined operation is unary or binary.  Will return true
-     * if the operation only supports a subject with no value.
-     *
-     * @param {String} op the operation to check.
-     * @return {Boolean} whether the operation is an unary operation.
-     */
-    isUnary: function (op) {
-        var value = false;
-        if (op === Operation.IS_NULL) {
-            value = true;
-        }
-        return value;
-    },
-    /**
-     * Whether a defined operation is a logical operator or not.
-     *
-     * @param {String} op the operation to check.
-     * @return {Boolean} whether the operation is a logical operation.
-     */
-    isLogical: function (op) {
-        return (op === Operation.AND || op === Operation.OR);
-    }
-};
-
 
 
 export var Predicate = function (config) {

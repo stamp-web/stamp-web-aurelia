@@ -117,11 +117,12 @@ export class StampEditorComponent extends EventManaged {
     }
 
     convertToStamp(m) {
-        if (this.duplicateModel.id === 0 && m && this.createMode === true) {
+        if (m) {
             this.duplicateModel = m;
             this.duplicateModel.stampOwnerships = [];
             this.duplicateModel.wantList = false;
             this.duplicateModel.stampOwnerships.push(createOwnership());
+            this.processPreferences(true);
         }
     }
 
@@ -185,18 +186,22 @@ export class StampEditorComponent extends EventManaged {
         let self = this;
         this.preferenceService.find().then(results => {
             self.preferences = results.models;
-            self.processPreferences();
+            self.processPreferences(true);
         });
     }
 
-    processPreferences() {
+    /**
+     *m[pref.ke
+     * @param alwaysProcess - whether to always process preferences independently of the state of the stamp
+     */
+    processPreferences(alwaysProcess) {
         if (this.preferences.length > 0) {
             let p = _.findWhere(this.preferences, { name: 'usedInlineImagePath', category: 'stamps'});
             this.usedInlineImagePath = ( p && p.value === 'true');
             let catPrefix = _.findWhere(this.preferences, { name: 'applyCatalogueImagePrefix', category: 'stamps'});
             this.useCataloguePrefix = ( catPrefix && catPrefix.value === 'true');
 
-            if( this.duplicateModel.id <= 0 ) {
+            if( this.duplicateModel.id <= 0 || alwaysProcess === true) {
                 PreferredValues.forEach(function (pref) {
                     let prefValue = _.findWhere(this.preferences, {name: pref.key, category: pref.category});
                     if (prefValue) {
@@ -212,11 +217,11 @@ export class StampEditorComponent extends EventManaged {
                                 } else if (key === "ownership") {
                                     m = this.ownership;
                                 }
-                                if (m) {
+                                if (m && (pref.type === Number && (m[pref.key] === undefined || m[pref.key] < 0))) {
                                     m[pref.key] = value;
                                 }
                             }, this);
-                        } else if (m) {
+                        } else if (m && (pref.type === Number && (m[pref.key] === undefined || m[pref.key] < 0))) {
                             m[pref.key] = value;
                         } else {
                             logger.error("The model was not defined");
@@ -303,7 +308,7 @@ export class StampEditorComponent extends EventManaged {
         if (newValue) {
             this.duplicateModel = _.clone(newValue, true);
             if( this.preferenceService.loaded ) {
-                this.processPreferences();
+                this.processPreferences(this.duplicateModel.id <= 0);
             }
             if( this.createMode ) { // set session purchased date
                 let owner = this.ownership;
