@@ -107,15 +107,14 @@ export class StampEditorComponent extends EventManaged {
         if( this.createMode === true && (mode === 'wantList' || mode === 'stamp') ) {
             this.duplicateModel.wantList = !this.duplicateModel.wantList;
             if( !this.duplicateModel.wantList ) {
-                this.duplicateModel.stampOwnerships = [];
-                this.duplicateModel.stampOwnerships.push(createOwnership());
+                // will lazy initialize ownership
+                this.assignCachedValues();
             } else {
                 delete this.duplicateModel.stampOwnerships;
             }
         } else if ( this.createMode === false && mode === 'create' ) {
             this.eventBus.publish(EventNames.stampCreate);
         }
-
     }
 
     convertToStamp(m) {
@@ -123,9 +122,18 @@ export class StampEditorComponent extends EventManaged {
             this.duplicateModel = m;
             this.duplicateModel.stampOwnerships = [];
             this.duplicateModel.wantList = false;
-            this.duplicateModel.stampOwnerships.push(createOwnership());
+            // need to ensure ownership is there prior to assigning values
+            var owner = this.ownership;  // eslint-disable-line no-unused-vars
             this.processPreferences(true);
             this.calculateImagePath();
+            this.assignCachedValues();
+        }
+    }
+
+    assignCachedValues() {
+        var owner = this.ownership;
+        if( owner && this.cachedValues.purchased ) {
+            owner.purchased = this.cachedValues.purchased;
         }
     }
 

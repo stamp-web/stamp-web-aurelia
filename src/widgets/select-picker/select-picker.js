@@ -37,15 +37,14 @@ export class Select2Picker {
     }
 
     bind() {
-        let self = this;
-        var select = this.element.firstElementChild;
+        let select = this.element.firstElementChild;
         this.config = this.config || {};
         let caption = this.config.caption;
         if (caption && caption.indexOf('.') > 0) {
             caption = this.i18n.tr(caption);
         }
 
-        var options = {
+        let options = {
             placeholder: caption,
             allowClear: true
          };
@@ -77,54 +76,73 @@ export class Select2Picker {
 
         const $select = $(select);
         $select.css('width', '100%');
+        $select.on("select2:unselect", this.onUnselect.bind(this));
+        $select.on("select2:select", this.onSelect.bind(this));
+        // the old values may have been assigned to the selector from previous edits
+        if( this.valueType === Number ) {
+            $select.val(0);
+        } else {
+            $select.val(undefined);
+        }
         this.select2 = $select.select2(options);
+
+
 
         let tabIndex = this.config.tabIndex;
         if( typeof tabIndex === 'undefined' ) {
             tabIndex = -1;
         }
+
         $select.attr('tabindex', -1);
         // Need to debounce in order to implement the tabindex change
         _.debounce((selectTarget, index) => {
             selectTarget.parent().find('.select2-selection').attr('tabindex', index);
         })($select, tabIndex);
+    }
 
+    unbind() {
+        let select = this.element.firstElementChild;
+        if( select ) {
+            let $select = $(select);
+            $select.off();
+        }
+    }
 
-        $select.on("select2:unselect", function(e) {
-            if( e.params && e.params.data ) {
-                if( self.multiple) {
-                    let newArr = [];
-                    if( self.value) {
-                        newArr = _.clone(self.value);
-                        _.remove(newArr, el => {
-                            return el === e.params.data.id;
-                        });
-                    }
-                    self.valueChanged(newArr, self.value);
-                } else {
-                    let newValue = "";
-                    switch(self.valueType) {
-                        case Number:
-                            newValue = -1;
-                            break;
-                    }
-                    self.valueChanged(newValue, self.value);
-                }
-
+    onSelect(e) {
+        let self = this;
+        if( e.params && e.params.data ) {
+            var data = e.params.data.id;
+            if( self.multiple === true && typeof data === 'string' ) {
+                var val = data;
+                data = (self.value) ? _.clone(self.value) : [];
+                data.push(val);
             }
-        });
+            self.valueChanged(data, self.value);  // even though we have a value property, select is tracking as an id
+        }
+    }
 
-        $select.on("select2:select", function (e) {
-            if( e.params && e.params.data ) {
-                var data = e.params.data.id;
-                if( self.multiple === true && typeof data === 'string' ) {
-                    var val = data;
-                    data = (self.value) ? _.clone(self.value) : [];
-                    data.push(val);
+    onUnselect(e) {
+        let self = this;
+        if( e.params && e.params.data ) {
+            if( self.multiple) {
+                let newArr = [];
+                if( self.value) {
+                    newArr = _.clone(self.value);
+                    _.remove(newArr, el => {
+                        return el === e.params.data.id;
+                    });
                 }
-                self.valueChanged(data, self.value);  // even though we have a value property, select is tracking as an id
+                self.valueChanged(newArr, self.value);
+            } else {
+                let newValue = "";
+                switch(self.valueType) {
+                    case Number:
+                        newValue = -1;
+                        break;
+                }
+                self.valueChanged(newValue, self.value);
             }
-        });
+        }
     }
 
     /**

@@ -44,7 +44,6 @@ export class DatePicker {
     }
 
     attached() {
-
         this.datePicker = $(this.element).find('.input-group.date')
             .datetimepicker({
                 // set to true to not dismiss dialog
@@ -59,5 +58,9 @@ export class DatePicker {
         this.datePicker.on("dp.change", (e) => {
             this.value = moment(e.date).format(this.format);
         });
+    }
+
+    detached() {
+        this.datePicker.off();
     }
 }
