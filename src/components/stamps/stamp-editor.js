@@ -173,7 +173,9 @@ export class StampEditorComponent extends EventManaged {
     }
 
     processExistenceResults(models) {
-        _.remove(models, {id: this.duplicateModel.id});
+        if( this.duplicateModel.wantList === false ) { // if the object IS the wantlist leave it there for conversion
+            _.remove(models, {id: this.duplicateModel.id});
+        }
         if (models.length > 0) {
             let index = _.findIndex(models, {wantList: true});
             let wantList = ( index >= 0 );

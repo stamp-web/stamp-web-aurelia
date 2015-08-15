@@ -60,7 +60,10 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
                 'A stamp with this country, catalogue and number already exists.';
             this.conversionModel = data.conversionModel;
             this.showWarning = true;
-            this.playConflict();
+            if( this.model.id <= 0 ) {
+                this.playConflict(); // only play conflict for new stamps
+            }
+
         }
     }
 
@@ -90,6 +93,10 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this.icon = ''; // clear exists icon
         this.conversionModel = undefined; // clear conversion context
         this.setupValidation(this.validatorDI);
+        _.debounce(function(self) {
+            self.sendNotifications(); // check or initial conversion of wantlist
+        })(this);
+
     }
 
     catalogueChanged(newValue) {
