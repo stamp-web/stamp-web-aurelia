@@ -30,7 +30,7 @@ export function configure(aurelia) {
             config.useDebounceTimeout(250);
             config.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);
         });
-    aurelia.globalizeResources('widgets/select-picker/select-picker', 'value-converters/as-enum');
+    aurelia.globalizeResources('widgets/select-picker/select-picker', 'value-converters/as-enum', 'value-converters/as-currency-formatted');
 
     aurelia.start().then(a => a.setRoot('app', document.body));
 

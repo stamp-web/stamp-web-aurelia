@@ -17,7 +17,6 @@ export class StampTable {
         })(this);
     }
     getStamps() {
-        console.log("here it is" + this.stamps);
         let self = this;
         return new Promise((resolve) => resolve({
             data: self.stamps,

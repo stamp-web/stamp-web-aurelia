@@ -1,11 +1,13 @@
 <template>
     <require from="../../value-converters/as-enum"></require>
+    <require from="../../value-converters/as-currency-formatted"></require>
     <grid read.call="getStamps($event)" pageable="false" sortable="true" page-size.bind="pageSize">
         <!-- Row template -->
         <grid-row>
             <!-- Column template(s) -->
-            <grid-col heading="description" field="rate" class="col-md-4">${ $item.rate + ' ' + $item.description }</grid-col>
-            <grid-col heading="${'table.condition'|t}" field="activeCatalogueNumber.condition" class="col-md-6">${ $item.activeCatalogueNumber.condition|asEnum:'Condition'|t }</grid-col>
+            <grid-col heading="Description" field="rate" class="col-md-4">${ $item.rate + ' ' + $item.description }</grid-col>
+            <grid-col heading="Condition" field="activeCatalogueNumber.condition" class="col-md-1">${ $item.activeCatalogueNumber.condition|asEnum:'Condition'|t }</grid-col>
+            <grid-col heading="Value" field="activeCatalogueNumber.value" class="col-md-1">${ $item.activeCatalogueNumber.value|asCurrencyFormatted:number.currencyCode }</grid-col>
         </grid-row>
     </grid>
 
