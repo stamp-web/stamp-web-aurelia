@@ -5,13 +5,13 @@
 		<div class="panel-heading panel-heading-with-actions">
 			<h4 class="panel-title">${'editor.details-title'|t}</h4>
             <div class="panel-actions btn-group">
-                <button class="btn btn-xs btn-default ${(model.wantList) ? '' : 'active'}" show.bind="!editing" type="button" click.trigger="changeEditMode('stamp')" title="${'editor.createStamp-hint'|t}">
+                <button class="btn btn-xs btn-default ${(model.wantList) ? '' : 'active'}" show.bind="!editing" type="button" click.delegate="changeEditMode('stamp')" title="${'editor.createStamp-hint'|t}">
                     <span class="sw-icon-stamp"></span>
                 </button>
-                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" if.bind="!editing" type="button" click.trigger="changeEditMode('wantList')" title="${'editor.createWantlist-hint'|t}">
+                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" if.bind="!editing" type="button" click.delegate="changeEditMode('wantList')" title="${'editor.createWantlist-hint'|t}">
                     <span class="sw-icon-wantlist"></span>
                 </button>
-                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" show.bind="editing" type="button" click.trigger="changeEditMode('create')" title="${'editor.createStamp-hint'|t}">
+                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" show.bind="editing" type="button" click.delegate="changeEditMode('create')" title="${'editor.createStamp-hint'|t}">
                     <span class="sw-icon-plus"></span>
                 </button>
             </div>

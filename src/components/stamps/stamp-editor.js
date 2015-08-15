@@ -164,7 +164,7 @@ export class StampEditorComponent extends EventManaged {
 
     checkExists() {
         _.debounce(function (self) {
-            if (self.duplicateModel.countryRef > 0 && self.duplicateModel.activeCatalogueNumber) {
+            if ((self.duplicateModel.id <= 0 || self.duplicateModel.wantList === true ) && self.duplicateModel.countryRef > 0 && self.duplicateModel.activeCatalogueNumber) {
                 let cn = self.duplicateModel.activeCatalogueNumber;
                 if (cn.catalogueRef > 0 && cn.number && cn.number !== '') {
                     let opts = {
