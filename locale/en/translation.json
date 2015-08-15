@@ -5,16 +5,23 @@
         "stamps": "Stamps",
         "title": "Stamp Web"
     },
+    "table": {
+        "catalogue-value": "Value",
+        "condition": "Condition",
+        "description": "Description",
+        "price-paid": "Price paid"
+    },
     "editor": {
         "actions": "Actions",
         "album": "Album",
         "album-select": "Select an album",
         "catalogue": "Catalogue",
-        "catalogue-value": "Value",
         "catalogue-number": "Number",
         "catalogue-select": "Select a catalogue",
         "catalogue-type": "Catalogue Type",
         "catalogue-type-select": "Select a catalogue type",
+        "catalogue-value": "Value",
+        "catalogue-value-unknown": "-Unknown-",
         "condition": "Condition",
         "condition-select": "Select condition",
         "country": "Country",

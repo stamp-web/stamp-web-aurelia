@@ -97,7 +97,7 @@
 			<stamp-grid if.bind="gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps"
                         edit-id.bind="editingStamp.id" show-catalogue-numbers.bind="referenceMode">
             </stamp-grid>
-			<stamp-table if.bind="!gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps"></stamp-table>
+			<stamp-table if.bind="!gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps" total.bind="pageInfo.total"></stamp-table>
 		</div>
 	</div>
 	<div class="sw-fullsize-image" if.bind="imageShown" click.delegate="closeFullSizeImage()">

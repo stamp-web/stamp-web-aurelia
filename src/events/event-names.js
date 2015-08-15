@@ -35,6 +35,11 @@ export var EventNames = {
     stampSelect: 'stamp-select'
 };
 
+export var StorageKeys = {
+    "referenceCatalogueNumbers": "referenceCatalogueNumbers",
+    "manageEntities","manage-entities"
+};
+
 export var KeyCodes = {
     VK_ENTER: 13,
     VK_ESCAPE: 27

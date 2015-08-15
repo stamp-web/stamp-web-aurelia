@@ -25,11 +25,12 @@ export function configure(aurelia) {
                 debug: true
             });
         })
+        .plugin('charlespockert/aurelia-bs-grid')
         .plugin('aurelia-validation', (config) => {
             config.useDebounceTimeout(250);
             config.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);
         });
-    aurelia.globalizeResources('widgets/select-picker/select-picker');
+    aurelia.globalizeResources('widgets/select-picker/select-picker', 'value-converters/as-enum');
 
     aurelia.start().then(a => a.setRoot('app', document.body));
 

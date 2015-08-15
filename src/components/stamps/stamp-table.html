@@ -1,7 +1,12 @@
 <template>
-	<div class="list-group">
-		<div class="list-group-item" repeat.for="stamp of stamps">
-			${stamp.description}
-		</div>
-	</div>
+    <require from="../../value-converters/as-enum"></require>
+    <grid read.call="getStamps($event)" pageable="false" sortable="true" page-size.bind="pageSize">
+        <!-- Row template -->
+        <grid-row>
+            <!-- Column template(s) -->
+            <grid-col heading="description" field="rate" class="col-md-4">${ $item.rate + ' ' + $item.description }</grid-col>
+            <grid-col heading="${'table.condition'|t}" field="activeCatalogueNumber.condition" class="col-md-6">${ $item.activeCatalogueNumber.condition|asEnum:'Condition'|t }</grid-col>
+        </grid-row>
+    </grid>
+
 </template>

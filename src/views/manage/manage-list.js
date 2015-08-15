@@ -7,7 +7,7 @@ import {StampCollections} from '../../services/stampCollections';
 import {Sellers} from '../../services/sellers';
 import {Catalogues} from '../../services/catalogues';
 import {Stamps} from '../../services/stamps';
-import {EventNames} from '../../events/event-names';
+import {EventNames, StorageKeys} from '../../events/event-names';
 import _ from 'lodash';
 
 import 'resources/styles/views/manage/manage.css!';
@@ -100,11 +100,11 @@ export class ManageList {
         var obj = {
             field: fieldDef
         };
-        localStorage.setItem("manage-entities", JSON.stringify(obj));
+        localStorage.setItem(StorageKeys.manageEntities, JSON.stringify(obj));
     }
 
     _restoreState() {
-        var entityCache = localStorage.getItem("manage-entities");
+        var entityCache = localStorage.getItem(StorageKeys.manageEntities);
         if (entityCache) {
             var cacheVal = JSON.parse(entityCache);
             if (cacheVal.field) {

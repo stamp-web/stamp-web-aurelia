@@ -10,7 +10,7 @@ import {EventManaged} from '../../events/event-managed';
 import _ from 'lodash';
 import moment from 'moment';
 
-import 'resources/styles/components/stamps/stamps.css!';
+import 'resources/styles/components/stamps/stamp-editor.css!';
 
 const logger = LogManager.getLogger('stamp-editor');
 

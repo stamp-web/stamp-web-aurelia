@@ -1,6 +1,7 @@
 <template>
 	<require from="../components/stamp-card"></require>
     <require from="../components/catalogue-numbers/cn-references"></require>
+
 	<div class="sw-stamp-grid">
 		<div class="scroller ${showCatalogueNumbers ? 'with-references' : ''}">
 			<stamp-card  repeat.for="stamp of stamps" model.bind="stamp" selection.bind="$parent.editId"></stamp-card>

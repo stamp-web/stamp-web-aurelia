@@ -3,7 +3,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {Countries} from '../../services/countries';
 import {Router} from 'aurelia-router';
 import {Stamps} from '../../services/stamps';
-import {EventNames} from '../../events/event-names';
+import {EventNames, StorageKeys} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
 import {StampFilter} from '../../util/common-models';
@@ -167,6 +167,7 @@ export class StampList extends EventManaged {
 
     toggleCatalogueNumbers() {
         this.referenceMode = !this.referenceMode;
+        localStorage.setItem(StorageKeys.referenceCatalogueNumbers, this.referenceMode);
     }
 
     clearSearch() {
@@ -342,6 +343,7 @@ export class StampList extends EventManaged {
     activate() {
         var t = new Date();
         var self = this;
+        this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');
         this.setupSubscriptions();
         return new Promise((resolve, reject) => {
             this.countryService.find().then(result => {

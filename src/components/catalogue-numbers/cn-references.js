@@ -44,13 +44,11 @@ export class CatalogueNumberReferences {
         this.$compiler.loadTemplate("./components/catalogue-numbers/cn-updateable-row.html").then(html => {
             this.updateTemplate = html.template.innerHTML;
         });
-
     }
 
     bind() {
         return this.catalogueService.find(this.catalogueService.getDefaultSearchOptions()).then(results => {
             this.catalogues = results.models;
-            console.log("got catalogues");
         });
     }
 

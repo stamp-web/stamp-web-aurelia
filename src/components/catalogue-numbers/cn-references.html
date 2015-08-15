@@ -26,7 +26,7 @@
                     <td class="col-md-3">${number.catalogueRef | byName:'catalogues' }</td>
                     <td class="col-md-2">${number.condition | asEnum:'Condition' | t}</td>
                     <td class="col-md-2">${number.number}</td>
-                    <td class="col-md-2">${number.value | asCurrencyFormatted:number.currencyCode}</td>
+                    <td class="col-md-2">${number.unknown ? 'editor.catalogue-value-unknown' : number.value | asCurrencyFormatted:number.currencyCode | t}</td>
                     <td class="col-md-2">
                         <div class="btn-group actions">
                             <button type="button" class="btn btn-default btn-xs" title="${'actions.make-active'|t}" show.bind="!number.active" click.delegate="$parent.makeActive(number)">
