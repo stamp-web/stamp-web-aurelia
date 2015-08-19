@@ -36,8 +36,8 @@ export var EventNames = {
 };
 
 export var StorageKeys = {
-    "referenceCatalogueNumbers": "referenceCatalogueNumbers",
-    "manageEntities","manage-entities"
+    referenceCatalogueNumbers: "referenceCatalogueNumbers",
+    manageEntities: "manage-entities"
 };
 
 export var KeyCodes = {
