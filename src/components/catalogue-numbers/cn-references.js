@@ -1,5 +1,4 @@
-import {bindable, inject, customElement, ViewCompiler, ResourceRegistry, ViewResources, Container, ViewSlot, LogManager} from 'aurelia-framework';
-import {Compiler} from 'gooy/aurelia-compiler';
+import {bindable, inject, customElement, ViewCompiler, ViewResources, Container, ViewSlot, LogManager} from 'aurelia-framework';
 import {Catalogues} from '../../services/catalogues';
 import {Stamps} from '../../services/stamps';
 import {CatalogueNumbers} from '../../services/catalogueNumbers';
@@ -16,7 +15,7 @@ const logger = LogManager.getLogger('cn-references');
 
 @customElement('catalogue-number-references')
 @bindable('model')
-@inject(Element, Compiler, ViewCompiler, ResourceRegistry, Container, I18N, Catalogues, CatalogueNumbers, Stamps)
+@inject(Element, ViewCompiler, Container, I18N, Catalogues, CatalogueNumbers, Stamps)
 export class CatalogueNumberReferences {
 
     modelCopy;
@@ -27,13 +26,12 @@ export class CatalogueNumberReferences {
     conditions = Condition.symbols();
     number;
 
-    constructor(element, $compiler, $viewCompiler, $resources, $container, i18next, catalogueService, catalogueNumberService, stampService) {
+    constructor(element, $viewCompiler, $container, i18next, catalogueService, catalogueNumberService, stampService) {
         this.element = $(element);
-        this.$compiler = $compiler;
+        this.$compiler = null;//$compiler;
         this.$viewCompiler = $viewCompiler;
-        this.$resources = $resources;
         this.$container = $container;
-        this.$viewResources = new ViewResources($resources);
+        this.$viewResources = new ViewResources();
         this.i18next = i18next;
         this.catalogueService = catalogueService;
         this.catalogueNumberService = catalogueNumberService;
@@ -41,9 +39,9 @@ export class CatalogueNumberReferences {
     }
 
     attached() {
-        this.$compiler.loadTemplate("./components/catalogue-numbers/cn-updateable-row.html").then(html => {
+       /* this.$compiler.loadTemplate("./components/catalogue-numbers/cn-updateable-row.html").then(html => {
             this.updateTemplate = html.template.innerHTML;
-        });
+        }); */
     }
 
     bind() {

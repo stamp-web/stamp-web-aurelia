@@ -9,3 +9,24 @@
 * move css to .js as static resources?
 * updateCountries in country-editor.html is not binding correctly
 
+
+
+aurelia/validation@0.2.7  - needed to fork santosh-suresh/validation
+
+http://plnkr.co/edit/OPOKxRiyRDwzBM92YlcG?p=preview
+
+ <tr repeat.for="row of rows" click.delegate="$parent.edit(row)">
+        <template if.bind="$parent.selectedRow == row">
+          <td>
+            <input value.bind="row.name" />
+          </td>
+          <td>
+            <input value.bind="row.description" />
+          </td>
+        </template>
+        <template if.bind="$parent.selectedRow != row">
+          <td>${row.name}</td>
+          <td>${row.description}</td>
+        </template>
+      </tr>
+

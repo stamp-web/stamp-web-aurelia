@@ -54,23 +54,23 @@
   },
   "jspm": {
     "dependencies": {
-      "aurelia-binding": "github:aurelia/binding@^0.8.1",
-      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.14.0",
-      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.9.0",
-      "aurelia-framework": "github:aurelia/framework@^0.13.2",
-      "aurelia-http-client": "github:aurelia/http-client@^0.10.0",
+      "aurelia-binding": "github:aurelia/binding@^0.8.6",
+      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.16.0",
+      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.9.2",
+      "aurelia-framework": "github:aurelia/framework@^0.15.0",
+      "aurelia-http-client": "github:aurelia/http-client@^0.10.3",
       "aurelia-i18next": "github:zewa666/aurelia-i18next@master",
-      "aurelia-loader-default": "github:aurelia/loader-default@0.9.0",
-      "aurelia-router": "github:aurelia/router@^0.10.1",
-      "aurelia-validation": "github:aurelia/validation@0.2.7",
+      "aurelia-loader-default": "github:aurelia/loader-default@0.9.5",
+      "aurelia-router": "github:aurelia/router@^0.11",
+      "aurelia-validation": "github:santosh-suresh/validation@master",
       "bootbox": "npm:bootbox@^4.4.0",
       "bootstrap": "github:twbs/bootstrap@^3.3.5",
-      "charlespockert/aurelia-bs-grid": "github:charlespockert/aurelia-bs-grid@^0.0.2",
+      "charlespockert/aurelia-bs-grid": "github:charlespockert/aurelia-bs-grid@master",
       "components/jquery": "github:components/jquery@2.1.4",
       "core-js": "npm:core-js@^0.9.18",
       "css": "github:systemjs/plugin-css@^0.1.9",
       "eonasdan/bootstrap-datetimepicker": "github:eonasdan/bootstrap-datetimepicker@^4.14.30",
-      "gooy/aurelia-compiler": "github:gooy/aurelia-compiler@0.0.5",
+      "gooy/aurelia-compiler": "github:zhhz/aurelia-compiler@0.0.7",
       "jquery": "github:components/jquery@2.1.4",
       "less": "github:aaike/jspm-less-plugin@^0.0.5",
       "lodash": "npm:lodash@^3.10.0",
@@ -80,8 +80,14 @@
       "select2/select2": "github:select2/select2@^4.0.0"
     },
     "devDependencies": {
-      "traceur": "github:jmcriffey/bower-traceur@0.0.88",
-      "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.88"
+      "babel": "npm:babel-core@^5.8.21",
+      "babel-runtime": "npm:babel-runtime@^5.8.20",
+      "core-js": "npm:core-js@^0.9.18"
+    },
+    "overrides": {
+      "npm:core-js@0.9.18": {
+        "main": "client/shim.min"
+      }
     }
   },
   "dependencies": {

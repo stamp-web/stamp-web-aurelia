@@ -13,7 +13,7 @@ export function configure(aurelia) {
     aurelia.use
         .standardConfiguration()
         //.developmentLogging()
-        .plugin('./global-resources/index')
+        .feature('global-resources')
         .plugin('aurelia-i18next', (instance) => {
             instance.setup({
                 resGetPath: 'locale/__lng__/__ns__.json',
@@ -30,7 +30,6 @@ export function configure(aurelia) {
             config.useDebounceTimeout(250);
             config.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);
         });
-    aurelia.globalizeResources('widgets/select-picker/select-picker', 'value-converters/as-enum', 'value-converters/as-currency-formatted');
 
     aurelia.start().then(a => a.setRoot('app', document.body));
 
