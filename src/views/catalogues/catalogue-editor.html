@@ -32,9 +32,9 @@
         <div class="form-group form-group-sm">
             <label for="editor-code" class="col-sm-3 control-label">${'editor.currencyCode'|t}</label>
             <div class="col-sm-3">
-                <select id="editor-code" tabindex="140" class="currency-selector form-control" value.bind="model.code">
-                    <option repeat.for="cur of codes" model.bind="cur.ordinal">${cur.description}</option>
-                </select>
+                <select-picker class="currency-selector" items.bind="codes" value.two-way="model.code"
+                               config.bind="{ id: 'editor-code', tabindex: 140, valueType: 'String', labelProperty: 'description', valueProperty: 'keyName', filterSearch: false, caption: 'editor.currencyCode-select' }">
+                </select-picker>
             </div>
         </div>
 	</form>

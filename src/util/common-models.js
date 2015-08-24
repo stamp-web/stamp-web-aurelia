@@ -1,4 +1,19 @@
 /**
+ Copyright 2015 Jason Drake
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+/**
  * Referenced from https://gist.github.com/xmlking/e86e4f15ec32b12c4689
  */
 export class EnumSymbol {
@@ -84,8 +99,9 @@ export const Condition = new Enum({
     MING_NG: {ordinal: 4, description: 'condition.MNG'},
     MINT_HH: {ordinal: 5, description: 'condition.MHH'},
     USED: {ordinal: 2, description: 'condition.U'},
-    CTO: {ordinal: 3, description: 'condition.CTO'}
-
+    CTO: {ordinal: 3, description: 'condition.CTO'},
+    COVER: {ordinal: 6, description: 'condition.COVER'},
+    ON_PAPER: {ordinal: 7, description: 'condition.ON_PAPER'}
 });
 
 export const Grade = new Enum({

@@ -29,6 +29,7 @@
         "createStamp-hint": "Create a stamp",
         "createWantlist-hint": "Create a wanted stamp",
         "currencyCode": "Currency",
+        "currencyCode-select": "Select a currency",
         "deceptions": "Deceptions",
         "deceptions-select": "Select deceptive practices",
         "defects": "Defects",
@@ -109,7 +110,9 @@
         "MNG": "Mint no gum",
         "MHH": "Mint heavily hinged",
         "U": "Used",
-        "CTO": "Cancel to order"
+        "CTO": "Cancel to order",
+        "COVER": "Used on cover",
+        "ON_PAPER": "Used on paper"
     },
     "currencyCode": {
         "USD": "USD",

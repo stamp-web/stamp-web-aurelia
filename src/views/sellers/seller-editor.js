@@ -1,7 +1,7 @@
-import {bindable} from 'aurelia-framework';
 
-@bindable('model')
 export class sellerEditor {
+
+    model;
 
     activate(options) {
         this.model = options;
