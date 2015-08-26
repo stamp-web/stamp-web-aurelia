@@ -45,7 +45,7 @@ export class CatalogueNumberReferences {
             self.catalogueService.find(self.catalogueService.getDefaultSearchOptions()).then(results => {
                 self.catalogues = results.models;
             }),
-            self.preferenceService.find(self.preferenceService.getDefaultSearchOptions()).then(results => {
+            self.preferenceService.find(self.preferenceService.getDefaultSearchOptions()).then(results => { //eslint-disable-line no-unused-vars
                 let cond = self.preferenceService.getByNameAndCategory('condition', 'stamps');
                 if( cond ) {
                     self.defaultCondition = +cond.value;

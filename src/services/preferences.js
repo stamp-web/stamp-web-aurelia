@@ -26,9 +26,8 @@ export class Preferences extends BaseService {
         if (!this.loaded) {
             throw new Error("Requires the service to be loaded first.");
         }
-        let result = null;
         let index = _.findIndex( this.models, { name: name, category: category });
-        return ( index >= 0 ) ? this.models[index]: null;
+        return ( index >= 0 ) ? this.models[index] : null;
     }
 
 

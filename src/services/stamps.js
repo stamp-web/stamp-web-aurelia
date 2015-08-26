@@ -28,7 +28,7 @@ export class Stamps extends BaseService {
             for(let i = 0, len = this.models.length; i < len; i++ ) {
                 let index = _.findIndex(this.models[i].catalogueNumbers, { id: +obj.id });
                 if( index >= 0 ) {
-                    this.models[i].catalogueNumbers.splice(1,index);
+                    this.models[i].catalogueNumbers.splice(1, index);
                     break;
                 }
             }
