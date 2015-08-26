@@ -1,41 +1,42 @@
 System.config({
-  defaultJSExtensions: true,
-  transpiler: "babel",
-  babelOptions: {
+  "transpiler": "babel",
+  "babelOptions": {
     "optional": [
       "es7.decorators",
       "es7.classProperties",
       "runtime"
     ]
   },
-  paths: {
+  "paths": {
     "*": "*",
     "dist/*": "dist/*",
     "resources/*.css": "resources/*.css",
-    "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "github:*": "jspm_packages/github/*.js",
+    "npm:*": "jspm_packages/npm/*.js"
   },
+  "defaultJSExtensions": true
+});
 
-  map: {
+System.config({
+  "map": {
     "aurelia-binding": "github:aurelia/binding@0.8.6",
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.16.0",
     "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.9.2",
     "aurelia-framework": "github:aurelia/framework@0.15.0",
     "aurelia-http-client": "github:aurelia/http-client@0.10.3",
-    "aurelia-i18next": "github:zewa666/aurelia-i18next@master",
+    "aurelia-i18next": "github:zewa666/aurelia-i18next@0.7.1",
     "aurelia-loader-default": "github:aurelia/loader-default@0.9.5",
     "aurelia-router": "github:aurelia/router@0.11.0",
-    "aurelia-validation": "github:santosh-suresh/validation@master",
+    "aurelia-validation": "github:aurelia/validation@0.2.8",
     "babel": "npm:babel-core@5.8.22",
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "bootbox": "npm:bootbox@4.4.0",
     "bootstrap": "github:twbs/bootstrap@3.3.5",
-    "charlespockert/aurelia-bs-grid": "github:charlespockert/aurelia-bs-grid@master",
+    "charlespockert/aurelia-bs-grid": "github:CharlesPockert/aurelia-bs-grid@master",
     "components/jquery": "github:components/jquery@2.1.4",
     "core-js": "npm:core-js@0.9.18",
-    "css": "github:systemjs/plugin-css@0.1.13",
+    "css": "github:systemjs/plugin-css@0.1.14",
     "eonasdan/bootstrap-datetimepicker": "github:eonasdan/bootstrap-datetimepicker@4.15.35",
-    "gooy/aurelia-compiler": "github:zhhz/aurelia-compiler@0.0.7",
     "jquery": "github:components/jquery@2.1.4",
     "less": "github:aaike/jspm-less-plugin@0.0.5",
     "lodash": "npm:lodash@3.10.1",
@@ -43,8 +44,10 @@ System.config({
     "nprogress": "github:rstacruz/nprogress@0.1.6",
     "polymer/mutationobservers": "github:polymer/mutationobservers@0.4.2",
     "select2/select2": "github:select2/select2@4.0.0",
-    "traceur": "github:jmcriffey/bower-traceur@0.0.91",
-    "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.91",
+    "github:CharlesPockert/aurelia-bs-grid@master": {
+      "bootstrap": "github:twbs/bootstrap@3.3.5",
+      "gooy/aurelia-compiler": "github:gooy/aurelia-compiler@0.0.5"
+    },
     "github:aaike/jspm-less-plugin@0.0.5": {
       "less.js": "github:distros/less@2.4.0"
     },
@@ -166,9 +169,11 @@ System.config({
       "aurelia-task-queue": "github:aurelia/task-queue@0.6.2",
       "core-js": "npm:core-js@0.9.18"
     },
-    "github:charlespockert/aurelia-bs-grid@master": {
-      "bootstrap": "github:twbs/bootstrap@3.3.5",
-      "gooy/aurelia-compiler": "github:gooy/aurelia-compiler@0.0.5"
+    "github:aurelia/validation@0.2.8": {
+      "aurelia-binding": "github:aurelia/binding@0.8.6",
+      "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.9.2",
+      "aurelia-logging": "github:aurelia/logging@0.6.4",
+      "aurelia-templating": "github:aurelia/templating@0.14.4"
     },
     "github:gooy/aurelia-compiler@0.0.5": {
       "aurelia-loader": "github:aurelia/loader@0.8.7",
@@ -179,27 +184,17 @@ System.config({
       "process": "npm:process@0.10.1"
     },
     "github:rstacruz/nprogress@0.1.6": {
-      "css": "github:systemjs/plugin-css@0.1.13"
-    },
-    "github:santosh-suresh/validation@master": {
-      "aurelia-binding": "github:aurelia/binding@0.8.6",
-      "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.9.2",
-      "aurelia-templating": "github:aurelia/templating@0.13.16"
+      "css": "github:systemjs/plugin-css@0.1.14"
     },
     "github:twbs/bootstrap@3.3.5": {
       "jquery": "github:components/jquery@2.1.4"
     },
-    "github:zewa666/aurelia-i18next@master": {
+    "github:zewa666/aurelia-i18next@0.7.1": {
       "Intl.js": "github:andyearnshaw/Intl.js@0.1.4",
       "aurelia-event-aggregator": "github:aurelia/event-aggregator@0.7.0",
       "aurelia-loader-default": "github:aurelia/loader-default@0.9.5",
       "aurelia-templating": "github:aurelia/templating@0.14.4",
       "i18next": "github:i18next/i18next@1.10.2"
-    },
-    "github:zhhz/aurelia-compiler@0.0.7": {
-      "aurelia-loader": "github:aurelia/loader@0.8.7",
-      "aurelia-loader-default": "github:aurelia/loader-default@0.9.5",
-      "aurelia-templating": "github:aurelia/templating@0.14.4"
     },
     "npm:babel-runtime@5.8.20": {
       "process": "github:jspm/nodelibs-process@0.1.1"
@@ -217,3 +212,4 @@ System.config({
     }
   }
 });
+

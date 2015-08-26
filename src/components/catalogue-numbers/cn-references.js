@@ -1,7 +1,8 @@
-import {bindable, inject, customElement, ViewCompiler, ViewResources, Container, ViewSlot, LogManager} from 'aurelia-framework';
+import {bindable, inject, customElement, LogManager} from 'aurelia-framework';
 import {Catalogues} from '../../services/catalogues';
 import {Stamps} from '../../services/stamps';
 import {CatalogueNumbers} from '../../services/catalogueNumbers';
+import {Preferences} from '../../services/preferences';
 import {Condition} from '../../util/common-models';
 import {I18N} from 'aurelia-i18next';
 
@@ -15,7 +16,7 @@ const logger = LogManager.getLogger('cn-references');
 
 @customElement('catalogue-number-references')
 @bindable('model')
-@inject(Element, ViewCompiler, Container, I18N, Catalogues, CatalogueNumbers, Stamps)
+@inject(Element, I18N, Catalogues, CatalogueNumbers, Stamps, Preferences)
 export class CatalogueNumberReferences {
 
     modelCopy;
@@ -23,31 +24,39 @@ export class CatalogueNumberReferences {
     editSlot;
     catalogues = [];
 
+    defaultCondition = -1;
+    defaultCatalogue = null;
+
     conditions = Condition.symbols();
     number;
 
-    constructor(element, $viewCompiler, $container, i18next, catalogueService, catalogueNumberService, stampService) {
+    constructor(element, i18next, catalogueService, catalogueNumberService, stampService, preferenceService) {
         this.element = $(element);
-        this.$compiler = null;//$compiler;
-        this.$viewCompiler = $viewCompiler;
-        this.$container = $container;
-        this.$viewResources = new ViewResources();
         this.i18next = i18next;
         this.catalogueService = catalogueService;
         this.catalogueNumberService = catalogueNumberService;
         this.stampService = stampService;
-    }
-
-    attached() {
-       /* this.$compiler.loadTemplate("./components/catalogue-numbers/cn-updateable-row.html").then(html => {
-            this.updateTemplate = html.template.innerHTML;
-        }); */
+        this.preferenceService = preferenceService;
     }
 
     bind() {
-        return this.catalogueService.find(this.catalogueService.getDefaultSearchOptions()).then(results => {
-            this.catalogues = results.models;
-        });
+        let self = this;
+        return Promise.all([
+            self.catalogueService.find(self.catalogueService.getDefaultSearchOptions()).then(results => {
+                self.catalogues = results.models;
+            }),
+            self.preferenceService.find(self.preferenceService.getDefaultSearchOptions()).then(results => {
+                let prefs = results.models;
+                let cond = self.preferenceService.getByNameAndCategory('condition', 'stamps');
+                if( cond ) {
+                    self.defaultCondition = +cond.value;
+                }
+                let cat = self.preferenceService.getByNameAndCategory('catalogueRef', 'stamps');
+                if( cat ) {
+                    self.defaultCatalogue = +cat.value;
+                }
+            })
+        ]);
     }
 
     modelChanged(newModel) {
@@ -69,67 +78,40 @@ export class CatalogueNumberReferences {
         return code;
     }
 
-    edit(num, index, addRow) {
-        if (typeof this.number !== 'undefined') {
-            this.cancel(this.number);
-        }
-        let trs = $(this.element.find('tbody > tr'));
-        if (index === -1) {
-            index = trs.length - 1;
-        }
-        let row = $(trs[index]);
-
-        this.number = num;
-        let clonedRow = $(this.updateTemplate).clone();
-        row.after(clonedRow);
-        let tpl = document.createElement('template');
-        clonedRow.find('td').each((indx, cell) => {
-            tpl.content.appendChild(cell);
-        });
-        let view = this.$viewCompiler.compile(tpl, this.$viewResources).create(this.$container, this);
-        this.insertByViewSlot(clonedRow[0], view);
-        if (!addRow) {
-            row.addClass("row-being-edited");
-        }
-    }
-
-    insertByViewSlot(rowDom, compiledView) {
-        this.editSlot = new ViewSlot(rowDom, true);
-        this.editSlot.add(compiledView);
-        this.editSlot.attached();
+    edit(num, index) { //eslint-disable-line no-unused-vars
+        num.editing = true;
     }
 
     cancel(num) {
-        if (num === this.number) {
-            let row = this.element.find('.row-being-edited');
-            if (row.length > 0) {
-                $(row).removeClass('row-being-edited');
-            }
-            let inlineRow = $(this.element.find('.editing-row'));
+        let inlineRow = $(this.element.find('.editing-row'));
+        if (num.id === 0) {
             inlineRow.remove();
-            this.editSlot.unbind();
-            this.editSlot.removeAll();
-            this.number = undefined;
+            let index = _.findIndex(this.modelCopy.catalogueNumbers, {id: 0});
+            if (index >= 0) {
+                this.modelCopy.catalogueNumbers.splice(1, index);
+            }
         }
+        num.editing = false;
     }
 
-    save(num) {
+    save(num) { //eslint-disable-line no-unused-vars
         let self = this;
-        if( num.id <= 0 ) {
-            this.modelCopy.catalogueNumbers.push(num);
-        }
-        self.stampService.save(this.modelCopy).then( stamp => { //eslint-disable-line no-unused-vars
-            self.cancel(num);
+        self.stampService.save(this.modelCopy).then( stamp => {
+            self.modelChanged(stamp);
         });
     }
 
     add() {
         let num = {
             id: 0,
+            active: false,
+            catalogueRef: this.defaultCatalogue,
+            condition: this.defaultCondition,
             number: "",
             value: 0
         };
-        this.edit(num, -1, true);
+        num.editing = true;
+        this.modelCopy.catalogueNumbers.push(num);
     }
 
     remove(num) {
@@ -176,6 +158,5 @@ export class CatalogueNumberReferences {
                 logger.error(err);
             });
         }
-
     }
 }

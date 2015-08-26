@@ -11,7 +11,8 @@
 
 
 
-aurelia/validation@0.2.7  - needed to fork santosh-suresh/validation
+jspm install aurelia-animator-css aurelia-binding aurelia-bootstrapper aurelia-dependency-injection aurelia-framework aurelia-http-client aurelia-router aurelia-event-aggregator aurelia-history-browser aurelia-loader-default aurelia-loader aurelia-metadata aurelia-route-recognizer aurelia-templating-binding aurelia-templating-resources aurelia-templating-router aurelia-templating aurelia-logging aurelia-task-queue aurelia-history aurelia-path
+
 
 http://plnkr.co/edit/OPOKxRiyRDwzBM92YlcG?p=preview
 

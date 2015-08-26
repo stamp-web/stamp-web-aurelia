@@ -3,6 +3,8 @@ import {HttpClient} from "aurelia-http-client";
 import {BaseService} from "services/base-service";
 import {EventAggregator} from 'aurelia-event-aggregator';
 
+import _ from 'lodash';
+
 @inject(HttpClient, EventAggregator)
 export class Preferences extends BaseService {
 
@@ -25,12 +27,8 @@ export class Preferences extends BaseService {
             throw new Error("Requires the service to be loaded first.");
         }
         let result = null;
-        for (var i = 0, len = this.models.length; i < len; i++) {
-            if (this.models[i].name === name && this.models[i].category === category) {
-                result = this.models[i];
-            }
-        }
-        return result;
+        let index = _.findIndex( this.models, { name: name, category: category });
+        return ( index >= 0 ) ? this.models[index]: null;
     }
 
 
