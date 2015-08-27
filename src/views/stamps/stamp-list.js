@@ -15,6 +15,7 @@
  */
 import {inject, LogManager} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {I18N} from 'aurelia-i18next';
 import {Countries} from '../../services/countries';
 import {Router} from 'aurelia-router';
 import {Stamps} from '../../services/stamps';
@@ -23,7 +24,7 @@ import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
 import {StampFilter} from '../../util/common-models';
 import {ODataParser, Operation, Predicate} from '../../util/odata-parser';
-
+import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
 import bootbox from 'bootbox';
 import _ from 'lodash';
 
@@ -41,7 +42,7 @@ function createStamp(wantList) {
     };
 }
 
-@inject(EventAggregator, Router, Stamps, Countries)
+@inject(EventAggregator, Router, Stamps, Countries, asCurrencyValueConverter, I18N)
 export class StampList extends EventManaged {
 
     stamps = [];
@@ -55,6 +56,8 @@ export class StampList extends EventManaged {
     createWantList = false;
     subscribers = [];
     referenceMode = false;
+    reportValue = "";
+    reportType = "CatalogueValue";
 
     sortColumns = [{
         attr: 'number',
@@ -88,13 +91,32 @@ export class StampList extends EventManaged {
         sortDirection: 'asc'
     };
 
-    constructor(eventBus, router, stampService, countryService) {
+    constructor(eventBus, router, stampService, countryService, currencyFormatter, i18next) {
         super(eventBus);
         this.stampService = stampService;
         this.countryService = countryService;
         this.eventBus = eventBus;
         this._ = _;
+        this.currencyFormatter = currencyFormatter;
         this.router = router;
+        this.i18next = i18next;
+    }
+
+    setStatistics(reportType) {
+        let self = this;
+        self.reportType = reportType;
+        var opt = self.buildOptions();
+        opt.$reportType = reportType;
+        self.reportValue = self.i18next.tr('footer-statistics.calculating');
+
+        self.stampService.executeReport(opt).then( result => {
+            if( +result.value > 0 ) {
+                self.reportValue = self.currencyFormatter.toView(+result.value, result.code);
+            } else {
+                self.reportValue = "";
+            }
+
+        });
     }
 
     generatePageModels(total, current) {
@@ -352,6 +374,7 @@ export class StampList extends EventManaged {
                 this.pageInfo.active = opts.$skip / opts.$top;
             }
         }
+        this.setStatistics(this.reportType);
 
     }
 

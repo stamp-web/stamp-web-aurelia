@@ -106,11 +106,27 @@
 	<nav class="navbar navbar-default stamp-list-footer">
 		<form class="navbar-form" role="footer">
             <paging-toolbar page.bind="pageInfo.active" total.bind="pageInfo.total"></paging-toolbar>
-			<div class="btn-toolbar" role="toolbar">
-				<div class="results-group">
-					Total: <span class="badge">${pageInfo.active * options.$top + 1} - ${pageInfo.active * options.$top + stamps.length}</span> of <span class="badge">${stampCount}</span>
-				</div>
-			</div>
+            <div class="btn-toolbar" role="toolbar">
+                <div class="results-group">
+                    Total: <span class="badge">${pageInfo.active * options.$top + 1} - ${pageInfo.active * options.$top + stamps.length}</span> of <span class="badge">${stampCount}</span>
+                </div>
+            </div>
+            <div class="report-statistics hidden-xs" role="group">
+                <div class="btn-group">
+                    <button class="btn btn-xs btn-default statistics-button ${(reportType==='CatalogueValue') ? 'active' : ''}" title="${'footer-statistics.catalogue-value'|t}" click.trigger="setStatistics('CatalogueValue')" role="button">
+                        <span class="sw-icon-catalogue"></span>
+                    </button>
+                    <button class="btn btn-xs btn-default statistics-button ${(reportType==='CostBasis') ? 'active' : ''}" title="${'footer-statistics.purchased'|t}" click.trigger="setStatistics('CostBasis')" role="button">
+                        <span class="sw-icon-purchased"></span>
+                    </button>
+                    <button class="btn btn-xs btn-default statistics-button ${(reportType==='CashValue') ? 'active' : ''}" title="${'footer-statistics.cash-value'|t}" click.trigger="setStatistics('CashValue')" role="button">
+                        <span class="sw-icon-cash-value"></span>
+                    </button>
+                    <input class="value-display" value.bind="reportValue" readonly role="status">
+                </div>
+
+            </div>
+
 		</form>
 	</nav>
 

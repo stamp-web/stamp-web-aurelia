@@ -104,6 +104,12 @@
     "paging-toolbar": {
         "page": "Page"
     },
+    "footer-statistics": {
+        "catalogue-value": "Report on catalogue value",
+        "purchased": "Report on price paid",
+        "cash-value": "Report on estimated cash value",
+        "calculating": "Calculating..."
+    },
     "condition": {
         "MLH": "Mint",
         "MNH": "Mint (NH)",

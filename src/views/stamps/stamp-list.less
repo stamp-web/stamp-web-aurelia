@@ -54,6 +54,51 @@
 		display: block;
 		margin: 0;
 	}
+    .report-statistics {
+        float:right;
+        margin-right: 25px;
+        display: inline-block;
+        .statistics-button {
+            padding: @padding-xs-horizontal / 2;
+            color: @pagination-color;
+            background-color: @pagination-bg;
+            border-color: @pagination-border;
+            &.active {
+                background-color: @pagination-disabled-bg;
+            }
+            &:focus {
+                outline: none;
+            }
+
+            &:hover {
+                color: @pagination-active-color;
+                background-color: @pagination-active-bg;
+                border-color: @pagination-active-border;
+                &:disabled {
+                    color: @pagination-disabled-color;
+                }
+            }
+        }
+        .value-display {
+            border: 1px solid @btn-default-border;
+            border-radius: 0 @border-radius-small @border-radius-small 0;
+            width: 100px;
+            height: 25px;
+            left: -1px;
+            position: relative;
+            background-color: @navbar-default-bg;
+            padding: 0 5px;
+            font-size: @font-size-small;
+        }
+    }
+    .btn-toolbar {
+        .badge {
+            position: relative;
+            top: -2px;
+            font-weight: normal;
+        }
+        float: right;
+    }
 }
 
 .sort-selector {

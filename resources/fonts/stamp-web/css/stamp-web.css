@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'stamp-web';
-  src: url('../font/stamp-web.eot?4748145');
-  src: url('../font/stamp-web.eot?4748145#iefix') format('embedded-opentype'),
-       url('../font/stamp-web.woff?4748145') format('woff'),
-       url('../font/stamp-web.ttf?4748145') format('truetype'),
-       url('../font/stamp-web.svg?4748145#stamp-web') format('svg');
+  src: url('../font/stamp-web.eot?315627');
+  src: url('../font/stamp-web.eot?315627#iefix') format('embedded-opentype'),
+       url('../font/stamp-web.woff?315627') format('woff'),
+       url('../font/stamp-web.ttf?315627') format('truetype'),
+       url('../font/stamp-web.svg?315627#stamp-web') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'stamp-web';
-    src: url('../font/stamp-web.svg?4748145#stamp-web') format('svg');
+    src: url('../font/stamp-web.svg?315627#stamp-web') format('svg');
   }
 }
 */
@@ -97,3 +97,4 @@
 .sw-icon-language:before { content: '\e828'; } /* '' */
 .sw-icon-references:before { content: '\e829'; } /* '' */
 .sw-icon-ok:before { content: '\e82a'; } /* '' */
+.sw-icon-cash-value:before { content: '\e82b'; } /* '' */

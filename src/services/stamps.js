@@ -23,6 +23,21 @@ export class Stamps extends BaseService {
         return "stamps";
     }
 
+    executeReport(options) {
+        let opts = _.extend({}, this.getDefaultSearchOptions(), options);
+        let self = this;
+        let q = new Promise((resolve, reject) => {
+            let href = self.baseHref + '/rest/reports?' + self.paramHelper.toParameters(opts);
+            self.http.get(href).then(response => {
+                let retModel = response.content;
+                resolve(retModel);
+            }).catch(reason => {
+                reject(reason);
+            });
+        });
+        return q;
+    }
+
     handleDelete(obj) {
         if( obj && obj.type === 'catalogueNumbers' && obj.id >= 0 ) {
             for(let i = 0, len = this.models.length; i < len; i++ ) {
