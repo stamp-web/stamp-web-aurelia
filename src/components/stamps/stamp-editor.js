@@ -139,7 +139,10 @@ export class StampEditorComponent extends EventManaged {
 
 
     calculateImagePath() {
-        _.debounce(function (self) {
+        if( this.calculateImagePathFn ) {
+            this.calculateImagePathFn.cancel();
+        }
+        this.calculateImagePathFn = _.debounce(function (self) {
             let m = self.duplicateModel;
             if( self.createMode === true && m.wantList === false && m.stampOwnerships && m.stampOwnerships.length > 0 ) {
                 let cn = m.activeCatalogueNumber;
@@ -159,11 +162,16 @@ export class StampEditorComponent extends EventManaged {
                     }
                 }
             }
-        }, 500)(this);
+            self.calculateImagePathFn = undefined;
+        }, 500);
+        this.calculateImagePathFn(this);
     }
 
     checkExists() {
-        _.debounce(function (self) {
+        if( this.checkExistsFn ) {
+            this.checkExistsFn.cancel();
+        }
+        this.checkExistsFn = _.debounce(function (self) {
             if ((self.duplicateModel.id <= 0 || self.duplicateModel.wantList === true ) && self.duplicateModel.countryRef > 0 && self.duplicateModel.activeCatalogueNumber) {
                 let cn = self.duplicateModel.activeCatalogueNumber;
                 if (cn.catalogueRef > 0 && cn.number && cn.number !== '') {
@@ -177,7 +185,9 @@ export class StampEditorComponent extends EventManaged {
                     });
                 }
             }
-        }, 500)(this);
+            self.checkExistsFn = undefined;
+        }, 350);
+        this.checkExistsFn(this);
     }
 
     processExistenceResults(models) {

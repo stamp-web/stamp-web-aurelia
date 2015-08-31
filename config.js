@@ -1,24 +1,22 @@
 System.config({
-  "transpiler": "babel",
-  "babelOptions": {
+  defaultJSExtensions: true,
+  transpiler: "babel",
+  babelOptions: {
     "optional": [
       "es7.decorators",
       "es7.classProperties",
       "runtime"
     ]
   },
-  "paths": {
+  paths: {
     "*": "*",
     "dist/*": "dist/*",
     "resources/*.css": "resources/*.css",
-    "github:*": "jspm_packages/github/*.js",
-    "npm:*": "jspm_packages/npm/*.js"
+    "github:*": "jspm_packages/github/*",
+    "npm:*": "jspm_packages/npm/*"
   },
-  "defaultJSExtensions": true
-});
 
-System.config({
-  "map": {
+  map: {
     "aurelia-binding": "github:aurelia/binding@0.8.6",
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.16.0",
     "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.9.2",
@@ -28,14 +26,14 @@ System.config({
     "aurelia-loader-default": "github:aurelia/loader-default@0.9.5",
     "aurelia-router": "github:aurelia/router@0.11.0",
     "aurelia-validation": "github:aurelia/validation@0.2.8",
-    "babel": "npm:babel-core@5.8.22",
+    "babel": "npm:babel-core@5.8.23",
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "bootbox": "npm:bootbox@4.4.0",
     "bootstrap": "github:twbs/bootstrap@3.3.5",
     "charlespockert/aurelia-bs-grid": "github:CharlesPockert/aurelia-bs-grid@master",
     "components/jquery": "github:components/jquery@2.1.4",
-    "core-js": "npm:core-js@0.9.18",
-    "css": "github:systemjs/plugin-css@0.1.14",
+    "core-js": "npm:core-js@0.8.4",
+    "css": "github:systemjs/plugin-css@0.1.15",
     "eonasdan/bootstrap-datetimepicker": "github:eonasdan/bootstrap-datetimepicker@4.15.35",
     "jquery": "github:components/jquery@2.1.4",
     "less": "github:aaike/jspm-less-plugin@0.0.5",
@@ -184,7 +182,7 @@ System.config({
       "process": "npm:process@0.10.1"
     },
     "github:rstacruz/nprogress@0.1.6": {
-      "css": "github:systemjs/plugin-css@0.1.14"
+      "css": "github:systemjs/plugin-css@0.1.15"
     },
     "github:twbs/bootstrap@3.3.5": {
       "jquery": "github:components/jquery@2.1.4"
@@ -202,6 +200,9 @@ System.config({
     "npm:bootbox@4.4.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
+    "npm:core-js@0.8.4": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
     "npm:core-js@0.9.18": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
@@ -212,4 +213,3 @@ System.config({
     }
   }
 });
-
