@@ -33,7 +33,7 @@ gulp.task('build-system', function () {
 	  }))
     .pipe(sourcemaps.init())
     .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
-    .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/src'}))
+    .pipe(sourcemaps.write('../maps'))
     .pipe(gulp.dest(paths.output))
 });
 

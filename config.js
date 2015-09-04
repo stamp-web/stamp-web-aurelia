@@ -1,22 +1,24 @@
 System.config({
-  defaultJSExtensions: true,
-  transpiler: "babel",
-  babelOptions: {
+  "transpiler": "babel",
+  "babelOptions": {
     "optional": [
       "es7.decorators",
       "es7.classProperties",
       "runtime"
     ]
   },
-  paths: {
+  "paths": {
     "*": "*",
     "dist/*": "dist/*",
     "resources/*.css": "resources/*.css",
-    "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "github:*": "jspm_packages/github/*.js",
+    "npm:*": "jspm_packages/npm/*.js"
   },
+  "defaultJSExtensions": true
+});
 
-  map: {
+System.config({
+  "map": {
     "aurelia-binding": "github:aurelia/binding@0.8.6",
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.16.0",
     "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.9.2",
@@ -33,7 +35,7 @@ System.config({
     "charlespockert/aurelia-bs-grid": "github:CharlesPockert/aurelia-bs-grid@master",
     "components/jquery": "github:components/jquery@2.1.4",
     "core-js": "npm:core-js@0.8.4",
-    "css": "github:systemjs/plugin-css@0.1.15",
+    "css": "github:systemjs/plugin-css@0.1.16",
     "eonasdan/bootstrap-datetimepicker": "github:eonasdan/bootstrap-datetimepicker@4.15.35",
     "jquery": "github:components/jquery@2.1.4",
     "less": "github:aaike/jspm-less-plugin@0.0.5",
@@ -44,7 +46,7 @@ System.config({
     "select2/select2": "github:select2/select2@4.0.0",
     "github:CharlesPockert/aurelia-bs-grid@master": {
       "bootstrap": "github:twbs/bootstrap@3.3.5",
-      "gooy/aurelia-compiler": "github:gooy/aurelia-compiler@0.0.5"
+      "gooy/aurelia-compiler": "github:charlespockert/aurelia-compiler@0.0.6"
     },
     "github:aaike/jspm-less-plugin@0.0.5": {
       "less.js": "github:distros/less@2.4.0"
@@ -145,17 +147,6 @@ System.config({
       "aurelia-router": "github:aurelia/router@0.11.0",
       "aurelia-templating": "github:aurelia/templating@0.14.4"
     },
-    "github:aurelia/templating@0.13.16": {
-      "aurelia-binding": "github:aurelia/binding@0.8.6",
-      "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.9.2",
-      "aurelia-html-template-element": "github:aurelia/html-template-element@0.2.0",
-      "aurelia-loader": "github:aurelia/loader@0.8.7",
-      "aurelia-logging": "github:aurelia/logging@0.6.4",
-      "aurelia-metadata": "github:aurelia/metadata@0.7.3",
-      "aurelia-path": "github:aurelia/path@0.8.1",
-      "aurelia-task-queue": "github:aurelia/task-queue@0.6.2",
-      "core-js": "npm:core-js@0.9.18"
-    },
     "github:aurelia/templating@0.14.4": {
       "aurelia-binding": "github:aurelia/binding@0.8.6",
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.9.2",
@@ -173,16 +164,16 @@ System.config({
       "aurelia-logging": "github:aurelia/logging@0.6.4",
       "aurelia-templating": "github:aurelia/templating@0.14.4"
     },
-    "github:gooy/aurelia-compiler@0.0.5": {
+    "github:charlespockert/aurelia-compiler@0.0.6": {
       "aurelia-loader": "github:aurelia/loader@0.8.7",
       "aurelia-loader-default": "github:aurelia/loader-default@0.9.5",
-      "aurelia-templating": "github:aurelia/templating@0.13.16"
+      "aurelia-templating": "github:aurelia/templating@0.14.4"
     },
     "github:jspm/nodelibs-process@0.1.1": {
       "process": "npm:process@0.10.1"
     },
     "github:rstacruz/nprogress@0.1.6": {
-      "css": "github:systemjs/plugin-css@0.1.15"
+      "css": "github:systemjs/plugin-css@0.1.16"
     },
     "github:twbs/bootstrap@3.3.5": {
       "jquery": "github:components/jquery@2.1.4"
@@ -213,3 +204,4 @@ System.config({
     }
   }
 });
+
