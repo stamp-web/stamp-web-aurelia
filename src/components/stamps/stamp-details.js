@@ -26,6 +26,13 @@ export class StampDetailsComponent extends EventManaged {
         this.loadCountries();
     }
 
+    detached() {
+        super.detached();
+        this._modelSubscribers.forEach(sub => {
+            sub();
+        });
+    }
+
     modelChanged(newValue) {
         this._modelSubscribers.forEach(sub => {
             sub();

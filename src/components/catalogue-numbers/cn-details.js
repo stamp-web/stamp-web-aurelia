@@ -40,6 +40,13 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this.subscribe(EventNames.conflictExists, this.handleConflictExists.bind(this));
     }
 
+    detached() {
+        super.detached();
+        this._modelSubscribers.forEach(sub => {
+            sub();
+        });
+    }
+
     setupValidation(validation) {
         this.validation = validation.on(this.model)
             .ensure('number')
