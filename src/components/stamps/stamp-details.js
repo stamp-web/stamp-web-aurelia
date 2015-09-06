@@ -7,7 +7,6 @@ import {EventManaged} from '../../events/event-managed';
 import {Countries} from '../../services/countries';
 
 import $ from 'jquery';
-import _ from 'lodash';
 
 @customElement('stamp-details')
 @bindable('model')
@@ -35,9 +34,9 @@ export class StampDetailsComponent extends EventManaged {
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
         this.editing = newValue.id > 0;
         if( this.model.id <= 0 ) {
-            _.debounce(function () {
+            setTimeout(function () {
                 $('#details-rate').focus();
-            })(this);
+            });
         }
     }
 

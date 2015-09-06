@@ -139,10 +139,12 @@ export class StampEditorComponent extends EventManaged {
 
 
     calculateImagePath() {
-        if( this.calculateImagePathFn ) {
-            this.calculateImagePathFn.cancel();
+        if( this.calculateImagePathFn && this.calculateImagePathFn.clearTimeout ) {
+            this.calculateImagePathFn.clearTimeout();
+            this.calculateImagePathFn = undefined;
         }
-        this.calculateImagePathFn = _.debounce(function (self) {
+        let self = this;
+        this.calculateImagePathFn = setTimeout(function () {
             let m = self.duplicateModel;
             if( self.createMode === true && m.wantList === false && m.stampOwnerships && m.stampOwnerships.length > 0 ) {
                 let cn = m.activeCatalogueNumber;
@@ -162,16 +164,17 @@ export class StampEditorComponent extends EventManaged {
                     }
                 }
             }
-            self.calculateImagePathFn = undefined;
+            this.calculateImagePathFn = undefined;
         }, 500);
-        this.calculateImagePathFn(this);
     }
 
     checkExists() {
-        if( this.checkExistsFn ) {
-            this.checkExistsFn.cancel();
+        if( this.checkExistsFn && this.checkExistsFn.clearTimeout ) {
+            this.checkExistsFn.clearTimeout();
+            this.checkExistsFn = undefined;
         }
-        this.checkExistsFn = _.debounce(function (self) {
+        let self = this;
+        this.checkExistsFn = setTimeout(function () {
             if ((self.duplicateModel.id <= 0 || self.duplicateModel.wantList === true ) && self.duplicateModel.countryRef > 0 && self.duplicateModel.activeCatalogueNumber) {
                 let cn = self.duplicateModel.activeCatalogueNumber;
                 if (cn.catalogueRef > 0 && cn.number && cn.number !== '') {
@@ -185,9 +188,8 @@ export class StampEditorComponent extends EventManaged {
                     });
                 }
             }
-            self.checkExistsFn = undefined;
+            this.checkExistsFn = undefined;
         }, 350);
-        this.checkExistsFn(this);
     }
 
     processExistenceResults(models) {
@@ -214,7 +216,7 @@ export class StampEditorComponent extends EventManaged {
     }
 
     /**
-     *m[pref.ke
+     *
      * @param alwaysProcess - whether to always process preferences independently of the state of the stamp
      */
     processPreferences(alwaysProcess) {

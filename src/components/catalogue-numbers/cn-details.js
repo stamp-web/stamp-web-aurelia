@@ -93,9 +93,10 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this.icon = ''; // clear exists icon
         this.conversionModel = undefined; // clear conversion context
         this.setupValidation(this.validatorDI);
-        _.debounce(function(self) {
+        let self = this;
+        setTimeout(function() {
             self.sendNotifications(); // check or initial conversion of wantlist
-        })(this);
+        }, 125);
 
     }
 
