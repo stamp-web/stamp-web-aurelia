@@ -1,5 +1,5 @@
 import {customElement, bindable, inject, computedFrom, LogManager} from 'aurelia-framework';
-import {CurrencyCode, CatalogueHelper} from '../../util/common-models';
+import {CurrencyCode, Condition, CatalogueHelper} from '../../util/common-models';
 import {Stamps} from '../../services/stamps';
 import {Countries} from '../../services/countries';
 import {Catalogues} from '../../services/catalogues';
@@ -58,7 +58,7 @@ export class StampEditorComponent extends EventManaged {
     preferences = [];
     duplicateModel;
     loaded = false;
-
+    usedConditions = [ Condition.USED.ordinal, Condition.CTO.ordinal, Condition.COVER.ordinal, Condition.ON_PAPER.ordinal];
     /* Session cached values (overriding preference values) */
     cachedValues = {
         purchased: null
@@ -152,8 +152,8 @@ export class StampEditorComponent extends EventManaged {
                     let country = self.countryService.getById( m.countryRef );
                     if( country ) {
                         let path = country.name + '/';
-                        if( !self.usedInlineImagePath && (cn.condition === 2 || cn.condition === 3) ) {
-                            path += 'used/';
+                        if( !self.usedInlineImagePath && (self.usedConditions.indexOf(cn.condition) >= 0 ) ) {
+                            path += (cn.condition === Condition.COVER.ordinal) ? 'on-cover/' : 'used/';
                         }
                         if( self.useCataloguePrefix === true && cn.catalogueRef > 0 ) {
                             path += CatalogueHelper.getImagePrefix(self.catalogueService.getById( cn.catalogueRef ));

@@ -25,7 +25,6 @@ export function configure(aurelia) {
                 debug: true
             });
         })
-        .plugin('charlespockert/aurelia-bs-grid')
         .plugin('aurelia-validation', (config) => {
             config.useDebounceTimeout(250);
             config.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);
