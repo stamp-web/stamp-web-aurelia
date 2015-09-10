@@ -4,7 +4,7 @@ import {Stamps} from '../../services/stamps';
 import {CatalogueNumbers} from '../../services/catalogueNumbers';
 import {Preferences} from '../../services/preferences';
 import {Condition} from '../../util/common-models';
-import {I18N} from 'aurelia-i18next';
+import {I18N} from 'aurelia-i18n';
 
 import _ from 'lodash';
 import bootbox from 'bootbox';

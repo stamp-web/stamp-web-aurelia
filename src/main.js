@@ -14,7 +14,7 @@ export function configure(aurelia) {
         .standardConfiguration()
         //.developmentLogging()
         .feature('global-resources')
-        .plugin('aurelia-i18next', (instance) => {
+        .plugin('aurelia-i18n', (instance) => {
             instance.setup({
                 resGetPath: 'locale/__lng__/__ns__.json',
                 lng: 'en',

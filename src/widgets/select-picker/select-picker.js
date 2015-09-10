@@ -1,5 +1,5 @@
 import {inject, customElement, bindable, LogManager} from 'aurelia-framework';
-import {I18N} from 'aurelia-i18next';
+import {I18N} from 'aurelia-i18n';
 import $ from 'jquery';
 import _ from 'lodash';
 import select2 from 'select2/select2'; //eslint-disable-line no-unused-vars

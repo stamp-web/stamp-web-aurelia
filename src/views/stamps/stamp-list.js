@@ -15,7 +15,7 @@
  */
 import {inject, LogManager} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {I18N} from 'aurelia-i18next';
+import {I18N} from 'aurelia-i18n';
 import {Countries} from '../../services/countries';
 import {Router} from 'aurelia-router';
 import {Stamps} from '../../services/stamps';

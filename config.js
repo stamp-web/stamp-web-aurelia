@@ -26,7 +26,6 @@ System.config({
     "aurelia-history": "github:aurelia/history@0.7.0",
     "aurelia-history-browser": "github:aurelia/history-browser@0.8.0",
     "aurelia-http-client": "github:aurelia/http-client@0.11.0",
-    "aurelia-i18next": "github:zewa666/aurelia-i18next@0.7.1",
     "aurelia-loader": "github:aurelia/loader@0.9.0",
     "aurelia-loader-default": "github:aurelia/loader-default@0.10.0",
     "aurelia-logging": "github:aurelia/logging@0.7.0",
@@ -40,6 +39,8 @@ System.config({
     "aurelia-templating-resources": "github:aurelia/templating-resources@0.15.2",
     "aurelia-templating-router": "github:aurelia/templating-router@0.16.1",
     "aurelia-validation": "github:aurelia/validation@0.2.8",
+    "aurelia-dialog": "github:aurelia/dialog@0.2.1",
+    "aurelia-i18n": "github:aurelia/i18n@0.1.2",
     "babel": "npm:babel-core@5.8.23",
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "bootbox": "npm:bootbox@4.4.0",
@@ -98,8 +99,11 @@ System.config({
       "aurelia-metadata": "github:aurelia/metadata@0.7.3",
       "core-js": "npm:core-js@0.9.18"
     },
-    "github:aurelia/event-aggregator@0.7.0": {
-      "aurelia-logging": "github:aurelia/logging@0.6.4"
+    "github:aurelia/dialog@0.2.1": {
+      "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.10.1",
+      "aurelia-framework": "github:aurelia/framework@0.16.0",
+      "aurelia-metadata": "github:aurelia/metadata@0.8.0",
+      "aurelia-templating": "github:aurelia/templating@0.15.3"
     },
     "github:aurelia/event-aggregator@0.8.0": {
       "aurelia-logging": "github:aurelia/logging@0.7.0"
@@ -123,13 +127,16 @@ System.config({
       "aurelia-path": "github:aurelia/path@0.9.0",
       "core-js": "npm:core-js@0.9.18"
     },
+    "github:aurelia/i18n@0.1.2": {
+      "Intl.js": "github:andyearnshaw/Intl.js@0.1.4",
+      "aurelia-event-aggregator": "github:aurelia/event-aggregator@0.8.0",
+      "aurelia-loader-default": "github:aurelia/loader-default@0.10.0",
+      "aurelia-templating": "github:aurelia/templating@0.15.3",
+      "i18next": "github:i18next/i18next@1.10.2"
+    },
     "github:aurelia/loader-default@0.10.0": {
       "aurelia-loader": "github:aurelia/loader@0.9.0",
       "aurelia-metadata": "github:aurelia/metadata@0.8.0"
-    },
-    "github:aurelia/loader-default@0.9.5": {
-      "aurelia-loader": "github:aurelia/loader@0.8.7",
-      "aurelia-metadata": "github:aurelia/metadata@0.7.3"
     },
     "github:aurelia/loader@0.8.7": {
       "aurelia-html-template-element": "github:aurelia/html-template-element@0.2.0",
@@ -224,13 +231,6 @@ System.config({
     },
     "github:twbs/bootstrap@3.3.5": {
       "jquery": "github:components/jquery@2.1.4"
-    },
-    "github:zewa666/aurelia-i18next@0.7.1": {
-      "Intl.js": "github:andyearnshaw/Intl.js@0.1.4",
-      "aurelia-event-aggregator": "github:aurelia/event-aggregator@0.7.0",
-      "aurelia-loader-default": "github:aurelia/loader-default@0.9.5",
-      "aurelia-templating": "github:aurelia/templating@0.14.4",
-      "i18next": "github:i18next/i18next@1.10.2"
     },
     "npm:babel-runtime@5.8.20": {
       "process": "github:jspm/nodelibs-process@0.1.1"
