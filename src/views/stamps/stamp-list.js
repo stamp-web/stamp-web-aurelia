@@ -19,13 +19,15 @@ import {I18N} from 'aurelia-i18n';
 import {Countries} from '../../services/countries';
 import {Router} from 'aurelia-router';
 import {Stamps} from '../../services/stamps';
+import {PurchaseForm} from './purchase-form';
 import {EventNames, StorageKeys} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
-import {StampFilter} from '../../util/common-models';
+import {StampFilter, CurrencyCode} from '../../util/common-models';
 import {ODataParser, Operation, Predicate} from '../../util/odata-parser';
 import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
 import bootbox from 'bootbox';
+import {DialogService} from 'aurelia-dialog';
 import _ from 'lodash';
 
 import "resources/styles/views/stamps/stamp-list.css!";
@@ -42,11 +44,12 @@ function createStamp(wantList) {
     };
 }
 
-@inject(EventAggregator, Router, Stamps, Countries, asCurrencyValueConverter, I18N)
+@inject(EventAggregator, Router, Stamps, Countries, asCurrencyValueConverter, I18N, DialogService)
 export class StampList extends EventManaged {
 
     stamps = [];
     editingStamp = undefined;
+    selectedStamps = [];
     stampCount = 0;
     countries = [];
     heading = "Stamp List";
@@ -91,7 +94,7 @@ export class StampList extends EventManaged {
         sortDirection: 'asc'
     };
 
-    constructor(eventBus, router, stampService, countryService, currencyFormatter, i18next) {
+    constructor(eventBus, router, stampService, countryService, currencyFormatter, i18next, dialogService) {
         super(eventBus);
         this.stampService = stampService;
         this.countryService = countryService;
@@ -100,6 +103,21 @@ export class StampList extends EventManaged {
         this.currencyFormatter = currencyFormatter;
         this.router = router;
         this.i18next = i18next;
+        this.dialogService = dialogService;
+    }
+
+    purchase() {
+        let purchaseModel = {
+            price: 0.0,
+            currency: CurrencyCode.USD,
+            updateExisting: true,
+            selectedStamps: this.selectedStamps
+        };
+        this.dialogService.open({ viewModel: PurchaseForm, model: purchaseModel}).then(() => {
+            //TODO: handle save of new purchased
+        }).catch(() => {
+            //TODO: handle cancel
+        });
     }
 
     setStatistics(reportType) {
@@ -303,6 +321,7 @@ export class StampList extends EventManaged {
                 _.remove(this.stamps, {id: obj.id});
             }
         });
+        this.subscribe(EventNames.stampSelect, this.stampSelected.bind(this));
         this.subscribe(EventNames.stampRemove, stamp => {
             var _remove = function (model) {
                 if (this.editingStamp && stamp.id === this.editingStamp.id) { // remove editing stamp
@@ -328,6 +347,12 @@ export class StampList extends EventManaged {
                 }
             });
         });
+    }
+
+    stampSelected(obj) {
+        if( obj ) {
+            this.selectedStamps.push(obj);
+        }
     }
 
     handleFullSizeImage(stamp) {

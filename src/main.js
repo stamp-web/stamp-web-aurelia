@@ -25,6 +25,7 @@ export function configure(aurelia) {
                 debug: true
             });
         })
+        .plugin('aurelia-dialog')
         .plugin('aurelia-validation', (config) => {
             config.useDebounceTimeout(250);
             config.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);

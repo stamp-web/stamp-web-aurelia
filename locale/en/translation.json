@@ -40,6 +40,10 @@
         "grade-select": "Select grade",
         "issue": "Year of Issue",
         "name": "Name",
+        "modify-existing": "Modify existing values",
+        "purchase-help": "Specify the amount paid for selected stamps",
+        "purchase-percentage": "Percentage",
+        "purchase-total": "Total purchase",
         "rate": "Denomination",
         "seller": "Seller",
         "seller-select": "Select a seller",
@@ -92,6 +96,7 @@
     },
     "actions": {
         "add-cn": "Add a new catalogue number",
+        "purchase": "Enter purchase information for selected stamps",
         "canel": "Cancel",
         "cancel-changes" : "Cancel edit",
         "edit-cn": "Edit catalogue number",
