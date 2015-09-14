@@ -97,6 +97,15 @@ export class EntityListManage {
         that.eventBus.publish(EventNames.selectEntity, instructions.route);
     }
 
+    /**
+     * On bind, force the update to the hasIssue definition
+     */
+    bind() {
+        if( this.field ) {
+            this.fieldChanged(this.field);
+        }
+    }
+
     detached() {
         this.subscriptions.forEach(function (sub) {
             sub();
