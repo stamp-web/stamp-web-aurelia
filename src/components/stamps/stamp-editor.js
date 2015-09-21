@@ -323,6 +323,7 @@ export class StampEditorComponent extends EventManaged {
             owner.cert = false;
             owner.img = undefined;
             owner.certImg = undefined;
+            owner.pricePaid = 0.0;
             owner.defects = 0;
             owner.deception = 0;
         }
