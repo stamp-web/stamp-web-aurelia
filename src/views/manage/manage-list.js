@@ -33,6 +33,7 @@ const logger = LogManager.getLogger('manage-list');
 export class ManageList {
 
     selectedEntity = undefined;
+    editingEntity = undefined;
     entityModels = [];
     subscriptions = [];
 
@@ -154,8 +155,8 @@ export class ManageList {
             }
         }));
         this.subscriptions.push(this.eventBus.subscribe(EventNames.save, model => {
-            if (this.selectedEntity.service) {
-                this.selectedEntity.service.save(model).then(result => {
+            if (this.editingEntity.service) {
+                this.editingEntity.service.save(model).then(result => {
                     logger.debug( result );
                     this.eventBus.publish(EventNames.close);
                 }).catch(err => {
@@ -165,9 +166,11 @@ export class ManageList {
         }));
         this.subscriptions.push(this.eventBus.subscribe(EventNames.edit, config => {
             this.editingModel = config.model;
-            this.editorTitle = config.field.editTitle;
-            this.editorContent = config.field.editor;
-            this.editorIcon = config.field.icon;
+            this.editingEntity = config.field;
+            this.editorTitle = this.editingEntity.editTitle;
+            this.editorContent = this.editingEntity.editor;
+            this.editorIcon = this.editingEntity.icon;
+
         }));
         this.subscriptions.push(this.eventBus.subscribe(EventNames.entityDelete, function() {
             throw new Error("Not implemented yet");
@@ -226,6 +229,7 @@ export class ManageList {
 
     create(entity) {
         var that = this;
+        this.editingEntity = entity;
         setTimeout(function () {
             that.editingModel = {
                 id: 0
