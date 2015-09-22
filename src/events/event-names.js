@@ -47,7 +47,7 @@ export var EventNames = {
     stampEditorCancel: 'stamp-edit-cancel',
     stampRemove: 'stamp-remove',
     stampSaved: 'stamp-saved',
-    stampSelect: 'stamp-select'
+    toggleStampSelection: 'stamp-select'
 };
 
 export var StorageKeys = {

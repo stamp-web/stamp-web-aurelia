@@ -5,6 +5,10 @@
         "stamps": "Stamps",
         "title": "Stamp Web"
     },
+    "footer": {
+        "totalSelected": "Selected",
+        "total": "Total"
+    },
     "table": {
         "catalogue-value": "Value",
         "condition": "Condition",

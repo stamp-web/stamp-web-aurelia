@@ -38,6 +38,8 @@ export class BaseService {
         model: null
     };
     loaded = false;
+    selections = [];
+
 
     constructor(http, eventBus) {
         this.http = http;
@@ -188,6 +190,7 @@ export class BaseService {
                     href += '?' + self.paramHelper.toParameters(opts);
                 }
                 self.http.get(href).then(response => {
+                    self.clearSelected();
                     self.loaded = true;
                     if (response.statusCode === 200 && response.response) {
                         var resp = response.content;
@@ -209,6 +212,34 @@ export class BaseService {
             }
         });
         return q;
+    }
+
+    select(model) {
+        model.selected = true;
+    }
+
+    unselect(model) {
+        model.selected = false;
+    }
+
+    clearSelected() {
+        _.each(this.models, function (model) {
+            model.selected = false;
+        });
+    }
+
+    isSelected(model) {
+        return model.selected === true;
+    }
+
+    getSelected() {
+        let retVal = [];
+        _.each(this.models, function(model) {
+            if( model.selected ) {
+                retVal.push(model);
+            }
+        });
+        return retVal;
     }
 
     save(model) {

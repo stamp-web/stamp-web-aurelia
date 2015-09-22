@@ -98,7 +98,7 @@
 				<stamp-editor model.bind="editingStamp"></stamp-editor>
 			</div>
 			<stamp-grid if.bind="gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps"
-                        edit-id.bind="editingStamp.id" show-catalogue-numbers.bind="referenceMode">
+                        last-selected.bind="lastSelected" edit-id.bind="editingStamp.id" show-catalogue-numbers.bind="referenceMode">
             </stamp-grid>
 			<stamp-table if.bind="!gridMode" class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'}" stamps.bind="stamps" total.bind="pageInfo.total"></stamp-table>
 		</div>
@@ -111,7 +111,10 @@
             <paging-toolbar page.bind="pageInfo.active" total.bind="pageInfo.total"></paging-toolbar>
             <div class="btn-toolbar" role="toolbar">
                 <div class="results-group">
-                    Total: <span class="badge">${pageInfo.active * options.$top + 1} - ${pageInfo.active * options.$top + stamps.length}</span> of <span class="badge">${stampCount}</span>
+                    ${'footer.total'|t}: <span class="badge">${pageInfo.active * options.$top + 1} - ${pageInfo.active * options.$top + stamps.length}</span> of <span class="badge">${stampCount}</span>
+                </div>
+                <div class="selection-group">
+                    ${'footer.totalSelected'|t}: <span class="badge">${selectedCount}</span>
                 </div>
             </div>
             <div class="report-statistics hidden-xs" role="group">

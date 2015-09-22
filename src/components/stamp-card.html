@@ -2,7 +2,7 @@
   <require from="../value-converters/by-name"></require>
   <require from="../value-converters/rate-filter"></require>
 
-  <div class="stamp-card ${(selected) ? 'selected' : ''}" click.delegate="select()">
+  <div class="stamp-card ${(selected) ? 'selected' : ''} ${(highlight) ? 'highlight' : ''}" click.trigger="toggleSelection($event)">
     <div class="card-header">
       ${model.activeCatalogueNumber.number} ${model.countryRef | byName:'countries' }
     </div>

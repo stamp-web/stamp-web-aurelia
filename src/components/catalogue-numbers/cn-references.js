@@ -65,6 +65,8 @@ export class CatalogueNumberReferences {
             this.modelCopy.catalogueNumbers.forEach(catNum => {
                 catNum.currencyCode = self.determineCurrencyCode(catNum.catalogueRef);
             });
+        } else {
+            this.modelCopy = {};
         }
     }
 

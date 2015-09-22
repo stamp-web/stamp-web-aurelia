@@ -3,17 +3,19 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../events/event-names';
 import {Preferences} from '../services/preferences';
 import _ from 'lodash';
+import $ from 'jquery';
+
 import 'resources/styles/components/stamp-card.css!';
 
 @customElement('stamp-card')
 @inject(EventAggregator, Preferences)
 @bindable('model')
-@bindable('selection')
-
+@bindable('selected')
+@bindable('highlight')
 export class StampCard {
 
     imageShown = false;
-    selected = false;
+
 
     constructor(eventBus, prefService) {
         this.eventBus = eventBus;
@@ -24,10 +26,6 @@ export class StampCard {
         if (newValue) {
             this.findActiveCatalogueNumber();
         }
-    }
-
-    selectionChanged(newValue) {
-        this.selected = (this.model && newValue === this.model.id );
     }
 
     getCatalogueNumber() {
@@ -76,8 +74,12 @@ export class StampCard {
         this.eventBus.publish(EventNames.stampRemove, this.model);
     }
 
-    select() {
-        this.eventBus.publish(EventNames.stampSelect, this.model);
+    toggleSelection(evt) {
+        let t = $(evt.target);
+        if( this.model.selected && !t.hasClass('stamp-card')) {
+            return;
+        }
+        this.eventBus.publish(EventNames.toggleStampSelection, this.model);
     }
 
     edit() {

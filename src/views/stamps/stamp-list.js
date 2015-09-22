@@ -49,7 +49,7 @@ export class StampList extends EventManaged {
 
     stamps = [];
     editingStamp = undefined;
-    selectedStamps = [];
+    latestSelected = undefined;
     stampCount = 0;
     countries = [];
     heading = "Stamp List";
@@ -111,7 +111,7 @@ export class StampList extends EventManaged {
             price: 0.0,
             currency: CurrencyCode.USD,
             updateExisting: true,
-            selectedStamps: this.selectedStamps
+            selectedStamps: this.stampService.getSelected()
         };
         this.dialogService.open({ viewModel: PurchaseForm, model: purchaseModel}).then(() => {
             //TODO: handle save of new purchased
@@ -152,6 +152,10 @@ export class StampList extends EventManaged {
         this.options.$top = size;
         this.pageInfo.active = active;
         this.search();
+    }
+
+    get selectedCount() {
+        return this.stampService.getSelected().length;
     }
 
     setFilter(ordinal) {
@@ -321,7 +325,7 @@ export class StampList extends EventManaged {
                 _.remove(this.stamps, {id: obj.id});
             }
         });
-        this.subscribe(EventNames.stampSelect, this.stampSelected.bind(this));
+        this.subscribe(EventNames.toggleStampSelection, this.stampSelected.bind(this));
         this.subscribe(EventNames.stampRemove, stamp => {
             var _remove = function (model) {
                 if (this.editingStamp && stamp.id === this.editingStamp.id) { // remove editing stamp
@@ -351,7 +355,14 @@ export class StampList extends EventManaged {
 
     stampSelected(obj) {
         if( obj ) {
-            this.selectedStamps.push(obj);
+            if( this.stampService.isSelected(obj)) {
+                this.stampService.unselect(obj);
+                let selected = this.stampService.getSelected();
+                this.lastSelected = ( selected && selected.length > 0) ? selected[selected.length - 1] : undefined;
+            } else {
+                this.stampService.select(obj);
+                this.lastSelected = obj;
+            }
         }
     }
 
