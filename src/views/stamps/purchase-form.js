@@ -14,23 +14,34 @@
  limitations under the License.
  */
 import {DialogController} from 'aurelia-dialog';
-import {inject, bindable} from 'aurelia-framework';
+import {bindable, LogManager} from 'aurelia-framework';
+import {Validation} from 'aurelia-validation';
 import {CurrencyCode} from '../../util/common-models';
+import {Stamps} from '../../services/stamps';
 import _ from 'lodash';
 
-@inject(DialogController)
+
+const logger = LogManager.getLogger('purchase-form');
+
 @bindable({
     name: 'percentage',
     defaultValue: 0.0
 })
 @bindable('model')
 export class PurchaseForm {
-
+    static inject() {
+        return [DialogController, Stamps, Validation];
+    }
     catalogueTotal = 0.0;
     codes = CurrencyCode.symbols();
+    processing = false;
+    processingCount = 0;
+    errorMessage = "";
 
-    constructor(controller) {
+    constructor(controller, stampService, validation) {
         this.controller = controller;
+        this.stampService = stampService;
+        this.validationDI = validation;
     }
 
     priceChanged() {
@@ -39,6 +50,41 @@ export class PurchaseForm {
         } else {
             this.percentage = 0.0;
         }
+    }
+
+    save() {
+        let self = this;
+        let results = [];
+        self.processing = true;
+        self.processingCount = 0;
+        self.errorMessage = "";
+        let count = self.model.selectedStamps.length;
+        _.each( self.model.selectedStamps, function(stamp) {
+            if(stamp.stampOwnerships && stamp.stampOwnerships.length > 0) {
+                let owner = stamp.stampOwnerships[0];
+                if( owner.pricePaid > 0.0 && self.model.updateExisting || owner.pricePaid <= 0.0 ) {
+                    owner.pricePaid =  +(stamp.activeCatalogueNumber.value / self.catalogueTotal * self.model.price).toFixed(2);
+                    owner.code = self.model.currency;
+                    let promise = self.stampService.save(stamp);
+                    results.push(promise);
+                    promise.then( () => {
+                        self.processingCount++;
+                        $('.progress-bar').css('width',self.processingCount * 1.0 / count * 100 + '%'); // need to manipulate the width
+                    });
+
+                }
+            }
+        });
+        Promise.all(results).then( () => {
+            logger.debug("Completed saving updates for " + results.length);
+            self.processing = false;
+            _.debounce( () => {
+                this.controller.ok();
+            }, 125)(this);
+        }).catch( err => {
+            self.processing = false;
+            self.errorMessage = (err.statusText) ? err.statusText : err;
+        });
     }
 
     activate(model) {
@@ -51,9 +97,21 @@ export class PurchaseForm {
                 if (activeCN) {
                     self.catalogueTotal += activeCN.value;
                 } else {
-                    console.log("No active number found.");
+                    logger.warn("No active number found.");
                 }
             });
         }
+        self.validation = self.validationDI.on(self.model)
+            .ensure('price')
+            .isNotEmpty()
+            .containsOnly(/^(\d*\.?\d?\d?)$/)
+            .isGreaterThan(0.0)
+            .ensure('currency')
+            .isNotEmpty();
+        _.debounce( () => {
+            this.validation.validate().catch( () => {
+               // assumed it will fail initially
+            });
+        }, 50)(this);
     }
 }

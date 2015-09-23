@@ -1,16 +1,52 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
+
 .purchase-form {
     width: 500px;
     .price-paid {
-        width: 75px;
-        margin-right: @padding-small-horizontal;
+        padding-left: 0;
+        input {
+            width: 75px;
+            margin-right: @padding-small-horizontal;
+        }
     }
     .percentage-not-valid {
         opacity: 0.5;
     }
-    .purchase-percentage {
+    .label-value {
         text-align: left;
         padding-left: 0;
+    }
+    .purchase-currency {
+        position: absolute;
+        top: 0;
+        left: 85px;
+    }
+}
+
+dialog-body {
+    > div.well {
+        background-color: @navbar-inverse-bg;
+        color: @navbar-inverse-color;
+        margin-left: -12px;
+        margin-right: -12px;
+        margin-top: -12px;
+    }
+}
+
+dialog-footer {
+    .process-progress, .messaging {
+        width: 60%;
+        display: inline-block;
+        float: left;
+        padding-top: @padding-large-vertical;
+        padding-left: @padding-small-horizontal;
+    }
+    .messaging {
+        text-align: left;
+        font-size: @font-size-small;
+        i {
+            color: @brand-danger;
+        }
     }
 }

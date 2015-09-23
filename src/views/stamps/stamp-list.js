@@ -107,17 +107,25 @@ export class StampList extends EventManaged {
     }
 
     purchase() {
-        let purchaseModel = {
-            price: 0.0,
-            currency: CurrencyCode.USD,
-            updateExisting: true,
-            selectedStamps: this.stampService.getSelected()
-        };
-        this.dialogService.open({ viewModel: PurchaseForm, model: purchaseModel}).then(() => {
-            //TODO: handle save of new purchased
-        }).catch(() => {
-            //TODO: handle cancel
-        });
+        let selected = this.stampService.getSelected();
+        if( selected && selected.length > 0 ) {
+            selected = _.filter(selected, { wantList: false });
+            if( selected.length > 0 ) {
+                let purchaseModel = {
+                    price: 0.0,
+                    currency: CurrencyCode.USD,
+                    updateExisting: true,
+                    selectedStamps: selected
+                };
+                this.dialogService.open({ viewModel: PurchaseForm, model: purchaseModel}).then(() => {
+                    // post-process any purchases
+                }).catch(() => {
+                    // handle cancel
+                });
+            }
+
+        }
+
     }
 
     setStatistics(reportType) {

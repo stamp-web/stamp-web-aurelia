@@ -4,17 +4,23 @@
     <require from="resources/styles/views/stamps/purchase-form.css"></require>
     <dialog class="purchase-form">
         <dialog-body>
-            <div class="well well-sm">${'editor.purchase-help'|t}</div>
-            <form class="form-horizontal">
-                <div class="form-group form-group-sm">
-                    <label for="price-paid" class="col-sm-3 control-label">${'editor.purchase-total'|t}</label>
-                    <div class="input-group col-md-9">
-                        <input type="text" tabindex="110" class="form-control price-paid" id="price-paid"
-                               value.bind="model.price" keyup.delegate="priceChanged()">
-                        <select id="currency-code" tabindex="115" class="currency-selector form-control"
-                                value.bind="model.code">
-                            <option repeat.for="cur of codes" model.bind="cur.keyName">${cur.description|t}</option>
-                        </select>
+            <div class="well">${'editor.purchase-help'|t}</div>
+            <form class="form-horizontal" validate.bind="validation">
+                <div class="form-group form-group-sm1">
+                    <span>
+                        <label class="col-sm-4 control-label">${'editor.purchase-stamp-count'|t}</label>
+                        <div class="col-md-8 control-label label-value">${model.selectedStamps.length}</div>
+                    </span>
+                </div>
+                <div class="form-group form-group-sm has-feedback">
+                    <label for="price-paid" class="col-sm-4 control-label">${'editor.purchase-total'|t}</label>
+                    <div class="col-md-8 price-paid">
+                            <input type="text" tabindex="110" class="form-control" id="price-paid"
+                                   validate="price" value.bind="model.price" keyup.delegate="priceChanged()" aria-describedby="inputValueStatus">
+                            <select id="currency-code" tabindex="115" class="currency-selector form-control purchase-currency"
+                                    value.bind="model.currency" validate="currency">
+                                <option repeat.for="cur of codes" model.bind="cur.keyName">${cur.description|t}</option>
+                            </select>
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
@@ -26,18 +32,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group form-group-sm ${(percentage <= 0) ? 'percentage-not-valid' : ''}">
-                    <label class="col-sm-3 control-label">${'editor.purchase-percentage'|t}</label>
-                    <div class="col-md-9 control-label purchase-percentage">
-                        <span>${percentage | asPercentage}</span>
-                    </div>
+                <div class="form-group form-group-sm1">
+                    <span class="${(percentage <= 0) ? 'percentage-not-valid' : ''}">
+                        <label class="col-sm-4 control-label">${'editor.purchase-percentage'|t}</label>
+                        <div class="col-md-8 control-label label-value">
+                            <span>${percentage | asPercentage}</span>
+                        </div>
+                    </span>
                 </div>
             </form>
-
         </dialog-body>
-
         <dialog-footer>
-            <button class="btn btn-primary" click.trigger="controller.ok(model)">Ok</button>
+            <div class="process-progress" if.bind="processing">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow.bind="25" aria-valuemin="0" aria-valuemax="100">
+                        ${processingCount / model.selectedStamps.length | asPercentage}
+                    </div>
+                </div>
+            </div>
+            <div class="messaging" if.bind="errorMessage !== ''">
+                <i class="sw-icon-attention"></i> ${errorMessage}
+            </div>
+
+            <button class="btn btn-primary" disabled.bind="!validation.result.isValid" click.trigger="save()">Ok</button>
             <button class="btn" click.trigger="controller.cancel()">Cancel</button>
         </dialog-footer>
     </dialog>

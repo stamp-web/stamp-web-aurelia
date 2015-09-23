@@ -76,7 +76,8 @@ export class StampCard {
 
     toggleSelection(evt) {
         let t = $(evt.target);
-        if( this.model.selected && !t.hasClass('stamp-card')) {
+        let p = t.parents('button');
+        if( this.model.selected && (p.length !== 0 || t.is('button')) ) {
             return;
         }
         this.eventBus.publish(EventNames.toggleStampSelection, this.model);
