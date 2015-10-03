@@ -63,13 +63,13 @@ export class PurchaseForm {
             if(stamp.stampOwnerships && stamp.stampOwnerships.length > 0) {
                 let owner = stamp.stampOwnerships[0];
                 if( owner.pricePaid > 0.0 && self.model.updateExisting || owner.pricePaid <= 0.0 ) {
-                    owner.pricePaid =  +(stamp.activeCatalogueNumber.value / self.catalogueTotal * self.model.price).toFixed(2);
+                    owner.pricePaid = +(stamp.activeCatalogueNumber.value / self.catalogueTotal * self.model.price).toFixed(2);
                     owner.code = self.model.currency;
                     let promise = self.stampService.save(stamp);
                     results.push(promise);
                     promise.then( () => {
                         self.processingCount++;
-                        $('.progress-bar').css('width',self.processingCount * 1.0 / count * 100 + '%'); // need to manipulate the width
+                        $('.progress-bar').css('width', self.processingCount * 1.0 / count * 100 + '%'); // need to manipulate the width
                     });
 
                 }

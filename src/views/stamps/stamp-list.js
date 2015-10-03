@@ -56,7 +56,7 @@ export class StampList extends EventManaged {
     gridMode = true;
     imageShown = false;
     editorShown = false;
-    createWantList = false;
+    panelContents = "stamp-editor";
     subscribers = [];
     referenceMode = false;
     reportValue = "";
@@ -215,15 +215,14 @@ export class StampList extends EventManaged {
         this.search();
     }
 
-    toggleEditor(action) {
+    showEditor(action) {
         if (action === 'create-stamp' || action === 'create-wantList') {
             this.editingStamp = createStamp((action === 'create-wantList'));
-            var toggle = (this.createWantList === this.editingStamp.wantList || !this.editorShown);
-            this.createWantList = this.editingStamp.wantList;
-            if (toggle) {
-                this.editorShown = !this.editorShown;
-            }
+            this.panelContents = "stamp-editor";
+        } else if ( action === 'search-panel' ) {
+            this.panelContents = action;
         }
+        this.editorShown = true;
     }
 
     setViewMode(mode) {
@@ -295,21 +294,27 @@ export class StampList extends EventManaged {
             this.options._ul = (new Date()).getTime();
             this.setPage(page);
         });
-        this.subscribe(EventNames.stampCreate, function() {
+        this.subscribe(EventNames.stampCreate, () => {
             self.editingStamp = createStamp(false /* Not a wantlist */);
             self.editorShown = true;
+        });
+
+        this.subscribe(EventNames.panelCollapsed, config => {
+            if( config.name === "stamp-list-editor-panel") {
+                self.editorShown = false;
+            }
         });
         this.subscribe(EventNames.showImage, stamp => {
             this.handleFullSizeImage(stamp);
         });
         this.subscribe(EventNames.stampEdit, stamp => {
             self.editingStamp = stamp;
-            self.createWantList = stamp.wantList;
             self.editorShown = true;
         });
-        this.subscribe(EventNames.stampEditorCancel, function() {
-            self.editingStamp = null;
+        this.subscribe(EventNames.stampEditorCancel, () => {
             self.editorShown = false;
+            self.editingStamp = null;
+
         });
         this.subscribe(EventNames.stampSaved, result => {
             if( !result.remainOpen) {
@@ -334,6 +339,7 @@ export class StampList extends EventManaged {
             }
         });
         this.subscribe(EventNames.toggleStampSelection, this.stampSelected.bind(this));
+
         this.subscribe(EventNames.stampRemove, stamp => {
             var _remove = function (model) {
                 if (this.editingStamp && stamp.id === this.editingStamp.id) { // remove editing stamp
