@@ -3,7 +3,8 @@
         "manage": "Manage",
         "settings": "Manage settings",
         "stamps": "Stamps",
-        "title": "Stamp Web"
+        "title": "Stamp Web",
+        "search": "Search by criteria"
     },
     "footer": {
         "totalSelected": "Selected",
@@ -42,6 +43,7 @@
         "details-title": "Details",
         "grade": "Grade",
         "grade-select": "Select grade",
+        "hide": "close",
         "issue": "Year of Issue",
         "name": "Name",
         "modify-existing": "Modify existing values",
@@ -61,6 +63,9 @@
         "ALL_STAMPS": "All stamps",
         "ONLY_OWNED": "Only owned stamps",
         "ONLY_WANTLIST": "Only wantlist stamps"
+    },
+    "search": {
+        "form-title": "Search Criteria"
     },
     "prompts": {
         "delete-catalogue-number": "Delete catalogue number __number__?"
