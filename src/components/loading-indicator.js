@@ -3,6 +3,8 @@ import {bindable, noView, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../events/event-names';
 
+import 'resources/styles/components/loading-indicator.css!';
+
 @noView
 @bindable("loading")
 @inject(EventAggregator)
@@ -18,14 +20,16 @@ export class LoadingIndicator {
     }
 
     subscribe() {
+        let self = this;
         this.eventBus.subscribe(EventNames.loadingStarted, function() {
             nprogress.start();
-            this.loadingCount++;
+            self.loadingCount++;
         });
         this.eventBus.subscribe(EventNames.loadingFinished, function() {
-            this.loadingCount--;
-            if (!this.loading && this.loadingCount === 0) {
+            self.loadingCount--;
+            if (!self.loading && self.loadingCount <= 0) {
                 nprogress.done();
+                self.loadingCount = 0;
             }
         });
 
