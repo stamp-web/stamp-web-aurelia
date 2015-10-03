@@ -34,13 +34,14 @@ export class EventManaged {
 
     detached() {
         let self = this;
-        self._subscribers.forEach(key => {
+        let channel = Object.keys(self._subscribers);
+        channel.forEach(key => {
             self.unsubscribe(key);
         });
     }
 
-    unsubscribe(key) {
-        this._subscribers[key].forEach(sub => {
+    unsubscribe(channel) {
+        this._subscribers[channel].forEach(sub => {
             sub();
         });
     }
