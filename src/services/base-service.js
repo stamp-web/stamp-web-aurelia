@@ -190,7 +190,6 @@ export class BaseService {
                     href += '?' + self.paramHelper.toParameters(opts);
                 }
                 self.http.get(href).then(response => {
-                    self.clearSelected();
                     self.loaded = true;
                     if (response.statusCode === 200 && response.response) {
                         var resp = response.content;

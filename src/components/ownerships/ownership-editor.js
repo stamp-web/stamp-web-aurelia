@@ -1,6 +1,5 @@
 import {customElement, bindable, inject, LogManager} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import {Albums} from '../../services/albums';
 import {Sellers} from '../../services/sellers';
@@ -32,12 +31,6 @@ export class OwnershipEditor extends EventManaged {
         this.loadDependentModels();
     }
 
-    attached() {
-        this.subscribe(EventNames.updateImagePath, function (path) {
-            this.model.img = path;
-        });
-    }
-
     loadDependentModels() {
         var self = this;
         var albumPromise = this.albumService.find({
@@ -59,7 +52,7 @@ export class OwnershipEditor extends EventManaged {
             }
             self.loading = false;
         }).catch(err => {
-            logger.debug(err);
+            logger.error(err);
         });
     }
 }
