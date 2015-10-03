@@ -123,9 +123,7 @@ export class StampList extends EventManaged {
                     // handle cancel
                 });
             }
-
         }
-
     }
 
     setStatistics(reportType) {
@@ -282,7 +280,6 @@ export class StampList extends EventManaged {
 
     setupSubscriptions() {
         var self = this;
-
         this.subscribe(EventNames.search, options => {
             this.options = _.merge(this.options, options);
             this.search();
@@ -350,7 +347,7 @@ export class StampList extends EventManaged {
                     var index = _.findIndex(this.stamps, {id: model.id});
                     this.stamps.splice(index, 1);
                 }).catch(err => {
-                    console.log(err);
+                    logger.error(err);
                 });
             };
             bootbox.confirm({
@@ -368,8 +365,8 @@ export class StampList extends EventManaged {
     }
 
     stampSelected(obj) {
-        if( obj ) {
-            if( this.stampService.isSelected(obj)) {
+        if (obj) {
+            if (this.stampService.isSelected(obj)) {
                 this.stampService.unselect(obj);
                 let selected = this.stampService.getSelected();
                 this.lastSelected = ( selected && selected.length > 0) ? selected[selected.length - 1] : undefined;
@@ -405,6 +402,7 @@ export class StampList extends EventManaged {
 
     search() {
         var opts = this.buildOptions();
+        this.stampService.clearSelected();
         this.stampService.find(opts).then(result => {
             this.processStamps(result, opts);
         }).catch(err => {
@@ -428,11 +426,15 @@ export class StampList extends EventManaged {
 
     }
 
+    attached() {
+        this.setupSubscriptions();
+    }
+
     activate() {
         var t = new Date();
         var self = this;
         this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');
-        this.setupSubscriptions();
+
         return new Promise((resolve, reject) => {
             this.countryService.find().then(result => {
                 this.countries = result.models;
@@ -452,12 +454,12 @@ export class StampList extends EventManaged {
                     }));
                 }
                 var opts = this.buildOptions();
-
+                // this really should be consolidated with sendSearch() above.
+                this.stampService.clearSelected();
                 this.stampService.find(opts).then(stamps => {
                     this.processStamps(stamps, opts);
                     logger.debug("StampGrid initialization time: " + ((new Date().getTime()) - t.getTime()) + "ms");
                     resolve();
-
                 });
 
             }).catch(err => {
