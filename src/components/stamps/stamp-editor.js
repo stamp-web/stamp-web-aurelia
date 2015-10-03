@@ -10,8 +10,6 @@ import {EventManaged} from '../../events/event-managed';
 import _ from 'lodash';
 import moment from 'moment';
 
-import 'resources/styles/components/stamps/stamp-editor.css!';
-
 const logger = LogManager.getLogger('stamp-editor');
 
 const PreferredValues = [
@@ -28,6 +26,7 @@ function createCatalogueNumber() {
         id: 0,
         catalogueRef: -1,
         value: 0.0,
+        condition: 0,
         number: '',
         active: true,
         unknown: false
@@ -38,11 +37,15 @@ function createOwnership() {
     return {
         id: 0,
         albumRef: -1,
+        sellerRef: -1,
         code: CurrencyCode.USD.keyName,
         purchased: moment(new Date()).format('YYYY-MM-DDT00:00:00Z'),
         pricePaid: 0.0,
         defects: 0,
-        deception: 0
+        deception: 0,
+        condition: 0,
+        grade: 0,
+        img: ''
     };
 }
 
@@ -139,6 +142,7 @@ export class StampEditorComponent extends EventManaged {
 
 
     calculateImagePath() {
+
         if( this.calculateImagePathFn && this.calculateImagePathFn.clearTimeout ) {
             this.calculateImagePathFn.clearTimeout();
             this.calculateImagePathFn = undefined;
@@ -166,16 +170,18 @@ export class StampEditorComponent extends EventManaged {
             }
             this.calculateImagePathFn = undefined;
         }, 500);
+
     }
 
     checkExists() {
+
         if( this.checkExistsFn && this.checkExistsFn.clearTimeout ) {
             this.checkExistsFn.clearTimeout();
             this.checkExistsFn = undefined;
         }
         let self = this;
         this.checkExistsFn = setTimeout(function () {
-            if ((self.duplicateModel.id <= 0 || self.duplicateModel.wantList === true ) && self.duplicateModel.countryRef > 0 && self.duplicateModel.activeCatalogueNumber) {
+            if ((self.duplicateModel && (self.duplicateModel.id <= 0 || self.duplicateModel.wantList === true ) && self.duplicateModel.countryRef > 0 && self.duplicateModel.activeCatalogueNumber)) {
                 let cn = self.duplicateModel.activeCatalogueNumber;
                 if (cn.catalogueRef > 0 && cn.number && cn.number !== '') {
                     let opts = {
@@ -227,6 +233,10 @@ export class StampEditorComponent extends EventManaged {
             this.useCataloguePrefix = ( catPrefix && catPrefix.value === 'true');
 
             if( this.duplicateModel.id <= 0 || alwaysProcess === true) {
+                let m = this.duplicateModel;
+                if( m ) {
+                    logger.info("Stamp model was available on preferences initialization");
+                }
                 PreferredValues.forEach(function (pref) {
                     let prefValue = _.findWhere(this.preferences, {name: pref.key, category: pref.category});
                     if (prefValue) {
@@ -234,7 +244,7 @@ export class StampEditorComponent extends EventManaged {
                         if (pref.type === Number) {
                             value = +value;
                         }
-                        let m = this.duplicateModel;
+
                         if (pref.model) {
                             pref.model.forEach(function (key) {
                                 if (key === "activeCatalogueNumber") {
@@ -248,8 +258,8 @@ export class StampEditorComponent extends EventManaged {
                             }, this);
                         } else if (m && (pref.type === Number && (m[pref.key] === undefined || m[pref.key] < 0))) {
                             m[pref.key] = value;
-                        } else {
-                            logger.error("The model was not defined");
+                        } else if (!m) {
+                            logger.warn("The stamp model was not defined at the point of preferences initialization.");
                         }
                     }
                 }, this);

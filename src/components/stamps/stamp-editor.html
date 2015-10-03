@@ -1,7 +1,9 @@
 <template>
-	<require from="./stamp-details"></require>
+	<require from="resources/styles/components/stamps/stamp-editor.css"></require>
+    <require from="./stamp-details"></require>
 	<require from="../catalogue-numbers/cn-details"></require>
     <require from="../ownerships/ownership-editor"></require>
+
 
 	<div class="stamp-editor" if.bind="duplicateModel && loaded">
         <div>
@@ -13,9 +15,9 @@
         </div>
 
 		<div class="editor-buttons">
-			<button type="button" class="btn btn-sm btn-default" click.trigger="save()">Save</button>
-			<button type="button" class="btn btn-sm btn-default" click.trigger="saveAndNew()" if.bind="createMode">Save and New</button>
-			<button type="button" class="btn btn-sm btn-default" click.trigger="cancel()">Cancel</button>
+			<button type="button" class="btn btn-sm btn-default" click.delegate="save()">Save</button>
+			<button type="button" class="btn btn-sm btn-default" click.delegate="saveAndNew()" if.bind="createMode">Save and New</button>
+			<button type="button" class="btn btn-sm btn-default" click.delegate="cancel()">Cancel</button>
 		</div>
 	</div>
 

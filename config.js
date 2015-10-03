@@ -41,6 +41,7 @@ System.config({
     "aurelia-templating-resources": "github:aurelia/templating-resources@0.15.2",
     "aurelia-templating-router": "github:aurelia/templating-router@0.16.1",
     "aurelia-validation": "github:aurelia/validation@0.3.1",
+    "aurelia/binding": "github:aurelia/binding@0.9.1",
     "aurelia/validation": "github:aurelia/validation@0.3.1",
     "babel": "npm:babel-core@5.8.25",
     "babel-runtime": "npm:babel-runtime@5.8.25",
