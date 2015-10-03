@@ -77,7 +77,7 @@
       "aurelia-templating-binding": "github:aurelia/templating-binding@^0.15.0",
       "aurelia-templating-resources": "github:aurelia/templating-resources@^0.15.2",
       "aurelia-templating-router": "github:aurelia/templating-router@^0.16.1",
-      "aurelia-validation": "github:aurelia/validation@0.2.8",
+      "aurelia-validation": "github:aurelia/validation@^0.3.1",
       "bootbox": "npm:bootbox@^4.4.0",
       "bootstrap": "github:twbs/bootstrap@^3.3.5",
       "components/jquery": "github:components/jquery@2.1.4",

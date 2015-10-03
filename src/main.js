@@ -1,6 +1,6 @@
 import {LogManager} from 'aurelia-framework';
 import {ConsoleAppender} from 'aurelia-logging-console';
-import {ValidateCustomAttributeViewStrategy} from 'aurelia-validation';
+import {TWBootstrapViewStrategy} from 'aurelia-validation';
 
 LogManager.addAppender(new ConsoleAppender());
 LogManager.setLevel(LogManager.logLevel.info);
@@ -28,7 +28,7 @@ export function configure(aurelia) {
         .plugin('aurelia-dialog')
         .plugin('aurelia-validation', (config) => {
             config.useDebounceTimeout(250);
-            config.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);
+            config.useViewStrategy(TWBootstrapViewStrategy.AppendToInput);
         });
 
     aurelia.start().then(a => a.setRoot('app', document.body));
