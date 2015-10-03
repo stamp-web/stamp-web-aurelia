@@ -103,8 +103,9 @@ export class Select2Picker {
     unbind() {
         let select = this.element.firstElementChild;
         if( select ) {
-            let $select = $(select);
+            const $select = $(select);
             $select.off();
+            $select.select2("destroy");
         }
     }
 
@@ -166,11 +167,13 @@ export class Select2Picker {
     itemsChanged(newValue, oldValue) { //eslint-disable-line no-unused-vars
         if( newValue && newValue.length > 0 ) {
             _.debounce(self => {
-                self.valueChanged(self.value, undefined);
-                if( self.firedCollectionChanged ) {
-                    logger.debug("Collections was changed after initial binding");
+                if( self.value ) {
+                    self.valueChanged(self.value, undefined);
+                    if( self.firedCollectionChanged ) {
+                        logger.debug("Collections was changed after initial binding");
+                    }
+                    self.firedCollectionChanged = true;
                 }
-                self.firedCollectionChanged = true;
             })(this);
 
         }
@@ -180,7 +183,10 @@ export class Select2Picker {
         if( !finalNewValue ) {
             finalNewValue = newValue;
         }
-        this.select2.select2('val', newValue);
+        // need to handle the case where it is destroyed and listeners are clearing out
+        if( this.select2.data('select2') !== undefined ) {
+            this.select2.select2('val', newValue);
+        }
         if( this.value !== finalNewValue ) {
             this.value = finalNewValue;
         }
