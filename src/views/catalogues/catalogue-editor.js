@@ -13,6 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+import $ from 'jquery';
+import _ from 'lodash';
+
 import {CurrencyCode, CatalogueType} from '../../util/common-models';
 
 export class catalogueEditor {
@@ -23,5 +26,10 @@ export class catalogueEditor {
 
     activate(options) {
         this.model = options;
+        if( !(this.model.id > 0) ) {
+            _.debounce( () => {
+                $('#editor-issue').focus();
+            }, 125)(this);
+        }
     }
 }

@@ -21,7 +21,7 @@
 				<label for="details-countryRef" class="col-sm-3 control-label">${'editor.country'|t}</label>
 				<div class="col-sm-9">
                     <select-picker items.bind="countries" disabled.bind="loading" class="country-selector" value.two-way="model.countryRef"
-                        config.bind="{ id: 'details-countryRef',labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
+                        config.bind="{ id: 'details-countryRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
 				</div>
 			</div>
 			<div class="form-group form-group-sm has-feedback">
