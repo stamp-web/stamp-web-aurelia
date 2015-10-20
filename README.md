@@ -2,6 +2,7 @@
 
 stamp-web-aurelia is the web front-end for managing collections of stamps and leverages the REST interfaces of stamp-web-services.
 
+![Screen shot from Stamp-Web](http://i1178.photobucket.com/albums/x373/jadrake/stamp-web-aurelia_zpsp6rlurxt.png)
 
 ## Build Status
 
