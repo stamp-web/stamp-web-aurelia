@@ -217,7 +217,7 @@ export class StampEditorComponent extends EventManaged {
         let self = this;
         this.preferenceService.find().then(results => {
             self.preferences = results.models;
-            self.processPreferences(true);
+            self.processPreferences((self.duplicateModel && self.duplicateModel.id <= 0 ));
         });
     }
 
