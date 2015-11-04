@@ -13,6 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+import $ from 'jquery';
+import _ from 'lodash';
+
 export class countryEditor {
 
     model;
@@ -20,5 +23,11 @@ export class countryEditor {
 
     activate(options) {
         this.model = options;
+        if( !(this.model.id > 0) ) {
+            _.debounce( () => {
+                $('#editor-name').focus();
+            }, 125)(this);
+        }
     }
+
 }

@@ -16,6 +16,8 @@
 import {inject} from 'aurelia-framework';
 import {StampCollections} from '../../services/stampCollections';
 import {LogManager} from 'aurelia-framework';
+import $ from 'jquery';
+import _ from 'lodash';
 
 const logger = LogManager.getLogger('albumEditor');
 
@@ -38,6 +40,11 @@ export class albumEditor {
         }).catch(err => {
             logger.error("Error with stamp collections", err);
         });
+        if( !(this.model.id > 0) ) {
+            _.debounce( () => {
+                $('#editor-name').focus();
+            }, 125)(this);
+        }
         return p;
     }
 }

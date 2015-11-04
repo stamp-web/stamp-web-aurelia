@@ -217,7 +217,7 @@ export class StampEditorComponent extends EventManaged {
         let self = this;
         this.preferenceService.find().then(results => {
             self.preferences = results.models;
-            self.processPreferences(true);
+            self.processPreferences((self.duplicateModel && self.duplicateModel.id <= 0 ));
         });
     }
 
@@ -231,8 +231,7 @@ export class StampEditorComponent extends EventManaged {
             this.usedInlineImagePath = ( p && p.value === 'true');
             let catPrefix = _.findWhere(this.preferences, { name: 'applyCatalogueImagePrefix', category: 'stamps'});
             this.useCataloguePrefix = ( catPrefix && catPrefix.value === 'true');
-
-            if( this.duplicateModel.id <= 0 || alwaysProcess === true) {
+            if( (this.duplicateModel.id <= 0) || alwaysProcess === true) {
                 let m = this.duplicateModel;
                 if( m ) {
                     logger.info("Stamp model was available on preferences initialization");
@@ -252,11 +251,11 @@ export class StampEditorComponent extends EventManaged {
                                 } else if (key === "ownership") {
                                     m = this.ownership;
                                 }
-                                if (m && (pref.type === Number && (m[pref.key] === undefined || m[pref.key] < 0))) {
+                                if (m && (pref.type === Number && (m[pref.key] === undefined || (m[pref.key] <= 0) && value > 0))) {
                                     m[pref.key] = value;
                                 }
                             }, this);
-                        } else if (m && (pref.type === Number && (m[pref.key] === undefined || m[pref.key] < 0))) {
+                        } else if (m && (pref.type === Number && (m[pref.key] === undefined || ( m[pref.key] <= 0) && value > 0))) {
                             m[pref.key] = value;
                         } else if (!m) {
                             logger.warn("The stamp model was not defined at the point of preferences initialization.");

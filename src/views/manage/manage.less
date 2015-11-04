@@ -34,6 +34,7 @@
 }
 
 .manage-list-toolbar {
+    height: 40px;
     .col-sm-2, .col-sm-4 {
         padding-right: 0;
     }
@@ -63,10 +64,17 @@
 	padding-top: @panel-body-padding;
 	position: relative;
 	top: 56px;
-	overflow-y: auto;
-	.row {
-		height: inherit;
+	overflow-y: hidden;
+	>.row {
+		height: 100%;
+        >div {
+            height: 100%;
+        }
 	}
+    .manage-list-contents {
+        height: calc(~"100% - 40px");
+        overflow: auto;
+    }
 	.actions {
 		width: 120px;
 	}
