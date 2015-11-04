@@ -122,6 +122,14 @@ export class Select2Picker {
         }
     }
 
+    getBoundValue(item) {
+        return item[this.valueProperty];
+    }
+
+    getBoundText(item) {
+        return item[this.labelProperty];
+    }
+
     onUnselect(e) {
         let self = this;
         if( e.params && e.params.data ) {

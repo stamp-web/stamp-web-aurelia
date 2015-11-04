@@ -126,6 +126,10 @@ export class StampList extends EventManaged {
         }
     }
 
+    getFilterText(filter) {
+        return filter.description;
+    }
+
     setStatistics(reportType) {
         let self = this;
         self.reportType = reportType;

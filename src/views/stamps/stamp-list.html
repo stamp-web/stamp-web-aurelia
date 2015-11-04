@@ -6,7 +6,6 @@
     <require from="../../widgets/paging/paging-toolbar"></require>
     <require from="../../widgets/collapse-panel/collapse-panel"></require>
     <require from="../../widgets/select-picker/select-picker"></require>
-
 	<nav class="navbar navbar-default stamp-grid-nav">
 		<form class="navbar-form" role="search">
 			<div class="btn-toolbar" role="toolbar">
@@ -70,11 +69,11 @@
 				<div class="btn-group">
                     <div class="dropdown">
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selector-text">${stampFilter.description|t | defaultValue:'filters.filter'|t}</span>
+                            <span class="selector-text">${getFilterText(stampFilter)|t | defaultValue:'filters.filter'|t}</span>
                              <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li repeat.for="filter of filters" click.trigger="$parent.setFilter($index)">${filter.description|t}</li>
+                            <li repeat.for="filter of filters" click.trigger="$parent.setFilter($index)">${$parent.getFilterText(filter)|t}</li>
                         </ul>
                     </div>
 

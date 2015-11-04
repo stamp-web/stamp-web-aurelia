@@ -29,13 +29,15 @@ export class StampDetailsComponent extends EventManaged {
     detached() {
         super.detached();
         this._modelSubscribers.forEach(sub => {
-            sub();
+            // subscribers will be null
+           // sub.dispose();
         });
     }
 
     modelChanged(newValue) {
         this._modelSubscribers.forEach(sub => {
-            sub();
+            // model subscribers not defined
+            //sub();
         });
         this._modelSubscribers = [];
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));

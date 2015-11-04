@@ -139,7 +139,7 @@ export class ManageList {
 
     deactivate() {
         this.subscriptions.forEach(function (subscription) {
-            subscription();
+            subscription.dispose();
         });
         this.subscriptions = [];
     }

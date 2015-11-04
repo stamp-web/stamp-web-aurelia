@@ -38,6 +38,10 @@ export class EnumSymbol {
         return this.description || Symbol.keyFor(this.sym);
     }
 
+    get key() {
+        return this.keyName;
+    }
+
     toString() {
         return this.sym;
     }

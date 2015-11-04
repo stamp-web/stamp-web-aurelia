@@ -42,7 +42,7 @@ export class EventManaged {
 
     unsubscribe(channel) {
         this._subscribers[channel].forEach(sub => {
-            sub();
+            sub.dispose();
         });
     }
 }

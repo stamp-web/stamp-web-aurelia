@@ -2,30 +2,36 @@ import nprogress from 'nprogress';
 import {bindable, noView, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../events/event-names';
+import {EventManaged} from '../events/event-managed';
 
 import 'resources/styles/components/loading-indicator.css!';
 
 @noView
 @bindable("loading")
 @inject(EventAggregator)
-export class LoadingIndicator {
+export class LoadingIndicator extends EventManaged {
 
     constructor(eventBus) {
+        super(eventBus);
         this.eventBus = eventBus;
         this.loadingCount = 0;
-        this.subscribe();
+
         nprogress.configure({
             showSpinner: false
         });
     }
 
-    subscribe() {
+    attached() {
+        this.setupSubscriptions();
+    }
+
+    setupSubscriptions() {
         let self = this;
-        this.eventBus.subscribe(EventNames.loadingStarted, function() {
+        this.subscribe(EventNames.loadingStarted, function() {
             nprogress.start();
             self.loadingCount++;
         });
-        this.eventBus.subscribe(EventNames.loadingFinished, function() {
+        this.subscribe(EventNames.loadingFinished, function() {
             self.loadingCount--;
             if (!self.loading && self.loadingCount <= 0) {
                 nprogress.done();

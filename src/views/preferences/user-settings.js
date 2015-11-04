@@ -67,7 +67,6 @@ export class UserSettings {
     ]
 
     servicesLoaded = 0;
-    modelSubscribers = [];
     loading = false;
     valid = false;
 
@@ -87,9 +86,6 @@ export class UserSettings {
     }
 
     deactivate() {
-        this.modelSubscribers.forEach(sub => {
-            sub();
-        });
     }
 
     save() {
@@ -181,7 +177,7 @@ export class UserSettings {
             }
 
             self.model[prefKey.category][prefKey.name] = value;
-            self.modelSubscribers.push(self.observer.getObserver(self.model[prefKey.category], prefKey.name).subscribe(self.validate.bind(self)));
+            self.observer.getObserver(self.model[prefKey.category], prefKey.name).subscribe(self.validate.bind(self));
         });
         self.stateReset();
     }

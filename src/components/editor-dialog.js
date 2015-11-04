@@ -15,6 +15,7 @@
  */
 import {bindable, customElement, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {EventManaged} from '../events/event-managed';
 import {EventNames} from '../events/event-names';
 
 @customElement('editor-dialog')
@@ -24,21 +25,23 @@ import {EventNames} from '../events/event-names';
 @bindable('title')
 @bindable('icon')
 @inject(EventAggregator)
-export class EditorDialog {
+export class EditorDialog extends EventManaged {
 
     errorMsg = "None";
+    subscriptions = [];
 
     constructor(eventBus) {
+        super(eventBus);
         this.eventBus = eventBus;
         this.setupSubscriptions();
     }
 
     setupSubscriptions() {
         var that = this;
-        this.eventBus.subscribe(EventNames.close, function () {
+        this.subscribe(EventNames.close, function () {
             $("#" + that.dialogId).modal('hide');
         });
-        this.eventBus.subscribe(EventNames.actionError, msg => {
+        this.subscribe(EventNames.actionError, msg => {
             this.errorMsg = msg;
         });
     }

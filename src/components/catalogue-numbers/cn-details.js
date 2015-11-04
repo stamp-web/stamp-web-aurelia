@@ -43,7 +43,8 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
     detached() {
         super.detached();
         this._modelSubscribers.forEach(sub => {
-            sub();
+            // sub will be undefined
+         //   sub.dispose();
         });
     }
 
@@ -90,7 +91,8 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     modelChanged(newValue) {
         this._modelSubscribers.forEach(sub => {
-            sub();
+            // model subscribers not defined
+           // sub();
         });
         this._modelSubscribers = [];
         this._modelSubscribers.push(this.observer.getObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));

@@ -108,7 +108,7 @@ export class EntityListManage {
 
     detached() {
         this.subscriptions.forEach(function (sub) {
-            sub();
+            sub.dispose();
         });
     }
 
