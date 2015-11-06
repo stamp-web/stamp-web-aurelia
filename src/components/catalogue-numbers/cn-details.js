@@ -1,6 +1,6 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {Validation} from 'aurelia-validation';
-import {ObserverLocator} from 'aurelia-binding';
+import {bindingEngine} from 'aurelia-binding'; // technically this is a static not a DI until next release
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
@@ -14,7 +14,7 @@ import 'resources/styles/components/catalogue-numbers/cn-details.css!';
 @customElement('catalogue-number-details')
 @bindable('model')
 @bindable('selectedCatalogue')
-@inject(EventAggregator, ObserverLocator, Validation, Catalogues)
+@inject(EventAggregator, bindingEngine, Validation, Catalogues)
 export class CatalogueNumberDetailsComponent extends EventManaged {
 
     catalogues = [];
@@ -28,10 +28,10 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     _modelSubscribers = [];
 
-    constructor(eventBus, observer, validation, catalogueService) {
+    constructor(eventBus, $bindingEngine, validation, catalogueService) {
         super(eventBus);
         this.catalogueService = catalogueService;
-        this.observer = observer;
+        this.$bindingEngine = $bindingEngine;
         this.validatorDI = validation;
         this.loadCatalogues();
     }
@@ -43,8 +43,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
     detached() {
         super.detached();
         this._modelSubscribers.forEach(sub => {
-            // sub will be undefined
-         //   sub.dispose();
+            sub.dispose();
         });
     }
 
@@ -91,13 +90,12 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     modelChanged(newValue) {
         this._modelSubscribers.forEach(sub => {
-            // model subscribers not defined
-           // sub();
+            sub.dispose();
         });
         this._modelSubscribers = [];
-        this._modelSubscribers.push(this.observer.getObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
-        this._modelSubscribers.push(this.observer.getObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
-        this._modelSubscribers.push(this.observer.getObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
+        this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
+        this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
+        this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
         this.showWarning = false;
         this.icon = ''; // clear exists icon
         this.conversionModel = undefined; // clear conversion context

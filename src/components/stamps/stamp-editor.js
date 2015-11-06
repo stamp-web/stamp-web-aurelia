@@ -231,7 +231,7 @@ export class StampEditorComponent extends EventManaged {
             this.usedInlineImagePath = ( p && p.value === 'true');
             let catPrefix = _.findWhere(this.preferences, { name: 'applyCatalogueImagePrefix', category: 'stamps'});
             this.useCataloguePrefix = ( catPrefix && catPrefix.value === 'true');
-            if( (this.duplicateModel.id <= 0) || alwaysProcess === true) {
+            if( this.duplicateModel && (this.duplicateModel.id <= 0) || alwaysProcess === true) {
                 let m = this.duplicateModel;
                 if( m ) {
                     logger.info("Stamp model was available on preferences initialization");

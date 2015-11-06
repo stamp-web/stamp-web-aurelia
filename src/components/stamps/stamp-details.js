@@ -1,6 +1,6 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {Validation} from 'aurelia-validation';
-import {ObserverLocator} from 'aurelia-binding';
+import {bindingEngine} from 'aurelia-binding'; // technically this is a static not a DI until next release
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
@@ -10,7 +10,7 @@ import $ from 'jquery';
 
 @customElement('stamp-details')
 @bindable('model')
-@inject(EventAggregator, ObserverLocator, Validation, Countries)
+@inject(EventAggregator, bindingEngine, Validation, Countries)
 export class StampDetailsComponent extends EventManaged {
 
     countries = [];
@@ -18,9 +18,9 @@ export class StampDetailsComponent extends EventManaged {
     editing = false;
     _modelSubscribers = [];
 
-    constructor(eventBus, observer, validator, countryService) {
+    constructor(eventBus, $bindingEngine, validator, countryService) {
         super(eventBus);
-        this.observer = observer;
+        this.$bindingEngine = $bindingEngine;
         this.validatorDI = validator;
         this.countryService = countryService;
         this.loadCountries();
@@ -29,18 +29,16 @@ export class StampDetailsComponent extends EventManaged {
     detached() {
         super.detached();
         this._modelSubscribers.forEach(sub => {
-            // subscribers will be null
-           // sub.dispose();
+            sub.dispose();
         });
     }
 
     modelChanged(newValue) {
         this._modelSubscribers.forEach(sub => {
-            // model subscribers not defined
-            //sub();
+            sub.dispose();
         });
         this._modelSubscribers = [];
-        this._modelSubscribers.push(this.observer.getObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
+        this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
         this.editing = newValue.id > 0;
         if( this.model.id <= 0 ) {
             setTimeout(function () {
