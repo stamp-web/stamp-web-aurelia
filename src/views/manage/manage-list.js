@@ -97,7 +97,6 @@ export class ManageList {
 
     configureRouter(config, router) {
         this.router = router;
-        config.title = 'Manage';
         config.mapUnknownRoutes(instruction => {
             if (instruction.fragment === '') {
                 instruction.config.moduleId = './list';
