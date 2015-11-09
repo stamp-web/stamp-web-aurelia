@@ -44,7 +44,7 @@ export class StampDetailsComponent extends EventManaged {
             if( this.model.id <= 0 ) {
                 setTimeout(function () {
                     $('#details-rate').focus();
-                });
+                }, 25);
             }
         }
     }

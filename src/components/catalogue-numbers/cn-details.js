@@ -93,18 +93,19 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
             sub.dispose();
         });
         this._modelSubscribers = [];
-        this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
-        this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
-        this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
-        this.showWarning = false;
-        this.icon = ''; // clear exists icon
-        this.conversionModel = undefined; // clear conversion context
-        this.setupValidation(this.validatorDI);
-        let self = this;
-        setTimeout(function() {
-            self.sendNotifications(); // check or initial conversion of wantlist
-        }, 125);
-
+        if( newValue ) {
+            this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
+            this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
+            this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
+            this.showWarning = false;
+            this.icon = ''; // clear exists icon
+            this.conversionModel = undefined; // clear conversion context
+            this.setupValidation(this.validatorDI);
+            let self = this;
+            setTimeout(function() {
+                self.sendNotifications(); // check or initial conversion of wantlist
+            }, 125);
+        }
     }
 
     catalogueChanged(newValue) {
