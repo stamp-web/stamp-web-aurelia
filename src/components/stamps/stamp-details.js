@@ -38,12 +38,14 @@ export class StampDetailsComponent extends EventManaged {
             sub.dispose();
         });
         this._modelSubscribers = [];
-        this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
-        this.editing = newValue.id > 0;
-        if( this.model.id <= 0 ) {
-            setTimeout(function () {
-                $('#details-rate').focus();
-            });
+        if( newValue ) {
+            this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
+            this.editing = newValue.id > 0;
+            if( this.model.id <= 0 ) {
+                setTimeout(function () {
+                    $('#details-rate').focus();
+                });
+            }
         }
     }
 
