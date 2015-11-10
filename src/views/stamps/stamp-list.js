@@ -314,7 +314,7 @@ export class StampList extends EventManaged {
         });
         this.subscribe(EventNames.stampEditorCancel, () => {
             self.editorShown = false;
-            self.editingStamp = null;
+         //   self.editingStamp = null;
 
         });
         this.subscribe(EventNames.stampSaved, result => {

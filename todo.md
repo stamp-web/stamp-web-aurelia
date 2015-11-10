@@ -31,3 +31,16 @@ http://plnkr.co/edit/OPOKxRiyRDwzBM92YlcG?p=preview
         </template>
       </tr>
 
+
+
+
+Fixing StampEditor and if.bind
+
+Remove the editingStamp as null...
+
+this.subscribe(EventNames.stampEditorCancel, () => {
+            self.editorShown = false;
+         //   self.editingStamp = null;
+
+        });
+
