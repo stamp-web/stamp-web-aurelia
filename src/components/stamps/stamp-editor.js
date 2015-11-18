@@ -128,8 +128,8 @@ export class StampEditorComponent extends EventManaged {
             // need to ensure ownership is there prior to assigning values
             var owner = this.ownership;  // eslint-disable-line no-unused-vars
             this.processPreferences(true);
-            this.calculateImagePath();
             this.assignCachedValues();
+            this.calculateImagePath();
         }
     }
 
@@ -150,7 +150,7 @@ export class StampEditorComponent extends EventManaged {
         let self = this;
         this.calculateImagePathFn = setTimeout(function () {
             let m = self.duplicateModel;
-            if( self.createMode === true && m.wantList === false && m.stampOwnerships && m.stampOwnerships.length > 0 ) {
+            if( m.wantList === false && m.stampOwnerships && m.stampOwnerships.length > 0 && (self.createMode === true || _.first(m.stampOwnerships).img === '' ) ) {
                 let cn = m.activeCatalogueNumber;
                 if( m.countryRef > 0 && cn.number !== '') {
                     let country = self.countryService.getById( m.countryRef );
