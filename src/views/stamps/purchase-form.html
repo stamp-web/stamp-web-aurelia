@@ -2,8 +2,8 @@
     <require from="../../widgets/select-picker/select-picker"></require>
     <require from="../../value-converters/as-percentage"></require>
     <require from="resources/styles/views/stamps/purchase-form.css"></require>
-    <dialog class="purchase-form">
-        <dialog-body>
+    <ai-dialog class="purchase-form">
+        <ai-dialog-body>
             <div class="well">${'editor.purchase-help'|t}</div>
             <form class="form-horizontal" validate.bind="validation">
                 <div class="form-group form-group-sm1">
@@ -41,8 +41,8 @@
                     </span>
                 </div>
             </form>
-        </dialog-body>
-        <dialog-footer>
+        </ai-dialog-body>
+        <ai-dialog-footer>
             <div class="process-progress" if.bind="processing">
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow.bind="25" aria-valuemin="0" aria-valuemax="100">
@@ -56,6 +56,6 @@
 
             <button class="btn btn-primary" disabled.bind="!validation.result.isValid" click.trigger="save()">Ok</button>
             <button class="btn" click.trigger="controller.cancel()">Cancel</button>
-        </dialog-footer>
-    </dialog>
+        </ai-dialog-footer>
+    </ai-dialog>
 </template>

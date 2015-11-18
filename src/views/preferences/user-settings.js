@@ -14,7 +14,7 @@
  limitations under the License.
  */
 import {inject, LogManager} from 'aurelia-framework';
-import {ObserverLocator} from 'aurelia-binding';
+import {BindingEngine} from 'aurelia-binding';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
 import {Countries} from '../../services/countries';
@@ -32,7 +32,7 @@ import 'resources/styles/views/preferences/user-settings.css!';
 
 const logger = LogManager.getLogger('user-settings');
 
-@inject(ObserverLocator, EventAggregator, Preferences, Countries, Albums, Sellers, Catalogues, StampCollections)
+@inject(BindingEngine, EventAggregator, Preferences, Countries, Albums, Sellers, Catalogues, StampCollections)
 export class UserSettings {
 
     countries = [];
@@ -70,8 +70,8 @@ export class UserSettings {
     loading = false;
     valid = false;
 
-    constructor(observer, eventBus, preferenceService, countryService, albumService, sellerService, catalogueService, stampCollectionService) {
-        this.observer = observer;
+    constructor($bindingEngine, eventBus, preferenceService, countryService, albumService, sellerService, catalogueService, stampCollectionService) {
+        this.$bindingEngine = $bindingEngine;
         this.eventBus = eventBus;
         this.preferenceService = preferenceService;
         this.countryService = countryService;
@@ -177,7 +177,7 @@ export class UserSettings {
             }
 
             self.model[prefKey.category][prefKey.name] = value;
-            self.observer.getObserver(self.model[prefKey.category], prefKey.name).subscribe(self.validate.bind(self));
+            self.$bindingEngine.propertyObserver(self.model[prefKey.category], prefKey.name).subscribe(self.validate.bind(self));
         });
         self.stateReset();
     }

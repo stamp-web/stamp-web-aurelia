@@ -40,13 +40,7 @@
 <script src="jspm_packages/github/polymer/mutationobservers@0.4.2/MutationObserver.js"></script>
 <script src="jspm_packages/system.js"></script>
 <script src="config.js"></script>
-<script>
-	System.config({
-		"paths": {
-			"*": "dist/*.js"
-		}
-	});
-</script>
+
 <script>
 	// Loads WeakMap polyfill needed by MutationObservers
 	System.import('core-js').then( function() {

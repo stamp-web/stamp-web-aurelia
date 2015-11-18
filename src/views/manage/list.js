@@ -91,10 +91,10 @@ export class EntityListManage {
         this.filterText = "";
     }
 
-    activate(obj, instructions) {
+    activate(obj) {
         this.models = [];
         var that = this;
-        that.eventBus.publish(EventNames.selectEntity, instructions.route);
+        that.eventBus.publish(EventNames.selectEntity, obj.path);
     }
 
     /**

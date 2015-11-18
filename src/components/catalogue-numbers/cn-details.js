@@ -1,6 +1,6 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {Validation} from 'aurelia-validation';
-import {bindingEngine} from 'aurelia-binding'; // technically this is a static not a DI until next release
+import {BindingEngine} from 'aurelia-binding'; // technically this is a static not a DI until next release
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
@@ -14,7 +14,7 @@ import 'resources/styles/components/catalogue-numbers/cn-details.css!';
 @customElement('catalogue-number-details')
 @bindable('model')
 @bindable('selectedCatalogue')
-@inject(EventAggregator, bindingEngine, Validation, Catalogues)
+@inject(EventAggregator, BindingEngine, Validation, Catalogues)
 export class CatalogueNumberDetailsComponent extends EventManaged {
 
     catalogues = [];

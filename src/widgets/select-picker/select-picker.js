@@ -203,7 +203,8 @@ export class Select2Picker {
 
     valueChanged(newValue, oldValue) {
         if (newValue === undefined) {
-            throw new Error("value may not be undefined");
+            logger.warn("value is undefined for " + this.valueProperty );
+            return;
         }
         if (this.multiple) {
             if( oldValue === null ) {

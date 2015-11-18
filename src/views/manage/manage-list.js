@@ -99,15 +99,16 @@ export class ManageList {
         this.router = router;
         config.mapUnknownRoutes(instruction => {
             if (instruction.fragment === '') {
-                instruction.config.moduleId = './list';
                 this._restoreState();
             } else {
                 var index = _.findIndex(this.entityModels, {collectionName: instruction.fragment});
                 if (index >= 0) {
                     this._saveState(this.entityModels[index].field);
-                    instruction.config.moduleId = './list';
                 }
             }
+            return {
+                moduleId: './list'
+            };
         });
     }
 
