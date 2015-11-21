@@ -23,16 +23,13 @@ import _ from 'lodash';
 
 const logger = LogManager.getLogger('purchase-form');
 
-@bindable({
-    name: 'percentage',
-    defaultValue: 0.0
-})
 @bindable('model')
 export class PurchaseForm {
     static inject() {
         return [DialogController, Stamps, Validation];
     }
     catalogueTotal = 0.0;
+    percentage = 0.0;
     codes = CurrencyCode.symbols();
     processing = false;
     processingCount = 0;
