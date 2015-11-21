@@ -64,6 +64,12 @@
         "ONLY_OWNED": "Only owned stamps",
         "ONLY_WANTLIST": "Only wantlist stamps"
     },
+    "conditionFilters": {
+        "ALL_STAMPS": "All conditions",
+        "ONLY_MINT": "Only mint stamps",
+        "ONLY_USED": "Only used stamps",
+        "ONLY_POSTAL_HISTORY": "Only postal history"
+    },
     "search": {
         "form-title": "Search Criteria"
     },

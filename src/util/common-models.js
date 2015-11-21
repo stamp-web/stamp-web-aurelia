@@ -179,6 +179,12 @@ export const StampFilter = new Enum({
     ONLY_WANTLIST: {ordinal: 2, description: 'filters.ONLY_WANTLIST'}
 });
 
+export const ConditionFilter = new Enum({
+    ALL: {ordinal: 0, description: 'conditionFilters.ALL_STAMPS'},
+    ONLY_MINT: {ordinal: 1, description: 'conditionFilters.ONLY_MINT'},
+    ONLY_USED: {ordinal: 2, description: 'conditionFilters.ONLY_USED'},
+    ONLY_POSTAL_HISTORY: {ordinal: 3, description: 'conditionFilters.ONLY_POSTAL_HISTORY'}
+});
 
 export var CatalogueHelper = function() {
     return {

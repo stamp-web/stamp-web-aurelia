@@ -23,7 +23,7 @@ import {PurchaseForm} from './purchase-form';
 import {EventNames, StorageKeys} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
-import {StampFilter, CurrencyCode} from '../../util/common-models';
+import {StampFilter, /*ConditionFilter, */CurrencyCode} from '../../util/common-models';
 import {ODataParser, Operation, Predicate} from '../../util/odata-parser';
 import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
 import bootbox from 'bootbox';
@@ -76,6 +76,8 @@ export class StampList extends EventManaged {
     filters = StampFilter.symbols();
     stampFilter = StampFilter.ALL;
 
+//   conditionFilters = ConditionFilter.symbols();
+//    conditionFilter = ConditionFilter.ALL;
 
     currentFilters = [];
 
@@ -167,6 +169,56 @@ export class StampList extends EventManaged {
     get selectedCount() {
         return this.stampService.getSelected().length;
     }
+
+/*    setConditionFilter(ordinal) {
+        let index = _.findIndex(this.currentFilters, { subject: 'condition'});
+        if( index >= 0 ) {
+            this.currentFilters.splice(index, 1);
+        } else {
+            let orMatches = _.filter(this.currentFilters, { operator: 'or'});
+            if( orMatches.length > 0 ) {
+                _.each( orMatches, (match) => {
+                   if ( match.value.subject = 'condition') {
+                       _.remove(this.currentFilters, match);
+                   }
+                });
+            }
+        }
+        this.conditionFilter = ConditionFilter.get(ordinal);
+        let conditions = [];
+
+        switch(ordinal) {
+            case 1:
+                conditions = [ 0, 1, 4, 5];
+                break;
+            case 2:
+                conditions = [ 2, 3, 7];
+                break;
+            case 3:
+                conditions = [6];
+                break;
+        }
+        if( conditions.length > 0 ) {
+            if( conditions.length === 1 ) {
+                this.currentFilters.push(new Predicate({
+                    subject: 'condition',
+                    value: conditions[0]
+                }));
+            } else {
+                let predicates = [];
+                for( let i = 0; i < conditions.length; i++ ) {
+                    predicates.push(new Predicate({
+                        subject: 'condition',
+                        value: conditions[i]
+                    }));
+                }
+                this.currentFilters.push(Predicate.logical(Operation.OR, predicates));
+            }
+        }
+        this.search();
+
+    }
+    */
 
     setFilter(ordinal) {
         var index = _.findIndex(this.currentFilters, { subject: 'wantList'});
