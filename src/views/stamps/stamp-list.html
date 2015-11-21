@@ -6,6 +6,8 @@
     <require from="../../widgets/paging/paging-toolbar"></require>
     <require from="../../widgets/collapse-panel/collapse-panel"></require>
     <require from="../../widgets/select-picker/select-picker"></require>
+    <require from="../../util/find-target"></require>
+
 	<nav class="navbar navbar-default stamp-grid-nav">
 		<form class="navbar-form" role="search">
 			<div class="btn-toolbar" role="toolbar">
@@ -19,7 +21,7 @@
 				</div>
 
                 <div class="btn-group input-group quick-search">
-                    <input type="text" class="form-control" value.two-way="searchText" placeholder="Search">
+                    <input type="text" find-target class="form-control" value.two-way="searchText" placeholder="Search">
                     <button class="btn btn-sm btn-default" title="Search" click.delegate="sendSearch()">
                         <span class="sw-icon-filter"></span>
                     </button>

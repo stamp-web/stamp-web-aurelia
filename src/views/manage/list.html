@@ -1,6 +1,7 @@
 <template>
 	<require from="../../value-converters/stamp-count"></require>
     <require from="../../value-converters/filter-by-name"></require>
+    <require from="../../util/find-target"></require>
 
     <div class="manage-list-toolbar">
         <form class="form-horizontal">
@@ -11,7 +12,7 @@
                 <div class="col-sm-4">
 
                     <div class="input-group">
-                        <input id="filter-text" class="form-control" placeholder="${'manage.filterPlaceholder'|t}" type="text" value.bind="filterText">
+                        <input id="filter-text" find-target class="form-control" placeholder="${'manage.filterPlaceholder'|t}" type="text" value.bind="filterText">
                         <button class="input-group-addon btn-sm btn btn-default" disabled.bind="filterText===''" click.delegate="clear()">
                             <span class="sw-icon-cancel"></span>
                         </button>
