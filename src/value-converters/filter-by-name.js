@@ -24,7 +24,7 @@ export class filterByNameValueConverter {
             return value;
         }
         return value.filter(item => {
-            return item.name.indexOf(filterText) >= 0;
+            return item.name.toUpperCase().indexOf(filterText.toUpperCase()) >= 0;
         });
     }
 }
