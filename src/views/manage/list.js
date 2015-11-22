@@ -21,6 +21,20 @@ import _ from 'lodash';
 
 const logger = LogManager.getLogger('manage-list-table');
 
+
+/*
+ * Handle the escaping in the filter box and have it clear the field.
+ */
+let handleKeyDown = function(e) {
+    var self = this;
+    if (e.keyCode === 27) {
+        self.clear();
+    } else if (e.keyCode === 13 ) {
+        e.preventDefault();
+    }
+};
+
+
 @inject(EventAggregator)
 @bindable('models')
 @bindable('field')
@@ -28,6 +42,7 @@ export class EntityListManage {
 
     subscriptions = [];
     filterText = "";
+    filterInput; // The input for filter text
     hasIssue = false;
     editingModel;
 
@@ -106,7 +121,16 @@ export class EntityListManage {
         }
     }
 
+    attached() {
+        let self = this;
+        setTimeout( () => { // bind this in a timeout to make sure the detached has fired to remove the listener first
+            $('#' + self.filterInput.id).on('keydown', handleKeyDown.bind(self));
+        }, 500);
+
+
+    }
     detached() {
+        $('#' + this.filterInput.id).off('keydown', handleKeyDown.bind(this));
         this.subscriptions.forEach(function (sub) {
             sub.dispose();
         });
