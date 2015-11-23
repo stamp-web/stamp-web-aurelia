@@ -26,6 +26,20 @@
 					<a href.bind="row.href">${row.title|t}</a>
 				</li>
 			</ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li role="presentation">
+                    <a href="http://www.drakeserver.com/javaws/tools/stamp-imageparsing.jnlp" title="${'nav.image-burst'|t}">
+                        <span class="hidden-xs sw-icon-imageburst"></span>
+                        <span class="visible-xs">${'nav.image-burst'|t}</span>
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="http://www.drakeserver.com/javaws/tools/stamp-pagegen.jnlp" title="${'nav.page-gen'|t}">
+                        <span class="hidden-xs sw-icon-catalogue sw-icon-pagegen"></span>
+                        <span class="visible-xs">${'nav.page-gen'|t}</span>
+                    </a>
+                </li>
+            </ul>
 		</div>
 	</nav>
 </template>
