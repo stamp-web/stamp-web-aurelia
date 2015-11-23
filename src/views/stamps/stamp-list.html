@@ -6,6 +6,7 @@
     <require from="../../widgets/paging/paging-toolbar"></require>
     <require from="../../widgets/collapse-panel/collapse-panel"></require>
     <require from="../../widgets/select-picker/select-picker"></require>
+    <require from="../../widgets/image-preview/image-preview"></require>
     <require from="../../util/find-target"></require>
 
 	<nav class="navbar navbar-default stamp-grid-nav">
@@ -123,9 +124,7 @@
 
 		</div>
 	</div>
-	<div class="sw-fullsize-image" if.bind="imageShown" click.delegate="closeFullSizeImage()">
-		<img src.bind="fullSizeImage" error.delegate="closeFullSizeImage()">
-	</div>
+	<image-preview image.bind="fullSizeImage" show.bind="imageShown" bounds-selector=".stamp-content"></image-preview>
 	<nav class="navbar navbar-default stamp-list-footer">
 		<form class="navbar-form" role="footer">
             <paging-toolbar page.bind="pageInfo.active" total.bind="pageInfo.total"></paging-toolbar>

@@ -24,6 +24,7 @@ import {EventNames, StorageKeys} from '../../events/event-names';
 import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
 import {StampFilter, /*ConditionFilter, */CurrencyCode} from '../../util/common-models';
+import {ImagePreviewEvents} from '../../widgets/image-preview/image-preview';
 import {ODataParser, Operation, Predicate} from '../../util/odata-parser';
 import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
 import bootbox from 'bootbox';
@@ -44,7 +45,7 @@ function createStamp(wantList) {
     };
 }
 
-@inject(EventAggregator, Router, Stamps, Countries, asCurrencyValueConverter, I18N, DialogService)
+@inject(Element, EventAggregator, Router, Stamps, Countries, asCurrencyValueConverter, I18N, DialogService)
 export class StampList extends EventManaged {
 
     stamps = [];
@@ -96,8 +97,9 @@ export class StampList extends EventManaged {
         sortDirection: 'asc'
     };
 
-    constructor(eventBus, router, stampService, countryService, currencyFormatter, i18next, dialogService) {
+    constructor(element, eventBus, router, stampService, countryService, currencyFormatter, i18next, dialogService) {
         super(eventBus);
+        this.element = element;
         this.stampService = stampService;
         this.countryService = countryService;
         this.eventBus = eventBus;
@@ -352,11 +354,16 @@ export class StampList extends EventManaged {
             self.editorShown = true;
         });
 
+        this.subscribe(ImagePreviewEvents.close, () => {
+            self.imageShown = false;
+        });
+
         this.subscribe(EventNames.panelCollapsed, config => {
             if( config.name === "stamp-list-editor-panel") {
                 self.editorShown = false;
             }
         });
+
         this.subscribe(EventNames.showImage, stamp => {
             this.handleFullSizeImage(stamp);
         });
@@ -435,25 +442,10 @@ export class StampList extends EventManaged {
 
     handleFullSizeImage(stamp) {
         if (stamp && stamp.stampOwnerships && stamp.stampOwnerships.length > 0) {
-            this.imageShown = true;
-            let elm = $($.find('.sw-fullsize-image'));
-            elm.css({
-                'max-width': '',
-                'max-height': ''
-            });
+            let oldImage = this.fullSizeImage;
             this.fullSizeImage = "http://drake-server.ddns.net:9001/Pictures/Stamps/" + stamp.stampOwnerships[0].img;
-            _.debounce(function () {
-                let container = $($.find('.stamp-content'));
-                elm = $($.find('.sw-fullsize-image'));
-                elm.css('height', +container.height());
-                elm.css('max-width', +container.width() );
-                elm.css('max-height', +container.height());
-            }, 50)(this);
+            this.imageShown = (!this.imageShown || oldImage !== this.fullSizeImage);
         }
-    }
-
-    closeFullSizeImage() {
-        this.imageShown = false;
     }
 
     search() {
