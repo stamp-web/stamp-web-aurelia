@@ -17,6 +17,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {inject, LogManager, bindable} from 'aurelia-framework';
 import {EventNames} from '../../events/event-names';
 import bootbox from 'bootbox';
+import {Operators, Predicate} from 'odata-filter-parser';
 import _ from 'lodash';
 
 const logger = LogManager.getLogger('manage-list-table');
@@ -71,8 +72,13 @@ export class EntityListManage {
     }
 
     viewStamps(model) {
+        var p = new Predicate( {
+            subject: this.field.field,
+            operator: Operators.EQUALS,
+            value: model.id
+        });
         this.eventBus.publish(EventNames.entityFilter, {
-            $filter: '(' + this.field.field + ' eq ' + model.id + ')'
+            $filter: p.serialize()
         });
     }
 
@@ -124,8 +130,9 @@ export class EntityListManage {
     attached() {
         let self = this;
         setTimeout( () => { // bind this in a timeout to make sure the detached has fired to remove the listener first
-            $('#' + self.filterInput.id).on('keydown', handleKeyDown.bind(self));
-        }, 500);
+            let id = (self.filterInput) ? self.filterInput.id : 'filter-text';
+            $('#' + id).on('keydown', handleKeyDown.bind(self));
+        }, 250);
 
 
     }

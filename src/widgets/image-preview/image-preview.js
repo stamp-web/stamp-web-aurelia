@@ -4,6 +4,11 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import _ from 'lodash';
 import loadImage from 'blueimp/JavaScript-Load-Image';
 
+export const ImagePreviewEvents = {
+    close: "closeImagePreview",
+    show: "showImagePreview"
+};
+
 @customElement('image-preview')
 @inject(Element, EventAggregator)
 @bindable("image")
@@ -12,7 +17,6 @@ import loadImage from 'blueimp/JavaScript-Load-Image';
     name: "show",
     defaultValue: false
 })
-
 export class ImagePreviewer {
 
     constructor(element, eventBus) {
@@ -48,7 +52,3 @@ export class ImagePreviewer {
     }
 }
 
-export const ImagePreviewEvents = {
-    close: "closeImagePreview",
-    show: "showImagePreview"
-};

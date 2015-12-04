@@ -25,7 +25,7 @@ import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
 import {StampFilter, /*ConditionFilter, */CurrencyCode} from '../../util/common-models';
 import {ImagePreviewEvents} from '../../widgets/image-preview/image-preview';
-import {ODataParser, Operation, Predicate} from '../../util/odata-parser';
+import {Predicate,Operators,Parser} from 'odata-filter-parser';
 import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
 import bootbox from 'bootbox';
 import {DialogService} from 'aurelia-dialog';
@@ -307,6 +307,7 @@ export class StampList extends EventManaged {
         if( this.searchText && this.searchText !== "") {
             this.currentFilters.unshift( new Predicate({
                 subject: 'description',
+                operators: Operators.EQUALS,
                 value: this.searchText
             })/*Predicate.contains( 'description', this.searchText )*/);
         }
@@ -326,7 +327,7 @@ export class StampList extends EventManaged {
             this.currentFilters.forEach( f => {
                 current.push( f );
             });
-            let predicate = (current.length > 1) ? Predicate.logical(Operation.AND, current) : this.currentFilters[0];
+            let predicate = (current.length > 1) ? Predicate.concat(Operators.AND, current) : this.currentFilters[0];
             opts.$filter = predicate.serialize();
             logger.debug("$filter=" + opts.$filter);
         }
@@ -489,9 +490,9 @@ export class StampList extends EventManaged {
 
                 var $filter = LocationHelper.getQueryParameter("$filter");
                 if ($filter) {
-                    let f = ODataParser.parse(decodeURI($filter));
+                    let f = Parser.parse(decodeURI($filter));
                     if (f) {
-                        self.currentFilters = ODataParser.flatten(f);
+                        self.currentFilters = f.flatten();
                         logger.debug(self.currentFilters);
                     }
                 } else if (result && result.total > 0) {
