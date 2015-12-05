@@ -1,4 +1,4 @@
-import {bindable, customElement, inject} from 'aurelia-framework';
+import {bindable, customElement, inject, computedFrom} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../events/event-names';
 import {Preferences} from '../services/preferences';
@@ -7,8 +7,10 @@ import $ from 'jquery';
 
 import 'resources/styles/components/stamp-card.css!';
 
+var defaultImagePath = "http://drake-server.ddns.net:9001/Thumbnails/";
+
 @customElement('stamp-card')
-@inject(EventAggregator, Preferences)
+@inject(Element, EventAggregator, Preferences)
 @bindable('model')
 @bindable('selected')
 @bindable('highlight')
@@ -16,8 +18,8 @@ export class StampCard {
 
     imageShown = false;
 
-
-    constructor(eventBus, prefService) {
+    constructor(element, eventBus, prefService) {
+        this.element = element;
         this.eventBus = eventBus;
         this.prefService = prefService;
     }
@@ -51,15 +53,15 @@ export class StampCard {
         return StampCard.prototype.imageNotFoundFn;
     }
 
-    getImagePath() {
+    @computedFrom("model")
+    get imagePath() {
         if (this.model && this.model.stampOwnerships && this.model.stampOwnerships.length > 0) {
-            var path = this.model.stampOwnerships[0].img;
+            var path = _.first(this.model.stampOwnerships).img;
             if (path) {
                 var index = path.lastIndexOf('/');
                 path = path.substring(0, index + 1) + "thumb-" + path.substring(index + 1);
-                return "http://drake-server.ddns.net:9001/Thumbnails/" + path;
+                return defaultImagePath + path;
             }
-
         }
         return null;
     }

@@ -10,7 +10,7 @@
       ${model.rate | rateFilter} - ${model.description}
     </div>
     <div class="stamp-thumbnail">
-      <img src.bind="getImagePath()" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage()"/>
+      <img src.bind="imagePath" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage()"/>
     </div>
     <div class="btn-group action-panel" role="group">
       <button type="button" class="btn btn-default" aria-label="View">

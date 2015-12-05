@@ -25,7 +25,7 @@ import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
 import {StampFilter, /*ConditionFilter, */CurrencyCode} from '../../util/common-models';
 import {ImagePreviewEvents} from '../../widgets/image-preview/image-preview';
-import {Predicate,Operators,Parser} from 'odata-filter-parser';
+import {Predicate, Operators, Parser} from 'odata-filter-parser';
 import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
 import bootbox from 'bootbox';
 import {DialogService} from 'aurelia-dialog';
