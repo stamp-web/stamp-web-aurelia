@@ -56,7 +56,7 @@ System.config({
     "nprogress": "github:rstacruz/nprogress@0.1.6",
     "odata-filter-parser": "npm:odata-filter-parser@0.2.5",
     "polymer/mutationobservers": "github:polymer/mutationobservers@0.4.2",
-    "select2/select2": "github:select2/select2@4.0.1",
+    "select2/select2": "github:select2/select2@4.0.0",
     "github:aaike/jspm-less-plugin@0.0.5": {
       "less.js": "github:distros/less@2.4.0"
     },

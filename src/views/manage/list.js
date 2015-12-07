@@ -77,9 +77,7 @@ export class EntityListManage {
             operator: Operators.EQUALS,
             value: model.id
         });
-        this.eventBus.publish(EventNames.entityFilter, {
-            $filter: p.serialize()
-        });
+        this.eventBus.publish(EventNames.entityFilter, p);
     }
 
     edit(model) {

@@ -23,6 +23,7 @@ import {Sellers} from '../../services/sellers';
 import {Catalogues} from '../../services/catalogues';
 import {Stamps} from '../../services/stamps';
 import {EventNames, StorageKeys} from '../../events/event-names';
+import {SessionContext} from '../../services/session-context';
 import _ from 'lodash';
 
 import 'resources/styles/views/manage/manage.css!';
@@ -146,7 +147,8 @@ export class ManageList {
 
     configureSubscriptions() {
         this.subscriptions.push(this.eventBus.subscribe(EventNames.entityFilter, opts => {
-            this.router.navigate(this.router.generate('stamp-list', {$filter: opts.$filter}));
+            SessionContext.setSearchCondition(opts);
+            this.router.navigate(this.router.generate('stamp-list', {$filter: opts.serialize()}));
         }));
         this.subscriptions.push(this.eventBus.subscribe(EventNames.selectEntity, collectionName => {
             var fieldDef = _.findWhere(this.entityModels, {collectionName: collectionName});

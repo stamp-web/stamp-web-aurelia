@@ -21,9 +21,10 @@ import {Router} from 'aurelia-router';
 import {Stamps} from '../../services/stamps';
 import {PurchaseForm} from './purchase-form';
 import {EventNames, StorageKeys} from '../../events/event-names';
+import {SessionContext} from '../../services/session-context';
 import {EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
-import {StampFilter, /*ConditionFilter, */CurrencyCode} from '../../util/common-models';
+import {StampFilter, ConditionFilter, CurrencyCode} from '../../util/common-models';
 import {ImagePreviewEvents} from '../../widgets/image-preview/image-preview';
 import {Predicate, Operators, Parser} from 'odata-filter-parser';
 import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
@@ -77,8 +78,8 @@ export class StampList extends EventManaged {
     filters = StampFilter.symbols();
     stampFilter = StampFilter.ALL;
 
-//   conditionFilters = ConditionFilter.symbols();
-//    conditionFilter = ConditionFilter.ALL;
+   conditionFilters = ConditionFilter.symbols();
+   conditionFilter = ConditionFilter.ALL;
 
     currentFilters = [];
 
@@ -108,6 +109,30 @@ export class StampList extends EventManaged {
         this.router = router;
         this.i18next = i18next;
         this.dialogService = dialogService;
+    }
+
+    bind() {
+        SessionContext.addContextListener(SessionContext.SEARCH_CHANGE, this.processSearchRequest.bind(this));
+    };
+
+    unbind() {
+        SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this.processSearchRequest.bind(this));
+    };
+
+    processSearchRequest(data, old_data) {
+        let self = this;
+        let options = {};
+        if( data ) {
+            delete self.options.$filter;
+            options.$filter = data.serialize();
+            self.currentFilters = data.flatten();
+            logger.debug(self.currentFilters);
+            //self.editorShown = false;
+        }
+        self.options = _.merge((!self.options) ? {} : self.options, options);
+        // Need to determine the implications of calling a navigate here, esp. when current stamp-list is the route
+        this.router.navigate(this.router.generate('stamp-list', self.options));
+        self.search();
     }
 
     purchase() {
@@ -172,7 +197,7 @@ export class StampList extends EventManaged {
         return this.stampService.getSelected().length;
     }
 
-/*    setConditionFilter(ordinal) {
+    setConditionFilter(ordinal) {
         let index = _.findIndex(this.currentFilters, { subject: 'condition'});
         if( index >= 0 ) {
             this.currentFilters.splice(index, 1);
@@ -214,13 +239,13 @@ export class StampList extends EventManaged {
                         value: conditions[i]
                     }));
                 }
-                this.currentFilters.push(Predicate.logical(Operation.OR, predicates));
+                this.currentFilters.push(Predicate.concat(Operators.OR, predicates));
             }
         }
         this.search();
 
     }
-    */
+
 
     setFilter(ordinal) {
         var index = _.findIndex(this.currentFilters, { subject: 'wantList'});
@@ -339,10 +364,6 @@ export class StampList extends EventManaged {
 
     setupSubscriptions() {
         var self = this;
-        this.subscribe(EventNames.search, options => {
-            this.options = _.merge(this.options, options);
-            this.search();
-        });
         this.subscribe(EventNames.pageChanged, page => {
             this.setPage(page);
         });
@@ -479,7 +500,7 @@ export class StampList extends EventManaged {
         this.setupSubscriptions();
     }
 
-    activate() {
+    activate(params, routeConfig) {
         var t = new Date();
         var self = this;
         this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');

@@ -73,7 +73,8 @@
         "ONLY_POSTAL_HISTORY": "Only postal history"
     },
     "search": {
-        "form-title": "Search Criteria"
+        "form-title": "Search Criteria",
+        "minimize": "Minimize on search"
     },
     "prompts": {
         "delete-catalogue-number": "Delete catalogue number __number__?"

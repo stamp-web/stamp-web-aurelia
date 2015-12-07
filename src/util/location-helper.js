@@ -29,6 +29,15 @@ function LocationHelperFn() {
             } else {
                 return qs[1];
             }
+        },
+
+        setQueryParameter: function(key, value) {
+            let href = window.location.href;
+            let indx = href.index(key+'=');
+            if( indx >= 0 ) {
+                let s = href.substring(indx + key.length + '=');
+                throw Error("Not implemented");
+            }
         }
     };
 }

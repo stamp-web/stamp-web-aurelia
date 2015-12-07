@@ -10,6 +10,11 @@
 * updateCountries in country-editor.html is not binding correctly
 
 
+SessionContext work
+SortColumn stuff needs to be worked - could likely just use a string and then localized text is the translation of this
+Not sure if we should have paging/sort/direction stored in SessionContext or not yet
+
+
 
 jspm install aurelia-animator-css aurelia-binding aurelia-bootstrapper aurelia-dependency-injection aurelia-framework aurelia-http-client aurelia-router aurelia-event-aggregator aurelia-history-browser aurelia-loader-default aurelia-loader aurelia-metadata aurelia-route-recognizer aurelia-templating-binding aurelia-templating-resources aurelia-templating-router aurelia-templating aurelia-logging aurelia-task-queue aurelia-history aurelia-path
 

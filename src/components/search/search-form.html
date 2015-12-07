@@ -1,13 +1,52 @@
 <template>
+    <require from="../../widgets/select-picker/select-picker"></require>
+    <require from="resources/styles/components/search/search-form.css"></require>
     <div>
         <form class="form-horizontal">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">${'search.form-title'|t}</h4>
                 </div>
-                <div> class="panel-body">
+                <div class="panel-body">
+                    <div class="form-group form-group-sm has-feedback">
+                        <label for="details-countryRef" class="col-sm-3 control-label">${'editor.country'|t}</label>
+                        <div class="col-sm-9">
+                            <select-picker items.bind="countries" class="country-selector" disabled.bind="loading" value.two-way="model.countryRef"
+                                           config.bind="{ id: 'details-countryRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm has-feedback">
+                        <label for="owner-albumRef" class="col-sm-3 control-label">Album</label>
+                        <div class="col-sm-9">
+                            <select-picker items.bind="albums" class="album-selector" disabled.bind="loading"  value.two-way="model.albumRef"
+                                           config.bind="{ id: 'owner-albumRef', tabIndex: 100, name: 'albumRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.album-select' }">
+                            </select-picker>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="owner-sellerRef" class="col-sm-3 control-label">${'editor.seller'|t}</label>
+                        <div class="col-sm-9">
+                            <select-picker items.bind="sellers" class="seller-selector" disabled.bind="loading"  value.two-way="model.sellerRef"
+                                           config.bind="{ id: 'owner-sellerRef', tabIndex: 110, name: 'sellerRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.seller-select' }">
+                            </select-picker>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="search-button-bar">
+                <div class="checkbox col-sm-6">
+                    <label>
+                        <input type="checkbox" checked.bind="minimizeOnSearch">
+                        <span>${'search.minimize'|t}</span>
+                    </label>
+                </div>
+
+                <div class="editor-buttons col-sm-6">
+                    <button type="button" class="btn btn-sm btn-default" click.delegate="search()">Search</button>
+                    <button type="button" class="btn btn-sm btn-default" click.delegate="reset()">Reset</button>
+                </div>
+            </div>
+
         </form>
     </div>
 </template>

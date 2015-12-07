@@ -1,1 +1,17 @@
 @import "@@pathToTheme/@@theme/variables.less";
+
+.search-button-bar {
+    label {
+        font-size: @font-size-small;
+    }
+    .editor-buttons {
+        padding-right: 0;
+        button {
+            &:first-child {
+                margin-left: @padding-xs-horizontal;
+            }
+            float: right;
+        }
+
+    }
+}
