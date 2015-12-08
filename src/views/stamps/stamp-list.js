@@ -64,16 +64,7 @@ export class StampList extends EventManaged {
     reportValue = "";
     reportType = "CatalogueValue";
 
-    sortColumns = [{
-        attr: 'number',
-        text: 'Catalogue number'
-    }, {
-        attr: 'value',
-        text: 'Catalogue value'
-    }, {
-        attr: 'pricePaid',
-        text: 'Price paid'
-    }];
+    sortColumns = ['number', 'value', 'pricePaid' ];
 
     filters = StampFilter.symbols();
     stampFilter = StampFilter.ALL;
@@ -121,17 +112,13 @@ export class StampList extends EventManaged {
 
     processSearchRequest(data, old_data) {
         let self = this;
-        let options = {};
+        let options = (!self.options) ? {} : self.options;
         if( data ) {
-            delete self.options.$filter;
             options.$filter = data.serialize();
             self.currentFilters = data.flatten();
             logger.debug(self.currentFilters);
             //self.editorShown = false;
         }
-        self.options = _.merge((!self.options) ? {} : self.options, options);
-        // Need to determine the implications of calling a navigate here, esp. when current stamp-list is the route
-        this.router.navigate(this.router.generate('stamp-list', self.options));
         self.search();
     }
 
@@ -213,7 +200,6 @@ export class StampList extends EventManaged {
         }
         this.conditionFilter = ConditionFilter.get(ordinal);
         let conditions = [];
-
         switch(ordinal) {
             case 1:
                 conditions = [ 0, 1, 4, 5];
@@ -225,22 +211,15 @@ export class StampList extends EventManaged {
                 conditions = [6];
                 break;
         }
-        if( conditions.length > 0 ) {
-            if( conditions.length === 1 ) {
-                this.currentFilters.push(new Predicate({
+        if (conditions.length > 0) {
+            let predicates = [];
+            for (let i = 0; i < conditions.length; i++) {
+                predicates.push(new Predicate({
                     subject: 'condition',
-                    value: conditions[0]
+                    value: conditions[i]
                 }));
-            } else {
-                let predicates = [];
-                for( let i = 0; i < conditions.length; i++ ) {
-                    predicates.push(new Predicate({
-                        subject: 'condition',
-                        value: conditions[i]
-                    }));
-                }
-                this.currentFilters.push(Predicate.concat(Operators.OR, predicates));
             }
+            this.currentFilters.push((predicates.length === 1 ) ? predicates[0] : Predicate.concat(Operators.OR, predicates));
         }
         this.search();
 
@@ -283,11 +262,14 @@ export class StampList extends EventManaged {
 
     setSort(attr) {
         this.options.sort = attr;
+        if( !this.options.sortDirection ) {
+            this.options.sortDirection = 'asc';
+        }
         this.search();
     }
 
     clearSort() {
-        this.options.sort = undefined;
+        this.options.sort = 'placeholder';
         this.search();
     }
 
@@ -343,8 +325,8 @@ export class StampList extends EventManaged {
         let cOpts = this.options;
         let opts = {};
 
-        if (cOpts.sort && cOpts.sortDirection) {
-            opts.$orderby = cOpts.sort.attr + " " + cOpts.sortDirection;
+        if (cOpts.sort && cOpts.sort !== 'placeholder' && cOpts.sortDirection) {
+            opts.$orderby = cOpts.sort + " " + cOpts.sortDirection;
         }
         opts.$top = cOpts.$top > -1 ? cOpts.$top : 100;
         if( this.currentFilters && this.currentFilters.length > 0 ) {
@@ -474,10 +456,13 @@ export class StampList extends EventManaged {
         var opts = this.buildOptions();
         this.stampService.clearSelected();
         this.stampService.find(opts).then(result => {
+            // Need to determine the implications of calling a navigate here, esp. when current stamp-list is the route
+            this.router.navigate(this.router.generate('stamp-list', opts));
             this.processStamps(result, opts);
         }).catch(err => {
             logger.debug(err);
         });
+
     }
 
     processStamps(result, opts) {
@@ -508,8 +493,7 @@ export class StampList extends EventManaged {
         return new Promise((resolve, reject) => {
             this.countryService.find().then(result => {
                 this.countries = result.models;
-
-                var $filter = LocationHelper.getQueryParameter("$filter");
+                let $filter = LocationHelper.getQueryParameter("$filter");
                 if ($filter) {
                     let f = Parser.parse(decodeURI($filter));
                     if (f) {
@@ -523,6 +507,21 @@ export class StampList extends EventManaged {
                         value: self.countries[indx].id
                     }));
                 }
+                let $orderby = LocationHelper.getQueryParameter("$orderby");
+                if( $orderby && $orderby.length > 1 ) {
+                    let orderParts = $orderby.split();
+                    this.options.sort = orderParts[0];
+                    this.options.sortDirection = orderParts[1];
+                }
+                let $top = LocationHelper.getQueryParameter("$top");
+                if( $top ) {
+                    this.options.$top = $top;
+                }
+                let $skip = LocationHelper.getQueryParameter("$skip");
+                if( $skip ) {
+                    this.options.$skip = $skip;
+                }
+
                 var opts = this.buildOptions();
                 // this really should be consolidated with sendSearch() above.
                 this.stampService.clearSelected();

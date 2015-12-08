@@ -19,25 +19,30 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {Countries} from '../../services/countries';
 import {Albums} from '../../services/albums';
 import {Sellers} from '../../services/sellers';
+import {StampCollections} from '../../services/stampCollections';
 import {Predicate, Operators} from 'odata-filter-parser';
 import {SessionContext} from '../../services/session-context';
 
 import _ from 'lodash';
 
 @customElement("search-form")
-@bindable('model')
-@inject(EventAggregator, BindingEngine, Countries, Albums, Sellers)
+@bindable({
+    name: 'model',
+    defaultValue: {}
+})
+@inject(EventAggregator, BindingEngine, Countries, StampCollections, Albums, Sellers)
 export class SearchForm {
 
     loading = true;
     minimizeOnSearch = true;
 
-    searchFields = ['countryRef', 'albumRef', 'sellerRef'];
+    searchFields = ['countryRef', 'stampCollectionRef', 'albumRef', 'sellerRef'];
 
-    constructor(eventBus, bindingEngine, countries, albums, sellers) {
+    constructor(eventBus, bindingEngine, countries, stampCollections, albums, sellers) {
         this.eventBus = eventBus;
         this.$bindingEngine = bindingEngine;
         this.countryServices = countries;
+        this.stampCollectionService = stampCollections;
         this.albumServices = albums;
         this.sellerServices = sellers;
     }
@@ -55,6 +60,7 @@ export class SearchForm {
 
         return Promise.all( [
             this.loadService(this.countryServices, 'countries'),
+            this.loadService(this.stampCollectionService, 'stampCollections'),
             this.loadService(this.albumServices, 'albums'),
             this.loadService(this.sellerServices, 'sellers')
         ]).then( () => {

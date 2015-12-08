@@ -27,7 +27,7 @@ function LocationHelperFn() {
             if (qs == null) {
                 return default_;
             } else {
-                return qs[1];
+                return decodeURI(qs[1]);
             }
         },
 

@@ -50,8 +50,7 @@
                 </div>
 
 				<div class="btn-group">
-
-					<button class="btn btn-sm btn-default" click.trigger="toggleSortDirection()">
+					<button class="btn btn-sm btn-default ${options.sort === 'placeholder' ? 'disabled' : ''}" click.trigger="toggleSortDirection()">
 						<span class="${options.sortDirection === 'asc' ? 'sw-icon-sort-up' : 'sw-icon-sort-down'}"></span>
 					</button>
 					<button class="btn btn-sm btn-default ${options.sort ? '' : 'disabled'}" title="Clear sort" click.trigger="clearSort()">
@@ -59,12 +58,12 @@
 					</button>
                     <div class="dropdown">
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle sort-selector" data-toggle="dropdown">
-                            <span class="selector-text">${options.sort.text | defaultValue:'Sort by'}</span>
+                            <span class="selector-text">${'sort.' + options.sort|t | defaultValue:'sort.placeholder'|t}</span>
                             <span class="caret"></span>
                         </button>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${sortCol.text}</li>
+                            <li repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${'sort.' + sortCol|t}</li>
                         </ul>
                     </div>
 				</div>

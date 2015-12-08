@@ -18,6 +18,12 @@
         "description": "Description",
         "price-paid": "Price paid"
     },
+    "sort": {
+        "number": "Catalogue number",
+        "value": "Catalogue value",
+        "pricePaid": "Price paid",
+        "placeholder": "Sort by"
+    },
     "editor": {
         "actions": "Actions",
         "album": "Album",
@@ -53,6 +59,7 @@
         "purchase-percentage": "Percentage",
         "purchase-stamp-count": "Number of stamps",
         "purchase-total": "Total purchase",
+        "purchased": "Purchased",
         "rate": "Denomination",
         "seller": "Seller",
         "seller-select": "Select a seller",
