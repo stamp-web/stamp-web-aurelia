@@ -81,7 +81,9 @@
     },
     "search": {
         "form-title": "Search Criteria",
-        "minimize": "Minimize on search"
+        "minimize": "Minimize on search",
+        "from": "From",
+        "to": "to"
     },
     "prompts": {
         "delete-catalogue-number": "Delete catalogue number __number__?"

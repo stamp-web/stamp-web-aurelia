@@ -456,7 +456,6 @@ export class StampList extends EventManaged {
         var opts = this.buildOptions();
         this.stampService.clearSelected();
         this.stampService.find(opts).then(result => {
-            // Need to determine the implications of calling a navigate here, esp. when current stamp-list is the route
             this.router.navigate(this.router.generate('stamp-list', opts));
             this.processStamps(result, opts);
         }).catch(err => {
@@ -495,7 +494,7 @@ export class StampList extends EventManaged {
                 this.countries = result.models;
                 let $filter = LocationHelper.getQueryParameter("$filter");
                 if ($filter) {
-                    let f = Parser.parse(decodeURI($filter));
+                    let f = Parser.parse($filter);
                     if (f) {
                         self.currentFilters = f.flatten();
                         logger.debug(self.currentFilters);

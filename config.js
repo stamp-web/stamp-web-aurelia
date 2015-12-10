@@ -54,7 +54,7 @@ System.config({
     "lodash": "npm:lodash@3.10.1",
     "moment": "github:moment/moment@2.10.3",
     "nprogress": "github:rstacruz/nprogress@0.1.6",
-    "odata-filter-parser": "npm:odata-filter-parser@0.2.5",
+    "odata-filter-parser": "npm:odata-filter-parser@0.2.6",
     "polymer/mutationobservers": "github:polymer/mutationobservers@0.4.2",
     "select2/select2": "github:select2/select2@4.0.0",
     "github:aaike/jspm-less-plugin@0.0.5": {
@@ -154,7 +154,7 @@ System.config({
       "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.0.1",
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1",
       "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.0.1",
-      "i18next": "github:i18next/i18next@1.11.1"
+      "i18next": "github:i18next/i18next@1.11.2"
     },
     "npm:aurelia-loader-default@1.0.0-beta.1.0.1": {
       "aurelia-loader": "npm:aurelia-loader@1.0.0-beta.1",

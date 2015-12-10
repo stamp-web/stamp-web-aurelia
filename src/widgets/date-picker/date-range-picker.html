@@ -1,0 +1,9 @@
+<template>
+    <require from="../../value-converters/date-formatter"></require>
+    <span>
+        <date-picker id="${id}-start" tabindex="${tabindex)" value.two-way=startValue | dateFormatter"></date-picker>
+    </span>
+    <span>
+        <date-picker id="${id}-end" tabindex="${tabindex+5)" value.two-way="endValue | dateFormatter"></date-picker>
+    </span>
+</template>

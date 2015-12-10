@@ -41,13 +41,20 @@
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label for="owner-purchased" class="col-sm-3 control-label">${'editor.purchased'|t}</label>
-                        <div class="col-sm-3">
-                            <date-picker id="search-purchased-start" tabindex="120" value.two-way="model.purchasedStart | dateFormatter"></date-picker>
+                        <label for="search-purchased" class="col-sm-3 control-label">${'editor.purchased'|t}</label>
+                        <div class="col-sm-9" id="search-purchased">
+                            <span>
+                                <label class="control-label">${'search.from'|t}</label>
+                                <date-picker id="search-purchased-start" tabindex="120" value.two-way="model.purchasedStart | dateFormatter"></date-picker>
+                            </span>
+                            <span>
+                                <label class="control-label">${'search.to'|t}</label>
+                                <date-picker id="search-purchased-end" tabindex="120" value.two-way="model.purchasedEnd | dateFormatter"></date-picker>
+                            </span>
+
+
                         </div>
-                        <div class="input-group col-sm-3">
-                            <date-picker id="search-purchased-end" tabindex="120" value.two-way="model.purchasedEnd | dateFormatter"></date-picker>
-                        </div>
+
                     </div>
                 </div>
             </div>

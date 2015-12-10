@@ -1,17 +1,46 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
-.search-button-bar {
-    label {
-        font-size: @font-size-small;
-    }
-    .editor-buttons {
-        padding-right: 0;
-        button {
-            &:first-child {
-                margin-left: @padding-xs-horizontal;
-            }
-            float: right;
+search-form {
+    z-index:750;
+    .search-button-bar {
+        label {
+            font-size: @font-size-small;
         }
+        .editor-buttons {
+            padding-right: 0;
+            button {
+                &:first-child {
+                    margin-left: @padding-xs-horizontal;
+                }
+                float: right;
+            }
 
+        }
     }
+
+    #search-purchased {
+        label {
+            top: -8px;
+            position: relative;
+        }
+        span:last-child {
+            label {
+                margin-left: @padding-base-horizontal;
+            }
+        }
+        date-picker {
+            display: inline-block;
+
+        }
+        .date {
+            width: 130px;
+            .input-group-addon {
+                padding: 5px @padding-xs-horizontal 5px @padding-xs-horizontal;
+            }
+            .dropdown-menu {
+                z-index: 2000;
+            }
+        }
+    }
+
 }

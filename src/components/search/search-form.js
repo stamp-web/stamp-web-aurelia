@@ -37,6 +37,7 @@ export class SearchForm {
     minimizeOnSearch = true;
 
     searchFields = ['countryRef', 'stampCollectionRef', 'albumRef', 'sellerRef'];
+    dateFields = ['purchased', 'createTimestamp', 'modifyTimestamp'];
 
     constructor(eventBus, bindingEngine, countries, stampCollections, albums, sellers) {
         this.eventBus = eventBus;
@@ -86,6 +87,16 @@ export class SearchForm {
                     subject: key,
                     value: value
                 }));
+            } else {
+                let match = key.match(/^.*(Start|End)$/);
+                if( match && match.length > 1 && (match[1] === 'Start' || match[1] === 'End') && value ) {
+                    let nkey = key.substring(0, key.length - match[1].length);
+                    predicates.push( new Predicate({
+                        subject: nkey,
+                        value: _.indexOf(this.dateFields, nkey) >= 0 ? new Date(value) : value,
+                        operator: (key.endsWith("Start") ? Operators.GREATER_THAN_EQUAL : Operators.LESS_THAN_EQUAL)
+                    }));
+                }
             }
         });
         if( predicates.length > 0 ) {

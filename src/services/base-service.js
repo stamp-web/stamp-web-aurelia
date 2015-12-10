@@ -17,7 +17,7 @@ class ParameterHelper {
             if (s.length > 1) {
                 s += "&";
             }
-            s += keys[k] + '=' + encodeURI(options[keys[k]]);
+            s += keys[k] + '=' + encodeURIComponent(options[keys[k]]);
         }
         return s;
     }

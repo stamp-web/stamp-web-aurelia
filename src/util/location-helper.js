@@ -13,6 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+
 function LocationHelperFn() {
 
     return {
@@ -27,11 +28,12 @@ function LocationHelperFn() {
             if (qs == null) {
                 return default_;
             } else {
-                return decodeURI(qs[1]);
+                return decodeURIComponent(qs[1]);
             }
         },
 
         setQueryParameter: function(key, value) {
+            //TODO: NOT implemented
             let href = window.location.href;
             let indx = href.index(key+'=');
             if( indx >= 0 ) {
