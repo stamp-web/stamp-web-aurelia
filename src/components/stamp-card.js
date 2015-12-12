@@ -1,11 +1,9 @@
 import {bindable, customElement, inject, computedFrom} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventNames} from '../events/event-names';
+import {EventNames} from '../events/event-managed';
 import {Preferences} from '../services/preferences';
 import _ from 'lodash';
 import $ from 'jquery';
-
-import 'resources/styles/components/stamp-card.css!';
 
 var defaultImagePath = "http://drake-server.ddns.net:9001/Thumbnails/";
 

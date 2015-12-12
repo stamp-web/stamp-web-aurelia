@@ -1,5 +1,6 @@
 <template>
     <require from="../../widgets/date-picker/date-picker"></require>
+    <require from="../../widgets/date-picker/jq-date-picker"></require>
     <require from="../../widgets/select-picker/select-picker"></require>
     <require from="../../value-converters/date-formatter"></require>
     <require from="resources/styles/components/search/search-form.css"></require>
@@ -42,21 +43,50 @@
                     </div>
                     <div class="form-group form-group-sm">
                         <label for="search-purchased" class="col-sm-3 control-label">${'editor.purchased'|t}</label>
-                        <div class="col-sm-9" id="search-purchased">
-                            <span>
-                                <label class="control-label">${'search.from'|t}</label>
-                                <date-picker id="search-purchased-start" tabindex="120" value.two-way="model.purchasedStart | dateFormatter"></date-picker>
-                            </span>
-                            <span>
-                                <label class="control-label">${'search.to'|t}</label>
-                                <date-picker id="search-purchased-end" tabindex="120" value.two-way="model.purchasedEnd | dateFormatter"></date-picker>
-                            </span>
-
-
+                        <div class="col-sm-9">
+                            <jq-date-picker range="true" id="search-purchased" tabindex="120"
+                                            end.two-way="model.purchasedEnd | dateFormatter"
+                                            value.two-way="model.purchasedStart | dateFormatter">
+                            </jq-date-picker>
                         </div>
-
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="search-createTimestamp" class="col-sm-3 control-label">${'editor.createTimestamp'|t}</label>
+                        <div class="col-sm-9">
+                            <jq-date-picker range="true" id="search-createTimestamp" tabindex="130"
+                                            end.two-way="model.createTimestampEnd | dateFormatter"
+                                            value.two-way="model.createTimestampStart | dateFormatter">
+                            </jq-date-picker>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="search-modifyTimestamp" class="col-sm-3 control-label">${'editor.modifyTimestamp'|t}</label>
+                        <div class="col-sm-9">
+                            <jq-date-picker range="true" id="search-modifyTimestamp" tabindex="140"
+                                            end.two-way="model.modifyTimestampEnd | dateFormatter"
+                                            value.two-way="model.modifyTimestampStart | dateFormatter">
+                            </jq-date-picker>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9 advanced-options">
+                            <div class="checkbox">
+                                <label class="${model.deception ? 'disabled' : ''}">
+                                    <input tabindex="150" type="checkbox" checked.bind="model.defects" disabled.bind="model.deception">
+                                    Only stamps with defects
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label class="${model.defects ? 'disabled' : ''}">
+                                    <input tabindex="160" type="checkbox" checked.bind="model.deception" disabled.bind="model.defects">
+                                    Only stamps with deceptive qualities
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
             <div class="search-button-bar">
                 <div class="checkbox col-sm-6">

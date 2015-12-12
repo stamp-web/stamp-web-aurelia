@@ -1,5 +1,7 @@
 <template>
+    <require from="resources/styles/widgets/paging/paging-toolbar.css"></require>
     <require from="../../value-converters/zero-based"></require>
+
     <div class="paging-component">
         <div class="btn-group" role="group">
             <button class="btn btn-xs btn-default first-page paging-button" title="Show the first page" click.trigger="selectPage(0)" disabled.bind="page < 1">

@@ -16,7 +16,7 @@
 import {inject, LogManager} from 'aurelia-framework';
 import {BindingEngine} from 'aurelia-binding';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventNames} from '../../events/event-names';
+import {EventNames} from '../../events/event-managed';
 import {Countries} from '../../services/countries';
 import {Albums} from '../../services/albums';
 import {Sellers} from '../../services/sellers';

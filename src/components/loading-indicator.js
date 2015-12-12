@@ -1,8 +1,7 @@
 import nprogress from 'nprogress';
 import {bindable, noView, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventNames} from '../events/event-names';
-import {EventManaged} from '../events/event-managed';
+import {EventNames, EventManaged} from '../events/event-managed';
 
 import 'resources/styles/components/loading-indicator.css!';
 

@@ -1,6 +1,6 @@
 import {bindable, customElement, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventNames} from '../../events/event-names';
+import {EventNames, EventManaged} from '../../events/event-managed';
 
 @bindable('title')
 @bindable({
@@ -13,11 +13,21 @@ import {EventNames} from '../../events/event-names';
 })
 @customElement('collapse-panel')
 @inject(EventAggregator)
-export class CollapsePanel {
+export class CollapsePanel extends EventManaged {
 
 
     constructor(eventBus) {
-        this.eventBus = eventBus;
+        super(eventBus);
+    }
+
+    attached() {
+        this.setupSubscriptions();
+    }
+
+    setupSubscriptions() {
+        this.subscribe(EventNames.collapsePanel, () => {
+            this.hide();
+        });
     }
 
     hide() {

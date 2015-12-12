@@ -1,0 +1,35 @@
+@import "@@pathToTheme/@@theme/variables.less";
+
+jq-date-picker {
+    .form-control {
+        width: 90px;
+        border-radius: @border-radius-base 0 0 @border-radius-base !important;
+        display: inline-block;
+    }
+    .date-wrapper {
+        white-space: nowrap;
+    }
+    label {
+        &.to-label {
+            margin-left: @padding-base-horizontal;
+        }
+    }
+    button {
+        height: 26px;
+        border-radius: 0 @btn-border-radius-base @btn-border-radius-base 0 !important;
+        border: 1px solid @btn-default-border;
+    }
+}
+
+.ui-datepicker {
+    z-index: 8000 !important;
+    th {
+        font-weight: normal;
+    }
+}
+
+.ui-widget-header {
+    border: none;
+    background: none;
+    font-weight: normal;
+}

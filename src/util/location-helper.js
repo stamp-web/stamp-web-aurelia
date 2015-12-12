@@ -30,16 +30,6 @@ function LocationHelperFn() {
             } else {
                 return decodeURIComponent(qs[1]);
             }
-        },
-
-        setQueryParameter: function(key, value) {
-            //TODO: NOT implemented
-            let href = window.location.href;
-            let indx = href.index(key+'=');
-            if( indx >= 0 ) {
-                let s = href.substring(indx + key.length + '=');
-                throw Error("Not implemented");
-            }
         }
     };
 }

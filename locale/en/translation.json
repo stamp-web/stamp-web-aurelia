@@ -40,6 +40,7 @@
         "country": "Country",
         "country-select": "Select a country",
         "createStamp-hint": "Create a stamp",
+        "createTimestamp": "Created",
         "createWantlist-hint": "Create a wanted stamp",
         "currencyCode": "Currency",
         "currencyCode-select": "Select a currency",
@@ -55,6 +56,7 @@
         "issue": "Year of Issue",
         "name": "Name",
         "modify-existing": "Modify existing values",
+        "modifyTimestamp": "Modified",
         "purchase-help": "Specify the amount paid for selected stamps",
         "purchase-percentage": "Percentage",
         "purchase-stamp-count": "Number of stamps",
@@ -82,6 +84,10 @@
     "search": {
         "form-title": "Search Criteria",
         "minimize": "Minimize on search",
+        "from": "From",
+        "to": "to"
+    },
+    "date-picker": {
         "from": "From",
         "to": "to"
     },

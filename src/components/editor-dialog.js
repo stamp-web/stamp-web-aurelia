@@ -15,8 +15,7 @@
  */
 import {bindable, customElement, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventManaged} from '../events/event-managed';
-import {EventNames} from '../events/event-names';
+import {EventNames, EventManaged} from '../events/event-managed';
 
 @customElement('editor-dialog')
 @bindable('model')

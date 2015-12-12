@@ -20,9 +20,8 @@ import {Countries} from '../../services/countries';
 import {Router} from 'aurelia-router';
 import {Stamps} from '../../services/stamps';
 import {PurchaseForm} from './purchase-form';
-import {EventNames, StorageKeys} from '../../events/event-names';
 import {SessionContext} from '../../services/session-context';
-import {EventManaged} from '../../events/event-managed';
+import {EventNames, StorageKeys, EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
 import {StampFilter, ConditionFilter, CurrencyCode} from '../../util/common-models';
 import {ImagePreviewEvents} from '../../widgets/image-preview/image-preview';
@@ -94,7 +93,6 @@ export class StampList extends EventManaged {
         this.element = element;
         this.stampService = stampService;
         this.countryService = countryService;
-        this.eventBus = eventBus;
         this._ = _;
         this.currencyFormatter = currencyFormatter;
         this.router = router;
@@ -110,14 +108,14 @@ export class StampList extends EventManaged {
         SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this.processSearchRequest.bind(this));
     };
 
-    processSearchRequest(data, old_data) {
+    processSearchRequest(data, oldData) { //eslint-disable-line no-unused-vars
         let self = this;
         let options = (!self.options) ? {} : self.options;
         if( data ) {
             options.$filter = data.serialize();
             self.currentFilters = data.flatten();
             logger.debug(self.currentFilters);
-            //self.editorShown = false;
+            //TODO handle self.editorShown = false;
         }
         self.search();
     }
@@ -185,27 +183,27 @@ export class StampList extends EventManaged {
     }
 
     setConditionFilter(ordinal) {
-        let index = _.findIndex(this.currentFilters, { subject: 'condition'});
-        if( index >= 0 ) {
+        let index = _.findIndex(this.currentFilters, {subject: 'condition'});
+        if (index >= 0) {
             this.currentFilters.splice(index, 1);
         } else {
-            let orMatches = _.filter(this.currentFilters, { operator: 'or'});
-            if( orMatches.length > 0 ) {
-                _.each( orMatches, (match) => {
-                   if ( match.value.subject = 'condition') {
-                       _.remove(this.currentFilters, match);
-                   }
+            let orMatches = _.filter(this.currentFilters, {operator: 'or'});
+            if (orMatches.length > 0) {
+                _.each(orMatches, (match) => {
+                    if (match.value.subject === 'condition') {
+                        _.remove(this.currentFilters, match);
+                    }
                 });
             }
         }
         this.conditionFilter = ConditionFilter.get(ordinal);
         let conditions = [];
-        switch(ordinal) {
+        switch (ordinal) {
             case 1:
-                conditions = [ 0, 1, 4, 5];
+                conditions = [0, 1, 4, 5];
                 break;
             case 2:
-                conditions = [ 2, 3, 7];
+                conditions = [2, 3, 7];
                 break;
             case 3:
                 conditions = [6];
@@ -363,7 +361,7 @@ export class StampList extends EventManaged {
         });
 
         this.subscribe(EventNames.panelCollapsed, config => {
-            if( config.name === "stamp-list-editor-panel") {
+            if (config.name === "stamp-list-editor-panel") {
                 self.editorShown = false;
             }
         });
@@ -372,6 +370,7 @@ export class StampList extends EventManaged {
             this.handleFullSizeImage(stamp);
         });
         this.subscribe(EventNames.stampEdit, stamp => {
+            self.panelContents = 'stamp-editor';
             self.editingStamp = stamp;
             self.editorShown = true;
         });
@@ -484,7 +483,7 @@ export class StampList extends EventManaged {
         this.setupSubscriptions();
     }
 
-    activate(params, routeConfig) {
+    activate(params, routeConfig) { //eslint-disable-line no-unused-vars
         var t = new Date();
         var self = this;
         this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');
@@ -498,6 +497,7 @@ export class StampList extends EventManaged {
                     if (f) {
                         self.currentFilters = f.flatten();
                         logger.debug(self.currentFilters);
+                        SessionContext.setSearchCondition(f);
                     }
                 } else if (result && result.total > 0) {
                     var indx = Math.floor(Math.random() * result.total);

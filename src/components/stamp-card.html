@@ -1,6 +1,8 @@
 <template>
-  <require from="../value-converters/by-name"></require>
-  <require from="../value-converters/rate-filter"></require>
+    <require from="resources/styles/components/stamp-card.css"></require>
+    <require from="../value-converters/by-name"></require>
+    <require from="../value-converters/rate-filter"></require>
+
 
   <div class="stamp-card ${(selected) ? 'selected' : ''} ${(highlight) ? 'highlight' : ''}" click.trigger="toggleSelection($event)">
     <div class="card-header">

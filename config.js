@@ -50,15 +50,19 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.20",
     "eonasdan/bootstrap-datetimepicker": "github:eonasdan/bootstrap-datetimepicker@4.17.37",
     "jquery": "github:components/jquery@2.1.4",
+    "jquery-ui": "github:components/jqueryui@1.11.4",
     "less": "github:aaike/jspm-less-plugin@0.0.5",
     "lodash": "npm:lodash@3.10.1",
     "moment": "github:moment/moment@2.10.3",
     "nprogress": "github:rstacruz/nprogress@0.1.6",
-    "odata-filter-parser": "npm:odata-filter-parser@0.2.6",
+    "odata-filter-parser": "npm:odata-filter-parser@0.2.8",
     "polymer/mutationobservers": "github:polymer/mutationobservers@0.4.2",
     "select2/select2": "github:select2/select2@4.0.0",
     "github:aaike/jspm-less-plugin@0.0.5": {
       "less.js": "github:distros/less@2.4.0"
+    },
+    "github:components/jqueryui@1.11.4": {
+      "jquery": "github:components/jquery@2.1.4"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"

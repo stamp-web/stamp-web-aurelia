@@ -22,7 +22,7 @@ import {StampCollections} from '../../services/stampCollections';
 import {Sellers} from '../../services/sellers';
 import {Catalogues} from '../../services/catalogues';
 import {Stamps} from '../../services/stamps';
-import {EventNames, StorageKeys} from '../../events/event-names';
+import {EventNames, StorageKeys} from '../../events/event-managed';
 import {SessionContext} from '../../services/session-context';
 import _ from 'lodash';
 

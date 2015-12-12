@@ -15,7 +15,7 @@
  */
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {inject, LogManager, bindable} from 'aurelia-framework';
-import {EventNames} from '../../events/event-names';
+import {EventNames} from '../../events/event-managed';
 import bootbox from 'bootbox';
 import {Operators, Predicate} from 'odata-filter-parser';
 import _ from 'lodash';

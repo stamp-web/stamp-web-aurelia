@@ -1,10 +1,9 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
 search-form {
-    z-index:750;
     .search-button-bar {
         label {
-            font-size: @font-size-small;
+            font-size: 0.9 * @font-size-small;
         }
         .editor-buttons {
             padding-right: 0;
@@ -17,30 +16,17 @@ search-form {
 
         }
     }
-
-    #search-purchased {
-        label {
-            top: -8px;
-            position: relative;
+    .advanced-options {
+        label:after {
+            content: "";
         }
-        span:last-child {
-            label {
-                margin-left: @padding-base-horizontal;
-            }
-        }
-        date-picker {
-            display: inline-block;
-
-        }
-        .date {
-            width: 130px;
-            .input-group-addon {
-                padding: 5px @padding-xs-horizontal 5px @padding-xs-horizontal;
-            }
-            .dropdown-menu {
-                z-index: 2000;
-            }
+        .checkbox input[type="checkbox"], .radio input[type="radio"] {
+            margin-left: 0;
         }
     }
-
+    label {
+        &.disabled {
+            color: @list-group-disabled-text-color;
+        }
+    }
 }

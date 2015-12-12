@@ -22,6 +22,7 @@ import {Sellers} from '../../services/sellers';
 import {StampCollections} from '../../services/stampCollections';
 import {Predicate, Operators} from 'odata-filter-parser';
 import {SessionContext} from '../../services/session-context';
+import {EventNames} from '../../events/event-managed';
 
 import _ from 'lodash';
 
@@ -30,7 +31,7 @@ import _ from 'lodash';
     name: 'model',
     defaultValue: {}
 })
-@inject(EventAggregator, BindingEngine, Countries, StampCollections, Albums, Sellers)
+@inject(Element, EventAggregator, BindingEngine, Countries, StampCollections, Albums, Sellers)
 export class SearchForm {
 
     loading = true;
@@ -38,8 +39,10 @@ export class SearchForm {
 
     searchFields = ['countryRef', 'stampCollectionRef', 'albumRef', 'sellerRef'];
     dateFields = ['purchased', 'createTimestamp', 'modifyTimestamp'];
+    booleanFields = ['defects', 'deception'];
 
-    constructor(eventBus, bindingEngine, countries, stampCollections, albums, sellers) {
+    constructor(element, eventBus, bindingEngine, countries, stampCollections, albums, sellers) {
+        this.element = element;
         this.eventBus = eventBus;
         this.$bindingEngine = bindingEngine;
         this.countryServices = countries;
@@ -52,10 +55,17 @@ export class SearchForm {
         let self = this;
 
         self.loading = true;
-        let conditions = SessionContext.getSearchCondition();
-        if( conditions !== undefined ) {
-            _.forEach(conditions.flatten(), filter => {
-                self.model[filter.subject] = filter.value;
+        let searchConditions = SessionContext.getSearchCondition();
+        if( searchConditions !== undefined ) {
+            _.forEach(searchConditions.flatten(), filter => {
+                if( _.findWhere( self.dateFields, filter.subject ) === filter.subject ) {
+                    let key = filter.subject + ((filter.operator === Operators.GREATER_THAN_EQUAL) ? 'Start' : 'End');
+                    self.model[key] = filter.value;
+                } else if (_.findWhere( self.booleanFields, filter.subject) === filter.subject) {
+                    self.model[filter.subject] = ( +filter.value > 0 ) ? true : false;
+                } else {
+                    self.model[filter.subject] = filter.value;
+                }
             });
         }
 
@@ -75,6 +85,10 @@ export class SearchForm {
         _.forOwn( this.model, (value, key) => {
             if( _.isNumber(value) ) {
                 this.model[key] = -1;
+            } else if (_.isBoolean(value) ) {
+                this.model[key] = false;
+            } else {
+                this.model[key] = null;
             }
         });
     };
@@ -82,10 +96,12 @@ export class SearchForm {
     search() {
         let predicates = [];
         _.forOwn( this.model, (value, key) => {
-            if( _.isNumber(value) && value > -1 ) {
+            let bool = _.isBoolean(value);
+            if( (_.isNumber(value) || bool) && value > 0 ) {
                 predicates.push( new Predicate({
                     subject: key,
-                    value: value
+                    value: bool ? 1 : value,
+                    operator: bool ? Operators.GREATER_THAN_EQUAL : Operators.EQUALS
                 }));
             } else {
                 let match = key.match(/^.*(Start|End)$/);
@@ -102,6 +118,9 @@ export class SearchForm {
         if( predicates.length > 0 ) {
             let p = (predicates.length > 1) ? Predicate.concat(Operators.AND, predicates) : predicates[0];
             SessionContext.setSearchCondition(p);
+            if( this.minimizeOnSearch === true ) {
+                this.eventBus.publish(EventNames.collapsePanel);
+            }
         }
 
     }
