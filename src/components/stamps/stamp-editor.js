@@ -317,8 +317,9 @@ export class StampEditorComponent extends EventManaged {
 
     preprocess() {
         let owner = this.ownership;
-        if( owner && owner.purchased === "") { // remove date objects from model if cleared to avoid server format issues
-            delete owner.purchased;
+        // remove date objects from model if cleared to avoid server format issues
+        if( owner && (owner.purchased === "" || owner.purchased === undefined)) {
+            owner.purchased = null;
         }
         return true;
     }

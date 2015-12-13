@@ -8,6 +8,7 @@ jq-date-picker {
     }
     .date-wrapper {
         white-space: nowrap;
+        display: inline-block;
     }
     label {
         &.to-label {
@@ -25,6 +26,38 @@ jq-date-picker {
     z-index: 8000 !important;
     th {
         font-weight: normal;
+    }
+    .ui-datepicker-header {
+        .ui-datepicker-title {
+            select {
+                font-size: @font-size-small;
+            }
+        }
+        .ui-corner-all {
+            display: none;
+            &.ui-state-hover {
+                background-color: @component-active-color;
+            }
+        }
+    }
+
+    .ui-datepicker-buttonpane {
+        button {
+            font-size: @font-size-small * 0.9em;
+        }
+    }
+    .ui-datepicker-calendar {
+        .ui-state-default {
+            border-color: @datepicker-days-border;
+            background-color: @datepicker-days-bg;
+        }
+        .ui-state-hover {
+            border-color: @datepicker-days-border-hover;
+        }
+        .ui-state-active {
+            background-color: @datepicker-days-active;
+            border-color: @datepicker-days-border-active;
+        }
     }
 }
 
