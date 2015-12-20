@@ -324,7 +324,6 @@ System.config({
     "components/jquery": "github:components/jquery@2.1.4",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.20",
-    "eonasdan/bootstrap-datetimepicker": "github:eonasdan/bootstrap-datetimepicker@4.17.37",
     "jquery": "github:components/jquery@2.1.4",
     "jquery-ui": "github:components/jqueryui@1.11.4",
     "less": "github:aaike/jspm-less-plugin@0.0.5",
