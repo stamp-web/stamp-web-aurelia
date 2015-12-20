@@ -5,11 +5,11 @@
 
     <span class="date-wrapper">
          <label if.bind="range">${'date-picker.from'|t}</label>
-         <input value.bind="value">
+         <input value.bind="valueDisplay">
     </span>
     <span class="date-wrapper" if.bind="range">
         <label class="to-label">${'date-picker.to'|t}</label>
-        <input value.bind="end">
+        <input value.bind="endDisplay">
     </span>
 
 </template>

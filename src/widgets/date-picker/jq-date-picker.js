@@ -13,8 +13,11 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {inject, bindable, customElement} from 'aurelia-framework';
+import {inject, bindable, customElement, LogManager} from 'aurelia-framework';
 import {datepicker} from 'jquery-ui/ui/datepicker';  //eslint-disable-line no-unused-vars
+import $ from 'jquery';
+
+const logger = LogManager.getLogger('date-picker');
 
 function createEvent(name) {
     var event = document.createEvent('Event');
@@ -34,46 +37,104 @@ const MAX_DATE = 1;
 @inject(Element)
 @bindable("value")
 @bindable("end")
+@bindable({
+    name: "range",
+    defaultValue: false
+})
+@bindable({
+    name: "futureDates",
+    defaultValue: false
+})
 export class DatePicker {
     constructor(element) {
         this.element = element;
     }
 
     attached() {
-        this.range = $(this.element).attr('range') ? true : false;
 
-        setTimeout(() => {
-            let elm = $(this.element);
-            let self = this;
+        let elm = $(this.element);
+        let self = this;
 
-            elm.find('input').datepicker({
-                showOn: "button",
-                changeMonth: true,
-                changeYear: true,
-                showButtonPanel: true,
-                buttonImageOnly: false,
-                buttonText: '',
-                onClose: ( selectedDate, eventObj ) => {
-                    if( self.range ) {
-                        if( elm.find('input')[MIN_DATE].id === eventObj.input[MIN_DATE].id ) {
-                            $(elm.find('input')[MAX_DATE]).datepicker( "option", "minDate", selectedDate );
-                        } else {
-                            $(elm.find('input')[MIN_DATE]).datepicker( "option", "maxDate", selectedDate );
-                        }
-                        // icon is lost with selection
-                        elm.find('.ui-datepicker-trigger').addClass('sw-icon-calendar btn-default');
+        elm.find('input').datepicker({
+            showOn: "button",
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            buttonImageOnly: false,
+            buttonText: '',
+            onClose: (selectedDate, eventObj) => {
+                if (self.range) {
+                    if (elm.find('input')[MIN_DATE].id === eventObj.input[MIN_DATE].id) {
+                        $(elm.find('input')[MAX_DATE]).datepicker("option", "minDate", selectedDate);
+                    } else {
+                        $(elm.find('input')[MIN_DATE]).datepicker("option", "maxDate", selectedDate);
                     }
+                    // icon is lost with selection
+                    elm.find('.ui-datepicker-trigger').addClass('sw-icon-calendar btn-default');
                 }
-            }).on('change', e => {
-                fireEvent(e.target, 'input');
-            });
-            elm.find('.ui-datepicker-trigger').addClass('sw-icon-calendar btn-default');
-            elm.find('input').addClass('form-control');
+            }
+        }).on('change', e => { // used when user changes the input, need to cascade to bound values.
+            let val = $(e.currentTarget).val();
+            if( e.currentTarget.id === elm.find('input')[MIN_DATE].id) {
+                self.value = val ? new Date(val) : null;
+            } else {
+                self.end = val ? new Date(val) : null;
+            }
+            fireEvent(e.target, 'input');
         });
+
+        if( self.range && !self.futureDates) { // ensure no future dates can be chosen
+            $(elm.find('input')[MIN_DATE]).datepicker("option", "maxDate", new Date());
+            $(elm.find('input')[MAX_DATE]).datepicker("option", "maxDate", new Date());
+        }
+
+        // by default jquery ui uses glyph images for the next and back buttons.  These
+        // elements are redrawn when navigating between months, so we need to recreate
+        // them each time, after they have been rendered..
+        let reassignMonthIcons = () => {
+            setTimeout( () => { // delay until the rendering of components has occurred
+                let picker = $.find('.ui-datepicker');
+                let fixNav = (p, locator, cls) => {
+                    let el = $(p).find(locator + ' > span');
+                    el.removeClass();
+                    el.addClass(cls);
+                    el.text('');
+                    let button = $(p).find(locator);
+                    button.off('click', reassignMonthIcons); // free up memory/listener
+                    button.on('click', reassignMonthIcons); // need to reassign when navigating
+                };
+                fixNav(picker, '.ui-datepicker-prev', 'sw-icon-previous');
+                fixNav(picker, '.ui-datepicker-next', 'sw-icon-next');
+            }, 50);
+        };
+
+        let trigger = elm.find('.ui-datepicker-trigger');
+        trigger.addClass('sw-icon-calendar btn-default');
+        trigger.on('click', () => {
+            reassignMonthIcons();
+        });
+        elm.find('input').addClass('form-control');
+    }
+
+    valueChanged(newValue) {
+        setTimeout( () => { // give picker time to render
+            $($(this.element).find('input')[MIN_DATE]).val( newValue );
+        }, 50);
+    }
+
+    endChanged(newValue) {
+        setTimeout( () => { // give picker time to render
+            $($(this.element).find('input')[MAX_DATE]).val( newValue );
+        }, 50);
     }
 
     detached() {
-        $(this.element).datepicker('destroy').off('change');
+        try {
+            $(this.element).datepicker('destroy').off('change');
+        } catch( err ) {
+            logger.warn('could not remove change listener for' + this.element);
+        }
+
     }
 }
 

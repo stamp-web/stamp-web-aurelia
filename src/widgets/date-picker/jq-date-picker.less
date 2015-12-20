@@ -1,5 +1,30 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
+// ############################################################################
+//
+// jQuery-UI theme overrides
+//
+// The following CSS rules will set the background-image to none which is referenced from a variety
+// of jquery-ui classes.  These images are not included in the control (nor are they needed) given
+// the current stamp-web theme.
+//
+// ############################################################################
+.ui-widget-header,
+.ui-widget-header .ui-icon {
+    background-image: none; // replaces ui-icons_222222_256x240.png
+}
+
+.ui-widget-header .ui-state-hover,
+.ui-widget-header .ui-state-focus {
+    background-image: none; // replaces ui-bg_glass_75_dadada_1x400.png
+}
+
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+    background-image: none; // replace ui-bg_glass_75_e6e6e6_1x400.png
+}
+
+
 jq-date-picker {
     .form-control {
         width: 90px;
@@ -22,34 +47,43 @@ jq-date-picker {
     }
 }
 
+@ui-datepicker-fontsize: @font-size-small * 0.9em;
+
 .ui-datepicker {
     z-index: 8000 !important;
+    width: 210px;
     th {
         font-weight: normal;
     }
     .ui-datepicker-header {
         .ui-datepicker-title {
             select {
-                font-size: @font-size-small;
+                font-size: @ui-datepicker-fontsize;
             }
         }
         .ui-corner-all {
-            display: none;
+            top: 7px;
+            border-color: @datepicker-days-border;
+            font-size: @ui-datepicker-fontsize;
             &.ui-state-hover {
                 background-color: @component-active-color;
+                border-color: @datepicker-days-border-hover;
+                color: @datepicker-days-border-hover;
             }
         }
     }
 
     .ui-datepicker-buttonpane {
         button {
-            font-size: @font-size-small * 0.9em;
+            font-size: @ui-datepicker-fontsize;
         }
     }
     .ui-datepicker-calendar {
+        font-size: @ui-datepicker-fontsize * 0.9;
         .ui-state-default {
             border-color: @datepicker-days-border;
             background-color: @datepicker-days-bg;
+
         }
         .ui-state-hover {
             border-color: @datepicker-days-border-hover;

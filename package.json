@@ -32,6 +32,7 @@
     "gulp-bump": "^0.1.11",
     "gulp-changed": "^1.1.0",
     "gulp-concat": "^2.5.2",
+    "gulp-connect-proxy": "^0.3.1",
     "gulp-eslint": "^0.13.2",
     "gulp-jshint": "^1.9.0",
     "gulp-less": "^3.0.3",
@@ -85,6 +86,7 @@
       "blueimp/JavaScript-Load-Image": "github:blueimp/JavaScript-Load-Image@^1.14.0",
       "bootbox": "npm:bootbox@^4.4.0",
       "bootstrap": "github:twbs/bootstrap@^3.3.5",
+      "clean-css": "npm:clean-css@^3.4.8",
       "components/jquery": "github:components/jquery@2.1.4",
       "core-js": "npm:core-js@^1.2.5",
       "css": "github:systemjs/plugin-css@^0.1.18",
@@ -97,13 +99,14 @@
       "nprogress": "github:rstacruz/nprogress@^0.1.6",
       "odata-filter-parser": "npm:odata-filter-parser@^0.2.8",
       "polymer/mutationobservers": "github:polymer/mutationobservers@^0.4.2",
-      "select2/select2": "github:select2/select2@4.0.0"
+      "select2/select2": "github:select2/select2@4.0.0",
+      "text": "npm:system-text@0.1.0"
     },
-      "devDependencies": {
-          "babel": "npm:babel-core@^5.8.24",
-          "babel-runtime": "npm:babel-runtime@^5.8.24",
-          "core-js": "npm:core-js@^1.2.5"
-      },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.2.5"
+    },
     "overrides": {
       "npm:core-js@1.1.4": {
         "main": "client/shim.min"

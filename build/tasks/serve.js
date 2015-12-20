@@ -12,10 +12,10 @@ gulp.task('serve', ['build'], function(done) {
     port: 9000,
     server: {
       baseDir: [paths.baseDir],
-      middleware: function (req, res, next) {
+      middleware: [function (req, res, next) {
         res.setHeader('Access-Control-Allow-Origin', '*');
         next();
-      }
+      }]
     }
   }, done);
 });

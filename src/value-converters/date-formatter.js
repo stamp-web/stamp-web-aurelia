@@ -30,6 +30,9 @@ export class dateFormatterValueConverter {
                 logger.warn( "Invalid value for view:" + value, dateErr );
             }
         }
+        if( value === 'Invalid date') { // this will force the text to be "" for invalid dates
+            value = null;
+        }
         return value;
     }
 
@@ -41,6 +44,7 @@ export class dateFormatterValueConverter {
             try {
                 value = moment(new Date(value)).format('YYYY-MM-DDTHH:mm:ssZ');
             } catch (dateErr) {
+                value = null;
                 logger.warn("invalid value from view: " + value, dateErr);
             }
         }
