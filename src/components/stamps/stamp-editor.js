@@ -110,18 +110,12 @@ export class StampEditorComponent extends EventManaged {
      */
     loadServices() {
         let self = this;
-        let loadCount = 0;
-        let loaded = () => {
-            loadCount++;
-            if (loadCount >= 2) {
-                self.loaded = true;
-            }
-        };
-        this.countryService.find(this.countryService.getDefaultSearchOptions()).then(() => {
-            loaded();
-        });
-        this.catalogueService.find(this.catalogueService.getDefaultSearchOptions()).then(() => {
-            loaded();
+        let services = [
+            this.countryService.find(this.countryService.getDefaultSearchOptions()),
+            this.catalogueService.find(this.catalogueService.getDefaultSearchOptions())
+        ];
+        Promise.all(services).then( () => {
+            self.loaded = true;
         });
     }
 
@@ -277,14 +271,16 @@ export class StampEditorComponent extends EventManaged {
     }
 
     save(keepOpen) {
-        if (this.validate() && this.preprocess()) {
-            this.stampService.save(this.duplicateModel).then(stamp => {
-                if( this.duplicateModel.id <= 0 ) {
-                    this.cacheSessionValues(this.duplicateModel);
+        let self = this;
+        if (self.validate() && self.preprocess()) {
+            self.stampService.save(self.duplicateModel).then(stamp => {
+                if( self.duplicateModel.id <= 0 ) {
+                    self.eventBus.publish(EventNames.stampCount, { stamp: self.duplicateModel, increment: true });
+                    self.cacheSessionValues(self.duplicateModel);
                 }
-                this.eventBus.publish(EventNames.stampSaved, { stamp: stamp, remainOpen: keepOpen });
+                self.eventBus.publish(EventNames.stampSaved, { stamp: stamp, remainOpen: keepOpen });
                 if( keepOpen) {
-                    this.resetModel();
+                    self.resetModel();
                 }
             }).catch(err => {
                 logger.error(err);

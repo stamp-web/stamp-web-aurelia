@@ -405,13 +405,14 @@ export class StampList extends EventManaged {
 
         this.subscribe(EventNames.stampRemove, stamp => {
             var _remove = function (model) {
-                if (this.editingStamp && stamp.id === this.editingStamp.id) { // remove editing stamp
-                    this.editingStamp = null;
-                    this.editorShown = false;
+                if (self.editingStamp && stamp.id === self.editingStamp.id) { // remove editing stamp
+                    self.editingStamp = null;
+                    self.editorShown = false;
                 }
-                this.stampService.remove(model).then(function() {
-                    var index = _.findIndex(this.stamps, {id: model.id});
-                    this.stamps.splice(index, 1);
+                self.stampService.remove(model).then(function() {
+                    self.eventBus.publish(EventNames.stampCount, { stamp: model, increment: false });
+                    var index = _.findIndex(self.stamps, {id: model.id});
+                    self.stamps.splice(index, 1);
                 }).catch(err => {
                     logger.error(err);
                 });
