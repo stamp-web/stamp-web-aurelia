@@ -35,6 +35,8 @@ const PreferredValues = [
     {key: 'grade', category: 'stamps', type: Number, model: ['ownership']}
 ];
 
+const CACHED_PURCHASED = 'stamp-editor.purchased';
+
 function createCatalogueNumber() {
     return {
         id: 0,
@@ -87,6 +89,9 @@ export class StampEditorComponent extends EventManaged {
         this.countryService = countryService;
         this.catalogueService = catalogueService;
         this.preferenceService = preferenceService;
+
+        let purchasedValue = localStorage.getItem(CACHED_PURCHASED);
+        this.cachedValues.purchased = (purchasedValue) ? new Date(purchasedValue) : null;
     }
 
     attached() {
@@ -142,18 +147,9 @@ export class StampEditorComponent extends EventManaged {
             // need to ensure ownership is there prior to assigning values
             var owner = this.ownership;  // eslint-disable-line no-unused-vars
             this.processPreferences(true);
-            this.assignCachedValues();
             this.calculateImagePath();
         }
     }
-
-    assignCachedValues() {
-        var owner = this.ownership;
-        if( owner && this.cachedValues.purchased ) {
-            owner.purchased = this.cachedValues.purchased;
-        }
-    }
-
 
     calculateImagePath() {
 
@@ -300,6 +296,7 @@ export class StampEditorComponent extends EventManaged {
         let owner = (m.stampOwnerships && m.stampOwnerships.length > 0 ) ? m.stampOwnerships[0] : undefined;
         if( owner && owner.id <= 0 ) {
             this.cachedValues.purchased = (owner.purchased) ? owner.purchased : null;
+            localStorage.setItem(CACHED_PURCHASED, this.cachedValues.purchased);
         }
     }
 
@@ -361,10 +358,7 @@ export class StampEditorComponent extends EventManaged {
                 this.processPreferences(this.duplicateModel.id <= 0);
             }
             if( this.createMode ) { // set session purchased date
-                let owner = this.ownership;
-                if( owner && this.cachedValues.purchased ) {
-                    owner.purchased = this.cachedValues.purchased;
-                }
+                let owner = this.ownership; // eslint-disable-line no-unused-vars
             }
         } else {
             this.duplicateModel = null;
@@ -374,21 +368,28 @@ export class StampEditorComponent extends EventManaged {
 
     @computedFrom('duplicateModel')
     get ownership() {
-        if (!this.duplicateModel) {
+        let self = this;
+        if (!self.duplicateModel) {
             return undefined;
         }
-        let owners = this.duplicateModel.stampOwnerships;
+        let owners = self.duplicateModel.stampOwnerships;
         let owner;
-        if( this.duplicateModel.wantList === false ) {
+        if( self.duplicateModel.wantList === false ) {
+            let configureOwnership = () => {
+                self.duplicateModel.stampOwnerships = [];
+                owner = createOwnership();
+                if( owner && self.cachedValues.purchased ) {
+                    owner.purchased = self.cachedValues.purchased;
+                }
+                self.duplicateModel.stampOwnerships.push(owner);
+            };
             if (!owners) {
-                this.duplicateModel.stampOwnerships = [];
-                owner = createOwnership();
-                this.duplicateModel.stampOwnerships.push(owner);
-            } else if (this.duplicateModel.stampOwnerships.length > 0) {
-                owner = _.first(this.duplicateModel.stampOwnerships);
+                configureOwnership();
+            } else if (self.duplicateModel.stampOwnerships.length > 0) {
+                owner = _.first(self.duplicateModel.stampOwnerships);
             } else {
-                owner = createOwnership();
-                this.duplicateModel.stampOwnerships.push(owner);
+                configureOwnership();
+
             }
         }
         return owner;
