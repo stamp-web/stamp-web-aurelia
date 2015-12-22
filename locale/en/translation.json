@@ -13,9 +13,11 @@
         "total": "Total"
     },
     "table": {
-        "catalogue-value": "Value",
+        "catalogue-number": "Catalogue number",
+        "catalogue-value": "Catalogue value",
         "condition": "Condition",
         "description": "Description",
+        "grade": "Grade",
         "price-paid": "Price paid"
     },
     "sort": {

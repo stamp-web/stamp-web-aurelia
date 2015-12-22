@@ -1,19 +1,26 @@
 <template>
     <require from="../../value-converters/as-enum"></require>
     <require from="../../value-converters/as-currency-formatted"></require>
-    <table>
+
+    <table class="table table-hover">
         <thead>
             <tr>
                 <td>${'table.description'|t}</td>
-                <td>${'table.condition'|t}</td>
+                <td>${'table.catalogue-number'|t}</td>
                 <td>${'table.catalogue-value'|t}</td>
+                <td>${'table.condition'|t}</td>
+                <td>${'table.grade'|t}</td>
+                <td>${'table.price-paid'|t}</td>
             </tr>
         </thead>
         <tbody>
-            <tr repeat.for="stamp of stamps">
+            <tr repeat.for="stamp of models">
                 <td class="col-md-4">${ stamp.rate + ' ' + stamp.description }</td>
-                <td class="col-md-1">${ stamp.activeCatalogueNumber.condition|asEnum:'Condition'|t }</td>
-                <td class="col-md-1">${ stamp.activeCatalogueNumber.value|asCurrencyFormatted:number.currencyCode }</td>
+                <td class="col-md-1">${ getActiveCatalogueNumber(stamp).number }</td>
+                <td class="col-md-1">${ getActiveCatalogueNumber(stamp).value|asCurrencyFormatted:getCurrencyCode(getActiveCatalogueNumber(stamp)) }</td>
+                <td class="col-md-1">${ getOwnership(stamp).condition|asEnum:'Condition'|t }</td>
+                <td class="col-md-1">${ getOwnership(stamp).grade|asEnum:'Grade'|t }</td>
+                <td class="col-md-1">${ getOwnership(stamp).pricePaid|asCurrencyFormatted:getOwnership(stamp).code }</td>
             </tr>
         </tbody>
     </table>

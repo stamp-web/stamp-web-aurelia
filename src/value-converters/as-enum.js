@@ -14,7 +14,7 @@
  limitations under the License.
  */
 import {valueConverter} from 'aurelia-framework';
-import {Condition} from '../util/common-models';
+import {Condition, Grade} from '../util/common-models';
 
 @valueConverter("asEnum")
 export class asEnumValueConverter {
@@ -26,6 +26,8 @@ export class asEnumValueConverter {
                 case 'Condition':
                     enumValues = Condition;
                     break;
+                case 'Grade':
+                    enumValues = Grade;
 
             }
             if( enumValues ) {
