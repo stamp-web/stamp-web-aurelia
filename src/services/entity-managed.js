@@ -15,7 +15,7 @@
  */
 import {inject} from "aurelia-framework";
 import {HttpClient} from "aurelia-http-client";
-import {BaseService} from "services/base-service";
+import {BaseService} from "./base-service";
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../events/event-managed';
 

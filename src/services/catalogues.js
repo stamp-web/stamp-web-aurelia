@@ -1,6 +1,6 @@
 import {inject} from "aurelia-framework";
 import {HttpClient} from "aurelia-http-client";
-import {EntityManaged} from "services/entity-managed";
+import {EntityManaged} from "./entity-managed";
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 import _ from 'lodash';

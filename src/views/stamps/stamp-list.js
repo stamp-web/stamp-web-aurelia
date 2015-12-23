@@ -24,6 +24,7 @@ import {SessionContext} from '../../services/session-context';
 import {EventNames, StorageKeys, EventManaged} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
 import {StampFilter, ConditionFilter, CurrencyCode} from '../../util/common-models';
+import {PredicateUtilities} from '../../util/object-utilities';
 import {ImagePreviewEvents} from '../../widgets/image-preview/image-preview';
 import {Predicate, Operators, Parser} from 'odata-filter-parser';
 import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
@@ -183,19 +184,9 @@ export class StampList extends EventManaged {
     }
 
     setConditionFilter(ordinal) {
-        let index = _.findIndex(this.currentFilters, {subject: 'condition'});
-        if (index >= 0) {
-            this.currentFilters.splice(index, 1);
-        } else {
-            let orMatches = _.filter(this.currentFilters, {operator: 'or'});
-            if (orMatches.length > 0) {
-                _.each(orMatches, (match) => {
-                    if (match.value.subject === 'condition') {
-                        _.remove(this.currentFilters, match);
-                    }
-                });
-            }
-        }
+
+        this.currentFilters = PredicateUtilities.removeMatches( 'condition', this.currentFilters );
+
         this.conditionFilter = ConditionFilter.get(ordinal);
         let conditions = [];
         switch (ordinal) {
@@ -225,10 +216,8 @@ export class StampList extends EventManaged {
 
 
     setFilter(ordinal) {
-        var index = _.findIndex(this.currentFilters, { subject: 'wantList'});
-        if( index >= 0 ) {
-            this.currentFilters.splice(index, 1);
-        }
+        this.currentFilters = PredicateUtilities.removeMatches( 'wantList', this.currentFilters );
+
         this.stampFilter = StampFilter.get(ordinal);
 
         let theFilter = new Predicate({
@@ -303,12 +292,7 @@ export class StampList extends EventManaged {
     }
 
     sendSearch() {
-        for( let i = 0; i < this.currentFilters.length; i++ ) {
-            if( this.currentFilters[i].subject.startsWith('description' /*'contains(description'*/)) {
-                this.currentFilters.splice(i, 1);
-                break;
-            }
-        }
+        this.currentFilters = PredicateUtilities.removeMatches( 'description', this.currentFilters );
         if( this.searchText && this.searchText !== "") {
             this.currentFilters.unshift( new Predicate({
                 subject: 'description',
