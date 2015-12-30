@@ -55,8 +55,8 @@ export var ObjectUtilities = {
 export var PredicateUtilities = {
     removeMatches(subject, predicates) {
         let predicateList = _.clone(predicates);
-        if( predicateList.length === 1 && !Operators.isLogical(predicateList[0].operator)) {
-            if( predicateList[0].subject === subject ) {
+        if (predicateList.length === 1 && !Operators.isLogical(predicateList[0].operator)) {
+            if (predicateList[0].subject === subject) {
                 predicateList.splice(0, 1);
             }
         } else {
@@ -66,14 +66,14 @@ export var PredicateUtilities = {
             let logicals = _.filter(predicateList, item => {
                 return Operators.isLogical(item.operator);
             });
-            if( logicals.length > 0 ) {
+            if (logicals.length > 0) {
                 _.forEach(logicals, logical => {
-                   let flattened = logical.flatten();
-                   let processed = PredicateUtilities.removeMatches(subject, flattened);
-                   if( processed.length < flattened.length ) {
-                       let indx = _.indexOf(predicateList, logical);
-                       predicateList.splice(indx,1);
-                   }
+                    let flattened = logical.flatten();
+                    let processed = PredicateUtilities.removeMatches(subject, flattened);
+                    if (processed.length < flattened.length) {
+                        let indx = _.indexOf(predicateList, logical);
+                        predicateList.splice(indx, 1);
+                    }
                 });
             }
         }

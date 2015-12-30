@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr repeat.for="stamp of models">
+            <tr repeat.for="stamp of models" class="${stamp.selected ? 'selected' : ''}">
                 <td class="col-md-4">${ stamp.rate + ' ' + stamp.description }</td>
                 <td class="col-md-1">${ getActiveCatalogueNumber(stamp).number }</td>
                 <td class="col-md-1">${ getActiveCatalogueNumber(stamp).value|asCurrencyFormatted:getCurrencyCode(getActiveCatalogueNumber(stamp)) }</td>

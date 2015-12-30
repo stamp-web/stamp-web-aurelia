@@ -13,4 +13,13 @@ stamp-table {
     .grid-footer-container {
         opacity: 0.01;
     }
+    tbody {
+        tr.selected {
+            background-color: #0a6ebd;
+            &:hover {
+                background-color: lighten(#0a6ebd, 10%);
+            }
+        }
+    }
+
 }
