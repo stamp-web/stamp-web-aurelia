@@ -51,6 +51,7 @@
     "karma": "^0.13.15",
     "karma-babel-preprocessor": "^5.2.1",
     "karma-chrome-launcher": "^0.2.1",
+      "karma-firefox-launcher": "^0.1.7",
     "karma-coverage": "douglasduteil/karma-coverage#next",
     "karma-jasmine": "^0.3.5",
     "karma-jspm": "2.0.1-beta.2",
