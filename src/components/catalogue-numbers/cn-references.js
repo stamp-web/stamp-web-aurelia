@@ -50,7 +50,7 @@ export class CatalogueNumberReferences {
                 if( cond ) {
                     self.defaultCondition = +cond.value;
                 }
-                let cat = self.preferenceService.getByNameAndCategory('catalogueRef', 'stamps');
+                let cat = self.preferenceService.getByNameAndCategory('catalogueRefSecondary', 'stamps');
                 if( cat ) {
                     self.defaultCatalogue = +cat.value;
                 }
