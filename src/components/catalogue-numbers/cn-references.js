@@ -41,7 +41,8 @@ export class CatalogueNumberReferences {
 
     bind() {
         let self = this;
-        return Promise.all([
+        // Using a promise here, but not bind (view-models) do not use promises to block
+        Promise.all([
             self.catalogueService.find(self.catalogueService.getDefaultSearchOptions()).then(results => {
                 self.catalogues = results.models;
             }),
