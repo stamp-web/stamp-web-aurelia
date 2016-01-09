@@ -19,6 +19,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {Countries} from '../../services/countries';
 import {Albums} from '../../services/albums';
 import {Sellers} from '../../services/sellers';
+import {Catalogues} from '../../services/catalogues';
 import {StampCollections} from '../../services/stampCollections';
 import {Predicate, Operators} from 'odata-filter-parser';
 import {SessionContext} from '../../services/session-context';
@@ -31,7 +32,7 @@ import _ from 'lodash';
     name: 'model',
     defaultValue: {}
 })
-@inject(Element, EventAggregator, BindingEngine, Countries, StampCollections, Albums, Sellers)
+@inject(Element, EventAggregator, BindingEngine, Countries, StampCollections, Albums, Sellers, Catalogues)
 export class SearchForm {
 
     loading = true;
@@ -41,14 +42,15 @@ export class SearchForm {
     dateFields = ['purchased', 'createTimestamp', 'modifyTimestamp'];
     booleanFields = ['defects', 'deception'];
 
-    constructor(element, eventBus, bindingEngine, countries, stampCollections, albums, sellers) {
+    constructor(element, eventBus, bindingEngine, countries, stampCollections, albums, sellers, catalogueService) {
         this.element = element;
         this.eventBus = eventBus;
         this.$bindingEngine = bindingEngine;
         this.countryServices = countries;
         this.stampCollectionService = stampCollections;
-        this.albumServices = albums;
-        this.sellerServices = sellers;
+        this.albumService = albums;
+        this.sellerService = sellers;
+        this.catalogueService = catalogueService;
     }
 
     bind() {
@@ -72,8 +74,9 @@ export class SearchForm {
         return Promise.all( [
             this.loadService(this.countryServices, 'countries'),
             this.loadService(this.stampCollectionService, 'stampCollections'),
-            this.loadService(this.albumServices, 'albums'),
-            this.loadService(this.sellerServices, 'sellers')
+            this.loadService(this.albumService, 'albums'),
+            this.loadService(this.sellerService, 'sellers'),
+            this.loadService(this.catalogueService, 'catalogues')
         ]).then( () => {
             self.loading = false;
         });

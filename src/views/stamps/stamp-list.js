@@ -428,7 +428,7 @@ export class StampList extends EventManaged {
     }
 
     search() {
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             var opts = this.buildOptions();
             this.stampService.clearSelected();
             this.stampService.find(opts).then(result => {
@@ -469,7 +469,7 @@ export class StampList extends EventManaged {
         var self = this;
         this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');
 
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             Promise.all([this.countryService.find(), this.preferenceService.find()]).then( (results) => {
                 let result = (results && results.length > 0 ) ? results[0] : undefined;
                 self.countries = result ? result.models : [];
