@@ -369,16 +369,12 @@ export class StampList extends EventManaged {
             }
             // TODO Need to toggle editor without toggling
         });
+        this.subscribe(EventNames.updateFinished, obj => {
+            this.stampUpdated(obj);
+        });
 
         this.subscribe(EventNames.saveSuccessful, obj => {
-            if( obj && obj.type === self.stampService.getCollectionName() ) {
-                let stamp = obj.model;
-                // need to check whether it is filtered...
-                let index = _.findIndex(this.stamps, { id: stamp.id });
-                if( index >= 0 ) {
-                    this.stamps[index] = stamp;
-                }
-            }
+            this.stampUpdated(obj);
         });
         this.subscribe(EventNames.deleteSuccessful, obj => {
             if (obj && obj.type === self.stampService.getCollectionName()) {
@@ -413,6 +409,17 @@ export class StampList extends EventManaged {
                 }
             });
         });
+    }
+
+    stampUpdated(obj) {
+       /* if( obj && obj.type === this.stampService.getCollectionName() ) {
+            let stamp = obj.model;
+            // need to check whether it is filtered...
+            let m = _.findWhere(this.stamps, { id: stamp.id });
+            if( m ) {
+                _.merge(m, stamp);
+            }
+        } */
     }
 
     stampSelected(obj) {

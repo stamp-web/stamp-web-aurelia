@@ -185,7 +185,7 @@ export class BaseService {
             if(m) {
                 _.merge(m, model);
                 // Not sure if this is a good idea or not.
-                this.eventBus.publish(EventNames.saveSuccessful, { type: this.getCollectionName(), model: m});
+                this.eventBus.publish(EventNames.updateFinished, { type: this.getCollectionName(), model: m});
             } else {
                 logger.debug("Could not locate id " + model.id + " in " + this.getCollectionName());
             }

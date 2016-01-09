@@ -79,6 +79,7 @@ export var EventNames = {
     pageRefreshed: "page-refreshed",
     preferenceChanged: "preference-changed",
     saveSuccessful: "save-completed",
+    updateFinished: "update-finished",
     stampCount: "stamp-count",
     stampCountForCollection: "stamp-count-for-collection",
     stampCreate: 'stamp-create',

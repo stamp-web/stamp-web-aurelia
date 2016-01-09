@@ -1,6 +1,6 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {Validation} from 'aurelia-validation';
-import {BindingEngine} from 'aurelia-binding'; // technically this is a static not a DI until next release
+import {BindingEngine} from 'aurelia-binding';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../events/event-managed';
 import {Catalogues} from '../../services/catalogues';

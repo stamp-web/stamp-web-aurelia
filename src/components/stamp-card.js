@@ -1,5 +1,6 @@
-import {bindable, customElement, inject, computedFrom} from 'aurelia-framework';
+import {bindable, customElement, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {BindingEngine} from 'aurelia-binding';
 import {EventNames} from '../events/event-managed';
 import {Preferences} from '../services/preferences';
 import _ from 'lodash';
@@ -8,60 +9,78 @@ import $ from 'jquery';
 var defaultImagePath = "http://drake-server.ddns.net:9001/Thumbnails/";
 
 @customElement('stamp-card')
-@inject(Element, EventAggregator, Preferences)
+@inject(Element, EventAggregator, BindingEngine, Preferences)
 @bindable('model')
 @bindable('selected')
 @bindable('highlight')
 export class StampCard {
 
     imageShown = false;
+    activeCN;
+    imagePath;
 
-    constructor(element, eventBus, prefService) {
+    constructor(element, eventBus, $bindingEngine, prefService) {
         this.element = element;
         this.eventBus = eventBus;
         this.prefService = prefService;
+        this.$bindingEngine = $bindingEngine;
     }
 
     modelChanged(newValue) {
         if (newValue) {
-            this.findActiveCatalogueNumber();
+            this.bindActiveNumber();
+            this.bindImagePath();
         }
     }
 
-    getCatalogueNumber() {
-        var s = "";
-        if (this.model) {
-            var activeCN = this.findActiveCatalogueNumber(this.model);
-            s = activeCN.number;
+    /**
+     * Bind the card to the active catalogue number and if the active flag of this catalogue number
+     * changes due to an update re-calculate the bound active catalogue number
+     */
+    bindActiveNumber() {
+        this.activeCN = this.findActiveCatalogueNumber();
+        if( this.activeCN ) {
+            let observer = this.$bindingEngine.propertyObserver(this.activeCN, 'active').subscribe( () => {
+                observer.dispose();
+                delete this.model.activeCatalogueNumber; // remove the current active CN
+                this.bindActiveNumber();
+            });
         }
-        return s;
     }
 
 
     findActiveCatalogueNumber() {
-        var activeCN = ( this.model.activeCatalogueNumber ) ? this.model.activeCatalogueNumber : undefined;
-        if (!activeCN) {
-            activeCN = _.findWhere(this.model.catalogueNumbers, {active: true});
-            this.model.activeCatalogueNumber = activeCN;
+        this.activeCN = ( this.model.activeCatalogueNumber ) ? this.model.activeCatalogueNumber : undefined;
+        if (!this.activeCN) {
+            this.activeCN = _.findWhere(this.model.catalogueNumbers, {active: true});
+            this.model.activeCatalogueNumber = this.activeCN;
         }
-        return activeCN;
+        return this.activeCN;
     }
 
     notFoundImage() {
         return StampCard.prototype.imageNotFoundFn;
     }
 
-    @computedFrom("model")
-    get imagePath() {
+    bindImagePath() {
         if (this.model && this.model.stampOwnerships && this.model.stampOwnerships.length > 0) {
-            var path = _.first(this.model.stampOwnerships).img;
-            if (path) {
-                var index = path.lastIndexOf('/');
-                path = path.substring(0, index + 1) + "thumb-" + path.substring(index + 1);
-                return defaultImagePath + path;
+            let owner = _.first(this.model.stampOwnerships);
+            if( owner ) {
+                let observer = this.$bindingEngine.propertyObserver(owner, 'img').subscribe(() => {
+                    if (observer) {
+                        observer.dispose();
+                    }
+                    this.imagePath = undefined;
+                    this.bindImagePath();
+                });
+                let path = owner.img;
+                if (path) {
+                    var index = path.lastIndexOf('/');
+                    path = path.substring(0, index + 1) + "thumb-" + path.substring(index + 1);
+                    this.imagePath = defaultImagePath + path;
+                }
             }
         }
-        return null;
     }
 
     showFullSizeImage() {
