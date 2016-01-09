@@ -140,7 +140,8 @@
         "remove-cn": "Delete catalogue number",
         "reset": "Reset",
         "save": "Save",
-        "save-changes" : "Save edit"
+        "save-changes" : "Save edit",
+        "page-size": "Size"
     },
     "paging-toolbar": {
         "page": "Page"

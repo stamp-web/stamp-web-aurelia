@@ -19,6 +19,7 @@ import {I18N} from 'aurelia-i18n';
 import {Countries} from '../../services/countries';
 import {Router} from 'aurelia-router';
 import {Stamps} from '../../services/stamps';
+import {Preferences} from '../../services/preferences';
 import {PurchaseForm} from './purchase-form';
 import {SessionContext} from '../../services/session-context';
 import {EventNames, StorageKeys, EventManaged} from '../../events/event-managed';
@@ -46,7 +47,7 @@ function createStamp(wantList) {
     };
 }
 
-@inject(Element, EventAggregator, Router, Stamps, Countries, asCurrencyValueConverter, I18N, DialogService)
+@inject(Element, EventAggregator, Router, Stamps, Countries, Preferences, asCurrencyValueConverter, I18N, DialogService)
 export class StampList extends EventManaged {
 
     stamps = [];
@@ -89,12 +90,12 @@ export class StampList extends EventManaged {
         sortDirection: 'asc'
     };
 
-    constructor(element, eventBus, router, stampService, countryService, currencyFormatter, i18next, dialogService) {
+    constructor(element, eventBus, router, stampService, countryService, preferenceService, currencyFormatter, i18next, dialogService) {
         super(eventBus);
         this.element = element;
         this.stampService = stampService;
         this.countryService = countryService;
-        this._ = _;
+        this.preferenceService = preferenceService;
         this.currencyFormatter = currencyFormatter;
         this.router = router;
         this.i18next = i18next;
@@ -369,13 +370,7 @@ export class StampList extends EventManaged {
             }
             // TODO Need to toggle editor without toggling
         });
-        this.subscribe(EventNames.updateFinished, obj => {
-            this.stampUpdated(obj);
-        });
 
-        this.subscribe(EventNames.saveSuccessful, obj => {
-            this.stampUpdated(obj);
-        });
         this.subscribe(EventNames.deleteSuccessful, obj => {
             if (obj && obj.type === self.stampService.getCollectionName()) {
                 _.remove(this.stamps, {id: obj.id});
@@ -411,17 +406,6 @@ export class StampList extends EventManaged {
         });
     }
 
-    stampUpdated(obj) {
-       /* if( obj && obj.type === this.stampService.getCollectionName() ) {
-            let stamp = obj.model;
-            // need to check whether it is filtered...
-            let m = _.findWhere(this.stamps, { id: stamp.id });
-            if( m ) {
-                _.merge(m, stamp);
-            }
-        } */
-    }
-
     stampSelected(obj) {
         if (obj) {
             if (this.stampService.isSelected(obj)) {
@@ -444,14 +428,19 @@ export class StampList extends EventManaged {
     }
 
     search() {
-        var opts = this.buildOptions();
-        this.stampService.clearSelected();
-        this.stampService.find(opts).then(result => {
-            this.router.navigate(this.router.generate('stamp-list', opts));
-            this.processStamps(result, opts);
-        }).catch(err => {
-            logger.debug(err);
+        return new Promise((resolve,reject) => {
+            var opts = this.buildOptions();
+            this.stampService.clearSelected();
+            this.stampService.find(opts).then(result => {
+                this.router.navigate(this.router.generate('stamp-list', opts));
+                this.processStamps(result, opts);
+                resolve();
+            }).catch(err => {
+                logger.debug(err);
+                reject(err);
+            });
         });
+
 
     }
 
@@ -480,9 +469,10 @@ export class StampList extends EventManaged {
         var self = this;
         this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');
 
-        return new Promise((resolve, reject) => {
-            this.countryService.find().then(result => {
-                this.countries = result.models;
+        return new Promise((resolve,reject) => {
+            Promise.all([this.countryService.find(), this.preferenceService.find()]).then( (results) => {
+                let result = (results && results.length > 0 ) ? results[0] : undefined;
+                self.countries = result ? result.models : [];
                 let $filter = LocationHelper.getQueryParameter("$filter");
                 if ($filter) {
                     let f = Parser.parse($filter);
@@ -500,28 +490,24 @@ export class StampList extends EventManaged {
                 }
                 let $orderby = LocationHelper.getQueryParameter("$orderby");
                 if( $orderby && $orderby.length > 1 ) {
-                    let orderParts = $orderby.split();
+                    let orderParts = $orderby.split(' ');
+
                     this.options.sort = orderParts[0];
                     this.options.sortDirection = orderParts[1];
+                    console.log(orderParts);
                 }
-                let $top = LocationHelper.getQueryParameter("$top");
+                let $top = self.preferenceService.getByNameAndCategory('pageSize', 'stamps');
                 if( $top ) {
-                    this.options.$top = $top;
+                    this.options.$top = +$top.value;
                 }
                 let $skip = LocationHelper.getQueryParameter("$skip");
                 if( $skip ) {
                     this.options.$skip = $skip;
                 }
-
-                var opts = this.buildOptions();
-                // this really should be consolidated with sendSearch() above.
-                this.stampService.clearSelected();
-                this.stampService.find(opts).then(stamps => {
-                    this.processStamps(stamps, opts);
+                this.search().then( () => {
                     logger.debug("StampGrid initialization time: " + ((new Date().getTime()) - t.getTime()) + "ms");
                     resolve();
                 });
-
             }).catch(err => {
                 reject(err);
             });

@@ -4,11 +4,13 @@ collapse-panel {
     width: 100%;
     height: 100%;
     >.panel {
-        border: none;
+        border: @highlight-color 1px solid;
         height: 100%;
     }
+
     .collapse-header {
         height: 35px;
+        background-color: @highlight-color;
         h4.panel-title {
             padding-left: 15px;
             padding-top: 15px;
