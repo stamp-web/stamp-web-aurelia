@@ -6,6 +6,7 @@ import {Preferences} from '../../services/preferences';
 import {Condition} from '../../util/common-models';
 import {I18N} from 'aurelia-i18n';
 
+import $ from 'jquery';
 import _ from 'lodash';
 import bootbox from 'bootbox';
 
@@ -114,6 +115,10 @@ export class CatalogueNumberReferences {
         };
         num.editing = true;
         this.modelCopy.catalogueNumbers.push(num);
+        setTimeout( () => {
+            let el = this.element.find('#cn-number');
+            $(el).focus();
+        }, 250);
     }
 
     remove(num) {
