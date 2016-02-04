@@ -22,12 +22,6 @@ var launchServer = function(baseDir, done) {
 
     proxy.on('error', function(err, req, res) {
         console.log('stamp-webservices proxy error... %s', err);
-        notifyClient('ServerNotification', {
-            'type': 'error',
-            'title': 'Error connecting to stamp-webservices',
-            'message': err.toString(),
-            'error': err
-        });
         res.writeHead(500, {
             'Content-Type': 'text/plain'
         });

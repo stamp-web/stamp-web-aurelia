@@ -445,6 +445,7 @@ export class StampList extends EventManaged {
     }
 
     processStamps(result, opts) {
+        this.lastSelected = undefined; // clear any editing stamps
         this.generatePageModels(1, 0);
         this.stamps = result.models;
         this.stampCount = result.total;

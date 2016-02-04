@@ -21,7 +21,7 @@ export class asCurrencyValueConverter {
 
     toView(value, currency) {
         if (typeof value !== 'undefined') {
-            
+
             if( +value > 0 && currency ) {
                 return value.toLocaleString("en", {style: "currency", currency: currency, minimumFractionDigits: 2});
             }
