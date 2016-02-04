@@ -45,13 +45,12 @@ To run the app, follow these steps.
   ```shell
   gulp watch
   ```
-7. Browse to [http://localhost:9000](http://localhost:9000) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
+7. Browse to [http://localhost:9005](http://localhost:9005) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
 
-**Note:** At present there is a bug in the HTMLImports polyfill which only occurs on IE. We have submitted a pull request to the team with the fix. In the mean time, if you want to test on IE, you can work around the issue by explicitly adding a script tag before you load system.js. The script tag should look something like this (be sure to confirm the version number):
+## Browser Support
 
-```html
-<script src="jspm_packages/github/webcomponents/webcomponentsjs@0.5.2/HTMLImports.js"></script>
-```
+This project is only going to support the latest browsers (Chrome/Firefox/IE11/Edge) and therefore polyfills for MutationObserver and support for IE9/IE10 is being dropped.
+
 
 ## Changing the theme
 
@@ -70,17 +69,15 @@ custom folder of bootswatch and has since been modified further.  The variables.
 
 The REST Web Services are available from [stamp-webservices](https://github.com/stamp-web/stamp-webservices).  This project has detailed instructions on how to setup the environment and setup.  You will need MySQL and NodeJS to do so.
 
-Once the stamp-webservices is setup and configured, the best and easiest way to develop the stamp-web-aurelia project is with a reverse proxy tool like [nginx](http://nginx.org/).
+Stamp-Web now includes a reverse proxy in the serve target (also called from watch) that will automatically proxy calls to the stamp-webservices, meaning that nginx is no longer needed.
 
-An example configuration for nginx might look as simple as adding the following (assuming web-services is running on port 9001
 
-```
-server {
-    location /stamp-webservices {
-        proxy_pass   http://127.0.0.1:9001;
-    }
-}
-```
+  ```shell
+  gulp watch
+  ```
+
+You can access both the web-services and the application server through port 9005 (http://localhost:9005/#)
+
 
 ## Running The Unit Tests
 

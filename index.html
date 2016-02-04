@@ -37,18 +37,14 @@
     req.send();
 
 </script>
-<script src="jspm_packages/github/polymer/mutationobservers@0.4.2/MutationObserver.js"></script>
+
 <script src="jspm_packages/system.js"></script>
 <script src="config.js"></script>
 
 <script>
 	// Loads WeakMap polyfill needed by MutationObservers
 	System.import('core-js').then( function() {
-		// Imports MutationObserver polyfill
-		System.import('polymer/mutationobservers').then( function() {
-			// Ensures start of Aurelia when all required IE9 dependencies are loaded
-			System.import('aurelia-bootstrapper');
-		})
+		System.import('aurelia-bootstrapper');
 	});
 </script>
 </body>

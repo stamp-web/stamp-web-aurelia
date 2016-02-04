@@ -37,7 +37,6 @@ var dependent_libs = [
 	'moment',
 	'nprogress',
 	'blueimp/JavaScript-Load-Image',
-	'polymer/mutationobservers',
     'lodash',
     'jquery'
 ];

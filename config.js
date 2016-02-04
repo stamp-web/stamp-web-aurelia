@@ -57,7 +57,6 @@ System.config({
     "moment": "github:moment/moment@2.10.3",
     "nprogress": "github:rstacruz/nprogress@0.1.6",
     "odata-filter-parser": "npm:odata-filter-parser@0.2.8",
-    "polymer/mutationobservers": "github:polymer/mutationobservers@0.4.2",
     "select2/select2": "github:select2/select2@4.0.0",
     "text": "npm:system-text@0.1.0",
     "github:aaike/jspm-less-plugin@0.0.5": {

@@ -494,7 +494,6 @@ export class StampList extends EventManaged {
 
                     this.options.sort = orderParts[0];
                     this.options.sortDirection = orderParts[1];
-                    console.log(orderParts);
                 }
                 let $top = self.preferenceService.getByNameAndCategory('pageSize', 'stamps');
                 if( $top ) {
