@@ -20,12 +20,12 @@ import {valueConverter} from 'aurelia-framework';
 export class asCurrencyValueConverter {
 
     toView(value, currency) {
-        if (typeof value !== 'undefined' && currency) {
-            if( +value <= 0 ) {
-                return "-";
+        if (typeof value !== 'undefined') {
+            
+            if( +value > 0 && currency ) {
+                return value.toLocaleString("en", {style: "currency", currency: currency, minimumFractionDigits: 2});
             }
-            return value.toLocaleString("en", {style: "currency", currency: currency, minimumFractionDigits: 2});
         }
-        return value;
+        return "-";
     }
 }

@@ -18,7 +18,8 @@ gulp.task('test', function (done) {
  */
 gulp.task('tdd', function (done) {
     karma.start({
-        configFile: __dirname + '/../../conf/karma.conf.js'
+        configFile: __dirname + '/../../conf/karma.conf.js',
+        singleRun: false
     }, function(e) {
         done();
     });
