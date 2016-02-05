@@ -1,5 +1,5 @@
 /**
- Copyright 2015 Jason Drake
+ Copyright 2016 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -82,6 +82,8 @@ export class StampEditorComponent extends EventManaged {
     cachedValues = {
         purchased: null
     };
+    catalogues = [];
+
 
     constructor(eventBus, stampService, countryService, catalogueService, preferenceService) {
         super(eventBus);
@@ -114,7 +116,10 @@ export class StampEditorComponent extends EventManaged {
             this.countryService.find(this.countryService.getDefaultSearchOptions()),
             this.catalogueService.find(this.catalogueService.getDefaultSearchOptions())
         ];
-        Promise.all(services).then( () => {
+        Promise.all(services).then( (serviceResult) => {
+            if( serviceResult && serviceResult.length > 0 ) {
+                this.catalogues = serviceResult[1].models;
+            }
             self.loaded = true;
         });
     }
@@ -178,7 +183,6 @@ export class StampEditorComponent extends EventManaged {
     }
 
     checkExists() {
-
         if( this.checkExistsFn && this.checkExistsFn.clearTimeout ) {
             this.checkExistsFn.clearTimeout();
             this.checkExistsFn = undefined;
@@ -189,7 +193,7 @@ export class StampEditorComponent extends EventManaged {
                 let cn = self.duplicateModel.activeCatalogueNumber;
                 if (cn.catalogueRef > 0 && cn.number && cn.number !== '') {
                     let opts = {
-                        $filter: '((countryRef eq ' + self.duplicateModel.countryRef + ') and (catalogueRef eq ' + cn.catalogueRef + ') and (number eq \'' + cn.number + '\'))'
+                        $filter: '((countryRef eq ' + self.duplicateModel.countryRef + ') and (number eq \'' + cn.number + '\'))'
                     };
                     self.stampService.find(opts).then(results => {
                         if (results.models.length > 0) {
@@ -206,14 +210,24 @@ export class StampEditorComponent extends EventManaged {
         if( this.duplicateModel.wantList === false ) { // if the object IS the wantlist leave it there for conversion
             _.remove(models, {id: this.duplicateModel.id});
         }
-        if (models.length > 0) {
-            let index = _.findIndex(models, {wantList: true});
-            let wantList = ( index >= 0 );
-            let obj = {
-                convert: wantList,
-                conversionModel: ( index >= 0 ) ? models[index] : undefined
-            };
-            this.eventBus.publish(EventNames.conflictExists, obj);
+        if (models && models.length > 0) {
+            // Retrieve the current catalogueType of the active number
+            let catalogueType = _.find(this.catalogues, { id: this.activeCatalogueNumber.catalogueRef}).type;
+            // Pull out only stamps that match the active number's catalogue type.
+            let matchingStamps = _.remove(models, m => {
+                let cn = _.find(m.catalogueNumbers, { active: true });
+                let cnType = _.find(this.catalogues, { id: cn.catalogueRef}).type;
+                return ( cnType === catalogueType );
+            });
+            if( matchingStamps.length > 0 ) {
+                let index = _.findIndex(matchingStamps, {wantList: true});
+                let wantList = ( index >= 0 );
+                let obj = {
+                    convert: wantList,
+                    conversionModel: ( index >= 0 ) ? matchingStamps[index] : undefined
+                };
+                this.eventBus.publish(EventNames.conflictExists, obj);
+            }
         }
     }
 
