@@ -9,4 +9,16 @@
     .editor-buttons {
         margin-bottom: @padding-large-vertical;
     }
+    .list-group-item {
+        &:hover {
+            background-color: lighten(@list-group-active-bg, 25%);
+            color: @list-group-active-text-color;
+            cursor: pointer;
+        }
+        &.selected {
+            background-color: @list-group-active-bg;
+            color: @list-group-active-text-color;
+            cursor: default;
+        }
+    }
 }

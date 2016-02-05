@@ -64,7 +64,15 @@ export class UserSettings {
         { name: 'imagePath', category: 'stamps', type: String },
         { name: 'locale', category: 'user', type: String, defaultValue: 'en' },
         { name: 'applyCatalogueImagePrefix', category: 'stamps', type: Boolean, defaultValue: true }
-    ]
+    ];
+
+    EDITOR = 'settings.editor';
+    REFERENCE = 'settings.reference';
+    SERVER = 'settings.server';
+    USER = 'settings.user';
+
+    viewModels = [ this.EDITOR, this.REFERENCE, this.SERVER, this.USER ];
+    selectedView = this.EDITOR;
 
     servicesLoaded = 0;
     loading = false;
@@ -86,6 +94,10 @@ export class UserSettings {
     }
 
     deactivate() {
+    }
+
+    selectView(pref) {
+        this.selectedView = pref;
     }
 
     save() {
