@@ -63,7 +63,7 @@ export class ImagePreviewer {
 
     closeFullSizeImage() {
         $(this.element).find('div').empty();
-        this.eventBus.publish(ImagePreviewEvents.closeImagePreview);
+        this.eventBus.publish(ImagePreviewEvents.close);
     }
 }
 

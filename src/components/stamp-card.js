@@ -98,7 +98,8 @@ export class StampCard {
         }
     }
 
-    showFullSizeImage() {
+    showFullSizeImage(evt) {
+        evt.cancelBubble = true;
         if (!_.isEmpty(this.model.stampOwnerships) && _.first(this.model.stampOwnerships).img) {
             this.eventBus.publish(EventNames.showImage, this.model);
         }
