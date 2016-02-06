@@ -11,6 +11,15 @@ stamp-web-aurelia is the web front-end for managing collections of stamps and le
 [![Build Status](http://drake-server.ddns.net:9000/jenkins/buildStatus/icon?job=stamp-aurelia)](http://drake-server.ddns.net:9000/jenkins/job/stamp-aurelia/)
 
 
+## Demo Server
+
+A demo server has been provided using the following credentials:
+
+* username: demo
+* password: demo
+* address: http://drake-server.ddns.net/stamp-aurelia/index.html
+
+
 ## Running The App
 
 To run the app, follow these steps.
@@ -45,7 +54,7 @@ To run the app, follow these steps.
   ```shell
   gulp watch
   ```
-7. Browse to [http://localhost:9005](http://localhost:9005) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
+7. Browse to [localhost:9005](http://localhost:9005) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
 
 ## Browser Support
 
@@ -78,6 +87,12 @@ Stamp-Web now includes a reverse proxy in the serve target (also called from wat
 
 You can access both the web-services and the application server through port 9005 (http://localhost:9005/#)
 
+### Accessing the Demo Services
+
+Another way to access the web-services is using the reverse proxy to the demo system located at http://drake-server.ddns.net/stamp-webservices.  You can change this setting via "webServices" variable in the file build/tasks/serve.js
+
+If you take this later approach, please note that the performance will not be great since you will be reverse proxying to a remote data service.  Also note, this is a demo machine so I would appreciate it if you didn't completely corrupt the data (this is not my production data, but if I have to continually manage the system due to misuse I will close it down to outside connections)
+
 
 ## Running The Unit Tests
 
@@ -98,7 +113,7 @@ jspm install aurelia-router
 3. You can now run the tests with this command:
 
   ```shell
-  karma start
+  gulp test
   ```
 
 ## Running The E2E Tests
