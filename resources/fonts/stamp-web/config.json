@@ -63,6 +63,20 @@
       ]
     },
     {
+      "uid": "7692717bd175440364637188c23eac36",
+      "css": "ribbon",
+      "code": 59440,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M38.6 995.2C46.3 998.4 54.4 1000 62.5 1000 78.8 1000 94.8 993.6 106.7 981.7L375 713.4 643.3 981.7C655.2 993.6 671.3 1000 687.5 1000 695.6 1000 703.7 998.4 711.4 995.2 734.7 985.6 750 962.8 750 937.5V62.5C750 28 722 0 687.5 0H62.5C28 0 0 28 0 62.5V937.5C0 962.8 15.2 985.6 38.6 995.2ZM375 625L62.5 937.5V250H687.5V937.5L375 625ZM687.5 62.5V187.5H62.5V62.5H687.5Z",
+        "width": 750
+      },
+      "search": [
+        "ribbon"
+      ]
+    },
+    {
       "uid": "2a6740fc2f9d0edea54205963f662594",
       "css": "progress",
       "code": 59406,
@@ -129,6 +143,12 @@
       "src": "fontawesome"
     },
     {
+      "uid": "b035c28eba2b35c6ffe92aee8b0df507",
+      "css": "deception",
+      "code": 59441,
+      "src": "fontawesome"
+    },
+    {
       "uid": "f48ae54adfb27d8ada53d0fd9e34ee10",
       "css": "trash",
       "code": 59401,
@@ -192,6 +212,12 @@
       "uid": "1256e3054823e304d7e452a589cf8bb8",
       "css": "minus",
       "code": 59399,
+      "src": "entypo"
+    },
+    {
+      "uid": "39a5a0d7ce8342d149373b2ce219503a",
+      "css": "defect",
+      "code": 59439,
       "src": "entypo"
     },
     {
@@ -313,6 +339,12 @@
       "css": "target",
       "code": 59426,
       "src": "elusive"
+    },
+    {
+      "uid": "29f4bce4a60650057c5248e30baa15a6",
+      "css": "note",
+      "code": 59438,
+      "src": "linecons"
     },
     {
       "uid": "41eeea14413f2539da21b4d1754bf4be",

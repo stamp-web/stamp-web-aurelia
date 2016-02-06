@@ -15,10 +15,20 @@
     "table": {
         "catalogue-number": "Catalogue number",
         "catalogue-value": "Catalogue value",
+        "certification": "Certified",
         "condition": "Condition",
+        "country": "Country",
         "description": "Description",
         "grade": "Grade",
-        "price-paid": "Price paid"
+        "image": "Image exists",
+        "price-paid": "Price paid",
+        "notes": "Notes"
+    },
+    "tooltip": {
+        "notes": "Notes",
+        "defects": "Defects",
+        "deception": "Deception",
+        "cert": "A certificate or expertization is exists"
     },
     "sort": {
         "number": "Catalogue number",

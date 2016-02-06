@@ -50,6 +50,7 @@
 @font-size-base:          14px;
 @font-size-large:         ceil((@font-size-base * 1.25)); // ~18px
 @font-size-small:         ceil((@font-size-base * 0.85)); // ~12px
+@font-size-xs:            ceil((@font-size-base * 0.78)); // ~11px
 
 @font-size-h1:            floor((@font-size-base * 2.6)); // ~36px
 @font-size-h2:            floor((@font-size-base * 2.15)); // ~30px
@@ -517,12 +518,12 @@
 //##
 
 //** Tooltip max width
-@tooltip-max-width:           200px;
+@tooltip-max-width:           250px;
 //** Tooltip text color
-@tooltip-color:               @white;
+@tooltip-color:                 @text-color;
 //** Tooltip background color
-@tooltip-bg:                  #000;
-@tooltip-opacity:             .9;
+@tooltip-bg:                  @cream;
+@tooltip-opacity:             .95;
 
 //** Tooltip arrow width
 @tooltip-arrow-width:         5px;

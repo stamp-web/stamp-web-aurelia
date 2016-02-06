@@ -1,5 +1,5 @@
 /**
- Copyright 2015 Jason Drake
+ Copyright 2016 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 /**
  * Referenced from https://gist.github.com/xmlking/e86e4f15ec32b12c4689
  */
+import _ from 'lodash';
+
 export class EnumSymbol {
 
     sym = Symbol.for(name);
@@ -199,3 +201,33 @@ export var CatalogueHelper = function() {
         }
     };
 }();
+
+var determineShiftedValues = (total, highestValue) => {
+    var values = [];
+    var runningTotal = total;
+    for (var i = highestValue; i >= 0; i--) {
+        if (runningTotal >> i === 1) {
+            var binValue = Math.pow(2, i);
+            runningTotal = runningTotal - binValue;
+            values.push(binValue);
+        }
+    }
+    return values;
+};
+
+export var EnumeratedTypeHelper = function () {
+    return {
+        asArray: (type, value) => {
+            if( value === undefined ) {
+                return [];
+            }
+            let v = determineShiftedValues(value, type.symbols().length);
+            let enums = [];
+            _.forEach(v, ordinal => {
+                enums.push( type.get(ordinal) );
+            });
+            return enums;
+        }
+    };
+}();
+

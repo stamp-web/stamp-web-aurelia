@@ -2,11 +2,14 @@
     <require from="resources/styles/components/stamp-card.css"></require>
     <require from="../value-converters/by-name"></require>
     <require from="../value-converters/rate-filter"></require>
-
+    <require from="../components/ownerships/ownership-notes"></require>
+    <require from="../components/ownerships/ownership-cert"></require>
 
   <div class="stamp-card ${(selected) ? 'selected' : ''} ${(highlight) ? 'highlight' : ''}" click.trigger="toggleSelection($event)">
     <div class="card-header">
-      ${activeCN.number} ${model.countryRef | byName:'countries' }
+        ${activeCN.number} ${model.countryRef | byName:'countries' }
+        <ownership-notes model.one-way="ownership"></ownership-notes>
+        <ownership-cert model.one-way="ownership"></ownership-cert>
     </div>
     <div class="description" title="${model.rate} - ${model.description}">
       ${model.rate | rateFilter} - ${model.description}

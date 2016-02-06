@@ -355,6 +355,7 @@ export class StampList extends EventManaged {
             this.handleFullSizeImage(stamp);
         });
         this.subscribe(EventNames.stampEdit, stamp => {
+            self.lastSelected = stamp;
             self.panelContents = 'stamp-editor';
             self.editingStamp = stamp;
             self.editorShown = true;
@@ -412,9 +413,17 @@ export class StampList extends EventManaged {
                 this.stampService.unselect(obj);
                 let selected = this.stampService.getSelected();
                 this.lastSelected = ( selected && selected.length > 0) ? selected[selected.length - 1] : undefined;
+                if( this.lastSelected && this.editorShown ) {
+                    this.editingStamp = this.lastSelected;
+                } else {
+                    this.editorShown = false;
+                }
             } else {
                 this.stampService.select(obj);
                 this.lastSelected = obj;
+                if( this.editorShown ) {
+                    this.editingStamp = obj;
+                }
             }
         }
     }

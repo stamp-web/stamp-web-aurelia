@@ -1,5 +1,5 @@
 /**
- Copyright 2015 Jason Drake
+ Copyright 2016 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,23 +14,30 @@
  limitations under the License.
  */
 import {customElement, bindable, inject} from 'aurelia-framework';
+import {EventAggregator} from 'aurelia-event-aggregator';
 import {Catalogues} from '../../services/catalogues';
+import {EventNames} from '../../events/event-managed';
 
 import _ from 'lodash';
 
 import 'resources/styles/components/stamps/stamp-table.css!';
 
+var defaultImagePath = "http://drake-server.ddns.net:9001/Thumbnails/";
+
 @customElement('stamp-table')
-@inject(Catalogues)
+@inject(EventAggregator, Catalogues)
 @bindable('stamps')
+@bindable('lastSelected')
 @bindable('total')
 export class StampTable {
 
     catalogues = [];
     models;
+    lastTime = 0;
 
-    constructor(catalogueService) {
+    constructor(eventBus, catalogueService) {
         this.catalogueService = catalogueService;
+        this.eventBus = eventBus;
     }
 
     bind() {
@@ -44,6 +51,52 @@ export class StampTable {
         if( this.catalogueService.loaded ) {
             this.models = newValues;
         }
+    }
+
+    toggleSelection(evt, stamp) {
+        if( this.selectionTimeout ) {
+            clearTimeout(this.selectionTimeout);
+        }
+        if( evt.detail > 1 ) {
+            return;
+        }
+        this.selectionTimeout = setTimeout( () => {
+            this.eventBus.publish(EventNames.toggleStampSelection, stamp);
+            this.selectionTimeout = undefined;
+        }, 200);
+
+    }
+
+    edit(stamp) {
+        if( !stamp.selected ) {
+            this.eventBus.publish(EventNames.toggleStampSelection, stamp);
+        }
+        this.eventBus.publish(EventNames.stampEdit, stamp);
+    }
+
+    getImagePath(stamp) {
+        let path = '';
+        if( !stamp.wantList && !_.isEmpty(stamp.stampOwnerships && _.first(stamp.stampOwnerships).img)) {
+            let img = _.first(stamp.stampOwnerships).img;
+            if( img && img !== '' ) {
+                var index = img.lastIndexOf('/');
+                img = img.substring(0, index + 1) + "thumb-" + img.substring(index + 1);
+                path = defaultImagePath + img;
+            }
+        }
+        return path;
+    }
+
+    showFullSizeImage(evt, stamp) {
+        evt.cancelBubble = true;
+        if (!_.isEmpty(stamp.stampOwnerships) && _.first(stamp.stampOwnerships).img) {
+            this.eventBus.publish(EventNames.showImage, stamp);
+        }
+        return false;
+    }
+
+    notFoundImage() {
+        return StampTable.prototype.imageNotFoundFn;
     }
 
     getActiveCatalogueNumber(stamp) {
@@ -74,5 +127,8 @@ export class StampTable {
         }
     }
 
-
 }
+
+StampTable.prototype.imageNotFoundFn = function () {
+    $(this).hide();
+};

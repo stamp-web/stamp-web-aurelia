@@ -1,5 +1,9 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
+@icon-size: @padding-xs-horizontal * 2 + 16px;
+@image-width: 36px;
+@image-size: @padding-xs-horizontal * 2 + @image-width;
+
 stamp-table {
     height: 100%;
     width: 100%;
@@ -13,12 +17,52 @@ stamp-table {
     .grid-footer-container {
         opacity: 0.01;
     }
-    tbody {
-        tr.selected {
-            background-color: #0a6ebd;
-            &:hover {
-                background-color: lighten(#0a6ebd, 10%);
+    table {
+        table-layout: fixed;
+        tbody {
+            tr {
+                &.selected {
+                    background-color: @table-selected-bg;
+                    &:hover {
+                        background-color: darken(@table-selected-bg, 5%);
+                    }
+                    &.highlight {
+                        background-color: lighten(@highlight-color, 10%);
+                    }
+                }
+
+
             }
+        }
+    };
+
+    .icon-col {
+        min-width: @icon-size;
+        max-width: @icon-size;
+        width: @icon-size;
+    }
+
+    .image-col {
+        min-width: @image-size;
+        max-width: @image-size;
+        width:@image-size;
+    }
+
+    .stamp-thumbnail {
+        padding: @thumbnail-padding;
+        margin: auto;
+        height: @image-size;
+        width: @image-size;
+        background-color: transparent;
+        position: relative;
+        border-radius: 0;
+        img {
+            max-width: @image-width;
+            max-height: @image-width;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
 
