@@ -30,12 +30,9 @@
         }
 	}
 
-	div {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		margin: auto;
-	}
+    div {
+        margin: auto;
+    }
 
 	.action-panel {
 		height: @line-height-computed * 2.5;
@@ -48,12 +45,16 @@
 		transform: translate(-50%,0);
 	}
 	.card-header {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 		text-align: center;
-        ownership-notes {
-            float: right;
-        }
-        ownership-cert {
-            float: right;
+        position: relative;
+        .header-status {
+            display: inline-block;
+            float: left;
+            background-color: @panel-bg;
+            margin-right: @padding-small-horizontal / 2;
         }
 	}
 
