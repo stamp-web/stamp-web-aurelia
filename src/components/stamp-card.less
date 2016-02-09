@@ -1,6 +1,11 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
 @thumbnail-size: 160px;
+.nowrap-text() {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .stamp-card {
 	height: 285px;
@@ -45,9 +50,7 @@
 		transform: translate(-50%,0);
 	}
 	.card-header {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        .nowrap-text();
 		text-align: center;
         position: relative;
         .header-status {
@@ -60,6 +63,7 @@
 
 	.description {
 		text-align: center;
+        .nowrap-text();
 		font-size: 0.9em;
 		padding-bottom: @padding-small-vertical;
 	}
