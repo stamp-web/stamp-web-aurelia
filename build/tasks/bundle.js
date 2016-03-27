@@ -13,6 +13,13 @@ var htmlOpts = {
 // CSS  https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-api
 // HTML https://github.com/kangax/html-minifier#options-quick-reference
 
+var coreJs = [
+    'core-js',
+    'lodash',
+    'css',
+    'text'
+];
+
 var dependent_libs = [
     'aurelia-framework',
     'aurelia-bootstrapper',
@@ -41,16 +48,11 @@ var dependent_libs = [
     'aurelia-binding',
     'aurelia-event-aggregator',
     'aurelia-dialog',
-    'aurelia-dialog/*.html!text',
+    'aurelia-dialog/resources/*.html!text',
     'bootstrap',
     'bootbox',
-    'core-js',
-	'css',
-    'text',
 	'moment',
 	'nprogress',
-	'blueimp/JavaScript-Load-Image',
-    'lodash',
     'jquery'
 ];
 
@@ -115,7 +117,8 @@ var stampWebWidgets = [
     'widgets/select-picker/*.html!text',
     'widgets/select-picker/*.js',
     'widgets/date-picker/*.html!text',
-    'widgets/date-picker/*.js'
+    'widgets/date-picker/*.js',
+    'blueimp/JavaScript-Load-Image'
 ];
 
 var config = {
@@ -123,8 +126,16 @@ var config = {
     configPath: './config.js',
     //packagePath: '.',
     bundles: {
-        "dist/stampweb-libs": {
+        "dist/core-lib": {
+            includes: coreJs,
+            options: {
+                inject: true,
+                minify: true
+            }
+        },
+        "dist/framework-libs": {
             includes: dependent_libs,
+            excludes: coreJs,
             options: {
                 inject: true,
                 minify: true,
@@ -133,7 +144,7 @@ var config = {
         },
         "dist/stampweb-common": {
             includes: stampWebCommon,
-            excludes: dependent_libs,
+            excludes: dependent_libs.concat(coreJs),
             options: {
                 inject: true,
                 minify: minifyCode,
@@ -143,7 +154,7 @@ var config = {
         },
         "dist/stampweb-manage": {
             includes: stampWebManage,
-            excludes: dependent_libs.concat(stampWebCommon,stampWebWidgets),
+            excludes: dependent_libs.concat(stampWebCommon,stampWebWidgets,coreJs),
             options: {
                 inject: true,
                 minify: minifyCode,
@@ -153,7 +164,7 @@ var config = {
         },
         "dist/stampweb-widgets": {
             includes: stampWebWidgets,
-            excludes: dependent_libs.concat(stampWebCommon),
+            excludes: dependent_libs.concat(stampWebCommon,coreJs),
             options: {
                 inject: true,
                 minify: minifyCode,
@@ -163,7 +174,7 @@ var config = {
         },
         "dist/stampweb-settings": {
             includes: stampWebSettings,
-            excludes: dependent_libs.concat(stampWebCommon, stampWebWidgets),
+            excludes: dependent_libs.concat(stampWebCommon, stampWebWidgets,coreJs),
             options: {
                 inject: true,
                 minify: minifyCode,
@@ -173,7 +184,7 @@ var config = {
         },
         "dist/stampweb-list": {
             includes: stampWebList,
-            excludes: dependent_libs.concat(stampWebCommon,stampWebWidgets),
+            excludes: dependent_libs.concat(stampWebCommon,stampWebWidgets,coreJs),
             options: {
                 inject: true,
                 minify: minifyCode,
@@ -181,13 +192,14 @@ var config = {
                 htmlminopts: htmlOpts
             }
         },
-        "dist/stampweb-css": {
+        "dist/stampweb-css-styles": {
             includes: [
                 'resources/css/jquery-ui/jquery-ui.structure.min.css!text',
                 'resources/css/jquery-ui/jquery-ui.theme.min.css!text',
                 'aurelia-dialog/dialog.css!text',
                 'resources/styles/**/*.css!text',
-                'resources/styles/styles.css!text'
+                'resources/styles/styles.css!text',
+                'resources/styles/bootstrap.css!text'
             ],
             options: {
                 inject: true,
