@@ -1,6 +1,7 @@
 import {LogManager} from 'aurelia-framework';
 import {ConsoleAppender} from 'aurelia-logging-console';
 import {TWBootstrapViewStrategy} from 'aurelia-validation';
+import XHR from 'i18next-xhr-backend';
 
 
 LogManager.addAppender(new ConsoleAppender());
@@ -16,17 +17,26 @@ export function configure(aurelia) {
         //.developmentLogging()
         .feature('global-resources')
         .plugin('aurelia-i18n', (instance) => {
+            instance.i18next.use(XHR);
+
+            // adapt options to your needs (see http://i18next.com/docs/options/)
             instance.setup({
-                resGetPath: 'locale/__lng__/__ns__.json',
+                backend: {                                  // <-- configure backend settings
+                    loadPath: '/locales/{{lng}}/{{ns}}.json' // <-- XHR settings for where to get the files from
+                },
                 lng: 'en',
                 attributes: ['t', 'i18n'],
-                getAsync: true,
-                sendMissing: false,
                 fallbackLng: 'en',
-                debug: true
+                debug: false // make true to see un-translated keys
             });
         })
-        .plugin('aurelia-dialog')
+        .plugin('aurelia-dialog', config => {
+            config.useDefaults();
+            config.settings.lock = true;
+            config.settings.centerHorizontalOnly = false;
+            config.settings.startingZIndex = 1000;
+        })
+        .plugin('aurelia-html-import-template-loader')
         .plugin('aurelia-validation', (config) => {
             config.useDebounceTimeout(250);
             config.useViewStrategy(TWBootstrapViewStrategy.AppendToInput);

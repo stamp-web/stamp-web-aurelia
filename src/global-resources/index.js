@@ -15,8 +15,6 @@
  */
 export function configure(config) {
     config.globalResources(
-        './default-value',
-        '../value-converters/as-enum',
-        '../value-converters/as-currency-formatted'
+        './default-value'
     );
 }

@@ -178,7 +178,8 @@
         "CAD": "CAD",
         "GBP": "GBP",
         "AUD": "AUD",
-        "JYP": "JYP"
+        "JYP": "JYP",
+        "SEK": "SEK"
     },
     "grade": {
         "XF": "Extra-Fine (XF)",

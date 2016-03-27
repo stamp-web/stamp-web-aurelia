@@ -13,7 +13,7 @@ module.exports = function(config) {
 
         jspm: {
             // Edit this to your needs
-            loadFiles: ['src/**/*.js', 'test/unit/**/*.js'],
+            loadFiles: ['test/unit/setup.js', 'src/**/*.js', 'test/unit/**/*.js'],
             serveFiles: ['resources/**/*.css','jspm_packages/github/**/*.css'],
             paths: {
                 '*': '*.js',
@@ -38,10 +38,11 @@ module.exports = function(config) {
         'babelPreprocessor': {
             options: {
                 sourceMap: 'inline',
-                moduleIds: false,
-                optional: [
-                    'es7.decorators',
-                    'es7.classProperties'
+                presets: [ 'es2015-loose', 'stage-1'],
+                plugins: [
+                    'syntax-flow',
+                    'transform-decorators-legacy',
+                    'transform-flow-strip-types'
                 ]
             }
         },
@@ -49,7 +50,13 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress'],
+        reporters: ['progress', 'notify'],
+
+        // Optional Settings
+        notifyReporter: {
+            reportEachFailure: true,
+            reportSuccess: true
+        },
 
         // web server port
         port: 9876,

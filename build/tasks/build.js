@@ -4,6 +4,7 @@ var changed = require('gulp-changed');
 var plumber = require('gulp-plumber');
 var to5 = require('gulp-babel');
 var sourcemaps = require('gulp-sourcemaps');
+var notify = require('gulp-notify');
 var paths = require('../paths');
 var path = require('path');
 var compilerOptions = require('../babel-options');
@@ -16,25 +17,26 @@ var themes = require('../theme');
 // by errors from other gulp plugins
 // https://www.npmjs.com/package/gulp-plumber
 gulp.task('build-system', function () {
-  return gulp.src([paths.source])
-    .pipe(plumber())
-    .pipe(changed(paths.output, {extension: '.js'}))
-	  .pipe(replace({
-		  patterns: [
-			  {
-				  match: 'theme',
-				  replacement: themes.bootstrapTheme
-			  },
-			  {
-				  match: 'pathToTheme',
-				  replacement: themes.pathToTheme
-			  }
-		  ]
-	  }))
-    .pipe(sourcemaps.init())
-    .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
-    .pipe(sourcemaps.write('../maps'))
-    .pipe(gulp.dest(paths.output))
+    return gulp.src([paths.source])
+        .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
+        .pipe(replace({
+            patterns: [
+                {
+                    match: 'theme',
+                    replacement: themes.bootstrapTheme
+                },
+                {
+                    match: 'pathToTheme',
+                    replacement: themes.pathToTheme
+                }
+            ]
+        }))
+
+        .pipe(changed(paths.output, {extension: '.js'}))
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(to5(assign({}, compilerOptions.system())))
+        .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/src'}))
+        .pipe(gulp.dest(paths.output))
 });
 
 // copies changed html files to the output directory

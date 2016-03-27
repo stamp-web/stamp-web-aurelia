@@ -1,7 +1,17 @@
 var gulp = require('gulp');
 var bundler = require('aurelia-bundler');
 
-var minifyCode = false;  // bug in v0.1.9 does not allow sourceMaps
+var minifyCode = true;  // bug in v0.1.9 does not allow sourceMaps
+var htmlOpts = {
+    removeComments: true,
+    removeCommentsFromCDATA: true,
+    collapseWhitespace: true,
+    conservativeCollapse: true
+};
+
+// for options see
+// CSS  https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-api
+// HTML https://github.com/kangax/html-minifier#options-quick-reference
 
 var dependent_libs = [
     'aurelia-framework',
@@ -17,6 +27,7 @@ var dependent_libs = [
     'aurelia-logging-console',
     'aurelia-metadata',
     'aurelia-path',
+    'aurelia-polyfills',
     'aurelia-router',
     'aurelia-route-recognizer',
     'aurelia-task-queue',
@@ -107,7 +118,8 @@ var stampWebWidgets = [
 
 var config = {
     force: true,
-    packagePath: '.',
+    configPath: './config.js',
+    //packagePath: '.',
     bundles: {
         "dist/stampweb-libs": {
             includes: dependent_libs,
@@ -123,7 +135,8 @@ var config = {
             options: {
                 inject: true,
                 minify: minifyCode,
-                sourceMaps: true
+                sourceMaps: true,
+                htmlminopts: htmlOpts
             }
         },
         "dist/stampweb-manage": {
@@ -132,7 +145,8 @@ var config = {
             options: {
                 inject: true,
                 minify: minifyCode,
-                sourceMaps: true
+                sourceMaps: true,
+                htmlminopts: htmlOpts
             }
         },
         "dist/stampweb-widgets": {
@@ -141,7 +155,8 @@ var config = {
             options: {
                 inject: true,
                 minify: minifyCode,
-                sourceMaps: true
+                sourceMaps: true,
+                htmlminopts: htmlOpts
             }
         },
         "dist/stampweb-settings": {
@@ -150,7 +165,8 @@ var config = {
             options: {
                 inject: true,
                 minify: minifyCode,
-                sourceMaps: true
+                sourceMaps: true,
+                htmlminopts: htmlOpts
             }
         },
         "dist/stampweb-list": {
@@ -159,7 +175,19 @@ var config = {
             options: {
                 inject: true,
                 minify: minifyCode,
-                sourceMaps: true
+                sourceMaps: true,
+                htmlminopts: htmlOpts
+            }
+        },
+        "dist/stampweb-theme": {
+            includes: [ 'resources/styles/**/*.css!text' ],
+            options: {
+                inject: true,
+                minify: minifyCode,
+                sourceMaps: true,
+                cssminopts: {
+                    // Supports all options here https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-api
+                }
             }
         }
     }
