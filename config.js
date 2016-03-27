@@ -18,6 +18,7 @@ System.config({
     "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.2.0",
     "aurelia-history": "npm:aurelia-history@1.0.0-beta.1.2.0",
     "aurelia-history-browser": "npm:aurelia-history-browser@1.0.0-beta.1.2.0",
+    "aurelia-html-import-template-loader": "npm:aurelia-html-import-template-loader@1.0.0-beta.1.2.0",
     "aurelia-http-client": "npm:aurelia-http-client@1.0.0-beta.1.2.0",
     "aurelia-i18n": "npm:aurelia-i18n@0.5.0",
     "aurelia-loader": "npm:aurelia-loader@1.0.0-beta.1.2.0",
@@ -169,6 +170,11 @@ System.config({
     "npm:aurelia-history-browser@1.0.0-beta.1.2.0": {
       "aurelia-history": "npm:aurelia-history@1.0.0-beta.1.2.0",
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.0"
+    },
+    "npm:aurelia-html-import-template-loader@1.0.0-beta.1.2.0": {
+      "aurelia-loader": "npm:aurelia-loader@1.0.0-beta.1.2.0",
+      "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.0",
+      "webcomponentsjs": "github:webcomponents/webcomponentsjs@0.7.21"
     },
     "npm:aurelia-http-client@1.0.0-beta.1.2.0": {
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.0",
