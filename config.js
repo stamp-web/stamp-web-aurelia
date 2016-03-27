@@ -42,7 +42,7 @@ System.config({
     "bootbox": "npm:bootbox@4.4.0",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
     "clean-css": "npm:clean-css@3.4.10",
-    "core-js": "npm:core-js@1.2.6",
+    "core-js": "npm:core-js@2.1.3",
     "css": "github:systemjs/plugin-css@0.1.20",
     "i18next-xhr-backend": "npm:i18next-xhr-backend@0.5.3",
     "jquery": "npm:jquery@2.2.0",
@@ -53,7 +53,7 @@ System.config({
     "nprogress": "github:rstacruz/nprogress@0.1.6",
     "odata-filter-parser": "npm:odata-filter-parser@0.2.8",
     "select2/select2": "github:select2/select2@4.0.0",
-    "text": "npm:system-text@0.1.0",
+    "text": "github:systemjs/plugin-text@0.0.7",
     "github:aaike/jspm-less-plugin@0.0.5": {
       "less.js": "github:distros/less@2.4.0"
     },
@@ -304,7 +304,7 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:core-js@1.2.6": {
+    "npm:core-js@2.1.3": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",

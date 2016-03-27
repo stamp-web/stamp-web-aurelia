@@ -48,7 +48,8 @@ var dependent_libs = [
     'aurelia-event-aggregator',
     'aurelia-dialog/resources/*.html!text',
     'aurelia-dialog',
-    'aurelia-dialog/dialog.css!text'
+    'aurelia-dialog/dialog.css!text',
+    'i18next-xhr-backend'
 ];
 
 var coreUi = [
@@ -132,6 +133,8 @@ var stampWebWidgets = [
     'resources/styles/widgets/paging/*.css!text',
     'widgets/paging/*.html!text',
     'widgets/paging/*.js',
+    'select2/select2/css/select2.css!text',
+    'select2/select2/js/select2.js',
     'resources/styles/widgets/select-picker/*.css!text',
     'widgets/select-picker/*.html!text',
     'widgets/select-picker/*.js'
