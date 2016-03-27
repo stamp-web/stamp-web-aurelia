@@ -10,8 +10,6 @@ import $ from 'jquery';
 import _ from 'lodash';
 import bootbox from 'bootbox';
 
-import 'resources/styles/components/catalogue-numbers/cn-references.css!';
-
 const logger = LogManager.getLogger('cn-references');
 
 

@@ -5,8 +5,6 @@ import {Albums} from '../../services/albums';
 import {Sellers} from '../../services/sellers';
 import {Condition, Grade, CurrencyCode, Defects, Deceptions} from '../../util/common-models';
 
-import 'resources/styles/components/ownerships/ownership-editor.css!';
-
 const logger = LogManager.getLogger('ownership-editor');
 
 @customElement('ownership-editor')

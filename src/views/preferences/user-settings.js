@@ -28,8 +28,6 @@ import {ObjectUtilities} from '../../util/object-utilities';
 
 import _ from 'lodash';
 
-import 'resources/styles/views/preferences/user-settings.css!';
-
 const logger = LogManager.getLogger('user-settings');
 
 @inject(BindingEngine, EventAggregator, Preferences, Countries, Albums, Sellers, Catalogues, StampCollections)

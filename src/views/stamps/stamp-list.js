@@ -33,8 +33,6 @@ import bootbox from 'bootbox';
 import {DialogService} from 'aurelia-dialog';
 import _ from 'lodash';
 
-import "resources/styles/views/stamps/stamp-list.css!";
-
 const logger = LogManager.getLogger('stamp-list');
 
 function createStamp(wantList) {

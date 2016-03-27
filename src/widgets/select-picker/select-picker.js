@@ -20,7 +20,7 @@ import _ from 'lodash';
 import select2 from 'select2/select2'; //eslint-disable-line no-unused-vars
 
 import "github:select2/select2@4.0.0/css/select2.css!";
-import 'resources/styles/widgets/select-picker/select-picker.css!';
+
 
 const logger = LogManager.getLogger('select-picker');
 

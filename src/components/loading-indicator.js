@@ -3,7 +3,7 @@ import {bindable, noView, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../events/event-managed';
 
-import 'resources/styles/components/loading-indicator.css!';
+System.import('resources/styles/components/loading-indicator.css!text');
 
 @noView
 @bindable("loading")

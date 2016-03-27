@@ -20,8 +20,6 @@ import {EventNames} from '../../events/event-managed';
 
 import _ from 'lodash';
 
-import 'resources/styles/components/stamps/stamp-table.css!';
-
 var defaultImagePath = "http://drake-server.ddns.net:9001/Thumbnails/";
 
 @customElement('stamp-table')

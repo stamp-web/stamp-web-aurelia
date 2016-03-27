@@ -15,7 +15,6 @@ var htmlOpts = {
 
 var coreJs = [
     'core-js',
-    'lodash',
     'css',
     'text'
 ];
@@ -47,18 +46,24 @@ var dependent_libs = [
     'aurelia-dependency-injection',
     'aurelia-binding',
     'aurelia-event-aggregator',
-    'aurelia-dialog',
     'aurelia-dialog/resources/*.html!text',
+    'aurelia-dialog',
+    'aurelia-dialog/dialog.css!text'
+];
+
+var coreUi = [
     'bootstrap',
     'bootbox',
-	'moment',
-	'nprogress',
+    'moment',
+    'nprogress',
+    'lodash',
     'jquery'
 ];
 
 var stampWebSettings = [
-    'views/preferences/*.js',
-    'views/preferences/*.html!text'
+    'resources/styles/views/preferences/*.css!text',
+    'views/preferences/*.html!text',
+    'views/preferences/*.js'
 ];
 
 var stampWebCommon =  [
@@ -67,14 +72,17 @@ var stampWebCommon =  [
     'events/**/*.js',
     'global-resources/**/*.js',
     'services/*.js',
-    'components/nav/*.js',
+    'resources/styles/components/nav/*.css!text',
     'components/nav/*.html!text',
+    'components/nav/*.js',
+    'resources/styles/components/loading-indicator.css!text',
     'components/loading-indicator.js',
-    'components/editor-dialog.js',
-    'components/editor-dialog.html!text'
+    'components/editor-dialog.html!text',
+    'components/editor-dialog.js'
 ];
 
 var stampWebManage = [
+    'resources/styles/views/manage/*.css!text',
     'views/manage/*.js',
     'views/manage/*.html!text',
     'views/albums/*.js',
@@ -85,40 +93,63 @@ var stampWebManage = [
     'views/sellers/*.html!text',
     'views/stamp-collections/*.js',
     'views/stamp-collections/*.html!text',
-    'views/catalogues/*.js',
-    'views/catalogues/*.html!text'
+    'views/catalogues/*.html!text',
+    'views/catalogues/*.js'
 ];
 
 var stampWebList = [
-    'views/stamps/*.js',
+    'resources/styles/views/stamps/*.css!text',
     'views/stamps/*.html!text',
-    'components/stamps/*.js',
+    'views/stamps/*.js',
+    'resources/styles/components/stamps/*.css!text',
     'components/stamps/*.html!text',
-    'components/search/*.js',
+    'components/stamps/*.js',
+    'resources/styles/components/search/*.css!text',
     'components/search/*.html!text',
-    'components/catalogue-numbers/*.js',
+    'components/search/*.js',
+    'resources/styles/components/catalogue-numbers/*.css!text',
     'components/catalogue-numbers/*.html!text',
-    'components/ownerships/*.js',
+    'components/catalogue-numbers/*.js',
+    'resources/styles/components/ownerships/*.css!text',
     'components/ownerships/*.html!text',
-    'components/stamp-card.js',
+    'components/ownerships/*.js',
+    'resources/styles/components/stamp-card.css!text',
     'components/stamp-card.html!text',
-    'components/stamp-grid.js',
+    'components/stamp-card.js',
+    'resources/styles/components/stamp-grid.css!text',
     'components/stamp-grid.html!text',
-    'components/stamps/*.html!text'
+    'components/stamp-grid.js'
 ];
 
 var stampWebWidgets = [
+    'resources/styles/widgets/collapse-panel/*.css!text',
     'widgets/collapse-panel/*.html!text',
     'widgets/collapse-panel/*.js',
+    'blueimp/JavaScript-Load-Image',
+    'resources/styles/widgets/image-preview/*.css!text',
     'widgets/image-preview/*.html!text',
     'widgets/image-preview/*.js',
+    'resources/styles/widgets/paging/*.css!text',
     'widgets/paging/*.html!text',
     'widgets/paging/*.js',
+    'resources/styles/widgets/select-picker/*.css!text',
     'widgets/select-picker/*.html!text',
-    'widgets/select-picker/*.js',
+    'widgets/select-picker/*.js'
+];
+
+var datePicker = [
+    'jquery-ui/ui/datepicker.js',
+    'jquery-ui/ui/core.js',
     'widgets/date-picker/*.html!text',
-    'widgets/date-picker/*.js',
-    'blueimp/JavaScript-Load-Image'
+    'resources/css/jquery-ui/jquery-ui.structure.min.css!text',
+    'resources/css/jquery-ui/jquery-ui.theme.min.css!text',
+    'resources/styles/widgets/date-picker/*.css!text',
+    'widgets/date-picker/*.js'
+];
+
+var stampWebCSS = [
+    'resources/styles/styles.css!text',
+    'resources/styles/bootstrap.css!text'
 ];
 
 var config = {
@@ -133,7 +164,7 @@ var config = {
                 minify: true
             }
         },
-        "dist/framework-libs": {
+        "dist/core-framework": {
             includes: dependent_libs,
             excludes: coreJs,
             options: {
@@ -142,9 +173,38 @@ var config = {
 				sourceMaps: true
             }
         },
+        "dist/core-ui": {
+            includes: coreUi,
+            excludes: dependent_libs,
+            options: {
+                inject: true,
+                minify: true,
+                sourceMaps: true
+            }
+        },
+        "dist/stampweb-css-styles": {
+            includes: stampWebCSS,
+            options: {
+                inject: true,
+                minify: minifyCode,
+                sourceMaps: true,
+                cssminopts: {
+                    // Supports all options here https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-api
+                }
+            }
+        },
+        "dist/datepicker": {
+            includes: datePicker,
+            excludes: dependent_libs.concat(coreJs, coreUi,stampWebCSS),
+            options: {
+                inject: true,
+                minify: true,
+                sourceMaps: true
+            }
+        },
         "dist/stampweb-common": {
             includes: stampWebCommon,
-            excludes: dependent_libs.concat(coreJs),
+            excludes: dependent_libs.concat(coreJs, coreUi,datePicker,stampWebCSS),
             options: {
                 inject: true,
                 minify: minifyCode,
@@ -154,7 +214,7 @@ var config = {
         },
         "dist/stampweb-manage": {
             includes: stampWebManage,
-            excludes: dependent_libs.concat(stampWebCommon,stampWebWidgets,coreJs),
+            excludes: dependent_libs.concat(stampWebCommon,stampWebWidgets,coreJs, coreUi,datePicker,stampWebCSS),
             options: {
                 inject: true,
                 minify: minifyCode,
@@ -164,7 +224,7 @@ var config = {
         },
         "dist/stampweb-widgets": {
             includes: stampWebWidgets,
-            excludes: dependent_libs.concat(stampWebCommon,coreJs),
+            excludes: dependent_libs.concat(stampWebCommon,coreJs, coreUi,datePicker,stampWebCSS),
             options: {
                 inject: true,
                 minify: minifyCode,
@@ -174,7 +234,7 @@ var config = {
         },
         "dist/stampweb-settings": {
             includes: stampWebSettings,
-            excludes: dependent_libs.concat(stampWebCommon, stampWebWidgets,coreJs),
+            excludes: dependent_libs.concat(stampWebCommon, stampWebWidgets,coreJs, coreUi,datePicker,stampWebCSS),
             options: {
                 inject: true,
                 minify: minifyCode,
@@ -184,32 +244,22 @@ var config = {
         },
         "dist/stampweb-list": {
             includes: stampWebList,
-            excludes: dependent_libs.concat(stampWebCommon,stampWebWidgets,coreJs),
+            excludes: dependent_libs.concat(stampWebCommon,stampWebWidgets,coreJs, coreUi,datePicker,stampWebCSS),
             options: {
                 inject: true,
                 minify: minifyCode,
                 sourceMaps: true,
                 htmlminopts: htmlOpts
             }
-        },
-        "dist/stampweb-css-styles": {
-            includes: [
-                'resources/css/jquery-ui/jquery-ui.structure.min.css!text',
-                'resources/css/jquery-ui/jquery-ui.theme.min.css!text',
-                'aurelia-dialog/dialog.css!text',
-                'resources/styles/**/*.css!text',
-                'resources/styles/styles.css!text',
-                'resources/styles/bootstrap.css!text'
-            ],
-            options: {
-                inject: true,
-                minify: minifyCode,
-                sourceMaps: true,
-                cssminopts: {
-                    // Supports all options here https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-api
-                }
-            }
         }
+        //"dist/stampweb-views": {
+        //    "htmlimport": true,                 // Set it to `true` for html import based view bundle.
+        //    "includes": ["dist/**/*.html"],
+        //    "options": {
+        //        "inject": true
+        //    }
+        //},
+
     }
 };
 

@@ -26,8 +26,6 @@ import {EventNames, StorageKeys} from '../../events/event-managed';
 import {SessionContext} from '../../services/session-context';
 import _ from 'lodash';
 
-import 'resources/styles/views/manage/manage.css!';
-
 const logger = LogManager.getLogger('manage-list');
 
 @inject(EventAggregator, Countries, Albums, StampCollections, Sellers, Catalogues, Stamps)
