@@ -24,9 +24,9 @@ gulp.task('theme-generate', function () {
             this.emit('end');
         })
     )
-        .pipe(gulp.dest(paths.lessOut))
-        .pipe(concat('bootstrap-min.css'))
+        .pipe(gulp.dest(paths.lessOut));
+        /*.pipe(concat('bootstrap-min.css'))
         .pipe(minifyCSS())
-        .pipe(gulp.dest(paths.lessOut))
+        .pipe(gulp.dest(paths.lessOut))*/
 
 });

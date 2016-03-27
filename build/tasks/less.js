@@ -39,9 +39,10 @@ gulp.task('less', function () {
             }))
 
 		.pipe(sourcemaps.write())
-        .pipe(gulp.dest(paths.lessOut))
+        .pipe(gulp.dest(paths.lessOut));
+        /*
         .pipe(concat('stamp-web-min.css'))
         .pipe(minifyCSS())
         .pipe(gulp.dest(paths.lessOut));
-
+        */
 });

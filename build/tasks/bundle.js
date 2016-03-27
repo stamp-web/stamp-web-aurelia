@@ -179,8 +179,14 @@ var config = {
                 htmlminopts: htmlOpts
             }
         },
-        "dist/stampweb-theme": {
-            includes: [ 'resources/styles/**/*.css!text' ],
+        "dist/stampweb-css": {
+            includes: [
+                'resources/css/jquery-ui/jquery-ui.structure.min.css!text',
+                'resources/css/jquery-ui/jquery-ui.theme.min.css!text',
+                'aurelia-dialog/dialog.css!text',
+                'resources/styles/**/*.css!text',
+                'resources/styles/styles.css!text'
+            ],
             options: {
                 inject: true,
                 minify: minifyCode,
