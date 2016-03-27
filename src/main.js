@@ -22,7 +22,7 @@ export function configure(aurelia) {
             // adapt options to your needs (see http://i18next.com/docs/options/)
             instance.setup({
                 backend: {                                  // <-- configure backend settings
-                    loadPath: '/locales/{{lng}}/{{ns}}.json' // <-- XHR settings for where to get the files from
+                    loadPath: 'locales/{{lng}}/{{ns}}.json' // <-- XHR settings for where to get the files from
                 },
                 lng: 'en',
                 attributes: ['t', 'i18n'],
