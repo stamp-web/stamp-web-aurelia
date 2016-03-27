@@ -126,7 +126,8 @@ export const CurrencyCode = new Enum({
     EUR: {ordinal: 2, description: 'currencyCode.EUR'},
     GBP: {ordinal: 3, description: 'currencyCode.GBP'},
     AUD: {ordinal: 4, description: 'currencyCode.AUD'},
-    JYP: {ordinal: 5, description: 'currencyCode.JYP'}
+    JYP: {ordinal: 5, description: 'currencyCode.JYP'},
+    SEK: {ordinal: 6, description: 'currencyCode.SEK'}
 });
 
 export const UserLocale = new Enum({
