@@ -59,7 +59,7 @@ export class StampTable {
             return;
         }
         this.selectionTimeout = setTimeout( () => {
-            this.eventBus.publish(EventNames.toggleStampSelection, stamp);
+            this.eventBus.publish(EventNames.toggleStampSelection, {model: stamp, shiftKey: evt.shiftKey });
             this.selectionTimeout = undefined;
         }, 200);
 
@@ -67,7 +67,7 @@ export class StampTable {
 
     edit(stamp) {
         if( !stamp.selected ) {
-            this.eventBus.publish(EventNames.toggleStampSelection, stamp);
+            this.eventBus.publish(EventNames.toggleStampSelection, {model: stamp, shiftKey: false});
         }
         this.eventBus.publish(EventNames.stampEdit, stamp);
     }

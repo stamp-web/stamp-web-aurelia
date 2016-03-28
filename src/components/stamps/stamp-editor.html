@@ -15,9 +15,9 @@
         </div>
 
 		<div class="editor-buttons">
-			<button type="button" class="btn btn-sm btn-default" click.delegate="save()">Save</button>
-			<button type="button" class="btn btn-sm btn-default" click.delegate="saveAndNew()" if.bind="createMode">Save and New</button>
-			<button type="button" class="btn btn-sm btn-default" click.delegate="cancel()">Cancel</button>
+			<button type="button" class="btn btn-sm btn-primary" click.delegate="save()">${'actions.save'|t}</button>
+			<button type="button" class="btn btn-sm btn-default" click.delegate="saveAndNew()" if.bind="createMode">${'actions.save-and-new'|t}</button>
+			<button type="button" class="btn btn-sm btn-default" click.delegate="cancel()">${'actions.cancel'|t}</button>
 		</div>
 	</div>
 

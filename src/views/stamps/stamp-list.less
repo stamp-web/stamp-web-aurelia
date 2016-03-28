@@ -3,13 +3,25 @@
 @grid-nav-height: 55px;
 
 .stamp-content {
-	height: calc(~"100% - 110px");
-	position: relative;
-	top: @grid-nav-height;
-	.row {
-		height: calc(~"100% - 60px");// @grid-nav-height;
-		//overflow-y: auto; // remove if we want independent scrollers
-	}
+    height: calc(~"100% - 110px");
+    position: relative;
+    top: @grid-nav-height;
+    .row {
+        height: calc(~"100% - 60px"); // @grid-nav-height;
+        //overflow-y: auto; // remove if we want independent scrollers
+    }
+    * {
+        &::selection {
+            background: transparent;
+        }
+        &::-moz-selection {
+            background: transparent;
+        }
+        input::selection, textarea::selection {
+            background: @component-active-bg;
+            color: @component-active-color;
+        }
+    }
 }
 
 .input-group.quick-search {
@@ -36,6 +48,7 @@ collapse-panel {
 		font-size: 0.9em;
 	}
 	.btn-toolbar {
+        width: 100%;
 		position: absolute;
 		top: 50%;
 		transform: translate(0,-50%);

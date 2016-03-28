@@ -140,6 +140,21 @@ export class StampList extends EventManaged {
         }
     }
 
+    selectAll(select) {
+        if( !select ) {
+            this.stampService.clearSelected();
+            if( this.editingStamp ) {
+                if( this.editorShown ) {
+                    this.editorShown = false;
+                }
+                this.editingStamp = undefined;
+                this.latestSelected = undefined;
+            }
+        } else {
+            this.stampService.selectAll();
+        }
+    }
+
     getFilterText(filter) {
         return filter.description;
     }
@@ -406,21 +421,34 @@ export class StampList extends EventManaged {
     }
 
     stampSelected(obj) {
-        if (obj) {
-            if (this.stampService.isSelected(obj)) {
-                this.stampService.unselect(obj);
-                let selected = this.stampService.getSelected();
-                this.lastSelected = ( selected && selected.length > 0) ? selected[selected.length - 1] : undefined;
-                if( this.lastSelected && this.editorShown ) {
-                    this.editingStamp = this.lastSelected;
+        if (obj && obj.model) {
+            if (this.stampService.isSelected(obj.model)) {
+                if( this.lastSelected.id !== obj.model.id ) {
+                    this.lastSelected = obj.model;
                 } else {
-                    this.editorShown = false;
+                    this.stampService.unselect(obj.model);
+                    let selected = this.stampService.getSelected();
+                    this.lastSelected = ( selected && selected.length > 0) ? selected[selected.length - 1] : undefined;
+                    if( this.lastSelected && this.editorShown ) {
+                        this.editingStamp = this.lastSelected;
+                    } else {
+                        this.editorShown = false;
+                    }
                 }
             } else {
-                this.stampService.select(obj);
-                this.lastSelected = obj;
+                if( obj.shiftKey && !!this.lastSelected ) {
+                    let lastIndex = _.indexOf(this.stamps, this.lastSelected);
+                    let nowIndex = _.indexOf(this.stamps, obj.model);
+                    let nowSelected = _.slice(this.stamps, Math.min(nowIndex, lastIndex), Math.max(nowIndex, lastIndex) + 1);
+                    _.each( nowSelected, s => {
+                        this.stampService.select(s);
+                    });
+                } else {
+                    this.stampService.select(obj.model);
+                }
+                this.lastSelected = obj.model;
                 if( this.editorShown ) {
-                    this.editingStamp = obj;
+                    this.editingStamp = obj.model;
                 }
             }
         }
