@@ -24,6 +24,10 @@
     &:hover {
         color: @blue;
     }
+    &.btn-primary:hover {
+        color: @btn-primary-color;
+
+    }
 }
 
 .dropdown-menu {
@@ -37,8 +41,8 @@
         padding-bottom: calc(@panel-body-padding / 2.0);
         font-size: 0.85em;
         &:hover {
-            background-color: darken(@component-active-bg, 15%);
-            color: darken(@component-active-color, 10%);
+            background-color: @component-active-bg;
+            color: @component-active-color;
         }
         &.selected {
             background-color: @component-active-bg;

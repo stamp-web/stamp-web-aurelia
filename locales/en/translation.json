@@ -6,7 +6,10 @@
         "title": "Stamp Web",
         "search": "Search by criteria",
         "page-gen": "Stamp Album Page Generator",
-        "image-burst": "Stamp Image Bursting Application"
+        "image-burst": "Stamp Image Bursting Application",
+        "new-stamp": "New stamp",
+        "select-all": "Select all stamps",
+        "clear-all": "Clear all selected stamps"
     },
     "footer": {
         "totalSelected": "Selected",
@@ -143,13 +146,14 @@
     "actions": {
         "add-cn": "Add a new catalogue number",
         "purchase": "Enter purchase information for selected stamps",
-        "canel": "Cancel",
+        "cancel": "Cancel",
         "cancel-changes" : "Cancel edit",
         "edit-cn": "Edit catalogue number",
         "make-active": "Set as active catalogue number",
         "remove-cn": "Delete catalogue number",
         "reset": "Reset",
         "save": "Save",
+        "save-and-new": "Save and new",
         "save-changes" : "Save edit",
         "page-size": "Size"
     },

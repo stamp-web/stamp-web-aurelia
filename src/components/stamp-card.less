@@ -8,9 +8,12 @@
 }
 
 .stamp-card {
+
+    position: relative;
 	height: 285px;
 	width: 300px;
 	display: inline-block;
+    cursor: default;
 	padding: @panel-body-padding;
 	border: @panel-inner-border solid thin;
 	border-radius: @thumbnail-border-radius;
@@ -19,6 +22,14 @@
 	//background-image: linear-gradient(to bottom, #ffffff 0%, #f3f3f4 100%);
 	background-repeat: repeat-x;
 	color: @text-color;
+
+    &::selection {
+        background: transparent;
+    }
+
+    &::-moz-selection {
+        background: transparent;
+    }
 
     &:first-child {
         margin-left: 0;
@@ -48,7 +59,12 @@
 		left: 50%;
 		position: relative;
 		transform: translate(-50%,0);
+        .btn,
+        .btn > span {
+            cursor: pointer;
+        }
 	}
+
 	.card-header {
         .nowrap-text();
 		text-align: center;
@@ -77,6 +93,7 @@
 		position: relative;
 		border-radius: @thumbnail-border-radius;
 		img {
+            cursor: pointer;
 			max-width: @thumbnail-size - 10px;
 			max-height: @thumbnail-size - 10px;
 			position: absolute;

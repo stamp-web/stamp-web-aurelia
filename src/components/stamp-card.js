@@ -115,7 +115,7 @@ export class StampCard {
         if( this.model.selected && (p.length !== 0 || t.is('button')) ) {
             return;
         }
-        this.eventBus.publish(EventNames.toggleStampSelection, this.model);
+        this.eventBus.publish(EventNames.toggleStampSelection, {model: this.model, shiftKey: evt.shiftKey} );
     }
 
     edit() {

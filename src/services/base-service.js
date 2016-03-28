@@ -236,8 +236,14 @@ export class BaseService {
         model.selected = false;
     }
 
+    selectAll() {
+        _.each(this.models, model => {
+            model.selected = true;
+        });
+    }
+
     clearSelected() {
-        _.each(this.models, function (model) {
+        _.each(this.models, model => {
             model.selected = false;
         });
     }

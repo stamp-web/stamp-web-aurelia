@@ -1,19 +1,24 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
-.app-bar {
-    z-index: 750;
+nav-bar {
+    nav {
+        z-index: 750;
+
+        .navbar-brand {
+            > span {
+                height: 28px;
+            }
+            span:last-child {
+                top: -1.5 * @padding-base-vertical;
+                position: relative;
+            }
+        }
+        .sw-icon-pagegen {
+            padding-right: 30px;
+        }
+
+    }
 }
 
-.navbar-brand {
-    > span {
-        height: 28px;
-    }
-    span:last-child {
-        top: -1.5 * @padding-base-vertical;
-        position: relative;
-    }
-}
 
-.sw-icon-pagegen {
-    padding-right: 30px;
-}
+

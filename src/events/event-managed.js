@@ -97,5 +97,6 @@ export var StorageKeys = {
 
 export var KeyCodes = {
     VK_ENTER: 13,
-    VK_ESCAPE: 27
+    VK_ESCAPE: 27,
+    VK_SHIFT: 16
 };
