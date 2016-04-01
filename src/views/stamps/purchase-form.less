@@ -24,7 +24,8 @@
     }
 }
 
-dialog-body {
+ai-dialog-body {
+
     > div.well {
         background-color: @navbar-inverse-bg;
         color: @navbar-inverse-color;
@@ -34,13 +35,24 @@ dialog-body {
     }
 }
 
-dialog-footer {
+ai-dialog-footer {
+    position: relative;
+    height: 50px;
     .process-progress, .messaging {
         width: 60%;
         display: inline-block;
         float: left;
         padding-top: @padding-large-vertical;
         padding-left: @padding-small-horizontal;
+        top: 50%;
+        transform: translate(0,-50%);
+        left: 0;
+        position: absolute;
+    }
+    .process-progress {
+        .progress {
+            margin-bottom: 10px;
+        }
     }
     .messaging {
         text-align: left;
@@ -48,5 +60,12 @@ dialog-footer {
         i {
             color: @brand-danger;
         }
+    }
+    .button-actions {
+        position: absolute;
+        right: @padding-small-horizontal;
+        bottom: 0;
+        top: 0;
+        float: right;
     }
 }
