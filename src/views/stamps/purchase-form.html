@@ -50,12 +50,14 @@
                     </div>
                 </div>
             </div>
-            <div class="messaging" if.bind="errorMessage !== ''">
-                <i class="sw-icon-attention"></i> ${errorMessage}
+            <div class="messaging" show.bind="!validation.result.isValid">
+                <i class="sw-icon-attention"></i> ${'editor.purchase-error'|t}
+            </div>
+            <div class="button-actions">
+                <button class="btn btn-primary" disabled.bind="!validation.result.isValid" click.trigger="save()">Ok</button>
+                <button class="btn" click.trigger="controller.cancel()">Cancel</button>
             </div>
 
-            <button class="btn btn-primary" disabled.bind="!validation.result.isValid" click.trigger="save()">Ok</button>
-            <button class="btn" click.trigger="controller.cancel()">Cancel</button>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

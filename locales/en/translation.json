@@ -73,6 +73,7 @@
         "modify-existing": "Modify existing values",
         "modifyTimestamp": "Modified",
         "purchase-help": "Specify the amount paid for selected stamps",
+        "purchase-error": "Complete the form to save",
         "purchase-percentage": "Percentage",
         "purchase-stamp-count": "Number of stamps",
         "purchase-total": "Total purchase",
