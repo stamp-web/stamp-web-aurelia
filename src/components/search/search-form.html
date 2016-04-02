@@ -1,5 +1,5 @@
 <template>
-    <require from="../../widgets/date-picker/jq-date-picker"></require>
+    <require from="../../widgets/date-picker/date-picker"></require>
     <require from="../../widgets/select-picker/select-picker"></require>
     <require from="../../value-converters/date-formatter"></require>
     <require from="resources/styles/components/search/search-form.css"></require>
@@ -51,28 +51,28 @@
                     <div class="form-group form-group-sm">
                         <label for="search-purchased" class="col-sm-3 control-label">${'editor.purchased'|t}</label>
                         <div class="col-sm-9">
-                            <jq-date-picker range="true" id="search-purchased" tabindex="120"
-                                            end.two-way="model.purchasedEnd | dateFormatter"
-                                            value.two-way="model.purchasedStart | dateFormatter">
-                            </jq-date-picker>
+                            <date-picker range="true" id="search-purchased" tabindex="120"
+                                            end-value.two-way="model.purchasedEnd"
+                                            value.two-way="model.purchasedStart">
+                            </date-picker>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
                         <label for="search-createTimestamp" class="col-sm-3 control-label">${'editor.createTimestamp'|t}</label>
                         <div class="col-sm-9">
-                            <jq-date-picker range="true" id="search-createTimestamp" tabindex="130"
-                                            end.two-way="model.createTimestampEnd | dateFormatter"
+                            <date-picker range="true" id="search-createTimestamp" tabindex="130"
+                                            end-value.two-way="model.createTimestampEnd | dateFormatter"
                                             value.two-way="model.createTimestampStart | dateFormatter">
-                            </jq-date-picker>
+                            </date-picker>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
                         <label for="search-modifyTimestamp" class="col-sm-3 control-label">${'editor.modifyTimestamp'|t}</label>
                         <div class="col-sm-9">
-                            <jq-date-picker range="true" id="search-modifyTimestamp" tabindex="140"
-                                            end.two-way="model.modifyTimestampEnd | dateFormatter"
+                            <date-picker range="true" id="search-modifyTimestamp" tabindex="140"
+                                            end-value.two-way="model.modifyTimestampEnd | dateFormatter"
                                             value.two-way="model.modifyTimestampStart | dateFormatter">
-                            </jq-date-picker>
+                            </date-picker>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">

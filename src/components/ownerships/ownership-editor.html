@@ -1,6 +1,6 @@
 <template>
     <require from="../../value-converters/empty-text"></require>
-    <require from="../../widgets/date-picker/jq-date-picker"></require>
+    <require from="../../widgets/date-picker/date-picker"></require>
     <require from="../../widgets/select-picker/select-picker"></require>
     <require from="../../value-converters/date-formatter"></require>
     <require from="../../value-converters/bitwise-to-array"></require>
@@ -74,8 +74,8 @@
            </div>
            <div class="form-group form-group-sm">
                <label for="owner-purchased" class="col-sm-3 control-label">Purchased</label>
-               <div class="input-group col-sm-4">
-                   <jq-date-picker id="owner-purchased" tabindex="115" value.two-way="model.purchased | dateFormatter"></jq-date-picker>
+               <div class="input-group col-sm-9">
+                   <date-picker id="owner-purchased" tabindex="115" value.two-way="model.purchased"></date-picker>
                </div>
            </div>
             <div class="form-group form-group-sm">

@@ -105,7 +105,8 @@
     },
     "date-picker": {
         "from": "From",
-        "to": "to"
+        "to": "to",
+        "format": "MM/DD/YYYY"
     },
     "prompts": {
         "delete-catalogue-number": "Delete catalogue number __number__?"

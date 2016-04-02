@@ -141,11 +141,9 @@ var stampWebWidgets = [
 ];
 
 var datePicker = [
-    'jquery-ui/ui/datepicker.js',
-    'jquery-ui/ui/core.js',
+    'bootstrap-datepicker/dist/css/bootstrap-datepicker.css!text',
+    'bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
     'widgets/date-picker/*.html!text',
-    'resources/css/jquery-ui/jquery-ui.structure.min.css!text',
-    'resources/css/jquery-ui/jquery-ui.theme.min.css!text',
     'resources/styles/widgets/date-picker/*.css!text',
     'widgets/date-picker/*.js'
 ];
@@ -201,7 +199,7 @@ var config = {
             excludes: dependent_libs.concat(coreJs, coreUi,stampWebCSS),
             options: {
                 inject: true,
-                minify: true,
+                minify: minifyCode,
                 sourceMaps: true
             }
         },
@@ -255,13 +253,6 @@ var config = {
                 htmlminopts: htmlOpts
             }
         }
-        //"dist/stampweb-views": {
-        //    "htmlimport": true,                 // Set it to `true` for html import based view bundle.
-        //    "includes": ["dist/**/*.html"],
-        //    "options": {
-        //        "inject": true
-        //    }
-        //},
 
     }
 };
