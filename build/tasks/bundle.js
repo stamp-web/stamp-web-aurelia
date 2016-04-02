@@ -141,7 +141,7 @@ var stampWebWidgets = [
 ];
 
 var datePicker = [
-    'bootstrap-datepicker/dist/css/bootstrap-datepicker.css!text',
+    'bootstrap-datepicker/dist/css/bootstrap-datepicker3.css!text',
     'bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
     'widgets/date-picker/*.html!text',
     'resources/styles/widgets/date-picker/*.css!text',
