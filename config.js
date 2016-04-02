@@ -41,12 +41,12 @@ System.config({
     "blueimp/JavaScript-Load-Image": "github:blueimp/JavaScript-Load-Image@1.14.0",
     "bootbox": "npm:bootbox@4.4.0",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
+    "bootstrap-datepicker": "npm:bootstrap-datepicker@1.6.0",
     "clean-css": "npm:clean-css@3.4.10",
     "core-js": "npm:core-js@2.1.3",
     "css": "github:systemjs/plugin-css@0.1.20",
     "i18next-xhr-backend": "npm:i18next-xhr-backend@0.5.3",
     "jquery": "npm:jquery@2.2.0",
-    "jquery-ui": "github:components/jqueryui@1.11.4",
     "less": "github:aaike/jspm-less-plugin@0.0.5",
     "lodash": "npm:lodash@3.10.1",
     "moment": "github:moment/moment@2.10.3",
@@ -56,9 +56,6 @@ System.config({
     "text": "github:systemjs/plugin-text@0.0.7",
     "github:aaike/jspm-less-plugin@0.0.5": {
       "less.js": "github:distros/less@2.4.0"
-    },
-    "github:components/jqueryui@1.11.4": {
-      "jquery": "npm:jquery@2.2.0"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
@@ -273,6 +270,11 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:bootbox@4.4.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:bootstrap-datepicker@1.6.0": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "jquery": "npm:jquery@2.2.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:buffer@3.6.0": {
