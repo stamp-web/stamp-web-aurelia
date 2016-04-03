@@ -7,15 +7,38 @@ import XHR from 'i18next-xhr-backend';
 LogManager.addAppender(new ConsoleAppender());
 LogManager.setLevel(LogManager.logLevel.info);
 
+const logger = LogManager.getLogger('stamp-web');
+
 if (window.location.href.indexOf('debug=true') >= 0) {
     LogManager.setLevel(LogManager.logLevel.debug);
 }
 
+function setRoot(aurelia) {
+    logger.info('bootstrapped:' + aurelia.setupAureliaFinished + ", localization:" + aurelia.setupI18NFinished);
+    if(aurelia.setupAureliaFinished && aurelia.setupI18NFinished) {
+        aurelia.setRoot('app');
+    }
+}
+
 export function configure(aurelia) {
+    aurelia.setupAureliaFinished = false;
+    aurelia.setupI18NFinished = false;
+
     aurelia.use
         .standardConfiguration()
         //.developmentLogging()
         .feature('global-resources')
+        .plugin('aurelia-dialog', config => {
+            config.useDefaults();
+            config.settings.lock = true;
+            config.settings.centerHorizontalOnly = false;
+            config.settings.startingZIndex = 1000;
+        })
+        .plugin('aurelia-html-import-template-loader')
+        .plugin('aurelia-validation', (config) => {
+            config.useDebounceTimeout(250);
+            config.useViewStrategy(TWBootstrapViewStrategy.AppendToInput);
+        })
         .plugin('aurelia-i18n', (instance) => {
             instance.i18next.use(XHR);
 
@@ -28,21 +51,16 @@ export function configure(aurelia) {
                 attributes: ['t', 'i18n'],
                 fallbackLng: 'en',
                 debug: false // make true to see un-translated keys
+            }).then( () => {
+                aurelia.setupI18NFinished = true;
+                setRoot(aurelia);
             });
-        })
-        .plugin('aurelia-dialog', config => {
-            config.useDefaults();
-            config.settings.lock = true;
-            config.settings.centerHorizontalOnly = false;
-            config.settings.startingZIndex = 1000;
-        })
-        .plugin('aurelia-html-import-template-loader')
-        .plugin('aurelia-validation', (config) => {
-            config.useDebounceTimeout(250);
-            config.useViewStrategy(TWBootstrapViewStrategy.AppendToInput);
         });
 
-    aurelia.start().then(a => a.setRoot('app', document.body));
-
+    aurelia.start().then( () => {
+        aurelia.setupAureliaFinished = true;
+        setRoot(aurelia);
+    });
 }
+
 
