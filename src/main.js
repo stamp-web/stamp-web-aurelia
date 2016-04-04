@@ -50,6 +50,9 @@ export function configure(aurelia) {
                 lng: 'en',
                 attributes: ['t', 'i18n'],
                 fallbackLng: 'en',
+                ns: ['stamp-web', 'translation'],
+                fallbackNS: ['stamp-web'],
+                defaultNS: 'stamp-web',
                 debug: false // make true to see un-translated keys
             }).then( () => {
                 aurelia.setupI18NFinished = true;
