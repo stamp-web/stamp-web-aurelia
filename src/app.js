@@ -1,7 +1,9 @@
-import {inject} from 'aurelia-framework';
+import {inject, LogManager} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 
 import 'bootstrap';
+
+const logger = LogManager.getLogger('stamp-web');
 
 @inject(Router)
 export class App {
@@ -23,4 +25,7 @@ export class App {
         this.router = router;
     }
 
+    activate() {
+        logger.info("Application is activated");
+    }
 }

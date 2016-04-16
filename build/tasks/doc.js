@@ -1,18 +1,16 @@
 var gulp = require('gulp');
-var tools = require('aurelia-tools');
 var paths = require('../paths');
-var yuidoc = require('gulp-yuidoc');
+var path = require('path');
 
-// uses yui to generate documentation to doc/api.json
-gulp.task('doc-generate', function(){
-  return gulp.src(paths.source)
-    .pipe(yuidoc.parser(null, 'api.json'))
-    .pipe(gulp.dest(paths.doc));
+gulp.task('doc', () => {
+    gulp.src(paths.root).pipe(require("gulp-esdoc")({
+        index: path.join(paths.doc, 'api/index.md'),
+        destination: path.join(paths.doc, 'api'),
+        plugins: [
+            {
+                name: 'esdoc-es7-plugin'
+            }
+        ]
+    }));
 });
 
-// takes output of doc-generate task
-// and cleans it up for use with aurelia
-// documentation app
-gulp.task('doc', ['doc-generate'], function(){
-  tools.transformAPIModel(paths.doc);
-});

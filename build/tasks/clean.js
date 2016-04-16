@@ -7,11 +7,9 @@ var vinylPaths = require('vinyl-paths');
 gulp.task('clean', function(callback) {
     del([
         paths.output,
-        paths.generated,
-        paths.temp
+        paths.temp,
+        paths.doc
     ], {
         force: true
     }, callback);
-  /*return gulp.src([paths.output, paths.generated, paths.temp])
-    .pipe(vinylPaths(del));*/
 });

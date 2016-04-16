@@ -1,11 +1,17 @@
 System.config({
   defaultJSExtensions: true,
-  transpiler: false,
+  transpiler: "babel",
+  babelOptions: {
+    "optional": [
+      "runtime",
+      "optimisation.modules.system"
+    ]
+  },
   paths: {
     "*": "dist/*",
-    "resources/*.css": "resources/*.css",
     "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "npm:*": "jspm_packages/npm/*",
+    "resources/*.css": "resources/*.css"
   },
 
   map: {
@@ -26,6 +32,8 @@ System.config({
     "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.2.0",
     "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0-beta.1.2.0",
     "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.2.0",
+    "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.0",
+    "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.1.2.0",
     "aurelia-path": "npm:aurelia-path@1.0.0-beta.1.2.0",
     "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.1.0",
     "aurelia-route-recognizer": "npm:aurelia-route-recognizer@1.0.0-beta.1.2.0",
@@ -44,6 +52,7 @@ System.config({
     "bootstrap-datepicker": "npm:bootstrap-datepicker@1.6.0",
     "clean-css": "npm:clean-css@3.4.10",
     "core-js": "npm:core-js@2.1.3",
+    "core-ui": "npm:core-ui@0.1.3",
     "css": "github:systemjs/plugin-css@0.1.20",
     "i18next-xhr-backend": "npm:i18next-xhr-backend@0.5.3",
     "jquery": "npm:jquery@2.2.0",
@@ -53,7 +62,9 @@ System.config({
     "nprogress": "github:rstacruz/nprogress@0.1.6",
     "odata-filter-parser": "npm:odata-filter-parser@0.2.8",
     "select2/select2": "github:select2/select2@4.0.0",
+    "systemjs": "npm:systemjs@0.19.26",
     "text": "github:systemjs/plugin-text@0.0.7",
+    "webcomponents-lite": "npm:webcomponents-lite@0.6.0",
     "github:aaike/jspm-less-plugin@0.0.5": {
       "less.js": "github:distros/less@2.4.0"
     },
@@ -102,7 +113,7 @@ System.config({
       "jquery": "npm:jquery@2.2.0"
     },
     "github:twbs/bootstrap@3.3.6": {
-      "jquery": "npm:jquery@2.2.0"
+      "jquery": "github:components/jquery@2.2.1"
     },
     "npm:amdefine@1.0.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
@@ -169,9 +180,7 @@ System.config({
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.0"
     },
     "npm:aurelia-html-import-template-loader@1.0.0-beta.1.2.0": {
-      "aurelia-loader": "npm:aurelia-loader@1.0.0-beta.1.2.0",
-      "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.0",
-      "webcomponentsjs": "github:webcomponents/webcomponentsjs@0.7.21"
+      "webcomponentsjs": "npm:webcomponents-lite@0.6.0"
     },
     "npm:aurelia-http-client@1.0.0-beta.1.2.0": {
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.0",
@@ -182,10 +191,9 @@ System.config({
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-beta.1.2.0",
       "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0-beta.1.2.0",
       "aurelia-loader": "npm:aurelia-loader@1.0.0-beta.1.2.0",
-      "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.2.0",
       "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.2.0",
       "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.2.0",
-      "i18next": "npm:i18next@2.4.0",
+      "i18next": "npm:i18next@2.5.1",
       "intl": "npm:intl@1.1.0"
     },
     "npm:aurelia-loader-default@1.0.0-beta.1.2.0": {
@@ -283,7 +291,8 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "ieee754": "npm:ieee754@1.1.6",
       "isarray": "npm:isarray@1.0.0",
-      "process": "github:jspm/nodelibs-process@0.1.2"
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:clean-css@3.4.10": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -312,6 +321,9 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
+    "npm:core-ui@0.1.3": {
+      "object-assign": "npm:object-assign@4.0.1"
+    },
     "npm:core-util-is@1.0.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
@@ -321,14 +333,18 @@ System.config({
     "npm:https-browserify@0.0.0": {
       "http": "github:jspm/nodelibs-http@1.7.1"
     },
-    "npm:i18next@2.4.0": {
+    "npm:i18next@2.5.1": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
     "npm:intl@1.1.0": {
-      "process": "github:jspm/nodelibs-process@0.1.2"
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
+    },
+    "npm:isarray@1.0.0": {
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:lodash@3.10.1": {
       "process": "github:jspm/nodelibs-process@0.1.2"
@@ -345,7 +361,7 @@ System.config({
     "npm:punycode@1.3.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:readable-stream@1.1.13": {
+    "npm:readable-stream@1.1.14": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "core-util-is": "npm:core-util-is@1.0.2",
       "events": "github:jspm/nodelibs-events@0.1.1",
@@ -362,10 +378,16 @@ System.config({
     "npm:stream-browserify@1.0.0": {
       "events": "github:jspm/nodelibs-events@0.1.1",
       "inherits": "npm:inherits@2.0.1",
-      "readable-stream": "npm:readable-stream@1.1.13"
+      "readable-stream": "npm:readable-stream@1.1.14"
     },
     "npm:string_decoder@0.10.31": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
+    },
+    "npm:systemjs@0.19.26": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0",
+      "when": "npm:when@3.7.7"
     },
     "npm:url@0.10.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
@@ -375,6 +397,12 @@ System.config({
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:webcomponents-lite@0.6.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:when@3.7.7": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     }
   }

@@ -16,14 +16,15 @@ module.exports = function(config) {
             loadFiles: ['test/unit/setup.js', 'src/**/*.js', 'test/unit/**/*.js'],
             serveFiles: ['resources/**/*.css','jspm_packages/github/**/*.css'],
             paths: {
-                '*': '*.js',
+                '*': '*',
                 'github:*': 'jspm_packages/github/*',
                 'npm:*': 'jspm_packages/npm/*'
             }
         },
 
         // list of files / patterns to load in the browser
-        files: [],
+        files: [
+        ],
 
         // list of files to exclude
         exclude: [],
@@ -73,7 +74,28 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome'], //,'Firefox'],
+        browsers: ['Chrome'/*,'Firefox'*/],
+       // browsers: ['PhantomJS2', 'PhantomJS_custom'],
+
+        // you can define custom flags
+        customLaunchers: {
+            'PhantomJS_custom': {
+                base: 'PhantomJS2',
+                options: {
+                    windowName: 'my-window',
+                    settings: {
+                        webSecurityEnabled: false
+                    },
+                },
+                flags: ['--load-images=true'],
+                debug: true
+            }
+        },
+
+        phantomjsLauncher: {
+            // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
+            exitOnResourceError: true
+        },
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
