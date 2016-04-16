@@ -1,6 +1,6 @@
 System.config({
   defaultJSExtensions: true,
-  transpiler: "babel",
+  transpiler: false,
   babelOptions: {
     "optional": [
       "runtime",
@@ -273,9 +273,6 @@ System.config({
       "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.2.0",
       "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.2.0",
       "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.2.0"
-    },
-    "npm:babel-runtime@5.8.38": {
-      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:bootbox@4.4.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
