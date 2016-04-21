@@ -77,9 +77,16 @@ export class DatePicker {
             }
         });
 
-        this.updateDate(this.value, false);
+        this.updateDate(null, false);
+        _.defer(()=> {
+            this.updateDate(this.value, false);
+        });
+
         if( this.endValue && this.range ) {
-            this.updateDate(this.endValue, true);
+            this.updateDate(null, true);
+            _.defer(()=> {
+                this.updateDate(this.endValue, true);
+            });
         }
         this.configureAttributes();
 

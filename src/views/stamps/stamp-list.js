@@ -501,8 +501,8 @@ export class StampList extends EventManaged {
     }
 
     activate(params, routeConfig) { //eslint-disable-line no-unused-vars
-        var t = new Date();
-        var self = this;
+        let t = new Date().getTime();
+        let self = this;
         this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');
 
         return new Promise((resolve, reject) => {
@@ -540,7 +540,7 @@ export class StampList extends EventManaged {
                     this.options.$skip = $skip;
                 }
                 this.search().then( () => {
-                    logger.debug("StampGrid initialization time: " + ((new Date().getTime()) - t.getTime()) + "ms");
+                    logger.debug("StampGrid initialization time: " + ((new Date().getTime()) - t) + "ms");
                     resolve();
                 });
             }).catch(err => {
