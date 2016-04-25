@@ -53,12 +53,13 @@ var dependent_libs = [
 ];
 
 var coreUi = [
+    'jquery',
     'bootstrap',
     'bootbox',
     'moment',
     'nprogress',
-    'lodash',
-    'jquery'
+    'lodash'
+
 ];
 
 var stampWebSettings = [
