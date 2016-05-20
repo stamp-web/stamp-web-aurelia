@@ -1,5 +1,5 @@
-import {customElement, bindable, inject} from 'aurelia-framework';
-import {Validation} from 'aurelia-validation';
+import {customElement, bindable} from 'aurelia-framework';
+import {Validator, ValidationEngine} from 'aurelia-validatejs';
 import {BindingEngine} from 'aurelia-binding';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../events/event-managed';
@@ -11,8 +11,9 @@ import $ from 'jquery';
 @customElement('catalogue-number-details')
 @bindable('model')
 @bindable('selectedCatalogue')
-@inject(EventAggregator, BindingEngine, Validation, Catalogues)
 export class CatalogueNumberDetailsComponent extends EventManaged {
+
+    static inject = [EventAggregator, BindingEngine, Catalogues];
 
     catalogues = [];
     icon;
@@ -22,14 +23,14 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
     loading = true;
     selectedCatalogue;
     showWarning = false;
+    isValid = false;
 
     _modelSubscribers = [];
 
-    constructor(eventBus, $bindingEngine, validation, catalogueService) {
+    constructor(eventBus, $bindingEngine, catalogueService) {
         super(eventBus);
         this.catalogueService = catalogueService;
-        this.$bindingEngine = $bindingEngine;
-        this.validatorDI = validation;
+        this.bindingEngine = $bindingEngine;
         this.loadCatalogues();
     }
 
@@ -42,19 +43,30 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this._modelSubscribers.forEach(sub => {
             sub.dispose();
         });
+        if( this.observer ) {
+            this.observer.dispose();
+        }
     }
 
-    setupValidation(validation) {
-        this.validation = validation.on(this.model)
+    setupValidation() {
+        this.validator = new Validator(this.model)
             .ensure('number')
-            .isNotEmpty()
-            .hasMinLength(1)
-            .hasMaxLength(25)
-            .ensure('catalogueRef')
-            .isNotEmpty()
-            .isGreaterThan(0);
+                .length({ minimum: 1, maximum: 25, message: 'exceeds the 25 character limit'})
+                .required( { message: 'is required'});
+        this.reporter = ValidationEngine.getValidationReporter(this.model);
+        if( this.observer ) {
+            this.observer.dispose();
+        }
+        this.observer = this.reporter.subscribe(this.handleValidation.bind(this));
     }
 
+    validate() {
+        this.validator.validate();
+    }
+
+    handleValidation(result) {
+        this.isValid = result.length === 0;
+    }
 
     handleConflictExists(data) {
         if (data) {
@@ -91,16 +103,16 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         });
         this._modelSubscribers = [];
         if( newValue ) {
-            this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
-            this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
-            this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
             this.showWarning = false;
             this.icon = ''; // clear exists icon
             this.conversionModel = undefined; // clear conversion context
-            this.setupValidation(this.validatorDI);
+            this.setupValidation();
             let self = this;
-            setTimeout(function() {
-                self.sendNotifications(); // check or initial conversion of wantlist
+            setTimeout(() => {
+                self.sendNotifications(); // check or initial conversion of wantlist as well as initial validation
             }, 125);
         }
     }
@@ -113,6 +125,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
     }
 
     sendNotifications() {
+        this.validate(); // in theory only number changes need to validate
         if( this.model.number && this.model.number !== '' ) {
             if (this.model.catalogueRef > 0) {
                 this.icon = '';

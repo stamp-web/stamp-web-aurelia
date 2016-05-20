@@ -127,7 +127,7 @@ export class StampList extends EventManaged {
             if( selected.length > 0 ) {
                 let purchaseModel = {
                     price: 0.0,
-                    currency: CurrencyCode.USD,
+                    currency: CurrencyCode.USD.key,
                     updateExisting: true,
                     selectedStamps: selected
                 };

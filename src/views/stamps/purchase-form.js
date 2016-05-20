@@ -15,7 +15,7 @@
  */
 import {DialogController} from 'aurelia-dialog';
 import {bindable, LogManager} from 'aurelia-framework';
-import {Validation} from 'aurelia-validation';
+import {Validator, ValidationEngine} from 'aurelia-validatejs';
 import {CurrencyCode} from '../../util/common-models';
 import {Stamps} from '../../services/stamps';
 import _ from 'lodash';
@@ -26,7 +26,7 @@ const logger = LogManager.getLogger('purchase-form');
 @bindable('model')
 export class PurchaseForm {
     static inject() {
-        return [DialogController, Stamps, Validation];
+        return [DialogController, Stamps];
     }
     catalogueTotal = 0.0;
     percentage = 0.0;
@@ -34,11 +34,11 @@ export class PurchaseForm {
     processing = false;
     processingCount = 0;
     errorMessage = "";
+    isValid = false;
 
-    constructor(controller, stampService, validation) {
+    constructor(controller, stampService) {
         this.controller = controller;
         this.stampService = stampService;
-        this.validationDI = validation;
     }
 
     priceChanged() {
@@ -47,6 +47,7 @@ export class PurchaseForm {
         } else {
             this.percentage = 0.0;
         }
+        this.validate();
     }
 
     save() {
@@ -85,11 +86,12 @@ export class PurchaseForm {
     }
 
     activate(model) {
-        let self = this;
-        self.model = model;
-        self.catalogueTotal = 0.0;
-        if(self.model && self.model.selectedStamps && self.model.selectedStamps.length > 0 ) {
-            _.each( self.model.selectedStamps, function( stamp ) {
+        model.currency = model.currency || CurrencyCode.USD.toString();
+        this.model = model;
+        this.catalogueTotal = 0.0;
+        if(this.model && this.model.selectedStamps && this.model.selectedStamps.length > 0 ) {
+            let self = this;
+            _.each( this.model.selectedStamps, function( stamp ) {
                 let activeCN = ( stamp.activeCatalogueNumber ) ? stamp.activeCatalogueNumber : undefined;
                 if (activeCN) {
                     self.catalogueTotal += activeCN.value;
@@ -98,17 +100,26 @@ export class PurchaseForm {
                 }
             });
         }
-        self.validation = self.validationDI.on(self.model)
+
+        this.validator = new Validator(this.model)
             .ensure('price')
-            .isNotEmpty()
-            .containsOnly(/^(\d*\.?\d?\d?)$/)
-            .isGreaterThan(0.0)
-            .ensure('currency')
-            .isNotEmpty();
+            .numericality({ lessThan: 9999.0, greaterThan: 0});
+        this.reporter = ValidationEngine.getValidationReporter(this.model);
+        this.observer = this.reporter.subscribe(this.handleValidation.bind(this));
         _.debounce( () => {
-            this.validation.validate().catch( () => {
-               // assumed it will fail initially
-            });
+            this.validator.validate();
         }, 50)(this);
+    }
+
+    handleValidation(result) {
+        this.isValid = result.length === 0;
+    }
+
+    validate() {
+        this.validator.validate();
+    }
+
+    deactivate() {
+        this.observer.dispose();
     }
 }

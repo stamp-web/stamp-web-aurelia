@@ -38,7 +38,7 @@ export class StampCard {
         this.element = element;
         this.eventBus = eventBus;
         this.prefService = prefService;
-        this.$bindingEngine = $bindingEngine;
+        this.bindingEngine = $bindingEngine;
     }
 
     modelChanged(newValue) {
@@ -55,7 +55,7 @@ export class StampCard {
     bindActiveNumber() {
         this.activeCN = this.findActiveCatalogueNumber();
         if( this.activeCN ) {
-            let observer = this.$bindingEngine.propertyObserver(this.activeCN, 'active').subscribe( () => {
+            let observer = this.bindingEngine.propertyObserver(this.activeCN, 'active').subscribe( () => {
                 observer.dispose();
                 delete this.model.activeCatalogueNumber; // remove the current active CN
                 this.bindActiveNumber();
@@ -78,10 +78,10 @@ export class StampCard {
     }
 
     bindImagePath() {
-        if (this.model && !_.isEmpty(this.model.stampOwnerships)) {
+        if (this.model && !this.model.wantList && !_.isEmpty(this.model.stampOwnerships)) {
             let owner = _.first(this.model.stampOwnerships);
             if( owner ) {
-                let observer = this.$bindingEngine.propertyObserver(owner, 'img').subscribe(() => {
+                let observer = this.bindingEngine.propertyObserver(owner, 'img').subscribe(() => {
                     if (observer) {
                         observer.dispose();
                     }
@@ -93,9 +93,11 @@ export class StampCard {
                     var index = path.lastIndexOf('/');
                     path = path.substring(0, index + 1) + "thumb-" + path.substring(index + 1);
                     this.imagePath = defaultImagePath + path;
+                    return;
                 }
             }
         }
+        this.imagePath = StampCard.prototype.imageNotFoundFn();
     }
 
     showFullSizeImage(evt) {

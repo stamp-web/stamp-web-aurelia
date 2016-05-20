@@ -128,7 +128,8 @@ export class StampEditorComponent extends EventManaged {
             this.duplicateModel.wantList = !this.duplicateModel.wantList;
             if( !this.duplicateModel.wantList ) {
                 // will lazy initialize ownership
-                this.assignCachedValues();
+                this.convertToStamp(this.duplicateModel);
+
             } else {
                 delete this.duplicateModel.stampOwnerships;
             }

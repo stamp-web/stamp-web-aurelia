@@ -23,19 +23,21 @@ import _ from 'lodash';
 var defaultImagePath = "http://drake-server.ddns.net:9001/Thumbnails/";
 
 @customElement('stamp-table')
-@inject(EventAggregator, Catalogues)
+@inject(Element, EventAggregator, Catalogues)
 @bindable('stamps')
 @bindable('lastSelected')
 @bindable('total')
 export class StampTable {
 
     catalogues = [];
-    models;
+    models = [];
     lastTime = 0;
 
-    constructor(eventBus, catalogueService) {
+
+    constructor(element, eventBus, catalogueService) {
         this.catalogueService = catalogueService;
         this.eventBus = eventBus;
+        this.element = element;
     }
 
     bind() {
@@ -43,6 +45,7 @@ export class StampTable {
             this.catalogues = result.models;
             this.models = this.stamps;
         });
+
     }
 
     stampsChanged(newValues) {

@@ -1,6 +1,5 @@
 import {LogManager} from 'aurelia-framework';
 import {ConsoleAppender} from 'aurelia-logging-console';
-import {TWBootstrapViewStrategy} from 'aurelia-validation';
 import XHR from 'i18next-xhr-backend';
 
 
@@ -28,6 +27,7 @@ export function configure(aurelia) {
         .standardConfiguration()
         //.developmentLogging()
         .feature('global-resources')
+        .plugin('aurelia-ui-virtualization')
         .plugin('aurelia-dialog', config => {
             config.useDefaults();
             config.settings.lock = true;
@@ -35,10 +35,7 @@ export function configure(aurelia) {
             config.settings.startingZIndex = 1000;
         })
         .plugin('aurelia-html-import-template-loader')
-        .plugin('aurelia-validation', (config) => {
-            config.useDebounceTimeout(250);
-            config.useViewStrategy(TWBootstrapViewStrategy.AppendToInput);
-        })
+        .plugin('aurelia-validatejs')
         .plugin('aurelia-i18n', (instance) => {
             instance.i18next.use(XHR);
 

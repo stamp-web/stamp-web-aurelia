@@ -45,7 +45,7 @@ export class SearchForm {
     constructor(element, eventBus, bindingEngine, countries, stampCollections, albums, sellers, catalogueService) {
         this.element = element;
         this.eventBus = eventBus;
-        this.$bindingEngine = bindingEngine;
+        this.bindingEngine = bindingEngine;
         this.countryServices = countries;
         this.stampCollectionService = stampCollections;
         this.albumService = albums;

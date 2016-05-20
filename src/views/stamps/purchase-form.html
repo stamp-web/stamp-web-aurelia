@@ -5,7 +5,7 @@
     <ai-dialog class="purchase-form">
         <ai-dialog-body>
             <div class="well">${'editor.purchase-help'|t}</div>
-            <form class="form-horizontal" validate.bind="validation">
+            <form class="form-horizontal">
                 <div class="form-group form-group-sm1">
                     <span>
                         <label class="col-sm-4 control-label">${'editor.purchase-stamp-count'|t}</label>
@@ -15,12 +15,12 @@
                 <div class="form-group form-group-sm has-feedback">
                     <label for="price-paid" class="col-sm-4 control-label">${'editor.purchase-total'|t}</label>
                     <div class="col-md-8 price-paid">
-                            <input type="text" tabindex="110" class="form-control" id="price-paid"
-                                   validate="price" value.bind="model.price" keyup.delegate="priceChanged()" aria-describedby="inputValueStatus">
-                            <select id="currency-code" tabindex="115" class="currency-selector form-control purchase-currency"
-                                    value.bind="model.currency" validate="currency">
-                                <option repeat.for="cur of codes" model.bind="cur.keyName">${cur.description|t}</option>
-                            </select>
+                            <input type="text" tabindex="0" class="form-control" id="price-paid" autofocus
+                                   value.bind="model.price & validate" keyup.delegate="priceChanged()" aria-describedby="inputValueStatus">
+                            <select-picker items.bind="codes" class="currency-selector purchase-currency" value.two-way="model.currency" value-type="String"
+                                       config.bind="{ id: 'currency-code', tabIndex: 0, name: 'code', noSearch: true, allowClear: false, labelProperty: 'description', valueProperty: 'keyName' }">
+                            </select-picker>
+
                     </div>
                 </div>
                 <div class="form-group form-group-sm">
@@ -50,11 +50,12 @@
                     </div>
                 </div>
             </div>
-            <div class="messaging" show.bind="!validation.result.isValid">
-                <i class="sw-icon-attention"></i> ${'editor.purchase-error'|t}
+            <div class="messaging" >
+                <i class="sw-icon-attention" show.bind="!isValid"></i> ${'editor.purchase-error'|t}
             </div>
             <div class="button-actions">
-                <button class="btn btn-primary" disabled.bind="!validation.result.isValid" click.trigger="save()">Ok</button>
+                <!---->
+                <button class="btn btn-primary" disabled.bind="!isValid" click.trigger="save()">Ok</button>
                 <button class="btn" click.trigger="controller.cancel()">Cancel</button>
             </div>
 

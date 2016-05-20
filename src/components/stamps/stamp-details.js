@@ -13,9 +13,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {customElement, bindable, inject} from 'aurelia-framework';
-import {Validation} from 'aurelia-validation';
-import {BindingEngine} from 'aurelia-binding'; // technically this is a static not a DI until next release
+import {customElement, bindable} from 'aurelia-framework';
+import {BindingEngine} from 'aurelia-binding';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../events/event-managed';
 import {Countries} from '../../services/countries';
@@ -24,18 +23,18 @@ import $ from 'jquery';
 
 @customElement('stamp-details')
 @bindable('model')
-@inject(EventAggregator, BindingEngine, Validation, Countries)
 export class StampDetailsComponent extends EventManaged {
+
+    static inject = [EventAggregator, BindingEngine, Countries];
 
     countries = [];
     loading = true;
     editing = false;
     _modelSubscribers = [];
 
-    constructor(eventBus, $bindingEngine, validator, countryService) {
+    constructor(eventBus, $bindingEngine, countryService) {
         super(eventBus);
-        this.$bindingEngine = $bindingEngine;
-        this.validatorDI = validator;
+        this.bindingEngine = $bindingEngine;
         this.countryService = countryService;
         this.loadCountries();
     }
@@ -53,7 +52,7 @@ export class StampDetailsComponent extends EventManaged {
         });
         this._modelSubscribers = [];
         if( newValue ) {
-            this._modelSubscribers.push(this.$bindingEngine.propertyObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
             this.editing = newValue.id > 0;
             if( this.model.id <= 0 ) {
                 setTimeout(function () {

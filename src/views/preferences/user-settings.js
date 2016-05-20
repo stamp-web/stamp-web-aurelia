@@ -77,7 +77,7 @@ export class UserSettings {
     valid = false;
 
     constructor($bindingEngine, eventBus, preferenceService, countryService, albumService, sellerService, catalogueService, stampCollectionService) {
-        this.$bindingEngine = $bindingEngine;
+        this.bindingEngine = $bindingEngine;
         this.eventBus = eventBus;
         this.preferenceService = preferenceService;
         this.countryService = countryService;
@@ -187,7 +187,7 @@ export class UserSettings {
             }
 
             self.model[prefKey.category][prefKey.name] = value;
-            self.$bindingEngine.propertyObserver(self.model[prefKey.category], prefKey.name).subscribe(self.validate.bind(self));
+            self.bindingEngine.propertyObserver(self.model[prefKey.category], prefKey.name).subscribe(self.validate.bind(self));
         });
         self.stateReset();
     }

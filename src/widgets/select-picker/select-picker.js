@@ -77,6 +77,13 @@ export class Select2Picker {
         if( this.config.valueType ) {
             this.valueType = this.config.valueType;
         }
+        if( typeof this.config.allowClear !== 'undefined') {
+            options.allowClear = this.config.allowClear;
+        }
+
+        if( typeof this.config.noSearch !== 'undefined') {
+            options.minimumResultsForSearch = Infinity;
+        }
 
         if( this.config.id ) {
             this.id = this.config.id;
@@ -119,8 +126,9 @@ export class Select2Picker {
         let select = this.element.firstElementChild;
         if( select ) {
             const $select = $(select);
-            $select.off();
-            $select.select2("destroy");
+            if( $select.data('select2')) { // depending on the destory state need to check whether it still thinks it is a select2
+                $select.select2("destroy");
+            }
         }
     }
 
