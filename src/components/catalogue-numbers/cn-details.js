@@ -1,6 +1,7 @@
 import {customElement, bindable} from 'aurelia-framework';
 import {Validator, ValidationEngine} from 'aurelia-validatejs';
 import {BindingEngine} from 'aurelia-binding';
+import {I18N} from 'aurelia-i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../events/event-managed';
 import {Catalogues} from '../../services/catalogues';
@@ -13,7 +14,7 @@ import $ from 'jquery';
 @bindable('selectedCatalogue')
 export class CatalogueNumberDetailsComponent extends EventManaged {
 
-    static inject = [EventAggregator, BindingEngine, Catalogues];
+    static inject = [EventAggregator, BindingEngine, I18N, Catalogues];
 
     catalogues = [];
     icon;
@@ -27,10 +28,11 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     _modelSubscribers = [];
 
-    constructor(eventBus, $bindingEngine, catalogueService) {
+    constructor(eventBus, $bindingEngine, i18n, catalogueService) {
         super(eventBus);
         this.catalogueService = catalogueService;
         this.bindingEngine = $bindingEngine;
+        this.i18n = i18n;
         this.loadCatalogues();
     }
 
@@ -51,8 +53,8 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
     setupValidation() {
         this.validator = new Validator(this.model)
             .ensure('number')
-                .length({ minimum: 1, maximum: 25, message: 'exceeds the 25 character limit'})
-                .required( { message: 'is required'});
+                .length({ minimum: 1, maximum: 25, message: this.i18n.tr('messages.numberInvalid')})
+                .required( { message: this.i18n.tr('messages.numberRequired')});
         this.reporter = ValidationEngine.getValidationReporter(this.model);
         if( this.observer ) {
             this.observer.dispose();

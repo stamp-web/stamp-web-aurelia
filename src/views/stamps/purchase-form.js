@@ -16,6 +16,7 @@
 import {DialogController} from 'aurelia-dialog';
 import {bindable, LogManager} from 'aurelia-framework';
 import {Validator, ValidationEngine} from 'aurelia-validatejs';
+import {I18N} from 'aurelia-i18n';
 import {CurrencyCode} from '../../util/common-models';
 import {Stamps} from '../../services/stamps';
 import _ from 'lodash';
@@ -26,7 +27,7 @@ const logger = LogManager.getLogger('purchase-form');
 @bindable('model')
 export class PurchaseForm {
     static inject() {
-        return [DialogController, Stamps];
+        return [DialogController, I18N, Stamps];
     }
     catalogueTotal = 0.0;
     percentage = 0.0;
@@ -36,8 +37,9 @@ export class PurchaseForm {
     errorMessage = "";
     isValid = false;
 
-    constructor(controller, stampService) {
+    constructor(controller, i18n, stampService) {
         this.controller = controller;
+        this.i18n = i18n;
         this.stampService = stampService;
     }
 
@@ -103,7 +105,9 @@ export class PurchaseForm {
 
         this.validator = new Validator(this.model)
             .ensure('price')
-            .numericality({ lessThan: 9999.0, greaterThan: 0});
+            .numericality({ lessThan: 9999.0, greaterThan: 0, message: this.i18n.tr('messages.totalPurchaseNumber')})
+            .required({message: this.i18n.tr('messages.totalPurchaseRequired')} );
+
         this.reporter = ValidationEngine.getValidationReporter(this.model);
         this.observer = this.reporter.subscribe(this.handleValidation.bind(this));
         _.debounce( () => {

@@ -108,6 +108,12 @@
         "to": "to",
         "format": "MM/DD/YYYY"
     },
+    "messages": {
+        "totalPurchaseNumber": "^Total purchase must be a number greater than 0",
+        "totalPurchaseRequired": "^Total purchase is required",
+        "numberRequired": "^Number is required",
+        "numberInvalid": "^Number exceeds the 25 character limit"
+    },
     "prompts": {
         "delete-catalogue-number": "Delete catalogue number __number__?"
     },
