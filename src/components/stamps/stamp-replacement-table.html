@@ -1,0 +1,23 @@
+<template>
+    <require from="../../value-converters/as-enum"></require>
+    <require from="../../value-converters/as-currency-formatted"></require>
+    <require from="../../value-converters/by-name"></require>
+    <require from="resources/styles/components/stamps/stamp-replacement-table.css"></require>
+    <div class="stamp-replacement-table-wrapper">
+        <table class="table table-condensed table-hover">
+            <thead>
+            <tr>
+                <th>${'table.country'|t}</th>
+                <th>${'table.description'|t}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr repeat.for="stamp of stamps">
+                <td class="col-md-3">${ stamp.countryRef | byName:'countries' }</td>
+                <td class="col-md-4">${ stamp.rate + ' ' + stamp.description }</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</template>

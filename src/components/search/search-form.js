@@ -32,6 +32,10 @@ import _ from 'lodash';
     name: 'model',
     defaultValue: {}
 })
+@bindable({
+    name: 'showMinimize',
+    defaultValue: true
+})
 @inject(Element, EventAggregator, BindingEngine, Countries, StampCollections, Albums, Sellers, Catalogues)
 export class SearchForm {
 

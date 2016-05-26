@@ -287,6 +287,12 @@ export class StampEditorComponent extends EventManaged {
     save(keepOpen) {
         let self = this;
         if (self.validate() && self.preprocess()) {
+            // patch for https://github.com/aurelia/validatejs/issues/68
+            _.each( self.duplicateModel.catalogueNumbers, cn => {
+               if( cn.__validationReporter__) {
+                   delete cn.__validationReporter__;
+               }
+            });
             self.stampService.save(self.duplicateModel).then(stamp => {
                 if( self.duplicateModel.id <= 0 ) {
                     self.eventBus.publish(EventNames.stampCount, { stamp: self.duplicateModel, increment: true });

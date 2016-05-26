@@ -1,0 +1,30 @@
+@import "@@pathToTheme/@@theme/variables.less";
+
+@grid-nav-height: 55px;
+
+.stamp-replacement-main {
+    height: calc(~"100% - 110px");
+    position: relative;
+    top: @grid-nav-height;
+    background-color: green;
+
+    .stamp-replacement-content {
+        height: 100%;
+        position: relative;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: pink;
+    }
+
+    .stamp-replacement-search {
+        height: 100%;
+        position: relative;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background-color: blue;
+
+    }
+}
+
