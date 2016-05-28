@@ -101,11 +101,12 @@ export class StampList extends EventManaged {
     }
 
     bind() {
-        SessionContext.addContextListener(SessionContext.SEARCH_CHANGE, this.processSearchRequest.bind(this));
+        this._searchHandler = this.processSearchRequest.bind(this);
+        SessionContext.addContextListener(SessionContext.SEARCH_CHANGE, this._searchHandler );
     };
 
     unbind() {
-        SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this.processSearchRequest.bind(this));
+        SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this._searchHandler );
     };
 
     processSearchRequest(data, oldData) { //eslint-disable-line no-unused-vars

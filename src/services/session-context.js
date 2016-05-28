@@ -36,13 +36,22 @@ export var SessionContext = function() {
 
         removeContextListener: function(eventName, callback) {
             if( this.contextListeners[eventName] ) {
-                _.remove(this.contextListeners, callback);
+                let index = -1;
+                _.forEach(this.contextListeners[eventName], (listener, idx) => {
+                    if( listener === callback ) {
+                        index = idx;
+                        return;
+                    }
+                });
+                if( index >= 0 ) {
+                    this.contextListeners[eventName].splice(index, 1);
+                }
             }
         },
 
         publish: function(eventName, data, oldData) {
             if( this.contextListeners[eventName] ) {
-                _.forEach(this.contextListeners[eventName], function (listener) {
+                _.forEach(this.contextListeners[eventName], listener => {
                     listener(data, oldData);
                 });
             }

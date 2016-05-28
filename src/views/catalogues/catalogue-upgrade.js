@@ -34,12 +34,13 @@ export class CatalogueUpgradeManager {
         this.stampService = stampService;
     }
 
-    bind() {
-        SessionContext.addContextListener(SessionContext.SEARCH_CHANGE, this.processSearchRequest.bind(this));
+    attached() {
+        this._searchHandle = this.processSearchRequest.bind(this);
+        SessionContext.addContextListener(SessionContext.SEARCH_CHANGE, this._searchHandle );
     };
 
-    unbind() {
-        SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this.processSearchRequest.bind(this));
+    detached() {
+        SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this._searchHandle );
     };
 
     processSearchRequest(data, oldData) { //eslint-disable-line no-unused-vars
@@ -70,6 +71,7 @@ export class CatalogueUpgradeManager {
 
     processStamps(result, opts) {
         this.stamps = result.models;
+        console.table(opts);
     }
 
 
