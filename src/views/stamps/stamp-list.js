@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {inject, LogManager} from 'aurelia-framework';
+import {inject, LogManager, computedFrom} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {I18N} from 'aurelia-i18n';
 import {Countries} from '../../services/countries';
@@ -54,7 +54,7 @@ export class StampList extends EventManaged {
     stampCount = 0;
     countries = [];
     heading = "Stamp List";
-    gridMode = true;
+    displayMode = 'Grid';
     imageShown = false;
     editorShown = false;
     panelContents = "stamp-editor";
@@ -290,10 +290,17 @@ export class StampList extends EventManaged {
         this.editorShown = true;
     }
 
-    setViewMode(mode) {
-        var m = ( mode === 'Grid');
-        this.gridMode = m;
-        this.listMode = !m;
+    setDisplayMode(mode) {
+        this.displayMode = mode;
+    }
+
+    getDisplayModeClass(mode) {
+        return ( this.displayMode === mode ) ? 'active' : '';
+    }
+
+    @computedFrom('referenceMode', 'displayMode')
+    get referenceTableState() {
+        return this.referenceMode && this.displayMode === 'Grid' ? 'active' : (this.displayMode !== 'Grid') ? 'disabled' : '';
     }
 
     toggleCatalogueNumbers() {

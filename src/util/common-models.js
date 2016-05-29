@@ -89,7 +89,7 @@ export class Enum {
         let self = this;
         let symbol;
         this.keys().forEach( k => {
-            if( self[k].ordinal === ordinal ) {
+            if( self[k].ordinal === +ordinal ) {
                 symbol = self[k];
             }
         });

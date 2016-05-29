@@ -142,9 +142,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     loadCatalogues() {
         var self = this;
-        this.catalogueService.find({
-            $orderby: 'issue desc'
-        }).then(results => {
+        this.catalogueService.find(this.catalogueService.getDefaultSearchOptions()).then(results => {
             self.catalogues = results.models;
             self.loading = false;
         });

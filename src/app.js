@@ -42,8 +42,7 @@ export class App {
                 title: this.i18n.tr('nav.stamps')
             },
             {route: 'manage', moduleId: './views/manage/manage-list', nav: true, title: this.i18n.tr('nav.manage')},
-            {route: 'settings', moduleId: './views/preferences/user-settings', nav: false, title: 'Settings'},
-            {route: 'upgrade', name: 'upgrade', moduleId: './views/catalogues/catalogue-upgrade', nav: true, title: this.i18n.tr('nav.upgrade')}
+            {route: 'settings', moduleId: './views/preferences/user-settings', nav: false, title: this.i18n.tr('nav.settings-short')}
         ]);
         this.router = router;
     }
