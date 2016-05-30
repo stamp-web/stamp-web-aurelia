@@ -10,18 +10,6 @@
         height: calc(~"100% - 60px"); // @grid-nav-height;
         //overflow-y: auto; // remove if we want independent scrollers
     }
-    * {
-        &::selection {
-            background: transparent;
-        }
-        &::-moz-selection {
-            background: transparent;
-        }
-        input::selection, textarea::selection {
-            background: @component-active-bg;
-            color: @component-active-color;
-        }
-    }
 }
 
 .input-group.quick-search {

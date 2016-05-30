@@ -1,8 +1,5 @@
 @import "@@pathToTheme/@@theme/variables.less";
 
-@icon-size: @padding-xs-horizontal * 2 + 16px;
-@image-width: 36px;
-@image-size: @padding-xs-horizontal * 2 + @image-width;
 
 stamp-table {
     height: 100%;
@@ -39,35 +36,5 @@ stamp-table {
         }
     };
 
-    .icon-col {
-        min-width: @icon-size;
-        max-width: @icon-size;
-        width: @icon-size;
-    }
-
-    .image-col {
-        min-width: @image-size;
-        max-width: @image-size;
-        width:@image-size;
-    }
-
-    .stamp-thumbnail {
-        padding: @thumbnail-padding;
-        margin: auto;
-        height: @image-size;
-        width: @image-size;
-        background-color: transparent;
-        position: relative;
-        border-radius: 0;
-        img {
-            cursor: pointer;
-            max-width: @image-width;
-            max-height: @image-width;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-    }
 
 }

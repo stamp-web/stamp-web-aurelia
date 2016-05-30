@@ -14,21 +14,24 @@
         "clear-all": "Clear all selected stamps"
     },
     "footer": {
-        "filtering-total": "Stamps matching filter criteria:",
+        "filtering-total": "Stamps matching filter:",
+        "modified-total": "Stamps to modify:",
         "totalSelected": "Selected",
         "total": "Total"
     },
     "table": {
         "catalogue-number": "Catalogue number",
         "catalogue-value": "Catalogue value",
+        "catalogue-value-unknown": "-Unknown-",
         "certification": "Certified",
         "condition": "Condition",
         "country": "Country",
         "description": "Description",
         "grade": "Grade",
         "image": "Image exists",
-        "price-paid": "Price paid",
-        "notes": "Notes"
+        "modified": "Modified",
+        "notes": "Notes",
+        "price-paid": "Price paid"
     },
     "tooltip": {
         "notes": "Notes",
@@ -76,6 +79,8 @@
         "name": "Name",
         "modify-existing": "Modify existing values",
         "modifyTimestamp": "Modified",
+        "no-value": "No value listed",
+        "no-value-short": "No value",
         "purchase-help": "Specify the amount paid for selected stamps",
         "purchase-error": "Complete the form to save",
         "purchase-percentage": "Percentage",

@@ -18,11 +18,23 @@ import {valueConverter} from 'aurelia-framework';
 @valueConverter("asNumber")
 export class asNumberValueConverter {
 
-    toView(value) {
+    toView(value, asFloat = false) {
         if (value) {
             try {
-                value = parseInt(value.toString());
+                value = asFloat ? parseFloat(value.toString()) : parseInt(value.toString());
             } catch (err) {
+                console.log("Could not parse '" + value + "' to a number.");
+                value = -1;
+            }
+        }
+        return value;
+    }
+
+    fromView(value, asFloat = false) {
+        if(value) {
+            try {
+                value = (asFloat) ? parseFloat(value) : parseInt(value);
+            } catch( err ) {
                 console.log("Could not parse '" + value + "' to a number.");
                 value = -1;
             }
