@@ -55,6 +55,9 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
             .ensure('number')
                 .length({ minimum: 1, maximum: 25, message: this.i18n.tr('messages.numberInvalid')})
                 .required( { message: this.i18n.tr('messages.numberRequired')});
+        if( this.model.__validationReporter__) {
+            delete this.model.__validationReporter__;
+        }
         this.reporter = ValidationEngine.getValidationReporter(this.model);
         if( this.observer ) {
             this.observer.dispose();
