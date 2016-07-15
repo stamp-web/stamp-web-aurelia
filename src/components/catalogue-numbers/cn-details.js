@@ -1,6 +1,6 @@
 import {customElement, bindable} from 'aurelia-framework';
 import {NewInstance} from 'aurelia-dependency-injection';
-import {Validator, ValidationEngine, ValidationRules} from 'aurelia-validatejs';
+import {ValidationRules} from 'aurelia-validatejs';
 import {ValidationController, validateTrigger} from 'aurelia-validation';
 import {BindingEngine} from 'aurelia-binding';
 import {I18N} from 'aurelia-i18n';
@@ -55,7 +55,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this.rules = ValidationRules
             .ensure('number')
                 .length({ minimum: 1, maximum: 25, message: this.i18n.tr('messages.numberInvalid')})
-                .required( { message: this.i18n.tr('messages.numberRequired')})
+                .required( { message: this.i18n.tr('messages.numberRequired')});
     }
 
     validate() {

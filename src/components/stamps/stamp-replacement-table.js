@@ -180,7 +180,7 @@ export class StampReplacementTable {
         });
         Promise.all(savePromises).then(result => {
             if( result ) {
-                _.each(result, s => {
+                _.each(result, s => { //eslint-disable-line no-unused-vars
                     this.filterStamps();
                 });
             }
