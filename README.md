@@ -17,7 +17,7 @@ A demo server has been provided using the following credentials:
 
 * username: demo
 * password: demo
-* address: http://drake-server.ddns.net/stamp-aurelia/index.html
+* address: http://drake-server.ddns.net:9008/stamp-aurelia/index.html
 
 
 ## Running The App
