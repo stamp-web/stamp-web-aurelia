@@ -1,5 +1,7 @@
 import {customElement, bindable} from 'aurelia-framework';
-import {Validator, ValidationEngine} from 'aurelia-validatejs';
+import {NewInstance} from 'aurelia-dependency-injection';
+import {Validator, ValidationEngine, ValidationRules} from 'aurelia-validatejs';
+import {ValidationController, validateTrigger} from 'aurelia-validation';
 import {BindingEngine} from 'aurelia-binding';
 import {I18N} from 'aurelia-i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
@@ -14,7 +16,7 @@ import $ from 'jquery';
 @bindable('selectedCatalogue')
 export class CatalogueNumberDetailsComponent extends EventManaged {
 
-    static inject = [EventAggregator, BindingEngine, I18N, Catalogues];
+    static inject = [EventAggregator, BindingEngine, I18N, Catalogues, NewInstance.of(ValidationController)];
 
     catalogues = [];
     icon;
@@ -28,11 +30,13 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     _modelSubscribers = [];
 
-    constructor(eventBus, $bindingEngine, i18n, catalogueService) {
+    constructor(eventBus, $bindingEngine, i18n, catalogueService, validationController) {
         super(eventBus);
         this.catalogueService = catalogueService;
         this.bindingEngine = $bindingEngine;
         this.i18n = i18n;
+        validationController.validateTrigger = validateTrigger.manual;
+        this.validationController = validationController;
         this.loadCatalogues();
     }
 
@@ -45,29 +49,20 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this._modelSubscribers.forEach(sub => {
             sub.dispose();
         });
-        if( this.observer ) {
-            this.observer.dispose();
-        }
     }
 
     setupValidation() {
-        this.validator = new Validator(this.model)
+        this.rules = ValidationRules
             .ensure('number')
                 .length({ minimum: 1, maximum: 25, message: this.i18n.tr('messages.numberInvalid')})
-                .required( { message: this.i18n.tr('messages.numberRequired')});
-        if( this.model.__validationReporter__) {
-            delete this.model.__validationReporter__;
-        }
-        this.reporter = ValidationEngine.getValidationReporter(this.model);
-        if( this.observer ) {
-            this.observer.dispose();
-        }
-        this.observer = this.reporter.subscribe(this.handleValidation.bind(this));
+                .required( { message: this.i18n.tr('messages.numberRequired')})
     }
 
     validate() {
-        this.validator.validate();
+        this.handleValidation(this.validationController.validate());
+
     }
+
 
     handleValidation(result) {
         this.isValid = result.length === 0;

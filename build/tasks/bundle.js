@@ -49,7 +49,6 @@ var dependent_libs = [
     'aurelia-event-aggregator',
     'aurelia-dialog/resources/*.html!text',
     'aurelia-dialog',
-    'aurelia-dialog/dialog.css!text',
     'i18next-xhr-backend'
 ];
 
@@ -70,6 +69,7 @@ var stampWebSettings = [
 ];
 
 var stampWebCommon =  [
+    'bootstrap-validation/*.js',
     'value-converters/**/*.js',
     'util/**/*.js',
     'events/**/*.js',
@@ -78,7 +78,6 @@ var stampWebCommon =  [
     'resources/styles/components/nav/*.css!text',
     'components/nav/*.html!text',
     'components/nav/*.js',
-    'resources/styles/components/loading-indicator.css!text',
     'components/loading-indicator.js',
     'components/editor-dialog.html!text',
     'components/editor-dialog.js'

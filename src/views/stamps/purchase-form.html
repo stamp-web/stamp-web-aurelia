@@ -5,7 +5,7 @@
     <ai-dialog class="purchase-form">
         <ai-dialog-body>
             <div class="well">${'editor.purchase-help'|t}</div>
-            <form class="form-horizontal">
+            <form class="form-horizontal" validation-renderer="bootstrap-form">
                 <div class="form-group form-group-sm1">
                     <span>
                         <label class="col-sm-4 control-label">${'editor.purchase-stamp-count'|t}</label>
@@ -16,7 +16,7 @@
                     <label for="price-paid" class="col-sm-4 control-label">${'editor.purchase-total'|t}</label>
                     <div class="col-md-8 price-paid">
                             <input type="text" tabindex="0" class="form-control" id="price-paid" autofocus
-                                   value.bind="model.price & validate" keyup.delegate="priceChanged()" aria-describedby="inputValueStatus">
+                                   value.bind="model.price & validate:rules" keyup.delegate="priceChanged()" aria-describedby="inputValueStatus">
                             <select-picker items.bind="codes" class="currency-selector purchase-currency" value.two-way="model.currency" value-type="String"
                                        config.bind="{ id: 'currency-code', tabIndex: 0, name: 'code', noSearch: true, allowClear: false, labelProperty: 'description', valueProperty: 'keyName' }">
                             </select-picker>

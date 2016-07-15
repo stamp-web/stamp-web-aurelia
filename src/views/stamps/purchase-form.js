@@ -15,7 +15,9 @@
  */
 import {DialogController} from 'aurelia-dialog';
 import {bindable, LogManager} from 'aurelia-framework';
-import {Validator, ValidationEngine} from 'aurelia-validatejs';
+import {NewInstance} from 'aurelia-dependency-injection';
+import {Validator, ValidationEngine, ValidationRules} from 'aurelia-validatejs';
+import {ValidationController, validateTrigger} from 'aurelia-validation';
 import {I18N} from 'aurelia-i18n';
 import {CurrencyCode} from '../../util/common-models';
 import {Stamps} from '../../services/stamps';
@@ -27,7 +29,7 @@ const logger = LogManager.getLogger('purchase-form');
 @bindable('model')
 export class PurchaseForm {
     static inject() {
-        return [DialogController, I18N, Stamps];
+        return [DialogController, I18N, Stamps, NewInstance.of(ValidationController)];
     }
     catalogueTotal = 0.0;
     percentage = 0.0;
@@ -37,10 +39,12 @@ export class PurchaseForm {
     errorMessage = "";
     isValid = false;
 
-    constructor(controller, i18n, stampService) {
+    constructor(controller, i18n, stampService, validationController) {
         this.controller = controller;
         this.i18n = i18n;
         this.stampService = stampService;
+        validationController.validateTrigger = validateTrigger.manual;
+        this.validationController = validationController;
     }
 
     priceChanged() {
@@ -103,16 +107,14 @@ export class PurchaseForm {
             });
         }
 
-        this.validator = new Validator(this.model)
+        this.rules = ValidationRules
             .ensure('price')
             .numericality({ lessThan: 9999.0, greaterThan: 0, message: this.i18n.tr('messages.totalPurchaseNumber')})
             .required({message: this.i18n.tr('messages.totalPurchaseRequired')} );
 
-        this.reporter = ValidationEngine.getValidationReporter(this.model);
-        this.observer = this.reporter.subscribe(this.handleValidation.bind(this));
         _.debounce( () => {
-            this.validator.validate();
-        }, 50)(this);
+            this.validate();
+        }, 150)(this);
     }
 
     handleValidation(result) {
@@ -120,10 +122,7 @@ export class PurchaseForm {
     }
 
     validate() {
-        this.validator.validate();
+        this.handleValidation( this.validationController.validate());
     }
 
-    deactivate() {
-        this.observer.dispose();
-    }
 }

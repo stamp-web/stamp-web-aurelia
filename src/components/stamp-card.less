@@ -8,19 +8,16 @@
 }
 
 .stamp-card {
-
     position: relative;
 	height: 285px;
 	width: 300px;
 	display: inline-block;
     cursor: default;
 	padding: @panel-body-padding;
-	border: @panel-inner-border solid thin;
+	border: @panel-inner-border solid 2px;
 	border-radius: @thumbnail-border-radius;
 	margin: 2px;
 	font-size: 0.9em;
-	//background-image: linear-gradient(to bottom, #ffffff 0%, #f3f3f4 100%);
-	background-repeat: repeat-x;
 	color: @text-color;
 
     &::selection {
@@ -43,6 +40,9 @@
 		border: @input-border-focus 2px solid;
         &.highlight {
             border: @highlight-color 2px solid;
+            //background-image: linear-gradient(to bottom, #ffffff 0%, lighten(@highlight-color, 20%) 100%);
+            //background-repeat: repeat-x;
+            background: lighten(@highlight-color, 20%);
         }
 	}
 

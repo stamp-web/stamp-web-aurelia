@@ -117,8 +117,8 @@
 		<div class="row">
 			<div class="col-md-12 col-lg-4 sw-editor-container" if.bind="editorShown">
                 <collapse-panel collapsed.bind="!editorShown" name="stamp-list-editor-panel" >
-                    <stamp-editor if.bind="panelContents === 'stamp-editor'" model.bind="editingStamp"></stamp-editor>
-                    <search-form if.bind="panelContents === 'search-panel'"></search-form>
+                    <stamp-editor show.bind="panelContents === 'stamp-editor'" model.bind="editingStamp"></stamp-editor>
+                    <search-form show.bind="panelContents === 'search-panel'"></search-form>
                 </collapse-panel>
 			</div>
             <div class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'} full-height">

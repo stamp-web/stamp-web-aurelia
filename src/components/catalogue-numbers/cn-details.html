@@ -8,7 +8,7 @@
 		<div class="panel-heading">
 			<h4 class="panel-title">Active Catalogue Number</h4>
 		</div>
-		<div class="panel-body">
+		<div class="panel-body" validation-renderer="bootstrap-form">
 			<div class="form-group form-group-sm">
 				<label for="cn-catalogueRef" class="col-sm-3 control-label">Catalogue</label>
 				<div class="col-sm-9">
@@ -28,7 +28,7 @@
 			<div class="form-group form-group-sm has-feedback">
 				<label for="cn-number" class="col-sm-3 control-label">Number</label>
 				<div class="col-sm-3">
-					<input type="text" tabindex="80" class="form-control" id="cn-number" value.bind="model.number & validate">
+					<input type="text" tabindex="80" class="form-control" id="cn-number" value.bind="model.number & validate:rules">
 				</div>
 				<div class="col-sm-1 packed-col">
 					<span title.bind="conflictMessage" class="control-label sw-conversion ${icon}" click.trigger="convert()" disabled.bind="conversionModel !== undefined"></span>
