@@ -1,0 +1,14 @@
+<template>
+	<require from="./stamp-card"></require>
+    <require from="../catalogue-numbers/cn-references"></require>
+    <require from="resources/elements/stamps/stamp-grid.css"></require>
+
+	<div class="sw-stamp-grid">
+		<div class="scroller ${showCatalogueNumbers ? 'with-references' : ''}">
+			<stamp-card repeat.for="stamp of stamps" model.bind="stamp" selected.bind="stamp.selected" highlight.bind="stamp.id===$parent.lastSelected.id"></stamp-card>
+		</div>
+        <div class="sw-reference-catalogue-numbers" if.bind="showCatalogueNumbers">
+            <catalogue-number-references model.bind="lastSelected"></catalogue-number-references>
+        </div>
+	</div>
+</template>

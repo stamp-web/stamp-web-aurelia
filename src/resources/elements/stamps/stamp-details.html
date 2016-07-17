@@ -1,0 +1,43 @@
+<template>
+	<require from="../../value-converters/empty-text"></require>
+    <require from="../select-picker/select-picker"></require>
+
+	<div class="panel panel-default">
+		<div class="panel-heading panel-heading-with-actions">
+			<h4 class="panel-title">${'editor.details-title'|t}</h4>
+            <div class="panel-actions btn-group">
+                <button class="btn btn-xs btn-default ${(model.wantList) ? '' : 'active'}" show.bind="!editing" type="button" click.delegate="changeEditMode('stamp')" title="${'editor.createStamp-hint'|t}">
+                    <span class="sw-icon-stamp"></span>
+                </button>
+                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" if.bind="!editing" type="button" click.delegate="changeEditMode('wantList')" title="${'editor.createWantlist-hint'|t}">
+                    <span class="sw-icon-wantlist"></span>
+                </button>
+                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" show.bind="editing" type="button" click.delegate="changeEditMode('create')" title="${'editor.createStamp-hint'|t}">
+                    <span class="sw-icon-plus"></span>
+                </button>
+            </div>
+		</div>
+		<div class="panel-body">
+			<div class="form-group form-group-sm has-feedback">
+				<label for="details-countryRef" class="col-sm-3 control-label">${'editor.country'|t}</label>
+				<div class="col-sm-9">
+                    <select-picker items.bind="countries" disabled.bind="loading" class="country-selector" value.two-way="model.countryRef"
+                        config.bind="{ id: 'details-countryRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
+				</div>
+			</div>
+			<div class="form-group form-group-sm has-feedback">
+				<label for="details-rate" class="col-sm-3 control-label">${'editor.rate'|t}</label>
+				<div class="col-sm-3">
+					<input type="text" tabindex="51" required aria-required="true" class="form-control" value.bind="model.rate | emptyText" id="details-rate" aria-describedby="rateStatus">
+				</div>
+			</div>
+			<div class="form-group form-group-sm">
+				<label for="details-description" class="col-sm-3 control-label">${'editor.description'|t}</label>
+				<div class="col-sm-9">
+					<input type="text" tabindex="52" class="form-control" id="details-description" value.bind="model.description | emptyText" aria-describedby="descriptionStatus">
+				</div>
+			</div>
+		</div>
+	</div>
+
+</template>

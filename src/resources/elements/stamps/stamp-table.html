@@ -1,0 +1,47 @@
+<template>
+    <require from="../../value-converters/as-enum"></require>
+    <require from="../../value-converters/as-currency-formatted"></require>
+    <require from="../../value-converters/by-name"></require>
+    <require from="../ownerships/ownership-notes"></require>
+    <require from="../ownerships/ownership-cert"></require>
+
+    <require from="resources/elements/stamps/stamp-table.css"></require>
+
+    <table class="table table-condensed table-hover">
+        <thead>
+            <tr>
+                <th class="image-col hidden-xs" title="${'table.image|t}">&nbsp;</th>
+                <th>${'table.country'|t}</th>
+                <th>${'table.description'|t}</th>
+                <th>${'table.catalogue-number'|t}</th>
+                <th>${'table.catalogue-value'|t}</th>
+                <th class="icon-col hidden-xs" title="${'table.certification'|t}">&nbsp;</th> <!-- cert -->
+                <th class="icon-col hidden-xs" title="${'table.notes'|t}">&nbsp;</th> <!-- notes -->
+                <th>${'table.condition'|t}</th>
+                <th>${'table.grade'|t}</th>
+                <th>${'table.price-paid'|t}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="stamp of models" class="${stamp.selected ? 'selected' : ''} ${stamp.id === $parent.lastSelected.id ? 'highlight' : ''}"
+                dblclick.trigger="edit(stamp)"
+                click.trigger="toggleSelection($event, stamp)">
+                <td class="image-col hidden-xs">
+                    <div class="stamp-thumbnail">
+                        <img if.bind="!stamp.wantList" src.one-way="getImagePath(stamp)" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event,stamp)"/>
+                    </div>
+                </td>
+                <td class="col-md-3">${ stamp.countryRef | byName:'countries' }</td>
+                <td class="col-md-4">${ stamp.rate + ' ' + stamp.description }</td>
+                <td class="col-md-1">${ getActiveCatalogueNumber(stamp).number }</td>
+                <td class="col-md-1">${ getActiveCatalogueNumber(stamp).value|asCurrencyFormatted:getCurrencyCode(getActiveCatalogueNumber(stamp)) }</td>
+                <td class="icon-col hidden-xs"><ownership-cert model.one-way="getOwnership(stamp)"></ownership-cert></td>
+                <td class="icon-col hidden-xs"><ownership-notes model.one-way="getOwnership(stamp)"></ownership-notes></td>
+                <td class="col-md-1">${ getOwnership(stamp).condition|asEnum:'Condition'|t }</td>
+                <td class="col-md-1">${ getOwnership(stamp).grade|asEnum:'Grade'|t }</td>
+                <td class="col-md-1">${ getOwnership(stamp).pricePaid|asCurrencyFormatted:getOwnership(stamp).code }</td>
+            </tr>
+        </tbody>
+    </table>
+
+</template>

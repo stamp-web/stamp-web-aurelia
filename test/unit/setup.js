@@ -1,3 +1,3 @@
 import 'aurelia-polyfills';
-//import {initialize} from 'aurelia-pal-browser';
-//initialize();
+import {initialize} from 'aurelia-pal-browser';
+initialize();

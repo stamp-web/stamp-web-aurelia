@@ -1,0 +1,5 @@
+
+* select2 - value for bound values is not showing - it is bound (visual only)
+* purchase editor does not work/show
+* put theme into a separate bundle
+* split UI into a few bundles

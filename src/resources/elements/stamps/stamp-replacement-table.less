@@ -1,0 +1,65 @@
+@import "../../../theme/variables.less";
+
+stamp-replacement-table {
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
+
+    .stamp-replacement-header {
+        position: absolute;
+        top: 0;
+        height: 100px;
+        width: 100%;
+    }
+    .stamp-replacement-table-wrapper {
+        overflow-y: auto;
+        overflow-x: hidden;
+        width: 100%;
+        position: absolute;
+        top: 100px;
+        bottom: 40px;
+        height: calc(~"100% - 140px");
+        tr {
+            height: 39px;
+        }
+        .replacement-value-input {
+            margin-right: @padding-small-horizontal;
+        }
+        .unknown {
+            font-style: italic;
+        }
+    }
+
+    .stamp-replacement-footer {
+        bottom: 0;
+        position: absolute;
+        border-top: 1px @table-border-color solid;
+        padding: @padding-base-vertical @padding-base-horizontal;
+        height: 40px;
+        width: 100%;
+        .filtering-message {
+            font-size: @font-size-small;
+            .badge {
+                margin-right: @padding-base-horizontal;
+            }
+        }
+        button {
+            float: right;
+        }
+    }
+
+    .form-control {
+        height: 28px;
+        font-size: @font-size-small;
+    }
+
+    .sw-icon-ok::before {
+        color: @brand-success;
+    }
+}

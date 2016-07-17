@@ -37,12 +37,12 @@ export class App {
             {
                 route: ['', 'stamp-list'],
                 name: 'stamp-list',
-                moduleId: './views/stamps/stamp-list',
+                moduleId: './resources/views/stamps/stamp-list',
                 nav: true,
                 title: this.i18n.tr('nav.stamps')
             },
-            {route: 'manage', moduleId: './views/manage/manage-list', nav: true, title: this.i18n.tr('nav.manage')},
-            {route: 'settings', moduleId: './views/preferences/user-settings', nav: false, title: this.i18n.tr('nav.settings-short')}
+            {route: 'manage', moduleId: './resources/views/manage/manage-list', nav: true, title: this.i18n.tr('nav.manage')},
+            {route: 'settings', moduleId: './resources/views/preferences/user-settings', nav: false, title: this.i18n.tr('nav.settings-short')}
         ]);
         this.router = router;
     }

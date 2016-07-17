@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {asCurrencyValueConverter} from '../../../src/value-converters/as-currency-formatted';
+import {asCurrencyValueConverter} from '../../../src/resources/value-converters/as-currency-formatted';
 
 describe('asCurrencyFormattedConverter test suite', () => {
 

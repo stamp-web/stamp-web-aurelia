@@ -1,0 +1,64 @@
+<template>
+    <require from="../../elements/select-picker/select-picker"></require>
+    <require from="../../value-converters/as-percentage"></require>
+    <require from="resources/views/stamps/purchase-form.css"></require>
+    <ai-dialog class="purchase-form">
+        <ai-dialog-body>
+            <div class="well">${'editor.purchase-help'|t}</div>
+            <form class="form-horizontal" validation-renderer="bootstrap-form">
+                <div class="form-group form-group-sm1">
+                    <span>
+                        <label class="col-sm-4 control-label">${'editor.purchase-stamp-count'|t}</label>
+                        <div class="col-md-8 control-label label-value">${model.selectedStamps.length}</div>
+                    </span>
+                </div>
+                <div class="form-group form-group-sm has-feedback">
+                    <label for="price-paid" class="col-sm-4 control-label">${'editor.purchase-total'|t}</label>
+                    <div class="col-md-8 price-paid">
+                            <input type="text" tabindex="0" class="form-control" id="price-paid" autofocus
+                                   value.bind="model.price & validate:rules" keyup.delegate="priceChanged()" aria-describedby="inputValueStatus">
+                            <select-picker items.bind="codes" class="currency-selector purchase-currency" value.two-way="model.currency" value-type="String"
+                                       config.bind="{ id: 'currency-code', tabIndex: 0, name: 'code', noSearch: true, allowClear: false, labelProperty: 'description', valueProperty: 'keyName' }">
+                            </select-picker>
+
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <div class="col-sm-offset-2">
+                        <div class="checkbox">
+					        <span>
+						        <input type="checkbox" id="update-existing" checked.bind="model.updateExisting">${'editor.modify-existing'|t}
+					        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-group-sm1">
+                    <span class="${(percentage <= 0) ? 'percentage-not-valid' : ''}">
+                        <label class="col-sm-4 control-label">${'editor.purchase-percentage'|t}</label>
+                        <div class="col-md-8 control-label label-value">
+                            <span>${percentage | asPercentage}</span>
+                        </div>
+                    </span>
+                </div>
+            </form>
+        </ai-dialog-body>
+        <ai-dialog-footer>
+            <div class="process-progress" if.bind="processing">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow.bind="25" aria-valuemin="0" aria-valuemax="100">
+                        ${processingCount / model.selectedStamps.length | asPercentage}
+                    </div>
+                </div>
+            </div>
+            <div class="messaging" >
+                <i class="sw-icon-attention" show.bind="!isValid"></i> ${'editor.purchase-error'|t}
+            </div>
+            <div class="button-actions">
+                <!---->
+                <button class="btn btn-primary" disabled.bind="!isValid" click.trigger="save()">Ok</button>
+                <button class="btn" click.trigger="controller.cancel()">Cancel</button>
+            </div>
+
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

@@ -1,0 +1,153 @@
+@import "../../../theme/variables.less";
+
+date-picker {
+    outline-style: none;
+    -webkit-tap-highlight-color:transparent;
+}
+
+.date-wrapper {
+    label {
+        position: relative;
+        display: inline-block;
+        text-align: left;
+        margin-bottom: 0;
+        padding-top: @padding-small-vertical;
+        padding-right: @padding-small-horizontal;
+        vertical-align: middle;
+        ussr-select: none;
+        &:focus {
+            border: none;
+            outline: none;
+        }
+        &:after {
+            content: ''
+        }
+
+    }
+    &:nth-child(2) {
+        label {
+            padding-left: @padding-small-horizontal;
+        }
+
+
+    }
+}
+.date-control {
+    display: inline-block;
+    z-index: auto;
+    position: relative;
+    input[type="text"] {
+        z-index: auto;
+        max-width: 110px;
+        input::selection, textarea::selection {
+            background: @component-active-bg;
+            color: @component-active-color;
+        }
+        border-top-right-radius: @border-radius-base !important;
+        border-bottom-right-radius: @border-radius-base !important;
+    }
+    .sw-icon-calendar {
+        z-index: auto;
+        position: absolute;
+        color: @input-color;
+        right: @padding-xs-horizontal * 0.80;
+        top: @padding-xs-horizontal * 0.80;
+        cursor: pointer;
+        &:focus {
+            outline: none;
+        }
+        &:hover {
+            color: @datepicker-calendar-hover;
+        }
+    }
+
+    .sw-icon-cancel {
+        z-index: auto;
+        position: absolute;
+        color: @input-color;
+        right: 18px;
+        cursor: pointer;
+        top: @padding-small-vertical;
+        transform: scale(0.60);
+        &:focus {
+            outline: none;
+        }
+        &:hover {
+            color: @datepicker-calendar-hover;
+        }
+    }
+}
+
+.datepicker {
+    table {
+        tbody {
+            td.day {
+                font-size: @font-size-small;
+                width:30px;
+                max-width: 30px;
+                min-width: 30px;
+                border-color: @component-active-color;
+                background-color: @component-active-color;
+                &.active {
+                    &:active, &.highlighted:active {
+                        border-color: @datepicker-days-border-active;
+                        background-color: @datepicker-days-active;
+                        color: @component-active-color;
+                    }
+                }
+                &.disabled {
+                    color: @datepicker-days-outside-range;
+                    backgroud-color: @datepicker-days-outside-range-bg;
+                    &:hover {
+                        background-color: @component-active-color;
+                    }
+                }
+                &.today {
+                    background-color: @datepicker-today-bg;
+                }
+                &:hover {
+                    background-color: @datepicker-days-hover-bg;
+                    border-color: @datepicker-days-border-hover;
+                }
+            }
+            td {
+                span.month, span.year {
+                    font-size: @font-size-small;
+                }
+            }
+            th {
+                font-weight: normal;
+            }
+        }
+        thead {
+            tr {
+                &:nth-child(3) {
+                    border-bottom: 1px solid @input-border;
+                }
+                th {
+                    font-weight: normal;
+                    font-size: @font-size-xs;
+                }
+                .datepicker-switch, .prev, .next {
+                    &:hover {
+                        background-color: @datepicker-header-hover;
+                        border: 1px solid @datepicker-header-border;
+                    }
+                }
+
+            }
+        }
+        tfoot {
+            tr {
+                th {
+                    font-size: @font-size-xs;
+                    font-weight: normal;
+                    &:hover {
+                        background-color: @datepicker-footer-hover;
+                        border: 1px solid @datepicker-footer-border;
+                    }
+                }
+            }
+        }
+    }
+}

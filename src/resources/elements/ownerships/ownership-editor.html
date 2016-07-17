@@ -1,0 +1,109 @@
+<template>
+    <require from="../../value-converters/empty-text"></require>
+    <require from="../../value-converters/date-formatter"></require>
+    <require from="../../value-converters/bitwise-to-array"></require>
+    <require from="../date-picker/date-picker"></require>
+    <require from="../select-picker/select-picker"></require>
+
+    <require from="resources/elements/ownerships/ownership-editor.css"></require>
+
+    <div class="panel panel-default sw-ownership-editor">
+        <div class="panel-heading">
+            <h4 class="panel-title">Owning Details</h4>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="form-group form-group-sm has-feedback">
+                <label for="owner-albumRef" class="col-sm-3 control-label">Album</label>
+                <div class="col-sm-9">
+                    <select-picker items.bind="albums" class="album-selector" disabled.bind="loading"  value.two-way="model.albumRef"
+                        config.bind="{ id: 'owner-albumRef', tabIndex: 100, name: 'albumRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.album-select' }">
+                    </select-picker>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-condition" class="col-sm-3 control-label">${'editor.condition'|t}</label>
+                <div class="col-sm-4">
+                    <select-picker class="condition-selector" items.bind="conditions" value.two-way="model.condition"
+                                   config.bind="{ id: 'owner-condition', tabIndex: 101, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
+                    </select-picker>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-grade" class="col-sm-3 control-label">${'editor.grade'|t}</label>
+                <div class="col-sm-4">
+                    <select-picker class="grade-selector" items.bind="grades" value.two-way="model.grade"
+                                   config.bind="{ id: 'owner-grade', tabIndex: 102, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.grade-select' }">
+                    </select-picker>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-defects" class="col-sm-3 control-label">${'editor.defects'|t}</label>
+                <div class="col-sm-9">
+                    <select-picker items.bind="defects" value.two-way="model.defects | bitwiseToArray:defects.length"
+                                   config.bind="{ id: 'owner-defects', tabIndex: 104, name: 'defects', labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, multiple: true, caption: 'editor.defects-select' }">
+                    </select-picker>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-deceptions" class="col-sm-3 control-label">${'editor.deceptions'|t}</label>
+                <div class="col-sm-9">
+                    <select-picker items.bind="deceptions" value.two-way="model.deception | bitwiseToArray:deceptions.length"
+                                   config.bind="{ id: 'owner-deceptions', tabIndex: 107, name: 'deceptions', labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, multiple: true, caption: 'editor.deceptions-select' }">
+                    </select-picker>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-sellerRef" class="col-sm-3 control-label">${'editor.seller'|t}</label>
+                <div class="col-sm-9">
+                    <select-picker items.bind="sellers" class="seller-selector" disabled.bind="loading"  value.two-way="model.sellerRef"
+                                   config.bind="{ id: 'owner-sellerRef', tabIndex: 110, name: 'sellerRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.seller-select' }">
+                    </select-picker>
+                </div>
+            </div>
+           <div class="form-group form-group-sm">
+               <label for="owner-pricePaid" class="col-sm-3 control-label">Price paid</label>
+               <div class="col-sm-2">
+                   <input type="text" tabindex="111" class="form-control price-paid" id="owner-pricePaid" value.bind="model.pricePaid | emptyText">
+               </div>
+               <div class="col-sm-3">
+                   <select-picker items.bind="codes" class="currency-selector" value.two-way="model.code" value-type="String"
+                                  config.bind="{ id: 'owner-code', tabIndex: 112, name: 'code', noSearch: true, labelProperty: 'description', valueProperty: 'keyName' }">
+                   </select-picker>
+               </div>
+           </div>
+           <div class="form-group form-group-sm">
+               <label for="owner-purchased" class="col-sm-3 control-label">Purchased</label>
+               <div class="input-group col-sm-9">
+                   <date-picker id="owner-purchased" tabindex="115" value.two-way="model.purchased"></date-picker>
+               </div>
+           </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-img" class="col-sm-3 control-label">Image Path</label>
+                <div class="col-sm-9">
+                    <input type="text" tabindex="120" required aria-required="true" class="form-control" value.bind="model.img | emptyText" id="owner-img">
+                </div>
+            </div>
+            <div class="checkbox">
+                <span class="col-sm-3"></span>
+                <label class="col-sm-9">
+                    <input tabindex="125" type="checkbox" checked.bind="model.cert">
+                    <span>Certified or validated</span>
+                </label>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-certImg" class="col-sm-3 control-label" disabled.bind="!model.cert">Certificate</label>
+                <div class="col-sm-9">
+                    <input type="text" tabindex="130" class="form-control" disabled.bind="!model.cert" value.bind="model.certImg | emptyText" id="owner-certImg">
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="owner-notes" class="col-sm-3 control-label">Notes</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" tabindex="135" value.bind="model.notes | emptyText" id="owner-notes" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

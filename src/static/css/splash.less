@@ -1,0 +1,101 @@
+@import "../../theme/variables.less";
+
+body {
+	background-color: @gray;
+	overflow-y: hidden;
+}
+
+.splash {
+	background-color: #eee;
+	color: #232323;
+	text-align: center;
+	margin: 10% 0 0 0;
+	box-sizing: border-box;
+	padding: 10px;
+	box-shadow: 10px 4px 30px @gray-dark;
+	border-radius: 8px;
+	border: 1px solid #dcdcdc;
+	width: 300px;
+	height: 180px;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%,0);
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	.content {
+		padding-top: 20px;
+		width: 240px;
+		display: inline-block;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+	}
+	.banner-splash {
+        margin-top: 20px;
+		padding-top: 30px;
+		padding-left: 20px;
+		width: 90px;
+		display: inline-block;
+		position: absolute;
+		height: 100%;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		> div {
+			background: url('../images/stamp-web-64x64.png') no-repeat;
+			height: 100%;
+		}
+	}
+	.version {
+		font-size: 0.8em;
+        color: #8888ff;
+		line-height: 18px;
+	}
+	.message {
+		font-size: 2.0em;
+		line-height: 36px;
+		text-shadow: rgba(0, 0, 0, 0.5) 0 0 3px;
+		margin-bottom: 5px;
+	}
+    .build-version {
+        margin-top: 20px;
+        font-size: 0.6em;
+        line-height: 14px;
+        font-style: italic;
+        color: #cecece;
+    }
+	.sw-icon-progress {
+		position: relative;
+		text-align: center;
+		margin-top: 20px;
+		font-size: 1.5em;
+	}
+}
+
+
+.splash-spin {
+	-webkit-animation: splash-spin 2s infinite linear;
+	animation: splash-spin 2s infinite linear;
+}
+
+@-webkit-keyframes splash-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}
+@keyframes splash-spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
+}

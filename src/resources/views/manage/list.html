@@ -1,0 +1,64 @@
+<template>
+	<require from="../../value-converters/stamp-count"></require>
+    <require from="../../value-converters/filter-by-name"></require>
+    <require from="../../attributes/find-target"></require>
+
+    <div class="manage-list-toolbar">
+        <form class="form-horizontal">
+            <div class="form-group form-group-sm">
+                <div class="col-sm-2 hidden-xs">
+                    <label for="filter-text">${'manage.filter'|t}</label>
+                </div>
+                <div class="col-sm-4">
+
+                    <div class="input-group">
+                        <input id="filter-text" ref="filterInput" find-target class="form-control" placeholder="${'manage.filterPlaceholder'|t}" type="text" value.bind="filterText">
+                        <button class="input-group-addon btn-sm btn btn-default" disabled.bind="filterText===''" click.delegate="clear()">
+                            <span class="sw-icon-cancel"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="manage-list-contents">
+        <table class="table table-hover entity-list">
+            <thead>
+            <tr>
+                <th if.bind="hasIssue">Issue</th>
+                <th class="sw-entitylist-name">Name</th>
+                <th class="sw-entitylist-actions">Actions</th>
+                <th class="sw-entitylist-count">Count</th>
+                <th if.bind="hasIssue">Currency</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr repeat.for="model of models | filterByName:filterText">
+                <td if.bind="$parent.hasIssue">${model.issue}</td>
+                <td>${model.name}</td>
+                <td>
+                    <div class="btn-group actions">
+                        <button type="button" class="btn btn-default btn-sm" click.delegate="$parent.edit(model)" data-toggle="modal" data-target="#editorDialog">
+                            <span class="sw-icon-edit"></span>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" click.trigger="$parent.remove(model)">
+                            <span class="sw-icon-trash"></span>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" title="View stamps for ${model.name}" click.delegate="$parent.viewStamps(model)">
+                            <i class="sw-icon-search"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>${model.stampCount | stampCount}</td>
+                <td if.bind="$parent.hasIssue">${model.code}</td>
+                <td>${model.description}</td>
+                <td>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</template>

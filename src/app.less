@@ -1,0 +1,197 @@
+@import "theme/variables.less";
+@import "../node_modules/bootstrap/less/mixins/buttons.less";
+
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: inherit;
+}
+
+section {
+    margin: 0 20px;
+}
+
+.app-icon-stampweb {
+    background: url("../resources/images/stamp-web-64x64.png") no-repeat;
+    background-size: 28px 28px;
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+}
+
+// auto-hide the splash screen when shown
+.splash {
+    display: none;
+}
+
+.page-host {
+    position: relative;
+    height: inherit;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+ai-dialog-overlay {
+    background-color: @gray-light;
+    z-index: 10000;
+    &.active {
+        opacity: 0.7;
+    }
+}
+
+.app-bar {
+    /*  box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.75);*/
+    padding-top: 4px;
+    margin-bottom: 0px;
+}
+
+.modal-open .modal {
+    overflow-y: hidden;
+}
+
+.modal-lg {
+    max-width: 600px;
+}
+
+.panel-title {
+    font-size: 1.1em;
+}
+
+.flex {
+    display: flex;
+    display: -webkit-flex;
+    flex-grow: 1;
+    align-self: stretch;
+}
+
+.flex-col {
+    display: flex;
+    display: -webkit-flex;
+    flex: 1 100%;
+    flex-flow: column nowrap;
+}
+
+.flex-down {
+    display: flex;
+    -webkit-flex: 2;
+    flex: 2;
+}
+
+.sw-warning {
+    color: @brand-warning;
+}
+
+.condition-selector {
+    max-width: 150px;
+}
+
+.currency-selector {
+    max-width: 80px;
+}
+
+.locale-selector {
+    max-width: 150px;
+}
+
+.pageSize-selector {
+    max-width: 150px;
+}
+
+.packed-col {
+    padding-left: 0;
+}
+
+.panel-heading-with-actions {
+    h4 {
+        display: inline-block;
+
+        position: relative;
+    }
+    .btn-group {
+        float: right;
+        top: -1 * @padding-small-vertical / 2;
+        span {
+            height: 14px;
+            font-size: 0.9em;
+        }
+    }
+}
+
+.mirror-icon {
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}
+
+.full-height {
+    height: 100%;
+}
+
+@icon-size: @padding-xs-horizontal * 2 + 16px;
+@image-width: 36px;
+@image-size: @padding-xs-horizontal * 2 + @image-width;
+
+table {
+    .icon-col {
+        min-width: @icon-size;
+        max-width: @icon-size;
+        width: @icon-size;
+    }
+
+    .image-col {
+        min-width: @image-size;
+        max-width: @image-size;
+        width:@image-size;
+    }
+
+    .stamp-thumbnail {
+        padding: @thumbnail-padding;
+        margin: auto;
+        height: @image-size;
+        width: @image-size;
+        background-color: transparent;
+        position: relative;
+        border-radius: 0;
+        img {
+            cursor: pointer;
+            max-width: @image-width;
+            max-height: @image-width;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+}
+
+* {
+    &::selection {
+        background: transparent;
+    }
+    &::-moz-selection {
+        background: transparent;
+    }
+    input::selection, textarea::selection {
+        background: @component-active-bg;
+        color: @component-active-color;
+    }
+}
+
+#nprogress {
+    .bar {
+        background: @progress-color !important;
+        height: 3px;
+    }
+
+    .peg {
+        box-shadow: 0 0 10px @progress-color, 0 0 5px @progress-working !important;
+    }
+}

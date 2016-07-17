@@ -1,13 +1,3 @@
 node_modules
-jspm_packages
-bower_components
 .idea
 .DS_STORE
-config.js
-/dist
-/doc
-/resources/styles
-/src/theme.js
-/src/app.less
-/temp
-/maps
