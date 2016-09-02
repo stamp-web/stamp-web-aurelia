@@ -8,7 +8,7 @@ stamp-web-aurelia is the web front-end for managing collections of stamps and le
 
 ## Build Status
 
-[![Build Status](http://drake-server.ddns.net:9000/buildStatus/icon?job=stamp-aurelia)]http://drake-server.ddns.net:9000/buildStatus/icon?job=stamp-aurelia)
+[![Build Status](http://drake-server.ddns.net:9000/buildStatus/icon?job=stamp-aurelia)]
 
 
 ## Demo Server
