@@ -6,3 +6,5 @@ scripts/bootstrap-theme.js
 scripts/dep-bundle.js
 scripts/vendor-bundle.js
 resources/css/splash.css
+
+*.css
