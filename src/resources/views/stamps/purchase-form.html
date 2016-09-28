@@ -12,12 +12,12 @@
                         <div class="col-md-8 control-label label-value">${model.selectedStamps.length}</div>
                     </span>
                 </div>
-                <div class="form-group form-group-sm has-feedback">
+                <div class="price-entry form-group form-group-sm has-feedback">
                     <label for="price-paid" class="col-sm-4 control-label">${'editor.purchase-total'|t}</label>
                     <div class="col-md-8 price-paid">
                             <input type="text" tabindex="0" class="form-control" id="price-paid" autofocus
                                    value.bind="model.price & validate:rules" keyup.delegate="priceChanged()" aria-describedby="inputValueStatus">
-                            <select-picker items.bind="codes" class="currency-selector purchase-currency" value.two-way="model.currency" value-type="String"
+                            <select-picker items.bind="codes" class="currency-selector purchase-currency" value.bind="model.currency" value-type="String"
                                        config.bind="{ id: 'currency-code', tabIndex: 0, name: 'code', noSearch: true, allowClear: false, labelProperty: 'description', valueProperty: 'keyName' }">
                             </select-picker>
 

@@ -13,7 +13,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {inject, customElement, bindable, LogManager} from 'aurelia-framework';
+import {customElement, bindable, LogManager} from 'aurelia-framework';
+import {bindingMode} from 'aurelia-binding';
 import {I18N} from 'aurelia-i18n';
 import $ from 'jquery';
 import _ from 'lodash';
@@ -23,24 +24,17 @@ import select2 from 'select2'; //eslint-disable-line no-unused-vars
 const logger = LogManager.getLogger('select-picker');
 
 @customElement('select-picker')
-@bindable('items')
-@bindable('config')
-@bindable('value')
-@bindable('multiple')
-@bindable({
-    name: 'valueProperty',
-    defaultValue: 'id'
-})
-@bindable({
-    name: 'valueType',
-    defaultValue: 'Number'
-})
-@bindable({
-    name: 'labelProperty',
-    defaultValue: 'name'
-})
-@inject(Element, I18N)
 export class Select2Picker {
+
+    @bindable({defaultBindingMode : bindingMode.twoWay}) value;
+    @bindable valueType = 'Number';
+    @bindable valueProperty = 'id';
+    @bindable labelProperty = 'name';
+    @bindable items;
+    @bindable config;
+    @bindable multiple = false;
+
+    static inject = [Element, I18N];
 
     firedCollectionChanged = false;
 

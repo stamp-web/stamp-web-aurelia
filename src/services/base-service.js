@@ -181,7 +181,7 @@ export class BaseService {
 
     updateLocalEntry(model) {
         if( this.loaded && this.models.length > 0 ) {
-            let m = _.findWhere(this.models, { id: model.id });
+            let m = _.find(this.models, { id: model.id });
             if(m) {
                 _.merge(m, model);
                 // Not sure if this is a good idea or not.
@@ -270,7 +270,7 @@ export class BaseService {
             this.http[(model.id > 0 ) ? 'put' : 'post'](href, body).then(response => {
                 if ((response.statusCode === 200 || response.statusCode === 201) && response.response) {
                     var retModel = response.content;
-                    var m = _.findWhere(self.models, {id: retModel.id});
+                    var m = _.find(self.models, {id: retModel.id});
                     if (m) {
                         _.merge(m, retModel);
                     } else {

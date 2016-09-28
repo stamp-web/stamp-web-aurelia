@@ -19,7 +19,6 @@ import _ from 'lodash';
 export class countryEditor {
 
     model;
-    updateCountries = true;
 
     activate(options) {
         this.model = options;
@@ -27,6 +26,9 @@ export class countryEditor {
             _.debounce( () => {
                 $('#editor-name').focus();
             }, 125)(this);
+        } else {
+            this.model.aspects = this.model.aspects || {};
+            this.model.aspects.updateImagePath = true;
         }
     }
 

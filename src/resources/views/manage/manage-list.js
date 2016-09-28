@@ -149,7 +149,7 @@ export class ManageList {
             this.router.navigate(this.router.generate('stamp-list', {$filter: opts.serialize()}));
         }));
         this.subscriptions.push(this.eventBus.subscribe(EventNames.selectEntity, collectionName => {
-            var fieldDef = _.findWhere(this.entityModels, {collectionName: collectionName});
+            var fieldDef = _.find(this.entityModels, {collectionName: collectionName});
             if (fieldDef) {
                 this.processField(fieldDef);
             }
@@ -205,7 +205,7 @@ export class ManageList {
             if( result.models.length > 0 && typeof result.models[0].stampCount === 'undefined') {
                 fieldDef.service.countStamps().then( countResults => {
                     _.forEach( countResults, function( r ) {
-                        var entity = _.findWhere(result.models, { id: +r.id});
+                        var entity = _.find(result.models, { id: +r.id});
                         if( entity ) {
                             entity.stampCount = +r.count;
                         }

@@ -14,7 +14,10 @@
  limitations under the License.
  */
 import {customElement, bindable} from 'aurelia-framework';
-import {BindingEngine} from 'aurelia-binding';
+import {NewInstance} from 'aurelia-dependency-injection';
+import {ValidationRules, ValidationController, validateTrigger} from 'aurelia-validation';
+import {BindingEngine, bindingMode} from 'aurelia-binding';
+import {I18N} from 'aurelia-i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../../events/event-managed';
 import {Countries} from '../../../services/countries';
@@ -22,20 +25,26 @@ import {Countries} from '../../../services/countries';
 import $ from 'jquery';
 
 @customElement('stamp-details')
-@bindable('model')
+
 export class StampDetailsComponent extends EventManaged {
 
-    static inject = [EventAggregator, BindingEngine, Countries];
+    static inject = [EventAggregator, BindingEngine, I18N, Countries,  NewInstance.of(ValidationController)];
+
+    @bindable model;
+    @bindable({defaultBindingMode : bindingMode.twoWay}) isValid = true;
 
     countries = [];
     loading = true;
     editing = false;
     _modelSubscribers = [];
 
-    constructor(eventBus, $bindingEngine, countryService) {
+    constructor(eventBus, bindingEngine, i18n, countryService, validationController) {
         super(eventBus);
-        this.bindingEngine = $bindingEngine;
+        this.bindingEngine = bindingEngine;
+        this.i18n = i18n;
         this.countryService = countryService;
+        this.validationController = validationController;
+        this.validationController.validateTrigger = validateTrigger.change;
         this.loadCountries();
     }
 
@@ -52,14 +61,21 @@ export class StampDetailsComponent extends EventManaged {
         });
         this._modelSubscribers = [];
         if( newValue ) {
+            this.setupValidation();
+            this._modelSubscribers.push(this.bindingEngine.collectionObserver(this.validationController.errors).subscribe(this.validationChanged.bind(this)));
             this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
             this.editing = newValue.id > 0;
             if( this.model.id <= 0 ) {
-                setTimeout(function () {
+                setTimeout(() => {
+                    this.validationController.validate();
                     $('#details-rate').focus();
                 }, 25);
             }
         }
+    }
+
+    validationChanged() {
+        this.isValid = (!this.validationController.errors || this.validationController.errors.length === 0);
     }
 
     countrySelected() {
@@ -71,6 +87,16 @@ export class StampDetailsComponent extends EventManaged {
 
     changeEditMode(mode) {
         this.eventBus.publish(EventNames.changeEditMode, mode);
+    }
+
+    setupValidation() {
+        ValidationRules
+            .ensure('rate')
+            .required().withMessage(this.i18n.tr('messages.rateRequired'))
+            .ensure('description')
+            .required().withMessage(this.i18n.tr('messages.descriptionRequired'))
+            .on(this.model);
+
     }
 
     loadCountries() {

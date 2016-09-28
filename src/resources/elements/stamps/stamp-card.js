@@ -67,7 +67,7 @@ export class StampCard {
     findActiveCatalogueNumber() {
         this.activeCN = ( this.model.activeCatalogueNumber ) ? this.model.activeCatalogueNumber : undefined;
         if (!this.activeCN) {
-            this.activeCN = _.findWhere(this.model.catalogueNumbers, {active: true});
+            this.activeCN = _.find(this.model.catalogueNumbers, {active: true});
             this.model.activeCatalogueNumber = this.activeCN;
         }
         return this.activeCN;

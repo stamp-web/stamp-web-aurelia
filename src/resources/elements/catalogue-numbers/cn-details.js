@@ -1,22 +1,23 @@
 import {customElement, bindable} from 'aurelia-framework';
 import {NewInstance} from 'aurelia-dependency-injection';
-import {ValidationRules} from 'aurelia-validatejs';
-import {ValidationController, validateTrigger} from 'aurelia-validation';
-import {BindingEngine} from 'aurelia-binding';
+import {ValidationController, ValidationRules, validateTrigger} from 'aurelia-validation';
+import {BindingEngine, bindingMode} from 'aurelia-binding';
 import {I18N} from 'aurelia-i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../../events/event-managed';
 import {Catalogues} from '../../../services/catalogues';
 import {Condition} from '../../../util/common-models';
+import {ValidationHelper} from '../../../util/validation-helper';
 import _ from 'lodash';
 import $ from 'jquery';
 
 @customElement('catalogue-number-details')
-@bindable('model')
-@bindable('selectedCatalogue')
 export class CatalogueNumberDetailsComponent extends EventManaged {
 
     static inject = [EventAggregator, BindingEngine, I18N, Catalogues, NewInstance.of(ValidationController)];
+
+    @bindable model;
+    @bindable({defaultBindingMode : bindingMode.twoWay}) isValid = true;
 
     catalogues = [];
     icon;
@@ -26,7 +27,6 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
     loading = true;
     selectedCatalogue;
     showWarning = false;
-    isValid = false;
 
     _modelSubscribers = [];
 
@@ -35,7 +35,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this.catalogueService = catalogueService;
         this.bindingEngine = $bindingEngine;
         this.i18n = i18n;
-        validationController.validateTrigger = validateTrigger.manual;
+        validationController.validateTrigger = validateTrigger.change;
         this.validationController = validationController;
         this.loadCatalogues();
     }
@@ -51,21 +51,24 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         });
     }
 
+    /**
+     * Reset the value when the unknown is selected to a value of 0
+     */
+    unknownChanged( ) {
+        if( this.model.unknown === true ) {
+            this.model.value = 0.0;
+        }
+    }
+
     setupValidation() {
-        this.rules = ValidationRules
-            .ensure('number')
-                .length({ minimum: 1, maximum: 25, message: this.i18n.tr('messages.numberInvalid')})
-                .required( { message: this.i18n.tr('messages.numberRequired')});
-    }
+        ValidationHelper.defineCurrencyValueRule( ValidationRules, 'number-validator');
+        ValidationRules.ensure('number')
+            .maxLength(25).withMessage(this.i18n.tr('messages.numberInvalid'))
+            .required().withMessage(this.i18n.tr('messages.numberRequired'))
+            .ensure('value')
+            .satisfiesRule( 'number-validator').withMessage(this.i18n.tr('messages.currencyInvalid'))
+            .on(this.model);
 
-    validate() {
-        this.handleValidation(this.validationController.validate());
-
-    }
-
-
-    handleValidation(result) {
-        this.isValid = result.length === 0;
     }
 
     handleConflictExists(data) {
@@ -97,35 +100,46 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this.eventBus.publish(EventNames.convert, this.conversionModel);
     }
 
+    validationChanged() {
+        this.isValid = (!this.validationController.errors || this.validationController.errors.length === 0);
+    }
+
     modelChanged(newValue) {
         this._modelSubscribers.forEach(sub => {
             sub.dispose();
         });
         this._modelSubscribers = [];
         if( newValue ) {
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
             this.showWarning = false;
             this.icon = ''; // clear exists icon
             this.conversionModel = undefined; // clear conversion context
             this.setupValidation();
-            let self = this;
-            setTimeout(() => {
-                self.sendNotifications(); // check or initial conversion of wantlist as well as initial validation
-            }, 125);
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'catalogueRef').subscribe(this.catalogueChanged.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'condition').subscribe(this.sendNotifications.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'number').subscribe(this.sendNotifications.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.collectionObserver(this.validationController.errors).subscribe(this.validationChanged.bind(this)));
+            _.defer(() => {
+                this.isValidChanged();
+            }, 50);
         }
+    }
+
+    isValidChanged() {
+        this.catalogueChanged(this.model.catalogueRef);
+        this.validationController.validate();
     }
 
     catalogueChanged(newValue) {
         if (newValue > 0) {
-            this.selectedCatalogue = _.findWhere(this.catalogues, {id: +newValue});
-            this.sendNotifications();
+            this.selectedCatalogue = _.find(this.catalogues, {id: +newValue});
+            if( this.selectedCatalogue ) {
+                this.sendNotifications();
+            }
         }
     }
 
     sendNotifications() {
-        this.validate(); // in theory only number changes need to validate
+        // in theory only number changes need to validate
         if( this.model.number && this.model.number !== '' ) {
             if (this.model.catalogueRef > 0) {
                 this.icon = '';
@@ -135,6 +149,9 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
             if( this.model.id <= 0 && this.model.condition >= 0 ) {
                 this.eventBus.publish(EventNames.calculateImagePath, { model: this.model});
             }
+        } else {
+            this.icon = '';
+            this.showWarning = false;
         }
     }
 
@@ -143,6 +160,9 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this.catalogueService.find(this.catalogueService.getDefaultSearchOptions()).then(results => {
             self.catalogues = results.models;
             self.loading = false;
+            if( this.model.catalogueRef > 0 ) {
+                this.catalogueChanged(this.model.catalogueRef);
+            }
         });
     }
 }

@@ -119,10 +119,15 @@
         "format": "MM/DD/YYYY"
     },
     "messages": {
-        "totalPurchaseNumber": "^Total purchase must be a number greater than 0",
-        "totalPurchaseRequired": "^Total purchase is required",
-        "numberRequired": "^Number is required",
-        "numberInvalid": "^Number exceeds the 25 character limit"
+        "currencyInvalid": "Not a currency value",
+        "descriptionRequired": "Description is required",
+        "rateRequired": "Denomination is required",
+        "totalPurchaseCurrencyInvalid": "Total purchase not a currency value",
+        "totalPurchaseNumber": "Total purchase out of allowed range",
+        "totalPurchaseRequired": "Total purchase is required",
+        "numberRequired": "Number is required",
+        "numberInvalid": "Number exceeds the 25 character limit",
+        "valueInvalid": "Value is not a number"
     },
     "prompts": {
         "delete-catalogue-number": "Delete catalogue number __number__?"
@@ -169,6 +174,7 @@
         "cancel-changes" : "Cancel edit",
         "edit-cn": "Edit catalogue number",
         "make-active": "Set as active catalogue number",
+        "print": "Print current page",
         "remove-cn": "Delete catalogue number",
         "reset": "Reset",
         "save": "Save",

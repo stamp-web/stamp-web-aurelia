@@ -13,7 +13,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {customElement, bindable, inject, computedFrom, LogManager} from 'aurelia-framework';
+import {customElement, bindable, computedFrom, LogManager} from 'aurelia-framework';
+import {BindingEngine} from 'aurelia-binding';
 import {CurrencyCode, Condition, CatalogueHelper} from '../../../util/common-models';
 import {Stamps} from '../../../services/stamps';
 import {Countries} from '../../../services/countries';
@@ -66,9 +67,11 @@ function createOwnership() {
 
 
 @customElement('stamp-editor')
-@bindable('model')
-@inject(EventAggregator, Stamps, Countries, Catalogues, Preferences)
 export class StampEditorComponent extends EventManaged {
+
+    static inject = [EventAggregator, BindingEngine, Stamps, Countries, Catalogues, Preferences];
+
+    @bindable model;
 
     createMode = false;
     usedInlineImagePath = false;
@@ -76,16 +79,21 @@ export class StampEditorComponent extends EventManaged {
     preferences = [];
     duplicateModel;
     loaded = false;
+
     usedConditions = [ Condition.USED.ordinal, Condition.CTO.ordinal, Condition.COVER.ordinal, Condition.ON_PAPER.ordinal];
     /* Session cached values (overriding preference values) */
     cachedValues = {
         purchased: null
     };
+    invalid = true;
+    validity = {};
     catalogues = [];
+    _validitySubscribers = [];
 
 
-    constructor(eventBus, stampService, countryService, catalogueService, preferenceService) {
+    constructor(eventBus, bindingEngine, stampService, countryService, catalogueService, preferenceService) {
         super(eventBus);
+        this.bindingEngine = bindingEngine;
         this.stampService = stampService;
         this.countryService = countryService;
         this.catalogueService = catalogueService;
@@ -102,6 +110,21 @@ export class StampEditorComponent extends EventManaged {
         this.subscribe(EventNames.calculateImagePath, this.calculateImagePath.bind(this));
         this.subscribe(EventNames.convert, this.convertToStamp.bind(this));
         this.subscribe(EventNames.changeEditMode, this.changeEditMode.bind(this));
+
+        this._validitySubscribers.forEach(sub => {
+            sub.dispose();
+        });
+        this._validitySubscribers = [];
+        this._resetValidity();
+        _.forEach( Object.keys(this.validity) , key => {
+            this._validitySubscribers.push(this.bindingEngine.propertyObserver(this.validity,key).subscribe(this._validateForm.bind(this)));
+        });
+    }
+
+    detached() {
+        this._validitySubscribers.forEach(sub => {
+            sub.dispose();
+        });
     }
 
     /**
@@ -121,6 +144,13 @@ export class StampEditorComponent extends EventManaged {
             }
             self.loaded = true;
         });
+    }
+
+    _validateForm() {
+        this.invalid = !this.validity.stamp || !this.validity.catalogueNumber;
+        if( !this.duplicateModel.wantList ) {
+            this.invalid = this.invalid || !this.validity.ownership;
+        }
     }
 
     changeEditMode(mode) {
@@ -245,9 +275,9 @@ export class StampEditorComponent extends EventManaged {
      */
     processPreferences(alwaysProcess) {
         if (this.preferences.length > 0) {
-            let p = _.findWhere(this.preferences, { name: 'usedInlineImagePath', category: 'stamps'});
+            let p = _.find(this.preferences, { name: 'usedInlineImagePath', category: 'stamps'});
             this.usedInlineImagePath = ( p && p.value === 'true');
-            let catPrefix = _.findWhere(this.preferences, { name: 'applyCatalogueImagePrefix', category: 'stamps'});
+            let catPrefix = _.find(this.preferences, { name: 'applyCatalogueImagePrefix', category: 'stamps'});
             this.useCataloguePrefix = ( catPrefix && catPrefix.value === 'true');
             if( this.duplicateModel && (this.duplicateModel.id <= 0) || alwaysProcess === true) {
                 let m = this.duplicateModel;
@@ -255,7 +285,7 @@ export class StampEditorComponent extends EventManaged {
                     logger.info("Stamp model was available on preferences initialization");
                 }
                 PreferredValues.forEach(function (pref) {
-                    let prefValue = _.findWhere(this.preferences, {name: pref.key, category: pref.category});
+                    let prefValue = _.find(this.preferences, {name: pref.key, category: pref.category});
                     if (prefValue) {
                         let value = prefValue.value;
                         if (pref.type === Number) {
@@ -286,7 +316,7 @@ export class StampEditorComponent extends EventManaged {
 
     save(keepOpen) {
         let self = this;
-        if (self.validate() && self.preprocess()) {
+        if (self.preprocess()) {
             // patch for https://github.com/aurelia/validatejs/issues/68
             _.each(self.duplicateModel.catalogueNumbers, cn => {
                 if (cn.__validationReporter__) {
@@ -300,7 +330,7 @@ export class StampEditorComponent extends EventManaged {
                 }
                 self.eventBus.publish(EventNames.stampSaved, { stamp: stamp, remainOpen: keepOpen });
                 if( keepOpen) {
-                    self.resetModel();
+                    self._resetModel();
                 }
             }).catch(err => {
                 logger.error(err);
@@ -324,10 +354,6 @@ export class StampEditorComponent extends EventManaged {
         this.save(true);
     }
 
-    validate() {
-        return true;
-    }
-
     preprocess() {
         let owner = this.ownership;
         // remove date objects from model if cleared to avoid server format issues
@@ -337,16 +363,17 @@ export class StampEditorComponent extends EventManaged {
         return true;
     }
 
-    resetModel() {
+    _resetModel() {
+        this._resetValidity();
         this.duplicateModel.id = 0;
         this.duplicateModel.rate = "";
         this.duplicateModel.description = "";
-        this.resetCatalogueNumber(this.activeCatalogueNumber);
-        this.resetOwnership(this.ownership);
+        this._resetCatalogueNumber(this.activeCatalogueNumber);
+        this._resetOwnership(this.ownership);
         this.model = this.duplicateModel;
     }
 
-    resetCatalogueNumber(cn) {
+    _resetCatalogueNumber(cn) {
         cn.id = 0;
         cn.number = "";
         cn.unknown = false;
@@ -354,7 +381,7 @@ export class StampEditorComponent extends EventManaged {
         cn.value = 0;
     }
 
-    resetOwnership(owner) {
+    _resetOwnership(owner) {
         if( owner ) {
             owner.notes = undefined;
             owner.cert = false;
@@ -366,9 +393,16 @@ export class StampEditorComponent extends EventManaged {
         }
     }
 
+    _resetValidity() {
+        this.validity.stamp = false;
+        this.validity.catalogueNumber = false;
+        this.validity.ownership = true;
+    }
+
     modelChanged(newValue) {
         this.createMode = (newValue && newValue.id <= 0);
         if (newValue) {
+            this._resetValidity();
             this.duplicateModel = _.clone(newValue, true);
             if( this.preferenceService.loaded ) {
                 this.processPreferences(this.duplicateModel.id <= 0);
@@ -379,7 +413,6 @@ export class StampEditorComponent extends EventManaged {
         } else {
             this.duplicateModel = null;
         }
-
     }
 
     @computedFrom('duplicateModel')
@@ -429,7 +462,7 @@ export class StampEditorComponent extends EventManaged {
             if (!this.duplicateModel.catalogueNumbers) {
                 this.duplicateModel.catalogueNumbers = [];
             } else {
-                activeNumber = _.findWhere(this.duplicateModel.catalogueNumbers, {active: true});
+                activeNumber = _.find(this.duplicateModel.catalogueNumbers, {active: true});
             }
             if (!activeNumber) {
                 activeNumber = createCatalogueNumber();

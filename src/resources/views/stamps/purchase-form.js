@@ -15,10 +15,11 @@
  */
 import {DialogController} from 'aurelia-dialog';
 import {bindable, LogManager} from 'aurelia-framework';
+import {BindingEngine} from 'aurelia-binding';
 import {NewInstance} from 'aurelia-dependency-injection';
-import {ValidationRules} from 'aurelia-validatejs';
-import {ValidationController, validateTrigger} from 'aurelia-validation';
+import {ValidationRules, ValidationController, validateTrigger} from 'aurelia-validation';
 import {I18N} from 'aurelia-i18n';
+import {ValidationHelper} from '../../../util/validation-helper';
 import {CurrencyCode} from '../../../util/common-models';
 import {Stamps} from '../../../services/stamps';
 import _ from 'lodash';
@@ -26,10 +27,12 @@ import _ from 'lodash';
 
 const logger = LogManager.getLogger('purchase-form');
 
-@bindable('model')
 export class PurchaseForm {
+
+    @bindable model;
+
     static inject() {
-        return [DialogController, I18N, Stamps, NewInstance.of(ValidationController)];
+        return [DialogController, I18N, BindingEngine, Stamps, NewInstance.of(ValidationController)];
     }
     catalogueTotal = 0.0;
     percentage = 0.0;
@@ -39,12 +42,15 @@ export class PurchaseForm {
     errorMessage = "";
     isValid = false;
 
-    constructor(controller, i18n, stampService, validationController) {
+    errorSubscriber;
+
+    constructor(controller, i18n, bindingEngine, stampService, validationController) {
         this.controller = controller;
         this.i18n = i18n;
+        this.bindingEngine = bindingEngine;
         this.stampService = stampService;
-        validationController.validateTrigger = validateTrigger.manual;
         this.validationController = validationController;
+        this.validationController.validateTrigger = validateTrigger.change;
     }
 
     priceChanged() {
@@ -53,7 +59,6 @@ export class PurchaseForm {
         } else {
             this.percentage = 0.0;
         }
-        this.validate();
     }
 
     save() {
@@ -82,9 +87,9 @@ export class PurchaseForm {
         Promise.all(results).then( () => {
             logger.debug("Completed saving updates for " + results.length);
             self.processing = false;
-            _.debounce( () => {
+            _.defer( () => {
                 this.controller.ok();
-            }, 125)(this);
+            });
         }).catch( err => {
             self.processing = false;
             self.errorMessage = (err.statusText) ? err.statusText : err;
@@ -106,23 +111,33 @@ export class PurchaseForm {
                 }
             });
         }
-
-        this.rules = ValidationRules
-            .ensure('price')
-            .numericality({ lessThan: 9999.0, greaterThan: 0, message: this.i18n.tr('messages.totalPurchaseNumber')})
-            .required({message: this.i18n.tr('messages.totalPurchaseRequired')} );
-
-        _.debounce( () => {
-            this.validate();
-        }, 150)(this);
+        this.setupValidation();
     }
 
-    handleValidation(result) {
-        this.isValid = result.length === 0;
+    deactivate() {
+        if( this.errorSubscriber) {
+            this.errorSubscriber.dispose();
+        }
     }
 
-    validate() {
-        this.handleValidation( this.validationController.validate());
+    setupValidation() {
+        ValidationHelper.defineCurrencyValueRule( ValidationRules, 'number-validator');
+        ValidationHelper.defineNumericRangeRule( ValidationRules, 'number-range',0, 20000.0);
+        ValidationRules.ensure('price')
+            .required().withMessage(this.i18n.tr('messages.totalPurchaseRequired'))
+            .satisfiesRule( 'number-range').withMessage(this.i18n.tr('messages.totalPurchaseNumber'))
+            .satisfiesRule( 'number-validator').withMessage(this.i18n.tr('messages.totalPurchaseCurrencyInvalid'))
+            .on(this.model);
+
+        this.errorSubscriber = this.bindingEngine.collectionObserver(this.validationController.errors).subscribe(this.validationChanged.bind(this));
+
+        _.defer(() => {
+            this.validationChanged();
+        });
+    }
+
+    validationChanged() {
+        this.isValid = this.validationController.errors.length === 0;
     }
 
 }

@@ -8,15 +8,15 @@
 	<div class="stamp-editor" if.bind="duplicateModel && loaded">
         <div>
             <form class="form-horizontal">
-                <stamp-details model.bind="duplicateModel"></stamp-details>
-                <catalogue-number-details model.bind="activeCatalogueNumber"></catalogue-number-details>
-                <ownership-editor if.bind="!duplicateModel.wantList" model.bind="ownership"></ownership-editor>
+                <stamp-details model.bind="duplicateModel" is-valid.bind="validity.stamp"></stamp-details>
+                <catalogue-number-details model.bind="activeCatalogueNumber" is-valid.bind="validity.catalogueNumber"></catalogue-number-details>
+                <ownership-editor if.bind="!duplicateModel.wantList" model.bind="ownership" is-valid.bind="validity.ownership"></ownership-editor>
             </form>
         </div>
 
 		<div class="editor-buttons">
-			<button type="button" class="btn btn-sm btn-primary" click.delegate="save()">${'actions.save'|t}</button>
-			<button type="button" class="btn btn-sm btn-default" click.delegate="saveAndNew()" if.bind="createMode">${'actions.save-and-new'|t}</button>
+			<button type="button" class="btn btn-sm btn-primary" click.delegate="save()" disabled.bind="invalid">${'actions.save'|t}</button>
+			<button type="button" class="btn btn-sm btn-default" click.delegate="saveAndNew()" disabled.bind="invalid" if.bind="createMode">${'actions.save-and-new'|t}</button>
 			<button type="button" class="btn btn-sm btn-default" click.delegate="cancel()">${'actions.cancel'|t}</button>
 		</div>
 	</div>

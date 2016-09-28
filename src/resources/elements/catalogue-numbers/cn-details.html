@@ -12,7 +12,7 @@
 			<div class="form-group form-group-sm">
 				<label for="cn-catalogueRef" class="col-sm-3 control-label">Catalogue</label>
 				<div class="col-sm-9">
-                    <select-picker items.bind="catalogues" disabled.bind="loading" value.two-way="model.catalogueRef"
+                    <select-picker items.bind="catalogues" disabled.bind="loading" value.bind="model.catalogueRef"
                                    config.bind="{ id: 'cn-catalogueRef', tabIndex: 70, labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
                     </select-picker>
 				</div>
@@ -20,13 +20,13 @@
 			<div class="form-group form-group-sm">
 				<label for="cn-condition" class="col-sm-3 control-label">Condition</label>
 				<div class="col-sm-4">
-                    <select-picker items.bind="conditions" disabled.bind="loading" value.two-way="model.condition"
+                    <select-picker items.bind="conditions" disabled.bind="loading" value.bind="model.condition"
                                    config.bind="{ id: 'cn-condition', tabIndex: 75, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
                     </select-picker>
 				</div>
 			</div>
 			<div class="form-group form-group-sm has-feedback">
-				<label for="cn-number" class="col-sm-3 control-label">Number</label>
+				<label for="cn-number" class="col-sm-3 control-label">${'editor.catalogue-number'|t}</label>
 				<div class="col-sm-3">
 					<input type="text" tabindex="80" class="form-control" id="cn-number" value.bind="model.number & validate:rules">
 				</div>
@@ -39,19 +39,18 @@
 				</div>
                 <span id="inputNumberStatus" class="sr-only"></span>
 			</div>
-			<div class="form-group form-group-sm">
-				<label for="cn-value" class="col-sm-3 control-label"  disabled.bind="model.unknown">Value</label>
-				<div class="col-sm-2">
-					<input type="text" tabindex="85" class="form-control" id="cn-value" disabled.bind="model.unknown" value.bind="model.value" >
+			<div class="form-group form-group-sm has-feedback">
+				<label for="cn-value" class="col-sm-3 control-label"  disabled.bind="model.unknown">${'editor.catalogue-value'|t}</label>
+				<div class="col-sm-3 value-field">
+					<input type="text" tabindex="85" class="form-control" id="cn-value" disabled.bind="model.unknown" value.bind="model.value & validate:rules" >
+                    <span if.bind="selectedCatalogue" class="sw-currency-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></span>
 				</div>
-				<div class="col-sm-2 packed-col">
-					<div class="sw-currency-label control-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></div>
-				</div>
+
 			</div>
 			<div class="checkbox">
 				<span class="col-sm-3"></span>
                 <label class="col-sm-9">
-                    <input type="checkbox" tabindex="90" checked.bind="model.unknown">
+                    <input type="checkbox" tabindex="90" checked.bind="model.unknown" change.trigger="unknownChanged()">
                     <span>No value listed</span>
                 </label>
 			</div>

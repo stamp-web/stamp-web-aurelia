@@ -64,10 +64,10 @@ export class SearchForm {
         let searchConditions = SessionContext.getSearchCondition();
         if( searchConditions !== undefined ) {
             _.forEach(searchConditions.flatten(), filter => {
-                if( _.findWhere( self.dateFields, filter.subject ) === filter.subject ) {
+                if( _.find( self.dateFields, filter.subject ) === filter.subject ) {
                     let key = filter.subject + ((filter.operator === Operators.GREATER_THAN_EQUAL) ? 'Start' : 'End');
                     self.model[key] = filter.value;
-                } else if (_.findWhere( self.booleanFields, filter.subject) === filter.subject) {
+                } else if (_.find( self.booleanFields, filter.subject) === filter.subject) {
                     self.model[filter.subject] = ( +filter.value > 0 ) ? true : false;
                 } else {
                     self.model[filter.subject] = filter.value;
