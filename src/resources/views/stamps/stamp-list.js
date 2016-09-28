@@ -22,13 +22,15 @@ import {Stamps} from '../../../services/stamps';
 import {Preferences} from '../../../services/preferences';
 import {PurchaseForm} from './purchase-form';
 import {SessionContext} from '../../../services/session-context';
+import {ReportGenerator} from '../../../services/report-generator';
 import {EventNames, StorageKeys, EventManaged} from '../../../events/event-managed';
 import {LocationHelper} from '../../../util/location-helper';
 import {StampFilter, ConditionFilter, CurrencyCode} from '../../../util/common-models';
-import {PredicateUtilities} from '../../../util/object-utilities';
+import {PredicateUtilities, PrintUtil} from '../../../util/object-utilities';
 import {ImagePreviewEvents} from '../../elements/image-preview/image-preview';
 import {Predicate, Operators, Parser} from 'odata-filter-parser';
 import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
+
 import bootbox from 'bootbox';
 import {DialogService} from 'aurelia-dialog';
 import _ from 'lodash';
@@ -45,7 +47,7 @@ function createStamp(wantList) {
     };
 }
 
-@inject(Element, EventAggregator, Router, Stamps, Countries, Preferences, asCurrencyValueConverter, I18N, DialogService)
+@inject(Element, EventAggregator, Router, Stamps, Countries, Preferences, asCurrencyValueConverter,  ReportGenerator, I18N, DialogService)
 export class StampList extends EventManaged {
 
     stamps = [];
@@ -88,7 +90,7 @@ export class StampList extends EventManaged {
         sortDirection: 'asc'
     };
 
-    constructor(element, eventBus, router, stampService, countryService, preferenceService, currencyFormatter, i18next, dialogService) {
+    constructor(element, eventBus, router, stampService, countryService, preferenceService, currencyFormatter, reportGenerator, i18next, dialogService) {
         super(eventBus);
         this.element = element;
         this.stampService = stampService;
@@ -96,6 +98,7 @@ export class StampList extends EventManaged {
         this.preferenceService = preferenceService;
         this.currencyFormatter = currencyFormatter;
         this.router = router;
+        this.reportGenerator = reportGenerator;
         this.i18next = i18next;
         this.dialogService = dialogService;
     }
@@ -139,6 +142,12 @@ export class StampList extends EventManaged {
                 });
             }
         }
+    }
+
+    print() {
+        let colModel = [ { title: 'Country', attribute: 'countryRef'} ];
+        let table = this.reportGenerator.generateTable( colModel, this.stamps );
+        PrintUtil.print("<div>" + table.html() + "</div>");
     }
 
     selectAll(select) {

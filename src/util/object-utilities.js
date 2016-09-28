@@ -15,6 +15,8 @@
  */
 import ODataFilter from 'odata-filter-parser';
 import _ from 'lodash';
+import $ from 'jquery';
+import bootbox from 'bootbox';
 
 let Operators = ODataFilter.Operators;
 
@@ -93,3 +95,29 @@ export var StringUtil = {
         return s;
     }
 };
+
+export var PrintUtil = {
+    print: function(rawData, options) {
+        let data = $(rawData).html();
+        let opts = (options) ? _.extend( {}, options ) : {};
+        var printWindow = window.open('', 'printable-page', opts.windowOptions);
+        if (printWindow === null || typeof(printWindow) === 'undefined') {
+            bootbox.alert({
+                size: 'medium',
+                message: "The popup blocker is enabled for this site.<br><br>Accept this domain as an exception to support printing."
+            });
+        } else {
+
+            printWindow.document.write('<html><head><title>' + ((opts.title) ? opts.title : '') + '</title>');
+            printWindow.document.write('<link rel="stylesheet" href="resources/css/print.css" type="text/css" />');
+            printWindow.document.write('</head><body style="direction:ltr;"><pre>');
+            printWindow.document.write(data);
+            printWindow.document.write('</pre></body></html>');
+            printWindow.document.close();
+            _.defer( () => {
+                printWindow.print();
+            }, 50);
+        }
+        return false;
+    }
+}

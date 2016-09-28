@@ -53,6 +53,9 @@
 					<button class="btn btn-sm btn-default ${ displayMode === 'Table' ? 'active' : ''}" title="${'actions.show-as-table'|t}" click.trigger="setDisplayMode('List')">
 						<span class="sw-icon-list"></span>
 					</button>
+                    <button class="btn btn-sm btn-default" title="${'actions.print'|t}" click.trigger="print()">
+                        <span class="sw-icon-print"></span>
+                    </button>
                     <button class="btn btn-sm btn-default ${ displayMode === 'Upgrade' ? 'active' : ''}" title="${'actions.show-as-upgrade'|t}" click.trigger="setDisplayMode('Upgrade')">
                         <span class="sw-icon-exchange"></span>
                     </button>
