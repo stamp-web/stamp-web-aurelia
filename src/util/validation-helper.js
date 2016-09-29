@@ -13,6 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+import {EventAggregator} from 'aurelia-event-aggregator';
 import _ from 'lodash';
 
 export var ValidationHelper = {
@@ -35,3 +36,20 @@ export var ValidationHelper = {
         })
     }
 };
+
+export class ValidationEventHandler extends EventAggregator {
+
+    constructor(controller) {
+        super();
+        this.controller = controller;
+    }
+    render(instruction) {
+        let msg = {
+            valid: this.controller ? this.controller.errors.length === 0 : true
+        };
+        if( !msg.valid ) {
+            msg.error = _.first(this.controller.errors)  // in case we want it (footer messaging etc)
+        };
+        this.publish('validation-status',msg);
+    }
+}
