@@ -111,6 +111,10 @@ export class StampCard {
         this.eventBus.publish(EventNames.stampRemove, this.model);
     }
 
+    toggleActions(show) {
+        this.showActions = show;
+    }
+
     toggleSelection(evt) {
         let t = $(evt.target);
         let p = t.parents('button');

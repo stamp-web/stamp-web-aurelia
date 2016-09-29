@@ -1,6 +1,7 @@
 @import "../../../theme/variables.less";
 
-@thumbnail-size: 160px;
+@thumbnail-width: 180px;
+@thumbnail-height: 170px;
 .nowrap-text() {
     white-space: nowrap;
     overflow: hidden;
@@ -9,8 +10,8 @@
 
 .stamp-card {
     position: relative;
-	height: 285px;
-	width: 300px;
+	height: 240px;
+	width: 220px;
 	display: inline-block;
     cursor: default;
 	padding: @panel-body-padding;
@@ -40,8 +41,6 @@
 		border: @input-border-focus 2px solid;
         &.highlight {
             border: @highlight-color 2px solid;
-            //background-image: linear-gradient(to bottom, #ffffff 0%, lighten(@highlight-color, 20%) 100%);
-            //background-repeat: repeat-x;
             background: lighten(@highlight-color, 20%);
         }
 	}
@@ -51,17 +50,21 @@
     }
 
 	.action-panel {
-		height: @line-height-computed * 2.5;
-		padding-top: 5px;
+		height: @line-height-computed;
 		margin-left: auto;
 		margin-right: auto;
 		margin-top: @padding-small-vertical;
 		left: 50%;
-		position: relative;
-		transform: translate(-50%,0);
+        width: 65px;
+		position: absolute;
+        bottom: 0;
+		transform: translate(-50%,-10px);
         .btn,
         .btn > span {
             cursor: pointer;
+        }
+        .btn {
+            padding: 2px 5px;
         }
 	}
 
@@ -69,6 +72,7 @@
         .nowrap-text();
 		text-align: center;
         position: relative;
+        font-size: 0.9em;
         .header-status {
             display: inline-block;
             float: left;
@@ -87,15 +91,15 @@
 	.stamp-thumbnail {
 		padding: @thumbnail-padding;
 		margin: auto;
-		height: @thumbnail-size;
-		width: @thumbnail-size;
+		height: @thumbnail-height;
+		width: @thumbnail-width;
 		background-color: @gray-dark;
 		position: relative;
 		border-radius: @thumbnail-border-radius;
 		img {
             cursor: pointer;
-			max-width: @thumbnail-size - 10px;
-			max-height: @thumbnail-size - 10px;
+			max-width: @thumbnail-width - 5px;
+			max-height: @thumbnail-height - 5px;
 			position: absolute;
 			top: 50%;
 			left: 50%;
