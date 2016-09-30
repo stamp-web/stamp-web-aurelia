@@ -20,7 +20,7 @@ export var ValidationHelper = {
 
     defineCurrencyValueRule: (ValidationRules, name) => {
         ValidationRules.customRule(name, (value, obj) => {
-            return (!_.isNil(value) && _.isEmpty(value)) || (new RegExp(/^\d+(\.\d{0,2})?$/).test(value));
+            return (_.isEmpty(value)) || (new RegExp(/^\d+(\.\d{0,2})?$/).test(value));
         });
     },
 

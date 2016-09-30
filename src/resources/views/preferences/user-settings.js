@@ -127,10 +127,13 @@ export class UserSettings {
 
     stateReset() {
         this.modelClone = {};
-        _.forEach(Object.keys(this.model), function(key) {
-            this.modelClone[key] = _.clone(this.model[key]);
-        }, this);
-        this.validate();
+        _.defer( () => {
+            _.forEach(Object.keys(this.model), key => {
+                this.modelClone[key] = _.clone(this.model[key]);
+            });
+            this.validate();
+        });
+
     }
 
     reset() {

@@ -233,9 +233,13 @@ export class Select2Picker {
                 this.selectAndFire(newValue);
             }
             else if( this.valueType === "Number" ) {
+                if( newValue === "null") { // oddball case - not sure where it is coming from
+                    console.log(this.id + " had a null string");
+                    newValue = null;
+                }
                 var newValueInt = parseInt(Number(newValue), 10);
                 if (isNaN(newValueInt)) {
-                    throw new Error('Item Id must be null or an integer!');
+                    throw new Error(this.id + ' - value must be null or an integer!');
                 }
                 if (newValueInt === 0 || newValueInt !== Number(oldValue)) { // oldValue may be 0 on initialization
                     this.selectAndFire('' + newValue, newValueInt);

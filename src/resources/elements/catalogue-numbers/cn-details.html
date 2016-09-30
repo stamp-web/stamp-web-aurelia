@@ -28,7 +28,7 @@
 			<div class="form-group form-group-sm has-feedback">
 				<label for="cn-number" class="col-sm-3 control-label">${'editor.catalogue-number'|t}</label>
 				<div class="col-sm-3">
-					<input type="text" tabindex="80" class="form-control" id="cn-number" value.bind="model.number & validate:rules">
+					<input type="text" autocomplete="off" tabindex="80" class="form-control" id="cn-number" value.bind="model.number & validate:rules">
 				</div>
 				<div class="col-sm-1 packed-col">
 					<span title.bind="conflictMessage" class="control-label sw-conversion ${icon}" click.trigger="convert()" disabled.bind="conversionModel !== undefined"></span>
@@ -42,7 +42,7 @@
 			<div class="form-group form-group-sm has-feedback">
 				<label for="cn-value" class="col-sm-3 control-label"  disabled.bind="model.unknown">${'editor.catalogue-value'|t}</label>
 				<div class="col-sm-3 value-field">
-					<input type="text" tabindex="85" class="form-control" id="cn-value" disabled.bind="model.unknown" value.bind="model.value & validate:rules" >
+					<input type="text" autocomplete="off" tabindex="85" class="form-control" id="cn-value" disabled.bind="model.unknown" value.bind="model.value & validate:rules" >
                     <span if.bind="selectedCatalogue" class="sw-currency-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></span>
 				</div>
 

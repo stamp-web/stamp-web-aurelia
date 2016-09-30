@@ -119,6 +119,9 @@ export class StampEditorComponent extends EventManaged {
         _.forEach( Object.keys(this.validity) , key => {
             this._validitySubscribers.push(this.bindingEngine.propertyObserver(this.validity,key).subscribe(this._validateForm.bind(this)));
         });
+        _.defer( ()=> {
+           this._validateForm();
+        });
     }
 
     detached() {
@@ -166,6 +169,16 @@ export class StampEditorComponent extends EventManaged {
         } else if ( this.createMode === false && mode === 'create' ) {
             this.eventBus.publish(EventNames.stampCreate);
         }
+    }
+
+    /**
+     * Really need a computedFrom on this, but if we do it is triggered after validation which fails
+     * for empty models.
+     * 
+     * @returns {Array|boolean}
+     */
+    get showOwnerhshipPanel( ) {
+        return !_.isEmpty(this.duplicateModel.stampOwnerships);
     }
 
     convertToStamp(m) {
@@ -394,16 +407,16 @@ export class StampEditorComponent extends EventManaged {
     }
 
     _resetValidity() {
-        this.validity.stamp = false;
-        this.validity.catalogueNumber = false;
+        this.validity.stamp = true;
+        this.validity.catalogueNumber = true;
         this.validity.ownership = true;
     }
 
-    modelChanged(newValue) {
-        this.createMode = (newValue && newValue.id <= 0);
-        if (newValue) {
+    modelChanged(newModel) {
+        this.createMode = (newModel && newModel.id <= 0);
+        if (newModel) {
             this._resetValidity();
-            this.duplicateModel = _.clone(newValue, true);
+            this.duplicateModel = _.clone(newModel, true);
             if( this.preferenceService.loaded ) {
                 this.processPreferences(this.duplicateModel.id <= 0);
             }
@@ -440,6 +453,8 @@ export class StampEditorComponent extends EventManaged {
                 configureOwnership();
 
             }
+        } else {
+            owner = undefined;
         }
         return owner;
     }

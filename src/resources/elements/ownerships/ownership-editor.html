@@ -65,7 +65,7 @@
            <div class="form-group form-group-sm has-feedback">
                <label for="owner-pricePaid" class="col-sm-3 control-label">Price paid</label>
                <div class="col-sm-2">
-                   <input type="text" tabindex="111" class="form-control price-paid" id="owner-pricePaid" value.bind="model.pricePaid & validate:rules">
+                   <input type="text" autocomplete="off" tabindex="111" class="form-control price-paid" id="owner-pricePaid" value.bind="model.pricePaid & validate:rules">
                </div>
                <div class="col-sm-2 ownership-currency">
                    <select-picker items.bind="codes" class="currency-selector" value.bind="model.code" value-type="String"

@@ -103,32 +103,32 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     /**
      * The model will not be "changed" on a save and new.  Only updated/cleared.  So this is only guaranteed to run once.
-     * @param newValue
+     * @param newModel
      */
-    modelChanged(newValue) {
+    modelChanged(newModel) {
         this._modelSubscribers.forEach(sub => {
             sub.dispose();
         });
         this._modelSubscribers = [];
-        if( newValue ) {
+        if( newModel ) {
             this.showWarning = false;
             this.icon = ''; // clear exists icon
             this.conversionModel = undefined; // clear conversion context
             this.setupValidation();
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'catalogueRef').subscribe(this._catalogueChanged.bind(this)));
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'condition').subscribe(this._sendNotifications.bind(this)));
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'number').subscribe(this._validateAndSendNotifiation.bind(this)));
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'value').subscribe(this._validate.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'catalogueRef').subscribe(this._catalogueChanged.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'condition').subscribe(this._sendNotifications.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'number').subscribe(this._validateAndSendNotifiation.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'value').subscribe(this._validate.bind(this)));
             _.defer(() => {
-                this._catalogueChanged(newValue.catalogueRef);
+                this._catalogueChanged(newModel.catalogueRef);
                 this._validate();
-            }, 50);
+            });
         }
     }
 
-    _catalogueChanged(newValue) {
-        if (newValue > 0) {
-            this.selectedCatalogue = _.find(this.catalogues, {id: +newValue});
+    _catalogueChanged(catalogueRef) {
+        if (catalogueRef > 0) {
+            this.selectedCatalogue = _.find(this.catalogues, {id: +catalogueRef});
             if( this.selectedCatalogue ) {
                 this._sendNotifications();
             }

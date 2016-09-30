@@ -55,23 +55,25 @@ export class StampDetailsComponent extends EventManaged {
         });
     }
 
-    modelChanged(newValue) {
+    modelChanged(newModel) {
         this._modelSubscribers.forEach(sub => {
             sub.dispose();
         });
         this._modelSubscribers = [];
-        if( newValue ) {
+        if( newModel ) {
             this.setupValidation();
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'rate').subscribe(this._validate.bind(this)));
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'description').subscribe(this._validate.bind(this)));
-            this.editing = newValue.id > 0;
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'countryRef').subscribe(this.countrySelected.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'rate').subscribe(this._validate.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'description').subscribe(this._validate.bind(this)));
+            this.editing = newModel.id > 0;
             if( this.model.id <= 0 ) {
-                _.defer(() => {
-                    this._validate();
+                _.debounce(() => {
                     $('#details-rate').focus();
-                }, 25);
+                }, 50)(this);
             }
+            _.defer( () => {
+                this._validate();
+            })
         }
     }
 

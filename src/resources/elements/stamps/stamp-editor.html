@@ -10,7 +10,7 @@
             <form class="form-horizontal">
                 <stamp-details model.bind="duplicateModel" is-valid.bind="validity.stamp"></stamp-details>
                 <catalogue-number-details model.bind="activeCatalogueNumber" is-valid.bind="validity.catalogueNumber"></catalogue-number-details>
-                <ownership-editor if.bind="!duplicateModel.wantList" model.bind="ownership" is-valid.bind="validity.ownership"></ownership-editor>
+                <ownership-editor if.bind="showOwnerhshipPanel" model.bind="ownership" is-valid.bind="validity.ownership"></ownership-editor>
             </form>
         </div>
 

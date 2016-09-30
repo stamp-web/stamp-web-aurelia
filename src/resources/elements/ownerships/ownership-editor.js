@@ -1,3 +1,18 @@
+/**
+ Copyright 2016 Jason Drake
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 import {customElement, bindable, LogManager} from 'aurelia-framework';
 import {NewInstance} from 'aurelia-dependency-injection';
 import {EventAggregator} from 'aurelia-event-aggregator';
@@ -31,7 +46,6 @@ export class OwnershipEditor extends EventManaged {
 
     _modelSubscribers = [];
 
-
     constructor(eventBus, bindingEngine, albumService, sellerService, i18n, validationController) {
         super(eventBus);
         this.bindingEngine = bindingEngine;
@@ -45,11 +59,8 @@ export class OwnershipEditor extends EventManaged {
 
     setupValidation() {
         ValidationHelper.defineCurrencyValueRule( ValidationRules, 'number-validator');
-        ValidationHelper.defineIdSelection( ValidationRules, 'album-id');
         ValidationRules.ensure('pricePaid')
             .satisfiesRule( 'number-validator').withMessage(this.i18n.tr('messages.currencyInvalid'))
-            .ensure('albumRef')
-            .satisfiesRule( 'album-id').withMessage( this.i18n.tr('messages.valueInvalid'))
             .on(this.model);
     }
 
@@ -59,17 +70,20 @@ export class OwnershipEditor extends EventManaged {
         });
     }
 
-    modelChanged(m) {
+    modelChanged(newModel) {
         this._modelSubscribers.forEach(sub => {
             sub.dispose();
         });
         this._modelSubscribers = [];
-        this._modelSubscribers.push(this.bindingEngine.propertyObserver(m, 'albumRef').subscribe(this._validate.bind(this)));
-        this._modelSubscribers.push(this.bindingEngine.propertyObserver(m, 'pricePaid').subscribe(this._validate.bind(this)));
-        this.setupValidation();
-        _.defer(() => {
-            this._validate();
-        }, 50);
+        if( newModel ) {
+            //this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'albumRef').subscribe(this._validate.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'pricePaid').subscribe(this._validate.bind(this)));
+            this.setupValidation();
+            _.defer(() => {
+                this._validate();
+            });
+        }
+
     }
 
     loadDependentModels() {
