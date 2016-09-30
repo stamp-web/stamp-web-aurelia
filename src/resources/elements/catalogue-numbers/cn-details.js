@@ -7,7 +7,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../../events/event-managed';
 import {Catalogues} from '../../../services/catalogues';
 import {Condition} from '../../../util/common-models';
-import {ValidationHelper, ValidationEventHandler} from '../../../util/validation-helper';
+import {ValidationHelper} from '../../../util/validation-helper';
 import _ from 'lodash';
 import $ from 'jquery';
 
@@ -36,23 +36,17 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this.catalogueService = catalogueService;
         this.bindingEngine = bindingEngine;
         this.i18n = i18n;
-        validationController.validateTrigger = validateTrigger.change;
+        validationController.validateTrigger = validateTrigger.manual;
         this.validationController = validationController;
-        this.validationHandler = new ValidationEventHandler(this.validationController);
-        this.validationController.addRenderer(this.validationHandler);
         this._loadCatalogues();
     }
 
     attached() {
         this.subscribe(EventNames.conflictExists, this.handleConflictExists.bind(this));
-        this.validationSubscriber = this.validationHandler.subscribe('validation-status', this._validationChanged.bind(this));
     }
 
     detached() {
         super.detached();
-        if( this.validationSubscriber ) {
-            this.validationSubscriber.dispose();
-        }
         this._modelSubscribers.forEach(sub => {
             sub.dispose();
         });
@@ -107,10 +101,6 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         this.eventBus.publish(EventNames.convert, this.conversionModel);
     }
 
-    _validationChanged(status) {
-        this.isValid = status.valid;
-    }
-
     /**
      * The model will not be "changed" on a save and new.  Only updated/cleared.  So this is only guaranteed to run once.
      * @param newValue
@@ -127,16 +117,13 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
             this.setupValidation();
             this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'catalogueRef').subscribe(this._catalogueChanged.bind(this)));
             this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'condition').subscribe(this._sendNotifications.bind(this)));
-            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'number').subscribe(this._sendNotifications.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'number').subscribe(this._validateAndSendNotifiation.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'value').subscribe(this._validate.bind(this)));
             _.defer(() => {
-                this.isValidChanged();
+                this._catalogueChanged(newValue.catalogueRef);
+                this._validate();
             }, 50);
         }
-    }
-
-    isValidChanged() {
-        this._catalogueChanged(this.model.catalogueRef);
-        this.validationController.validate();
     }
 
     _catalogueChanged(newValue) {
@@ -146,6 +133,17 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
                 this._sendNotifications();
             }
         }
+    }
+
+    _validate() {
+        this.validationController.validate().then( result => {
+           this.isValid = result.length === 0;
+        });
+    }
+
+    _validateAndSendNotifiation() {
+        this._validate();
+        this._sendNotifications();
     }
 
     _sendNotifications() {

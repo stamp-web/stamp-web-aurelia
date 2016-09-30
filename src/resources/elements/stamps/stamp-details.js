@@ -44,7 +44,7 @@ export class StampDetailsComponent extends EventManaged {
         this.i18n = i18n;
         this.countryService = countryService;
         this.validationController = validationController;
-        this.validationController.validateTrigger = validateTrigger.change;
+        this.validationController.validateTrigger = validateTrigger.manual;
         this.loadCountries();
     }
 
@@ -62,21 +62,25 @@ export class StampDetailsComponent extends EventManaged {
         this._modelSubscribers = [];
         if( newValue ) {
             this.setupValidation();
-            this._modelSubscribers.push(this.bindingEngine.collectionObserver(this.validationController.errors).subscribe(this.validationChanged.bind(this)));
             this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'countryRef').subscribe(this.countrySelected.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'rate').subscribe(this._validate.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(newValue, 'description').subscribe(this._validate.bind(this)));
             this.editing = newValue.id > 0;
             if( this.model.id <= 0 ) {
-                setTimeout(() => {
-                    this.validationController.validate();
+                _.defer(() => {
+                    this._validate();
                     $('#details-rate').focus();
                 }, 25);
             }
         }
     }
 
-    validationChanged() {
-        this.isValid = (!this.validationController.errors || this.validationController.errors.length === 0);
+    _validate() {
+        this.validationController.validate().then( result => {
+           this.isValid = result.length === 0;
+        });
     }
+
 
     countrySelected() {
         if (this.model.countryRef > 0) {

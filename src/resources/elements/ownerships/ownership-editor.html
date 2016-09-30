@@ -67,7 +67,7 @@
                <div class="col-sm-2">
                    <input type="text" tabindex="111" class="form-control price-paid" id="owner-pricePaid" value.bind="model.pricePaid & validate:rules">
                </div>
-               <div class="col-sm-3">
+               <div class="col-sm-2 ownership-currency">
                    <select-picker items.bind="codes" class="currency-selector" value.bind="model.code" value-type="String"
                                   config.bind="{ id: 'owner-code', tabIndex: 112, name: 'code', noSearch: true, labelProperty: 'description', valueProperty: 'keyName' }">
                    </select-picker>

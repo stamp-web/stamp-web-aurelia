@@ -81,16 +81,20 @@
     }
 }
 
+.form-control {
+    height: @input-height-base;
+}
+
 .form-group-sm {
     textarea.form-control {
         height: 100%;
     }
     select.form-control {
-        height: 26px;
-        line-height: 26px;
+        height: @input-height-base;
+        line-height: 1.25;
     }
     .form-control {
-        height: 26px;
+        height: @input-height-base;
         padding: 2px 10px;
         font-size: 12px;
         line-height: 1.25;

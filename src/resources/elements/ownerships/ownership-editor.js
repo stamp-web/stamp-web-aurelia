@@ -39,7 +39,7 @@ export class OwnershipEditor extends EventManaged {
         this.sellerService = sellerService;
         this.i18n = i18n;
         this.validationController = validationController;
-        this.validationController.validateTrigger = validateTrigger.change;
+        this.validationController.validateTrigger = validateTrigger.manual;
         this.loadDependentModels();
     }
 
@@ -53,24 +53,22 @@ export class OwnershipEditor extends EventManaged {
             .on(this.model);
     }
 
-    validationChanged() {
-        this.isValid = (!this.validationController.errors || this.validationController.errors.length === 0);
+    _validate() {
+        this.validationController.validate().then(result => {
+            this.isValid = result.length === 0;
+        });
     }
 
-    isValidChanged() {
-        this.validationController.validate();
-    }
-
-    modelChanged() {
+    modelChanged(m) {
         this._modelSubscribers.forEach(sub => {
             sub.dispose();
         });
         this._modelSubscribers = [];
+        this._modelSubscribers.push(this.bindingEngine.propertyObserver(m, 'albumRef').subscribe(this._validate.bind(this)));
+        this._modelSubscribers.push(this.bindingEngine.propertyObserver(m, 'pricePaid').subscribe(this._validate.bind(this)));
         this.setupValidation();
-        this._modelSubscribers.push(this.bindingEngine.collectionObserver(this.validationController.errors).subscribe(this.validationChanged.bind(this)));
-
         _.defer(() => {
-            this.validationController.validate();
+            this._validate();
         }, 50);
     }
 

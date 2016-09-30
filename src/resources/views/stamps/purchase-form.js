@@ -42,15 +42,13 @@ export class PurchaseForm {
     errorMessage = "";
     isValid = false;
 
-    errorSubscriber;
-
     constructor(controller, i18n, bindingEngine, stampService, validationController) {
         this.controller = controller;
         this.i18n = i18n;
         this.bindingEngine = bindingEngine;
         this.stampService = stampService;
         this.validationController = validationController;
-        this.validationController.validateTrigger = validateTrigger.change;
+        this.validationController.validateTrigger = validateTrigger.manual;
     }
 
     priceChanged() {
@@ -59,6 +57,7 @@ export class PurchaseForm {
         } else {
             this.percentage = 0.0;
         }
+        this._validate();
     }
 
     save() {
@@ -114,12 +113,6 @@ export class PurchaseForm {
         this.setupValidation();
     }
 
-    deactivate() {
-        if( this.errorSubscriber) {
-            this.errorSubscriber.dispose();
-        }
-    }
-
     setupValidation() {
         ValidationHelper.defineCurrencyValueRule( ValidationRules, 'number-validator');
         ValidationHelper.defineNumericRangeRule( ValidationRules, 'number-range',0, 20000.0);
@@ -129,15 +122,15 @@ export class PurchaseForm {
             .satisfiesRule( 'number-validator').withMessage(this.i18n.tr('messages.totalPurchaseCurrencyInvalid'))
             .on(this.model);
 
-        this.errorSubscriber = this.bindingEngine.collectionObserver(this.validationController.errors).subscribe(this.validationChanged.bind(this));
-
         _.defer(() => {
-            this.validationChanged();
+            this._validate();
         });
     }
 
-    validationChanged() {
-        this.isValid = this.validationController.errors.length === 0;
+    _validate() {
+        this.validationController.validate().then(result => {
+            this.isValid = result.length === 0;
+        });
     }
 
 }
