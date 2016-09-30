@@ -154,12 +154,13 @@ export class ManageList {
                 this.processField(fieldDef);
             }
         }));
-        this.subscriptions.push(this.eventBus.subscribe(EventNames.save, model => {
+        this.subscriptions.push(this.eventBus.subscribe(EventNames.save, data => {
             if (this.editingEntity.service) {
-                this.editingEntity.service.save(model).then(result => {
+                this.editingEntity.service.save(data.model, data.aspects).then(result => {
                     logger.debug( result );
                     this.eventBus.publish(EventNames.close);
                 }).catch(err => {
+                    logger.debug(err);
                     this.eventBus.publish(EventNames.actionError, err.message);
                 });
             }

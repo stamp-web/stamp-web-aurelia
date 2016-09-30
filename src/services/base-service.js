@@ -20,6 +20,7 @@ import {ObjectUtilities} from '../util/object-utilities';
 import {EventNames} from '../events/event-managed';
 import {LogManager} from 'aurelia-framework';
 import _ from 'lodash';
+import $ from 'jquery';
 
 const logger = LogManager.getLogger('services');
 
@@ -262,10 +263,13 @@ export class BaseService {
         return retVal;
     }
 
-    save(model) {
+    save(model, opts) {
         let self = this;
         return new Promise((resolve, reject) => {
             var href = this.baseHref + '/rest/' + self.getResourceName() + ((model.id > 0 ) ? "/" + model.id : "");
+             if( opts ) {
+                href += '?' + this.paramHelper.toParameters(opts);
+            }
             var body = JSON.stringify(model);
             this.http[(model.id > 0 ) ? 'put' : 'post'](href, body).then(response => {
                 if ((response.statusCode === 200 || response.statusCode === 201) && response.response) {

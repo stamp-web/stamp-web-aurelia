@@ -13,7 +13,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {bindable, customElement, inject} from 'aurelia-framework';
+import {bindable, customElement} from 'aurelia-framework';
+import {I18N} from 'aurelia-i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../events/event-managed';
 
@@ -23,16 +24,28 @@ import {EventNames, EventManaged} from '../../events/event-managed';
 @bindable('content')
 @bindable('title')
 @bindable('icon')
-@inject(EventAggregator)
 export class EditorDialog extends EventManaged {
 
-    errorMsg = "None";
-    subscriptions = [];
+    static inject = [EventAggregator, I18N];
 
-    constructor(eventBus) {
+    errorMsg = '';
+    subscriptions = [];
+    valid = true;
+
+    constructor(eventBus, i18n) {
         super(eventBus);
+        this.i18n = i18n;
         this.eventBus = eventBus;
         this.setupSubscriptions();
+    }
+
+    modelChanged() {
+        this._resetState();
+    }
+
+    _resetState() {
+        this.valid = true;
+        this.errorMsg = '';
     }
 
     setupSubscriptions() {
@@ -43,10 +56,17 @@ export class EditorDialog extends EventManaged {
         this.subscribe(EventNames.actionError, msg => {
             this.errorMsg = msg;
         });
+        this.subscribe(EventNames.valid, val => {
+            this.errorMsg = val === true ? '' : this.i18n.tr('messages.resolveErrors');
+            this.valid = val === true;
+        });
+        this.subscribe(EventNames.setAspects, data => {
+            this.aspects = data;
+        });
     }
 
     save() {
-        this.eventBus.publish(EventNames.save, this.model);
+        this.eventBus.publish(EventNames.save, {model: this.model, aspects: this.aspects});
 
     }
 }

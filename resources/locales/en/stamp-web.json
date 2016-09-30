@@ -125,8 +125,10 @@
         "totalPurchaseCurrencyInvalid": "Total purchase not a currency value",
         "totalPurchaseNumber": "Total purchase out of allowed range",
         "totalPurchaseRequired": "Total purchase is required",
+        "nameRequired": "Name is required",
         "numberRequired": "Number is required",
         "numberInvalid": "Number exceeds the 25 character limit",
+        "resolveErrors": "Resolve issues to continue",
         "valueInvalid": "Value is not a number"
     },
     "prompts": {

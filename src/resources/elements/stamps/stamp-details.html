@@ -29,13 +29,13 @@
 			<div class="form-group form-group-sm has-feedback">
 				<label for="details-rate" class="col-sm-3 control-label">${'editor.rate'|t}</label>
 				<div class="col-sm-3">
-					<input type="text" tabindex="51" required aria-required="true" class="form-control" value.bind="model.rate | emptyText & validate:rules" id="details-rate" aria-describedby="rateStatus">
+					<input type="text" autocomplete="off" tabindex="51" required aria-required="true" class="form-control" value.bind="model.rate | emptyText & validate:rules" id="details-rate" aria-describedby="rateStatus">
 				</div>
 			</div>
 			<div class="form-group form-group-sm stamp-description">
 				<label for="details-description" class="col-sm-3 control-label">${'editor.description'|t}</label>
 				<div class="col-sm-9">
-					<input type="text" tabindex="52" class="form-control" id="details-description" value.bind="model.description | emptyText & validate:rules" aria-describedby="descriptionStatus">
+					<input type="text" autocomplete="off" tabindex="52" class="form-control" id="details-description" value.bind="model.description | emptyText & validate:rules" aria-describedby="descriptionStatus">
 				</div>
 			</div>
 		</div>

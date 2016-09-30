@@ -1,5 +1,6 @@
 <template>
-	<div class="modal " id="${dialogId}" role="dialog">
+    <require from="resources/elements/editor-dialog.css"></require>
+	<div class="modal" id="${dialogId}" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -11,8 +12,10 @@
 					<compose model.bind="model" view-model.bind="content"></compose>
 				</div>
 				<div class="modal-footer">
-					<span class="error-msg">${errorMsg}</span>
-					<button type="button" class="btn btn-primary" tabindex="5000" click.delegate="save()">Save</button>
+                    <div class="messaging" show.bind="errorMsg !== ''">
+                        <i class="sw-icon-attention" ></i> ${errorMsg}
+                    </div>
+					<button type="button" class="btn btn-primary" tabindex="5000" click.delegate="save()" disabled.bind="!valid">Save</button>
 					<button type="button" class="btn" tabindex="5050" data-dismiss="modal">Close</button>
 				</div>
 			</div>

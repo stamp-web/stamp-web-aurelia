@@ -80,6 +80,7 @@ export var EventNames = {
     preferenceChanged: "preference-changed",
     saveSuccessful: "save-completed",
     updateFinished: "update-finished",
+    setAspects: "set-aspects",
     stampCount: "stamp-count",
     stampCountForCollection: "stamp-count-for-collection",
     stampCreate: 'stamp-create',
@@ -87,7 +88,8 @@ export var EventNames = {
     stampEditorCancel: 'stamp-edit-cancel',
     stampRemove: 'stamp-remove',
     stampSaved: 'stamp-saved',
-    toggleStampSelection: 'stamp-select'
+    toggleStampSelection: 'stamp-select',
+    valid: 'is-valid'
 };
 
 export var StorageKeys = {

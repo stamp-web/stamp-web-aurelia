@@ -13,23 +13,74 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+import {bindable} from 'aurelia-framework';
+import {BindingEngine} from 'aurelia-binding';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {NewInstance} from 'aurelia-dependency-injection';
+import {I18N} from 'aurelia-i18n';
+import {ValidationRules, ValidationController, validateTrigger} from 'aurelia-validation';
+import {EventNames} from '../../../events/event-managed';
 import $ from 'jquery';
 import _ from 'lodash';
 
 export class countryEditor {
 
-    model;
+    static inject = [EventAggregator, BindingEngine,  I18N, NewInstance.of(ValidationController)];
+
+    @bindable model;
+
+    _modelSubscribers = [];
+
+    constructor(eventBus, bindingEngine, i18n, validationController) {
+        this.eventBus = eventBus;
+        this.bindingEngine = bindingEngine;
+        this.i18n = i18n;
+        this.validationController = validationController;
+        this.validationController.validationTigger = validateTrigger.manual;
+    }
+
+    deactivate() {
+        this._modelSubscribers.forEach(sub => {
+            sub.dispose();
+        });
+    }
 
     activate(options) {
         this.model = options;
-        if( !(this.model.id > 0) ) {
+        this.setupValidation();
+        if( this.model.id > 0 ) {
+            this.aspects = this.aspects || {};
+            this.aspects.modifyImagePath = true;
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.aspects, 'modifyImagePath').subscribe(this._imagePathChanged.bind(this)));
+            this._imagePathChanged( this.aspects.modifyImagePath );
+        } else {
+            this.model.name = '';
             _.debounce( () => {
                 $('#editor-name').focus();
             }, 125)(this);
-        } else {
-            this.model.aspects = this.model.aspects || {};
-            this.model.aspects.updateImagePath = true;
         }
+        this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'name').subscribe(this._validate.bind(this)));
+        _.debounce( () => {
+            this._validate();
+        }, 125)(this);
+    }
+
+    _validate() {
+        this.validationController.validate().then( result => {
+            this.eventBus.publish(EventNames.valid, result.length === 0);
+        });
+    }
+
+    setupValidation() {
+        ValidationRules
+            .ensure('name')
+            .required().withMessage(this.i18n.tr('messages.nameRequired'))
+            .on(this.model);
+
+    }
+
+    _imagePathChanged(value) {
+        this.eventBus.publish(EventNames.setAspects, {modifyImagePath: value});
     }
 
 }
