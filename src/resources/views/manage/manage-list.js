@@ -31,7 +31,7 @@ const logger = LogManager.getLogger('manage-list');
 @inject(EventAggregator, Countries, Albums, StampCollections, Sellers, Catalogues, Stamps)
 export class ManageList {
 
-    selectedEntity = undefined;
+    selectedEntity = null;
     editingEntity = undefined;
     entityModels = [];
     subscriptions = [];
@@ -123,11 +123,9 @@ export class ManageList {
         if (entityCache) {
             var cacheVal = JSON.parse(entityCache);
             if (cacheVal.field) {
-                var that = this;
-                setTimeout(function () {
-                    that.setEntity(cacheVal.field);
-                }, 250);
-
+                _.debounce( ()=> {
+                   this.setEntity(cacheVal.field);
+                },125)(this);
             }
         }
     }

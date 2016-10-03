@@ -94,7 +94,8 @@ export var EventNames = {
 
 export var StorageKeys = {
     referenceCatalogueNumbers: "referenceCatalogueNumbers",
-    manageEntities: "manage-entities"
+    manageEntities: "manage-entities",
+    listFiltering: 'list-filtering'
 };
 
 export var KeyCodes = {

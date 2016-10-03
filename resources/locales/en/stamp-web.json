@@ -166,7 +166,8 @@
     },
     "manage": {
         "filter": "Filter",
-        "filterPlaceholder": "Filter results..."
+        "filterPlaceholder": "Filter results...",
+        "totalResults": "Total"
     },
     "actions": {
         "add-cn": "Add a new catalogue number",

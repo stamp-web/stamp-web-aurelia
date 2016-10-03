@@ -3,21 +3,20 @@
     <require from="../../value-converters/filter-by-name"></require>
     <require from="../../attributes/find-target"></require>
 
-    <div class="manage-list-toolbar">
+    <div class="manage-list-toolbar hidden-xs">
         <form class="form-horizontal">
             <div class="form-group form-group-sm">
-                <div class="col-sm-2 hidden-xs">
-                    <label for="filter-text">${'manage.filter'|t}</label>
-                </div>
-                <div class="col-sm-4">
-
+                <div class="col-sm-10">
                     <div class="input-group">
+                        <label for="filter-text">${'manage.filter'|t}</label>
                         <input id="filter-text" ref="filterInput" find-target class="form-control" placeholder="${'manage.filterPlaceholder'|t}" type="text" value.bind="filterText">
                         <button class="input-group-addon btn-sm btn btn-default" disabled.bind="filterText===''" click.delegate="clear()">
                             <span class="sw-icon-cancel"></span>
                         </button>
                     </div>
-
+                </div>
+                <div class="col-sm-2 hidden-sm total">
+                    <label>${'manage.totalResults'|t}</label> <span>${models.length}</span>
                 </div>
             </div>
         </form>

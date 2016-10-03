@@ -14,8 +14,8 @@
  limitations under the License.
  */
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {inject, LogManager, bindable} from 'aurelia-framework';
-import {EventNames} from '../../../events/event-managed';
+import {LogManager, bindable} from 'aurelia-framework';
+import {EventNames, StorageKeys} from '../../../events/event-managed';
 import bootbox from 'bootbox';
 import {Operators, Predicate} from 'odata-filter-parser';
 import _ from 'lodash';
@@ -35,11 +35,12 @@ let handleKeyDown = function(e) {
     }
 };
 
-
-@inject(EventAggregator)
-@bindable('models')
-@bindable('field')
 export class EntityListManage {
+
+    static inject = [EventAggregator];
+
+    @bindable models;
+    @bindable field;
 
     subscriptions = [];
     filterText = "";
@@ -67,8 +68,13 @@ export class EntityListManage {
         );
     }
 
-    fieldChanged(newVal) {
+    fieldChanged(newVal,oldVal) {
         this.hasIssue = ( newVal && newVal.field === 'catalogueRef');
+        // The field is changed, so we need to remember the old field if defined (switching between field types)
+        if( oldVal ) {
+            this._saveState(oldVal);
+        }
+        this._restoreState(newVal);
     }
 
     viewStamps(model) {
@@ -125,20 +131,44 @@ export class EntityListManage {
         }
     }
 
+    _saveState(fieldDef) {
+        if( fieldDef && fieldDef.field ) {
+            let obj = {};
+            var filterCache = localStorage.getItem(StorageKeys.listFiltering);
+            if (filterCache) {
+                obj = JSON.parse(filterCache);
+            }
+            obj[fieldDef.field] = this.filterText;
+            localStorage.setItem(StorageKeys.listFiltering, JSON.stringify(obj));
+        }
+    }
+
+    _restoreState(fieldDef) {
+        if( fieldDef &&fieldDef.field ) {
+            var filterCache = localStorage.getItem(StorageKeys.listFiltering);
+            if (filterCache) {
+                var cacheVal = JSON.parse(filterCache);
+                if(cacheVal[fieldDef.field]) {
+                    this.filterText = cacheVal[fieldDef.field];
+                }
+            }
+        }
+    }
+
     attached() {
         let self = this;
         setTimeout( () => { // bind this in a timeout to make sure the detached has fired to remove the listener first
             let id = (self.filterInput) ? self.filterInput.id : 'filter-text';
             $('#' + id).on('keydown', handleKeyDown.bind(self));
         }, 250);
-
-
     }
+
     detached() {
         $('#' + this.filterInput.id).off('keydown', handleKeyDown.bind(this));
         this.subscriptions.forEach(function (sub) {
             sub.dispose();
         });
+        this._saveState(this.field);
     }
 
 }

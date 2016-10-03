@@ -51,11 +51,21 @@
     }
     label {
         text-align: right;
-        float: right;
+        float: left;
+        padding-right: @padding-base-horizontal;
         vertical-align: middle;
         display: inline-block;
         position: relative;
         top: 5px;
+    }
+    .total {
+        float: right;
+        span {
+            position: relative;
+            vertical-align: middle;
+            display: inline-block;
+            top: 5px;
+        }
     }
 }
 
