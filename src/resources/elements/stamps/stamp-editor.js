@@ -226,27 +226,22 @@ export class StampEditorComponent extends EventManaged {
     }
 
     checkExists() {
-        if( this.checkExistsFn && this.checkExistsFn.clearTimeout ) {
-            this.checkExistsFn.clearTimeout();
-            this.checkExistsFn = undefined;
-        }
-        let self = this;
-        this.checkExistsFn = setTimeout(function () {
-            if ((self.duplicateModel && (self.duplicateModel.id <= 0 || self.duplicateModel.wantList === true ) && self.duplicateModel.countryRef > 0 && self.duplicateModel.activeCatalogueNumber)) {
-                let cn = self.duplicateModel.activeCatalogueNumber;
+         _.debounce( () => {
+            if ((this.duplicateModel && (this.duplicateModel.id <= 0 || this.duplicateModel.wantList === true )
+                && this.duplicateModel.countryRef > 0 && this.duplicateModel.activeCatalogueNumber)) {
+                let cn = this.duplicateModel.activeCatalogueNumber;
                 if (cn.catalogueRef > 0 && cn.number && cn.number !== '') {
                     let opts = {
-                        $filter: '((countryRef eq ' + self.duplicateModel.countryRef + ') and (number eq \'' + cn.number + '\'))'
+                        $filter: '((countryRef eq ' + this.duplicateModel.countryRef + ') and (number eq \'' + cn.number + '\'))'
                     };
-                    self.stampService.find(opts).then(results => {
+                    this.stampService.find(opts).then(results => {
                         if (results.models.length > 0) {
-                            self.processExistenceResults(results.models);
+                            this.processExistenceResults(results.models);
                         }
                     });
                 }
-            }
-            this.checkExistsFn = undefined;
-        }, 350);
+            }            
+        }, 350, { 'maxWait': 1000})();
     }
 
     processExistenceResults(models) {
