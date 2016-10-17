@@ -477,14 +477,13 @@ export class StampList extends EventManaged {
             this.stampService.find(opts).then(result => {
                 this.router.navigate(this.router.generate('stamp-list', opts));
                 this.processStamps(result, opts);
+                this.resetDisplay();
                 resolve();
             }).catch(err => {
                 logger.debug(err);
                 reject(err);
             });
         });
-
-
     }
 
     processStamps(result, opts) {
@@ -501,7 +500,27 @@ export class StampList extends EventManaged {
             }
         }
         this.setStatistics(this.reportType);
+    }
 
+    /**
+     * Reset the display to the initial state (scroll top)
+     */
+    resetDisplay() {
+        _.defer( () => {
+            let targetElement = '.stamp-content';
+            switch(this.displayMode) {
+                case 'List':
+                    targetElement += ' stamp-table';
+                    break;
+                case 'Upgrade':
+                    targetElement += ' .stamp-replacement-table-wrapper';
+                    break;
+                default:
+                    targetElement += ' .scroller';
+            }
+            let target = $(this.element).find(targetElement);
+            target.animate({scrollTop: 0}, 'fast');
+        });
     }
 
     attached() {
