@@ -56,12 +56,15 @@ export class StampList extends EventManaged {
     heading = "Stamp List";
     displayMode = 'Grid';
     imageShown = false;
+    imagePath;
+    _defaultImagePath = 'http://drake-server.ddns.net:9001/Pictures/Stamps';
     editorShown = false;
     panelContents = "stamp-editor";
     subscribers = [];
     referenceMode = false;
     reportValue = "";
     reportType = "CatalogueValue";
+
 
     sortColumns = ['number', 'value', 'pricePaid' ];
 
@@ -349,7 +352,6 @@ export class StampList extends EventManaged {
     }
 
     setupSubscriptions() {
-        var self = this;
         this.subscribe(EventNames.pageChanged, page => {
             this.setPage(page);
         });
@@ -358,17 +360,13 @@ export class StampList extends EventManaged {
             this.setPage(page);
         });
         this.subscribe(EventNames.stampCreate, () => {
-            self.editingStamp = createStamp(false /* Not a wantlist */);
-            self.editorShown = true;
-        });
-
-        this.subscribe(ImagePreviewEvents.close, () => {
-            self.imageShown = false;
+            this.editingStamp = createStamp(false /* Not a wantlist */);
+            this.editorShown = true;
         });
 
         this.subscribe(EventNames.panelCollapsed, config => {
             if (config.name === "stamp-list-editor-panel") {
-                self.editorShown = false;
+                this.editorShown = false;
             }
         });
 
@@ -376,25 +374,23 @@ export class StampList extends EventManaged {
             this.handleFullSizeImage(stamp);
         });
         this.subscribe(EventNames.stampEdit, stamp => {
-            self.lastSelected = stamp;
-            self.panelContents = 'stamp-editor';
-            self.editingStamp = stamp;
-            self.editorShown = true;
+            this.lastSelected = stamp;
+            this.panelContents = 'stamp-editor';
+            this.editingStamp = stamp;
+            this.editorShown = true;
         });
         this.subscribe(EventNames.stampEditorCancel, () => {
-            self.editorShown = false;
-         //   self.editingStamp = null;
-
+            this.editorShown = false;
         });
         this.subscribe(EventNames.stampSaved, result => {
             if( !result.remainOpen) {
-                self.editorShown = false;
+                this.editorShown = false;
             }
             // TODO Need to toggle editor without toggling
         });
 
         this.subscribe(EventNames.deleteSuccessful, obj => {
-            if (obj && obj.type === self.stampService.getCollectionName()) {
+            if (obj && obj.type === this.stampService.getCollectionName()) {
                 _.remove(this.stamps, {id: obj.id});
             }
         });
@@ -402,25 +398,26 @@ export class StampList extends EventManaged {
 
         this.subscribe(EventNames.stampRemove, stamp => {
             var _remove = function (model) {
-                if (self.editingStamp && stamp.id === self.editingStamp.id) { // remove editing stamp
-                    self.editingStamp = null;
-                    self.editorShown = false;
+                if (this.editingStamp && stamp.id === this.editingStamp.id) { // remove editing stamp
+                    this.editingStamp = null;
+                    this.editorShown = false;
                 }
-                self.stampService.remove(model).then(function() {
-                    self.eventBus.publish(EventNames.stampCount, { stamp: model, increment: false });
-                    var index = _.findIndex(self.stamps, {id: model.id});
-                    self.stamps.splice(index, 1);
+                this.stampService.remove(model).then(function() {
+                    this.eventBus.publish(EventNames.stampCount, { stamp: model, increment: false });
+                    var index = _.findIndex(this.stamps, {id: model.id});
+                    this.stamps.splice(index, 1);
                 }).catch(err => {
                     logger.error(err);
                 });
             };
+
             bootbox.confirm({
                 size: 'large',
                 className: 'sw-dialog-wrapper',
                 message: "Delete " + stamp.rate + ' - ' + stamp.description + "?",
-                callback: function (result) {
+                callback: (result) => {
                     if (result === true) {
-                        _remove.call(self, stamp);
+                        _remove.call(this, stamp);
 
                     }
                 }
@@ -463,10 +460,9 @@ export class StampList extends EventManaged {
     }
 
     handleFullSizeImage(stamp) {
-        if (stamp && stamp.stampOwnerships && stamp.stampOwnerships.length > 0) {
-            let oldImage = this.fullSizeImage;
-            this.fullSizeImage = "http://drake-server.ddns.net:9001/Pictures/Stamps/" + stamp.stampOwnerships[0].img;
-            this.imageShown = (!this.imageShown || oldImage !== this.fullSizeImage);
+        if (stamp && !_.isEmpty(stamp.stampOwnerships)) {
+            this.fullSizeImage = this.imagePath + '/' + _.first(stamp.stampOwnerships).img;
+            this.imageShown = !this.imageShown;
         }
     }
 
@@ -535,20 +531,20 @@ export class StampList extends EventManaged {
         return new Promise((resolve, reject) => {
             Promise.all([this.countryService.find(), this.preferenceService.find()]).then( (results) => {
                 let result = (results && results.length > 0 ) ? results[0] : undefined;
-                self.countries = result ? result.models : [];
+                this.countries = result ? result.models : [];
                 let $filter = LocationHelper.getQueryParameter("$filter");
                 if ($filter) {
                     let f = Parser.parse($filter);
                     if (f) {
-                        self.currentFilters = f.flatten();
-                        logger.debug(self.currentFilters);
+                        this.currentFilters = f.flatten();
+                        logger.debug(this.currentFilters);
                         SessionContext.setSearchCondition(f);
                     }
                 } else if (result && result.total > 0) {
                     var indx = Math.floor(Math.random() * result.total);
-                    self.currentFilters.push(new Predicate({
+                    this.currentFilters.push(new Predicate({
                         subject: 'countryRef',
-                        value: self.countries[indx].id
+                        value: this.countries[indx].id
                     }));
                 }
                 let $orderby = LocationHelper.getQueryParameter("$orderby");
@@ -558,7 +554,8 @@ export class StampList extends EventManaged {
                     this.options.sort = orderParts[0];
                     this.options.sortDirection = orderParts[1];
                 }
-                let $top = self.preferenceService.getByNameAndCategory('pageSize', 'stamps');
+
+                let $top = this.preferenceService.getByNameAndCategory('pageSize', 'stamps');
                 if( $top ) {
                     this.options.$top = +$top.value;
                 }
@@ -566,6 +563,11 @@ export class StampList extends EventManaged {
                 if( $skip ) {
                     this.options.$skip = $skip;
                 }
+
+                // extract image path from preferences.
+                let _imagePath = this.preferenceService.getByNameAndCategory('imagePath', 'stamps');
+                this.imagePath = ( !_.isEmpty(_imagePath)) ?  _imagePath.value : this._defaultImagePath;
+
                 this.search().then( () => {
                     logger.debug("StampGrid initialization time: " + ((new Date().getTime()) - t) + "ms");
                     resolve();

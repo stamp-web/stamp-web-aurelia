@@ -15,6 +15,7 @@
  */
 import {inject, customElement, bindable} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {bindingMode} from 'aurelia-binding';
 
 import _ from 'lodash';
 import loadImage from 'blueimp-load-image';
@@ -26,13 +27,11 @@ export const ImagePreviewEvents = {
 
 @customElement('image-preview')
 @inject(Element, EventAggregator)
-@bindable("image")
-@bindable("boundsSelector")
-@bindable({
-    name: "show",
-    defaultValue: false
-})
 export class ImagePreviewer {
+
+    @bindable({defaultBindingMode: bindingMode.twoWay}) shown = false; // show causes binding issues
+    @bindable image;
+    @bindable boundsSelector;
 
     constructor(element, eventBus) {
         this.element = element;
@@ -40,22 +39,37 @@ export class ImagePreviewer {
     }
 
     imageChanged(fullSizeImage) {
-        if( fullSizeImage && fullSizeImage !== '' ) {
-            let self = this;
-            _.debounce(function () {
-                let container = $(self.element).parents().find(self.boundsSelector);
-                loadImage( fullSizeImage, img => {
+        let oldImage = this.fullImage;
+        this.fullImage = fullSizeImage;
+        if( this.fullImage && oldImage && oldImage !== this.fullImage ) {
+            this.showFullSizeImage();
+        }
+    }
+
+    showFullSizeImage() {
+        if(  this.fullImage &&  this.fullImage !== '' ) {
+            _.defer(() => {
+                let container = $(this.element).parents().find(this.boundsSelector);
+                loadImage(  this.fullImage, img => {
                     if(img.type === "error") {
-                        self.closeFullSizeImage();
+                        this.closeFullSizeImage();
                     } else {
-                        $(self.element).find('div').html(img);
+                        $(this.element).find('div').html(img);
                     }
                 }, {
                     maxWidth: +container.width(),
                     maxHeight: +container.height(),
                     contain: true
                 } );
-            })(this);
+            });
+        } else {
+            this.closeFullSizeImage();
+        }
+    }
+
+    shownChanged(showIt) {
+        if(showIt) {
+            this.showFullSizeImage();
         } else {
             this.closeFullSizeImage();
         }
