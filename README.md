@@ -34,29 +34,25 @@ A demo server has been provided using the following credentials:
 To run the app, follow these steps.
 
 1. Ensure that [NodeJS](http://nodejs.org/) is installed. This provides the platform on which the build tooling runs.
-2. From the project folder, execute the following command:
 
-  ```shell
-  npm install
-  ```
-3. Ensure that [Gulp](http://gulpjs.com/) is installed. If you need to install it, use the following command:
+2. Ensure that [Gulp](http://gulpjs.com/) is installed. If you need to install it, use the following command:
 
   ```shell
   npm install -g gulp
   ```
 
-4. Install the client-side dependencies with npm:
+3. Install the client-side dependencies with npm:
 
   ```shell
   npm install
   ```
 
-5. To run the app, execute the following command:
+4. To run the app, execute the following command:
 
   ```shell
   au run --watch
   ```
-7. Browse to [localhost:9000](http://localhost:9000) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
+5. Browse to [localhost:9000](http://localhost:9000) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
 
 ## Browser Support
 
