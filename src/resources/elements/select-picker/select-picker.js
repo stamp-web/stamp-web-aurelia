@@ -93,14 +93,8 @@ export class Select2Picker {
         $select.on("select2:unselect", this.onUnselect.bind(this));
         $select.on("select2:select", this.onSelect.bind(this));
         // the old values may have been assigned to the selector from previous edits
-        if( this.valueType === Number ) {
-            $select.val(0);
-        } else {
-            $select.val(undefined);
-        }
+        $select.val(undefined);
         this.select2 = $select.select2(options);
-
-
 
         let tabIndex = this.config.tabIndex;
         if( typeof tabIndex === 'undefined' ) {
@@ -124,16 +118,24 @@ export class Select2Picker {
         }
     }
 
+    /**
+     * Take the selected value and properly set the bound value by converting to the appropriate supported type.
+     * @param e selection event.
+     */
     onSelect(e) {
-        let self = this;
         if( e.params && e.params.data ) {
             let data = e.params.data.id;
-            if( self.multiple === true && typeof data === 'string' ) {
+            if( this.multiple === true && typeof data === 'string' ) {
                 let val = data;
-                data = (self.value) ? _.clone(self.value) : [];
+                data = (this.value) ? _.clone(this.value) : [];
                 data.push(val);
+                this.value = _.uniq(data); // prevent duplicates
+            } else if ( this.valueType === 'Number') {
+                this.value = data ? Number.parseInt(data) : -1;
+            } else {
+                this.value = data;
             }
-            self.valueChanged(data, self.value);  // even though we have a value property, select is tracking as an id
+            this.element.dispatchEvent(new Event("change"));
         }
     }
 
@@ -146,37 +148,74 @@ export class Select2Picker {
     }
 
     onUnselect(e) {
-        let self = this;
         if( e.params && e.params.data ) {
-            if( self.multiple) {
+            if( this.multiple) {
                 let newArr = [];
-                if( self.value) {
-                    newArr = _.clone(self.value);
+                if( this.value) {
+                    newArr = _.clone(this.value);
                     _.remove(newArr, el => {
                         return el === e.params.data.id;
                     });
                 }
-                self.valueChanged(newArr, self.value);
+                this.value = newArr;
             } else {
                 let newValue = "";
-                switch(self.valueType) {
-                    case Number:
+                switch(this.valueType) {
+                    case 'Number':
                         newValue = -1;
                         break;
                 }
-                self.valueChanged(newValue, self.value);
+                this.value = newValue;
             }
         }
+    }
+    
+    _valueChanged(newVal,oldValue) {
+        if( newVal !== oldValue ) {
+            if(typeof newVal !== 'undefined') {
+                let val = newVal;
+                if( this.multiple ) {
+                    if (_.xor((oldValue === null ? [] : oldValue), newVal).length > 0) {
+                        let v = [];
+                        _.forEach(newVal, vEntry => {
+                            v.push(this._convertToInternal(vEntry));
+                        });
+                        val = v;
+                    }
+                } else {
+                    val = this._convertToInternal(newVal);
+                }
+                if( this.select2.data('select2') !== undefined ) {
+                    this.select2.val(val).trigger('change');
+                }
+            }
+        }
+    }
+
+    /**
+     * Handle the conversion of the type from the modeled value to the String equivalence of the value used by select2
+     */
+    _convertToInternal(val) {
+        if( typeof val === 'undefined') {
+            return undefined;
+        }
+        let retValue = val;
+        switch(this.valueType) {
+            case 'Number':
+                retValue = val.toString();
+                break;
+        }
+        return retValue;
     }
 
     /**
      * Need to fire to select the first copy
      */
     attached() {
-        _.debounce(self => {
-            if (self.value !== undefined && self.items && self.items.length > 0 ) { // the cached collections may not have been loaded yet
-                self.valueChanged(self.value, undefined);
-            }
+        _.debounce( self => {
+           if( self.items && self.items.length > 0 ) { // cached items are loaded
+               self._valueChanged(self.value);
+           }
         }, 125)(this);
     }
 
@@ -189,62 +228,11 @@ export class Select2Picker {
      */
     itemsChanged(newValue, oldValue) { //eslint-disable-line no-unused-vars
         if( newValue && newValue.length > 0 ) {
-            _.debounce(self => {
-                if( self.value ) {
-                    self.valueChanged(self.value, undefined);
-                    if( self.firedCollectionChanged ) {
-                        logger.debug("Collections was changed after initial binding");
-                    }
-                    self.firedCollectionChanged = true;
-                }
-            })(this);
+            _.defer(() => {
+                this._valueChanged(this.value);
+            });
 
         }
     }
 
-    selectAndFire(newValue, finalNewValue) {
-        if( !finalNewValue ) {
-            finalNewValue = newValue;
-        }
-        // need to handle the case where it is destroyed and listeners are clearing out
-        if( this.select2.data('select2') !== undefined ) {
-            this.select2.val(newValue).trigger('change');
-        }
-        if( this.value !== finalNewValue ) {
-            this.value = finalNewValue;
-        }
-        this.element.dispatchEvent(new Event("change"));
-    }
-
-    valueChanged(newValue, oldValue) {
-        if (newValue === undefined) {
-            logger.warn("value is undefined for " + this.valueProperty );
-            return;
-        }
-        if (this.multiple) {
-            if( oldValue === null ) {
-                oldValue = [];
-            }
-            if( _.xor(oldValue, newValue).length > 0 ) {
-                this.selectAndFire(newValue);
-            }
-        } else {
-            if( this.valueType === "String" ) {
-                this.selectAndFire(newValue);
-            }
-            else if( this.valueType === "Number" ) {
-                if( newValue === "null") { // oddball case - not sure where it is coming from
-                    console.log(this.id + " had a null string");
-                    newValue = null;
-                }
-                var newValueInt = parseInt(Number(newValue), 10);
-                if (isNaN(newValueInt)) {
-                    throw new Error(this.id + ' - value must be null or an integer!');
-                }
-                if (newValueInt === 0 || newValueInt !== Number(oldValue)) { // oldValue may be 0 on initialization
-                    this.selectAndFire('' + newValue, newValueInt);
-                }
-            }
-        }
-    }
 }
