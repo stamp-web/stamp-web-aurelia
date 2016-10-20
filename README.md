@@ -35,10 +35,13 @@ To run the app, follow these steps.
 
 1. Ensure that [NodeJS](http://nodejs.org/) is installed. This provides the platform on which the build tooling runs.
 
-2. Ensure that [Gulp](http://gulpjs.com/) is installed. If you need to install it, use the following command:
+2. Ensure that [Gulp](http://gulpjs.com/) and Aurelia CLI is installed globally. If you need to install it, use the following commands:
 
   ```shell
   npm install -g gulp
+  ```
+  ```shell
+  npm install -g aurelia-cli
   ```
 
 3. Install the client-side dependencies with npm:
