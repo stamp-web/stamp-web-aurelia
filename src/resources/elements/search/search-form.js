@@ -28,16 +28,11 @@ import {EventNames} from '../../../events/event-managed';
 import _ from 'lodash';
 
 @customElement("search-form")
-@bindable({
-    name: 'model',
-    defaultValue: {}
-})
-@bindable({
-    name: 'showMinimize',
-    defaultValue: true
-})
 @inject(Element, EventAggregator, BindingEngine, Countries, StampCollections, Albums, Sellers, Catalogues)
 export class SearchForm {
+
+    @bindable model = {};
+    @bindable showMinimize = true;
 
     loading = true;
     minimizeOnSearch = true;
@@ -45,6 +40,9 @@ export class SearchForm {
     searchFields = ['countryRef', 'stampCollectionRef', 'albumRef', 'sellerRef'];
     dateFields = ['purchased', 'createTimestamp', 'modifyTimestamp'];
     booleanFields = ['defects', 'deception'];
+
+    subscribers = [];
+    valid = false;
 
     constructor(element, eventBus, bindingEngine, countries, stampCollections, albums, sellers, catalogueService) {
         this.element = element;
@@ -58,23 +56,20 @@ export class SearchForm {
     }
 
     bind() {
-        let self = this;
-
-        self.loading = true;
+        this.loading = true;
         let searchConditions = SessionContext.getSearchCondition();
         if( searchConditions !== undefined ) {
             _.forEach(searchConditions.flatten(), filter => {
-                if( _.find( self.dateFields, filter.subject ) === filter.subject ) {
+                if( _.find( this.dateFields, filter.subject ) === filter.subject ) {
                     let key = filter.subject + ((filter.operator === Operators.GREATER_THAN_EQUAL) ? 'Start' : 'End');
-                    self.model[key] = filter.value;
-                } else if (_.find( self.booleanFields, filter.subject) === filter.subject) {
-                    self.model[filter.subject] = ( +filter.value > 0 ) ? true : false;
+                    this.model[key] = filter.value;
+                } else if (_.find( this.booleanFields, filter.subject) === filter.subject) {
+                    this.model[filter.subject] = ( +filter.value > 0 ) ? true : false;
                 } else {
-                    self.model[filter.subject] = filter.value;
+                    this.model[filter.subject] = filter.value;
                 }
             });
         }
-
         return Promise.all( [
             this.loadService(this.countryServices, 'countries'),
             this.loadService(this.stampCollectionService, 'stampCollections'),
@@ -82,11 +77,26 @@ export class SearchForm {
             this.loadService(this.sellerService, 'sellers'),
             this.loadService(this.catalogueService, 'catalogues')
         ]).then( () => {
-            self.loading = false;
+            this.loading = false;
+            this._validate();
         });
     };
 
     unbind() { };
+
+    attached( ) {
+        _.forOwn( this.model, (value, key) => {
+           this.subscribers.push( this.bindingEngine.propertyObserver(this.model,key).subscribe( val => {
+               this._validate();
+           }));
+        });
+    }
+
+    detached( ) {
+        _.forEach( this.subscribers, sub => {
+            sub.dispose();
+        });
+    }
 
     reset() {
         _.forOwn( this.model, (value, key) => {
@@ -95,7 +105,7 @@ export class SearchForm {
             } else if (_.isBoolean(value) ) {
                 this.model[key] = false;
             } else {
-                this.model[key] = null;
+                this.model[key] = undefined;
             }
         });
     };
@@ -129,6 +139,18 @@ export class SearchForm {
                 this.eventBus.publish(EventNames.collapsePanel);
             }
         }
+    }
+
+    _validate() {
+        this.valid = false;
+        _.forOwn( this.model, (value,key) => {
+            if( value && value !== -1 ) {
+                this.valid = true;
+                return false;
+            }
+            return true;
+
+        });
 
     }
 

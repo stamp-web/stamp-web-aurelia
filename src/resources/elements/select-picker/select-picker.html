@@ -4,6 +4,6 @@
 
     <select id.bind="id" class="form-control" multiple.bind="multiple">
         <option></option>
-        <option repeat.for="item of items" value.bind="$parent.getBoundValue(item)">${$parent.getBoundText(item)|t}</option>
+        <option repeat.for="item of items" value.bind="getBoundValue(item)">${getBoundText(item)|t}</option>
     </select>
 </template>

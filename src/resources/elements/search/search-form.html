@@ -104,7 +104,7 @@
                 </div>
                 <div class="editor-buttons ${(showMinimize === true) ? 'col-sm-6' : 'col-sm-12'}">
                     <button type="button" class="btn btn-sm btn-default ${!loading ? '' : 'disabled'}" click.delegate="reset()">Reset</button>
-                    <button type="button" class="btn btn-sm btn-primary ${!loading ? '' : 'disabled'}" click.delegate="search()">Search</button>
+                    <button type="button" class="btn btn-sm btn-primary ${!loading ? '' : 'disabled'}" click.delegate="search()" disabled.bind="!valid">Search</button>
                 </div>
             </div>
 

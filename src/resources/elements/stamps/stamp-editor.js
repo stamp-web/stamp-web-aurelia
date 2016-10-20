@@ -32,7 +32,8 @@ const PreferredValues = [
     {key: 'condition', category: 'stamps', type: Number, model: ['activeCatalogueNumber', 'ownership']},
     {key: 'albumRef', category: 'stamps', type: Number, model: ['ownership']},
     {key: 'sellerRef', category: 'stamps', type: Number, model: ['ownership']},
-    {key: 'grade', category: 'stamps', type: Number, model: ['ownership']}
+    {key: 'grade', category: 'stamps', type: Number, model: ['ownership']},
+    {key: 'CurrencyCode', modelKey: 'code', category: 'currency', type: String, model: ['ownershup']}
 ];
 
 const CACHED_PURCHASED = 'stamp-editor.purchased';
@@ -54,7 +55,7 @@ function createOwnership() {
         id: 0,
         albumRef: -1,
         sellerRef: -1,
-        code: CurrencyCode.USD.keyName,
+        code: undefined,
         purchased: null, //moment(new Date()).format('YYYY-MM-DDT00:00:00Z'),
         pricePaid: 0.0,
         defects: 0,
@@ -151,7 +152,7 @@ export class StampEditorComponent extends EventManaged {
 
     _validateForm() {
         this.invalid = !this.validity.stamp || !this.validity.catalogueNumber;
-        if( !this.duplicateModel.wantList ) {
+        if( this.duplicateModel && !this.duplicateModel.wantList ) {
             this.invalid = this.invalid || !this.validity.ownership;
         }
     }
@@ -299,7 +300,7 @@ export class StampEditorComponent extends EventManaged {
                         if (pref.type === Number) {
                             value = +value;
                         }
-
+                        let modelKey = pref.modelKey ? pref.modelKey : pref.key;
                         if (pref.model) {
                             pref.model.forEach(function (key) {
                                 if (key === "activeCatalogueNumber") {
@@ -307,12 +308,22 @@ export class StampEditorComponent extends EventManaged {
                                 } else if (key === "ownership") {
                                     m = this.ownership;
                                 }
-                                if (m && (pref.type === Number && (m[pref.key] === undefined || (m[pref.key] <= 0) && value > 0))) {
-                                    m[pref.key] = value;
+                                // only update if the current model value is not defined
+                                if( m ) {
+                                    if (pref.type === Number && (m[modelKey] === undefined || (m[modelKey] <= 0) && value > 0)) {
+                                        m[modelKey] = value;
+                                    } else if( m[modelKey] === undefined && value !== undefined) {
+                                        m[modelKey] = value;
+                                    }
                                 }
                             }, this);
-                        } else if (m && (pref.type === Number && (m[pref.key] === undefined || ( m[pref.key] <= 0) && value > 0))) {
-                            m[pref.key] = value;
+                        // only update if the current model value is not defined
+                        } else if (m) {
+                            if (pref.type === Number && (m[modelKey] === undefined || ( m[modelKey] <= 0) && value > 0)) {
+                                m[modelKey] = value;
+                            } else if( m[modelKey] === undefined && value !== undefined) {
+                                m[modelKey] = value;
+                            }
                         } else if (!m) {
                             logger.warn("The stamp model was not defined at the point of preferences initialization.");
                         }

@@ -37,13 +37,15 @@ const logger = LogManager.getLogger('date-picker');
 @inject(Element, I18N)
 export class DatePicker {
 
+    dateDisplayFormat = 'MM/DD/YYYY';
+
     constructor(element, i18n) {
         this.element = element;
         this.i18n = i18n;
     }
 
     attached() {
-        let self = this;
+        this.dateDisplayFormat = this.i18n.tr('date-picker.format');
 
         this.datepicker = $(this.element).find('.date-wrapper input');
         this.datepicker.datepicker({
@@ -63,17 +65,17 @@ export class DatePicker {
         }).on('changeDate', (event) => {
             let wrapper = $(event.currentTarget).closest('.date-control');
             if( wrapper.hasClass('end-date')) {
-                self.lastChangeEndDate = event.date;
+                this.lastChangeEndDate = event.date;
             } else {
-                self.lastChangeDate = event.date;
+                this.lastChangeDate = event.date;
             }
 
         }).on('hide', (event) => {
             let wrapper = $(event.currentTarget).closest('.date-control');
             if( wrapper.hasClass('end-date')) {
-                self.endValue = self.lastChangeEndDate;
+                this.endValue = this.lastChangeEndDate;
             } else {
-                self.value = self.lastChangeDate;
+                this.value = this.lastChangeDate;
             }
         });
 
@@ -198,7 +200,7 @@ export class DatePicker {
      * @private
      */
     formatDisplay(val) {
-        return val ? moment(val).format(this.i18n.tr('date-picker.format')) : undefined;
+        return val ? (moment(_.isString(val) ? new Date(val) : val).format(this.dateDisplayFormat)) : undefined;
     }
 
     /**
