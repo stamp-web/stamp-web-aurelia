@@ -179,6 +179,7 @@
         "make-active": "Set as active catalogue number",
         "print": "Print current page",
         "remove-cn": "Delete catalogue number",
+        "restart-app": "Restart...",
         "reset": "Reset",
         "save": "Save",
         "save-and-new": "Save and new",

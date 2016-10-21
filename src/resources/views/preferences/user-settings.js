@@ -73,6 +73,7 @@ export class UserSettings {
     selectedView = this.EDITOR;
 
     servicesLoaded = 0;
+    allowReset = false;
     loading = false;
     valid = false;
 
@@ -118,6 +119,9 @@ export class UserSettings {
                     };
                 }
                 self.preferenceService.save(pref).then( modifiedPref => {
+                    if( modifiedPref.name === 'locale' && modifiedPref.category === 'user') {
+                        self.allowReset = true;
+                    }
                     self.eventBus.publish( EventNames.preferenceChanged, modifiedPref);
                 });
             });
@@ -154,6 +158,10 @@ export class UserSettings {
             }
         }
         this.valid = !value;
+    }
+
+    restartApp() {
+        window.location.reload();
     }
 
     processResults(collectionName, results) {

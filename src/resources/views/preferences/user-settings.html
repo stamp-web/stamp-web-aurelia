@@ -127,10 +127,11 @@
                         <div class="panel-body">
                             <div class="form-group form-group-sm">
                                 <label for="settings-locale" class="col-sm-3 control-label">${'settings.preferredLocale'|t}</label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-4">
                                     <select-picker class="locale-selector" items.bind="locales" value.two-way="model.user.locale"
                                                    config.bind="{ id: 'settings-locale', valueType: 'String', labelProperty: 'description', tabIndex: 650, valueProperty: 'keyName', filterSearch: false, caption: 'settings.locale-select' }">
                                     </select-picker>
+                                    <button class="btn btn-sm btn-primary restart" click.delegate="restartApp()" show.bind="allowReset">${'actions.restart-app'|t}</button>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm">
