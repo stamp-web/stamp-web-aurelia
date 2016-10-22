@@ -41,7 +41,7 @@ export class ImagePreviewer {
     imageChanged(fullSizeImage) {
         let oldImage = this.fullImage;
         this.fullImage = fullSizeImage;
-        if( this.fullImage && oldImage && oldImage !== this.fullImage ) {
+        if( this.fullImage ) {
             this.showFullSizeImage();
         }
     }
