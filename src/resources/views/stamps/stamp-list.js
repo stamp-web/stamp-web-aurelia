@@ -461,8 +461,14 @@ export class StampList extends EventManaged {
 
     handleFullSizeImage(stamp) {
         if (stamp && !_.isEmpty(stamp.stampOwnerships)) {
+            let oldImage = this.fullSizeImage;
             this.fullSizeImage = this.imagePath + '/' + _.first(stamp.stampOwnerships).img;
-            this.imageShown = !this.imageShown;
+            if( oldImage === this.fullSizeImage ) {
+                this.imageShown = false; // tickle the image shown to force the proper state
+            }
+            _.defer( () => {
+                this.imageShown = true;
+            });
         }
     }
 

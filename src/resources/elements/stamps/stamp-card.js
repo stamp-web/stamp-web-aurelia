@@ -101,8 +101,10 @@ export class StampCard {
     }
 
     showFullSizeImage(evt) {
-        evt.cancelBubble = true;
         if (!_.isEmpty(this.model.stampOwnerships) && _.first(this.model.stampOwnerships).img) {
+            if( this.model.selected ) {
+                evt.cancelBubble = true;  // do not unselect selected stamps on show image
+            }
             this.eventBus.publish(EventNames.showImage, this.model);
         }
     }
