@@ -14,9 +14,13 @@
  limitations under the License.
  */
 import {LogManager} from 'aurelia-framework';
+import {NewInstance} from 'aurelia-dependency-injection';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {HttpClient} from 'aurelia-http-client';
+import {Preferences} from 'services/preferences';
 import environment from './environment';
 import Backend from 'i18next-xhr-backend'
-
+import _ from 'lodash';
 const logger = LogManager.getLogger('stamp-web');
 
 if (window.location.href.indexOf('debug=true') >= 0) {
@@ -31,6 +35,31 @@ Promise.config({
   }
 });
 
+function getLang() {
+    // Ideally we should DI these objects.  Investigate how we could do this at this early phase of the app
+    let httpClient = new HttpClient();
+    let eventBus = new EventAggregator();
+    let prefs = new Preferences(httpClient,eventBus);
+    return new Promise( (resolve,reject) => {
+        if( prefs ) {
+            prefs.find({
+                $filter: "(category eq 'user') and (name eq 'locale')"
+            }).then(result => {
+                let lang = 'en';
+                if( !_.isEmpty(result) ) {
+                    lang = _.first(result.models).value;
+                }
+                resolve(lang);
+            }).catch( e => {
+                reject(new Error("Failure querying preferences"));
+            });
+        } else {
+            reject(new Error("Preferences services is not available"));
+        }
+    });
+
+}
+
 function setRoot(aurelia) {
     logger.info('bootstrapped:' + aurelia.setupAureliaFinished + ", localization:" + aurelia.setupI18NFinished);
     if(aurelia.setupAureliaFinished && aurelia.setupI18NFinished) {
@@ -39,16 +68,22 @@ function setRoot(aurelia) {
 }
 
 export function configure(aurelia) {
+    getLang().then(lang => {
+        initialize( aurelia, lang );
+    }).catch(e => {
+        console.log('WARNING: Failure to obtain a language to use for Stamp-Web.  Defaulting to "en"');
+        initialize( aurelia, 'en');
+    });
+}
+
+function initialize( aurelia, lang ) {
     aurelia.setupAureliaFinished = false;
     aurelia.setupI18NFinished = false;
-
     aurelia.use
         .standardConfiguration()
         .feature('resources')
-   /*     .plugin('aurelia-ui-virtualization')
-
+   /*   .plugin('aurelia-ui-virtualization')
         .plugin('aurelia-html-import-template-loader')
-
         */
         .plugin('aurelia-dialog', config => {
             config.useDefaults();
@@ -61,13 +96,11 @@ export function configure(aurelia) {
         .feature('bootstrap-validation')
         .plugin('aurelia-i18n', (instance) => {
             instance.i18next.use(Backend);
-
-            // adapt options to your needs (see http://i18next.com/docs/options/)
             instance.setup({
                 backend: {                                  // <-- configure backend settings
                     loadPath: 'resources/locales/{{lng}}/{{ns}}.json' // <-- XHR settings for where to get the files from
                 },
-                lng: 'en',
+                lng: lang,
                 attributes: ['t', 'i18n'],
                 fallbackLng: 'en',
                 ns: ['stamp-web'/*, 'translation'*/],
