@@ -169,8 +169,8 @@ export class Select2Picker {
             }
         }
     }
-    
-    _valueChanged(newVal,oldValue) {
+
+    valueChanged(newVal,oldValue) {
         if( newVal !== oldValue ) {
             if(typeof newVal !== 'undefined') {
                 let val = newVal;
@@ -214,7 +214,7 @@ export class Select2Picker {
     attached() {
         _.debounce( self => {
            if( self.items && self.items.length > 0 ) { // cached items are loaded
-               self._valueChanged(self.value);
+               self.valueChanged(self.value);
            }
         }, 125)(this);
     }
@@ -229,7 +229,7 @@ export class Select2Picker {
     itemsChanged(newValue, oldValue) { //eslint-disable-line no-unused-vars
         if( newValue && newValue.length > 0 ) {
             _.defer(() => {
-                this._valueChanged(this.value);
+                this.valueChanged(this.value);
             });
 
         }
