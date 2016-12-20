@@ -100,7 +100,7 @@
                 "name": "vendor-bundle.js",
                 "prepend": [
                     "node_modules/bluebird/js/browser/bluebird.core.js",
-                    "scripts/require.js"
+                    "node_modules/requirejs/require.js"
                 ],
                 "dependencies": [
                     "lodash",
@@ -127,10 +127,7 @@
                     "aurelia-task-queue",
                     "aurelia-templating",
                     "aurelia-templating-binding",
-                    {
-                        "name": "text",
-                        "path": "../scripts/text"
-                    },
+                    "text",
                     {
                         "name": "aurelia-dialog",
                         "path": "../node_modules/aurelia-dialog/dist/amd",

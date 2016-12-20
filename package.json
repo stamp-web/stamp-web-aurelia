@@ -8,11 +8,11 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aurelia-bootstrapper": "1.0.1",
-    "aurelia-dialog": "1.0.0-beta.3.0.1",
-    "aurelia-http-client": "1.0.2",
-    "aurelia-i18n": "1.2.0",
     "aurelia-animator-css": "1.0.1",
+    "aurelia-bootstrapper": "2.0.0",
+    "aurelia-dialog": "1.0.0-beta.3.0.1",
+    "aurelia-http-client": "1.0.3",
+    "aurelia-i18n": "1.2.3",
     "aurelia-validatejs": "0.7.0",
     "aurelia-validation": "0.13.1",
     "bluebird": "^3.4.1",
@@ -25,11 +25,13 @@
     "moment": "^2.14.1",
     "nprogress": "0.2.0",
     "odata-filter-parser": "^0.2.9",
-    "select2": "4.0.3"
+    "requirejs": "^2.3.2",
+    "select2": "4.0.3",
+    "text": "github:requirejs/text"
   },
   "peerDependencies": {},
   "devDependencies": {
-    "aurelia-cli": "0.21.0",
+    "aurelia-cli": "0.23.0",
     "aurelia-testing": "^1.0.0-beta.2.0.0",
     "aurelia-tools": "^0.2.4",
     "babel-eslint": "^6.0.4",
