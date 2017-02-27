@@ -129,6 +129,7 @@ export class StampEditorComponent extends EventManaged {
         this._validitySubscribers.forEach(sub => {
             sub.dispose();
         });
+        super.detached();
     }
 
     /**
