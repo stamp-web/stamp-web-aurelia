@@ -5,21 +5,25 @@ import {
 } from 'aurelia-validation';
 
 export class BootstrapFormValidationRenderer {
-    render(instruction: RenderInstruction) {
-        for (let { error, elements } of instruction.unrender) {
+    render(instruction) {
+        for (let { result, elements } of instruction.unrender) {
             for (let element of elements) {
-                this.remove(element, error);
+                this.remove(element, result);
             }
         }
 
-        for (let { error, elements } of instruction.render) {
+        for (let { result, elements } of instruction.render) {
             for (let element of elements) {
-                this.add(element, error);
+                this.add(element, result);
             }
         }
     }
 
-    add(element, error) {
+    add(element, result) {
+        if (result.valid) {
+            return;
+        }
+
         const formGroup = element.closest('.form-group');
         if (!formGroup) {
             return;
@@ -34,19 +38,23 @@ export class BootstrapFormValidationRenderer {
         // add help-block
         const message = document.createElement('span');
         message.className = 'help-block validation-message';
-        message.textContent = error.message;
-        message.id = `validation-message-${error.id}`;
+        message.textContent = result.message;
+        message.id = `validation-message-${result.id}`;
         formGroup.appendChild(message);
     }
 
-    remove(element, error) {
+    remove(element, result) {
+        if (result.valid) {
+            return;
+        }
+
         const formGroup = element.closest('.form-group');
         if (!formGroup) {
             return;
         }
 
         // remove help-block
-        const message = formGroup.querySelector(`#validation-message-${error.id}`);
+        const message = formGroup.querySelector(`#validation-message-${result.id}`);
         if (message) {
             formGroup.removeChild(message);
 

@@ -92,7 +92,6 @@ function initialize( aurelia, lang ) {
             config.settings.startingZIndex = 1000;
         })
         .plugin('aurelia-validation')
-        .plugin('aurelia-validatejs')
         .feature('bootstrap-validation')
         .plugin('aurelia-i18n', (instance) => {
             instance.i18next.use(Backend);

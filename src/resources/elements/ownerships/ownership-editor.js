@@ -66,7 +66,7 @@ export class OwnershipEditor extends EventManaged {
 
     _validate() {
         this.validationController.validate().then(result => {
-            this.isValid = result.length === 0;
+            this.isValid = result.valid;
         });
     }
 

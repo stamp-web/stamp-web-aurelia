@@ -41,7 +41,7 @@
 			</div>
 			<div class="form-group form-group-sm has-feedback">
 				<label for="cn-value" class="col-sm-3 control-label"  disabled.bind="model.unknown">${'editor.catalogue-value'|t}</label>
-				<div class="col-sm-3 value-field">
+				<div class="col-sm-6 value-field">
 					<input type="text" autocomplete="off" tabindex="85" class="form-control" id="cn-value" disabled.bind="model.unknown" value.bind="model.value & validate:rules" >
                     <span if.bind="selectedCatalogue" class="sw-currency-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></span>
 				</div>

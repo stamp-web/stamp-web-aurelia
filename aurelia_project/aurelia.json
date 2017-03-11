@@ -135,16 +135,6 @@
                         "main": "aurelia-dialog"
                     },
                     {
-                        "name": "validate.js",
-                        "path": "../node_modules/validate.js",
-                        "main": "validate"
-                    },
-                    {
-                        "name": "aurelia-validatejs",
-                        "path": "../node_modules/aurelia-validatejs/dist/amd",
-                        "main": "aurelia-validatejs"
-                    },
-                    {
                         "name": "aurelia-validation",
                         "path": "../node_modules/aurelia-validation/dist/amd",
                         "main": "aurelia-validation"

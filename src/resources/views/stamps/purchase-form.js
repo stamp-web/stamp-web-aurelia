@@ -49,6 +49,7 @@ export class PurchaseForm {
         this.stampService = stampService;
         this.validationController = validationController;
         this.validationController.validateTrigger = validateTrigger.manual;
+        this._validateDebounced = _.debounce(this._validate.bind(this), 250);
     }
 
     priceChanged() {
@@ -57,7 +58,7 @@ export class PurchaseForm {
         } else {
             this.percentage = 0.0;
         }
-        this._validate();
+        this._validateDebounced();
     }
 
     save() {
@@ -121,15 +122,12 @@ export class PurchaseForm {
             .satisfiesRule( 'number-range').withMessage(this.i18n.tr('messages.totalPurchaseNumber'))
             .satisfiesRule( 'number-validator').withMessage(this.i18n.tr('messages.totalPurchaseCurrencyInvalid'))
             .on(this.model);
-
-        _.defer(() => {
-            this._validate();
-        });
+        this._validateDebounced();
     }
 
     _validate() {
         this.validationController.validate().then(result => {
-            this.isValid = result.length === 0;
+            this.isValid = result.valid;
         });
     }
 

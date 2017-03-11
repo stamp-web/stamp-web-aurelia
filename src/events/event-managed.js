@@ -15,6 +15,7 @@
  */
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import _ from 'lodash';
 
 @inject(EventAggregator)
 export class EventManaged {
@@ -34,15 +35,18 @@ export class EventManaged {
 
     detached() {
         let self = this;
-        let channel = Object.keys(self._subscribers);
-        channel.forEach(key => {
-            self.unsubscribe(key);
-        });
+        let channels = Object.keys(self._subscribers);
+        this.unsubscribe(channels);
     }
 
-    unsubscribe(channel) {
-        this._subscribers[channel].forEach(sub => {
-            sub.dispose();
+    unsubscribe() {
+        let remove = (channel) => {
+            _.forEach(this._subscribers[channel], sub => {
+                sub.dispose();
+            });
+        };
+        _.forEach(arguments, arg => {
+            remove(arg);
         });
     }
 }

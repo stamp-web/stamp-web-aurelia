@@ -107,6 +107,7 @@ export class StampEditorComponent extends EventManaged {
     attached() {
         this.setPreferences();
         this.loadServices();
+        this.unsubscribe(EventNames.checkExists, EventNames.calculateImagePath, EventNames.convert, EventNames.changeEditMode);
         this.subscribe(EventNames.checkExists, this.checkExists.bind(this));
         this.subscribe(EventNames.calculateImagePath, this.calculateImagePath.bind(this));
         this.subscribe(EventNames.convert, this.convertToStamp.bind(this));

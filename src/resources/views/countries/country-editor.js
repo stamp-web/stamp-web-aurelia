@@ -67,7 +67,7 @@ export class countryEditor {
 
     _validate() {
         this.validationController.validate().then( result => {
-            this.eventBus.publish(EventNames.valid, result.length === 0);
+            this.eventBus.publish(EventNames.valid, result.valid);
         });
     }
 

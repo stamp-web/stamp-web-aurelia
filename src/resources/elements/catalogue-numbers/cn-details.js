@@ -67,7 +67,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
             .maxLength(25).withMessage(this.i18n.tr('messages.numberInvalid'))
             .required().withMessage(this.i18n.tr('messages.numberRequired'))
             .ensure('value')
-            .satisfiesRule( 'number-validator').withMessage(this.i18n.tr('messages.currencyInvalid'))
+            .satisfiesRule('number-validator').withMessage(this.i18n.tr('messages.currencyInvalid'))
             .on(this.model);
 
     }
@@ -137,7 +137,7 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     _validate() {
         this.validationController.validate().then( result => {
-           this.isValid = result.length === 0;
+           this.isValid = result.valid;
         });
     }
 
