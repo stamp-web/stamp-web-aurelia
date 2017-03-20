@@ -1,0 +1,32 @@
+@import "../../../theme/_semantic.scss";
+
+search-form {
+    .search-button-bar {
+        label {
+            font-size: $theme-font-size-xs;
+        }
+        .editor-buttons {
+            padding-right: 0;
+            button {
+                &:first-child {
+                    margin-left: $theme-margin-thinner;
+                }
+                float: right;
+            }
+
+        }
+    }
+    .advanced-options {
+        label:after {
+            content: "";
+        }
+        .checkbox input[type="checkbox"], .radio input[type="radio"] {
+            margin-left: 0;
+        }
+    }
+    label {
+        &.disabled {
+            color: $theme-text-disabled-color;
+        }
+    }
+}

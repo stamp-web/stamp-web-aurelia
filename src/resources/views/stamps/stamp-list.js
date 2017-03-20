@@ -65,6 +65,7 @@ export class StampList extends EventManaged {
     reportValue = "";
     reportType = "CatalogueValue";
 
+    pageSize = 500;
 
     sortColumns = ['number', 'value', 'pricePaid' ];
 
@@ -112,7 +113,7 @@ export class StampList extends EventManaged {
         SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this._searchHandler );
     };
 
-    processSearchRequest(data, oldData) { //eslint-disable-line no-unused-vars
+    processSearchRequest(data, oldData) { //eslint-disable-line no-unused-lets
         let self = this;
         let options = (!self.options) ? {} : self.options;
         if( data ) {
@@ -166,7 +167,7 @@ export class StampList extends EventManaged {
     setStatistics(reportType) {
         let self = this;
         self.reportType = reportType;
-        var opt = self.buildOptions();
+        let opt = self.buildOptions();
         opt.$reportType = reportType;
         self.reportValue = self.i18next.tr('footer-statistics.calculating');
 
@@ -182,7 +183,7 @@ export class StampList extends EventManaged {
 
     generatePageModels(total, current) {
         this.pageModels = [];
-        for (var i = 0; i < total; i++) {
+        for (let i = 0; i < total; i++) {
             this.pageModels.push({page: i, current: (current === i)});
         }
         this.pageInfo.total = total;
@@ -190,11 +191,15 @@ export class StampList extends EventManaged {
     }
 
     setSize(size) {
-        var active = parseInt((this.pageInfo.active * this.options.$top) / size);
+        let active = parseInt((this.pageInfo.active * this.options.$top) / size);
         this.options.$skip = Math.max(0, size * active);
         this.options.$top = size;
         this.pageInfo.active = active;
         this.search();
+    }
+
+    pageSizeChanged(newSize) {
+        console.log(newSize);
     }
 
     get selectedCount() {
@@ -397,14 +402,14 @@ export class StampList extends EventManaged {
         this.subscribe(EventNames.toggleStampSelection, this.stampSelected.bind(this));
 
         this.subscribe(EventNames.stampRemove, stamp => {
-            var _remove = function (model) {
+            let _remove = function (model) {
                 if (this.editingStamp && stamp.id === this.editingStamp.id) { // remove editing stamp
                     this.editingStamp = null;
                     this.editorShown = false;
                 }
                 this.stampService.remove(model).then(function() {
                     this.eventBus.publish(EventNames.stampCount, { stamp: model, increment: false });
-                    var index = _.findIndex(this.stamps, {id: model.id});
+                    let index = _.findIndex(this.stamps, {id: model.id});
                     this.stamps.splice(index, 1);
                 }).catch(err => {
                     logger.error(err);
@@ -474,7 +479,7 @@ export class StampList extends EventManaged {
 
     search() {
         return new Promise((resolve, reject) => {
-            var opts = this.buildOptions();
+            let opts = this.buildOptions();
             this.stampService.clearSelected();
             this.stampService.find(opts).then(result => {
                 this.router.navigate(this.router.generate('stamp-list', opts));
@@ -529,7 +534,7 @@ export class StampList extends EventManaged {
         this.setupSubscriptions();
     }
 
-    activate(params, routeConfig) { //eslint-disable-line no-unused-vars
+    activate(params, routeConfig) { //eslint-disable-line no-unused-lets
         let t = new Date().getTime();
         let self = this;
         this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');
@@ -547,7 +552,7 @@ export class StampList extends EventManaged {
                         SessionContext.setSearchCondition(f);
                     }
                 } else if (result && result.total > 0) {
-                    var indx = Math.floor(Math.random() * result.total);
+                    let indx = Math.floor(Math.random() * result.total);
                     this.currentFilters.push(new Predicate({
                         subject: 'countryRef',
                         value: this.countries[indx].id

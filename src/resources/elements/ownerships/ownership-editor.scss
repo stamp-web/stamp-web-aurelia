@@ -1,0 +1,32 @@
+@import "../../../theme/_semantic.scss";
+
+.sw-ownership-editor {
+    .input-group[class*="col-"] {
+        padding-left: $theme-padding-base;
+        .input-group-addon {
+            padding: 0 0.4rem;
+        }
+    }
+
+    .form-control {
+        &.price-paid {
+            width:        9rem;
+            margin-right: $theme-margin-thin;
+        }
+    }
+
+    .checkbox input[type="checkbox"] {
+        margin-left: 0;
+    }
+
+    .help-block {
+        margin-bottom: 0;
+    }
+
+    .ownership-currency {
+        padding-left: 0;
+    }
+}
+
+
+

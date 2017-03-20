@@ -1,0 +1,60 @@
+@import 'semantic';
+
+html {
+    font-size: 10px;
+
+    /*@media screen and (min-width: 1200px) {
+        font-size: 20px;
+    }*/
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"] {
+    height: $theme-input-height;
+}
+
+button {
+    &:hover {
+        cursor: pointer;
+        &.disabled {
+            cursor: default;
+        }
+    }
+
+}
+
+/**
+ * Selector Rules
+ */
+.country-selector,
+.stamp-collection-selector,
+.album-selector,
+.seller-selector,
+.catalogue-selector {
+    max-width: 45rem;
+}
+
+.condition-selector, .grade-selector {
+    max-width: 17.5rem;
+}
+
+.currency-selector {
+    max-width: 8.5rem;
+}
+
+.pageSize-selector {
+    max-width: 15rem;
+}
+
+th {
+    background-color: $gray-lighter;
+}
+
+.form-group.has-error {
+    .validation-message {
+        color: $brand-danger;
+    }
+}

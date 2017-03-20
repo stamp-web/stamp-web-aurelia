@@ -1,0 +1,13 @@
+@import "../../../theme/_semantic.scss";
+
+stamp-editor {
+    width: 100%;
+}
+
+.stamp-editor {
+    font-size: $theme-font-size-sm;
+}
+
+.editor-buttons {
+    float: right;
+}

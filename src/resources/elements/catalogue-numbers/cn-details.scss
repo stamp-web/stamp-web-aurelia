@@ -1,0 +1,36 @@
+@import "../../../theme/_semantic.scss";
+
+catalogue-number-details {
+
+    .sw-conversion {
+        font-size: 1.2em;
+        position:  absolute;
+        &.sw-convert {
+            color:  $theme-action-color;
+            cursor: pointer;
+        }
+
+        &.sw-warning {
+            color: $theme-warning-color;
+        }
+    }
+
+    .sw-currency-label {
+        margin-left: $theme-margin-base;
+        &.control-label {
+            text-align: left;
+        }
+    }
+
+    .value-field {
+        input {
+            max-width: 7rem;
+            display:   inline-block;
+        }
+    }
+
+    .help-block {
+        margin-bottom: 0;
+    }
+}
+

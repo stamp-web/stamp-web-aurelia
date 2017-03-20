@@ -1,0 +1,51 @@
+@import "../../../theme/_semantic.scss";
+
+.sw-catalogue-number-table {
+    margin:    $theme-margin-base;
+    font-size: $theme-font-size-sm;
+
+    .sw-catalogue-number-content {
+        overflow-y: auto;
+        display:    block;
+        height:     100%;
+        max-height: 15.5rem;
+    }
+    thead {
+        border: $theme-border;
+    }
+    tbody {
+        border-right:  $theme-border;
+        border-left:   $theme-border;
+        border-bottom: $theme-border;
+    }
+
+    .editing-row {
+        .editable-cell {
+            width: 100%;
+        }
+
+        .form-control {
+            font-size: $theme-font-size-base;
+            height:    $theme-input-height;
+        }
+
+        .action-edit-ok {
+            color: $theme-btn-primary-color;
+        }
+
+        .action-edit-cancel {
+            color: $theme-invalid-color;
+        }
+
+        .actions {
+            padding-top: $theme-padding-thinner;
+        }
+    }
+
+    .cn-row {
+    }
+
+    .row-being-edited {
+        display: none;
+    }
+}

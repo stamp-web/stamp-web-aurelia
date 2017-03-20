@@ -1,0 +1,80 @@
+@import "../../../theme/_semantic.scss";
+
+.purchase-form {
+    width: 50rem;
+
+    .price-entry {
+        height: 5em;
+    }
+    .price-paid {
+        padding-left: 0;
+        input {
+            width:        7.5rem;
+            margin-right: $theme-margin-thin;
+        }
+    }
+    .percentage-not-valid {
+        opacity: 0.5;
+    }
+    .label-value {
+        text-align:   left;
+        padding-left: 0;
+    }
+    .purchase-currency {
+        position: absolute;
+        top:      0;
+        left:     calc(66% + #{$theme-padding-input});
+    }
+
+    .help-block {
+        padding-top:   $theme-input-height;
+        margin-bottom: 0;
+        padding-left:  16.5rem;
+    }
+}
+
+ai-dialog-body {
+
+    > div.well {
+        background-color: $theme-appbar-bg;
+        color:            $theme-appbar-color;
+        margin-left:      -1.2rem;
+        margin-right:     -1.2rem;
+        margin-top:       -1.2rem;
+    }
+}
+
+ai-dialog-footer {
+    position: relative;
+    height:   5rem;
+    .process-progress, .messaging {
+        width:        60%;
+        display:      inline-block;
+        float:        left;
+        padding-top:  $theme-padding-thick;
+        padding-left: $theme-padding-thin;
+        top:          50%;
+        transform:    translate(0, -50%);
+        left:         0;
+        position:     absolute;
+    }
+    .process-progress {
+        .progress {
+            margin-bottom: $theme-margin-base;
+        }
+    }
+    .messaging {
+        text-align: left;
+        font-size:  $theme-font-size-sm;
+        i {
+            color: $theme-invalid-color;
+        }
+    }
+    .button-actions {
+        position: absolute;
+        right:    $theme-padding-base;
+        bottom:   0;
+        top:      0;
+        float:    right;
+    }
+}

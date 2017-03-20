@@ -31,8 +31,8 @@ const logger = LogManager.getLogger('manage-list');
 @inject(EventAggregator, Countries, Albums, StampCollections, Sellers, Catalogues, Stamps)
 export class ManageList {
 
-    selectedEntity = null;
-    editingEntity = undefined;
+    selectedEntity;
+    editingEntity;
     entityModels = [];
     subscriptions = [];
 
@@ -100,7 +100,7 @@ export class ManageList {
             if (instruction.fragment === '') {
                 this._restoreState();
             } else {
-                var index = _.findIndex(this.entityModels, {collectionName: instruction.fragment});
+                let index = _.findIndex(this.entityModels, {collectionName: instruction.fragment});
                 if (index >= 0) {
                     this._saveState(this.entityModels[index].field);
                 }
@@ -112,19 +112,19 @@ export class ManageList {
     }
 
     _saveState(fieldDef) {
-        var obj = {
+        let obj = {
             field: fieldDef
         };
         localStorage.setItem(StorageKeys.manageEntities, JSON.stringify(obj));
     }
 
     _restoreState() {
-        var entityCache = localStorage.getItem(StorageKeys.manageEntities);
+        let entityCache = localStorage.getItem(StorageKeys.manageEntities);
         if (entityCache) {
-            var cacheVal = JSON.parse(entityCache);
+            let cacheVal = JSON.parse(entityCache);
             if (cacheVal.field) {
-                _.debounce( ()=> {
-                   this.setEntity(cacheVal.field);
+                _.debounce( that => {
+                   that.selectedEntityChanged(cacheVal.field);
                 },125)(this);
             }
         }
@@ -132,6 +132,7 @@ export class ManageList {
 
     activate() {
         this.configureSubscriptions();
+        this._restoreState();
     }
 
     deactivate() {
@@ -147,7 +148,7 @@ export class ManageList {
             this.router.navigate(this.router.generate('stamp-list', {$filter: opts.serialize()}));
         }));
         this.subscriptions.push(this.eventBus.subscribe(EventNames.selectEntity, collectionName => {
-            var fieldDef = _.find(this.entityModels, {collectionName: collectionName});
+            let fieldDef = _.find(this.entityModels, {collectionName: collectionName});
             if (fieldDef) {
                 this.processField(fieldDef);
             }
@@ -181,7 +182,7 @@ export class ManageList {
     }
 
     getSortCriteria(fieldDef) {
-        var opts = {
+        let opts = {
             $orderby: 'name asc'
         };
         if (fieldDef.field === 'catalogueRef') {
@@ -191,20 +192,19 @@ export class ManageList {
     }
 
     processField(fieldDef) {
-        if(this.selectedEntity === fieldDef) {
+        if(this.selectedEntity === fieldDef.field) {
             return;
         }
-        this.selectedEntity = fieldDef;
+        this.selectedEntity = fieldDef.field;
         fieldDef.service.find(this.getSortCriteria(fieldDef)).then(result => {
-            var that = this;
-            that.eventBus.publish(EventNames.manageEntity, {
+            this.eventBus.publish(EventNames.manageEntity, {
                 models: result.models,
-                field: that.selectedEntity
+                field: fieldDef
             });
             if( result.models.length > 0 && typeof result.models[0].stampCount === 'undefined') {
                 fieldDef.service.countStamps().then( countResults => {
                     _.forEach( countResults, function( r ) {
-                        var entity = _.find(result.models, { id: +r.id});
+                        let entity = _.find(result.models, { id: +r.id});
                         if( entity ) {
                             entity.stampCount = +r.count;
                         }
@@ -215,10 +215,16 @@ export class ManageList {
         });
     }
 
-    setEntity(entityType) {
-        var index = _.findIndex(this.entityModels, {field: entityType});
+    selectionChanged(event) {
+        if (event.originalEvent) return;
+        this.selectedEntity = event.detail.data;
+        this.selectedEntityChanged(this.selectedEntity);
+    }
+
+    selectedEntityChanged(entityType) {
+        let index = _.findIndex(this.entityModels, {field: entityType});
         if (index >= 0) {
-            var collectionName = this.entityModels[index].collectionName;
+            let collectionName = this.entityModels[index].collectionName;
             if (this.router.currentInstruction && this.router.currentInstruction.fragment !== collectionName) {
                 this.router.navigate(collectionName);
             }
@@ -227,16 +233,15 @@ export class ManageList {
     }
 
     create(entity) {
-        var that = this;
         this.editingEntity = entity;
-        setTimeout(function () {
-            that.editingModel = {
+        _.defer(() => {
+            this.editingModel = {
                 id: 0
             };
-            that.editorTitle = entity.createTitle;
-            that.editorContent = entity.editor;
-            that.editorIcon = entity.icon;
-        }, 50);
+            this.editorTitle = entity.createTitle;
+            this.editorContent = entity.editor;
+            this.editorIcon = entity.icon;
+        });
 
     }
 

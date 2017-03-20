@@ -16,57 +16,54 @@
 		<form class="navbar-form" role="search">
 			<div class="btn-toolbar" role="toolbar">
 				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-sm btn-default" title="${'nav.new-stamp'|t}" click.trigger="showEditor('create-stamp')">
+					<button type="button" class="btn btn-secondary hidden-sm-down" title="${'nav.new-stamp'|t}" click.trigger="showEditor('create-stamp')">
 						<span class="sw-icon-plus"></span>
 					</button>
-                    <button class="btn btn-sm btn-default" title="${'nav.search'|t}" click.trigger="showEditor('search-panel')">
+                    <button class="btn btn-secondary" title="${'nav.search'|t}" click.trigger="showEditor('search-panel')">
                         <span class="sw-icon-search"></span>
                     </button>
-                    <button class="btn btn-sm btn-default ${selectedCount > 0 ? '' : 'disabled'}" title="${'actions.purchase'|t}" click.delegate="purchase()">
+                    <button class="btn btn-secondary hidden-sm-down ${selectedCount > 0 ? '' : 'disabled'}" title="${'actions.purchase'|t}" click.delegate="purchase()">
                         <span class="sw-icon-purchased"></span>
                     </button>
 				</div>
 
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-sm btn-default" title="${'nav.select-all'|t}" click.trigger="selectAll(true)">
+                <div class="btn-group hidden-sm-down" role="group">
+                    <button type="button" class="btn btn-secondary" title="${'nav.select-all'|t}" click.trigger="selectAll(true)">
                         <span class="sw-icon-select-all"></span>
                     </button>
-                    <button type="button" class="btn btn-sm btn-default" title="${'nav.clear-all'|t}" click.trigger="selectAll(false)">
+                    <button type="button" class="btn btn-secondary" title="${'nav.clear-all'|t}" click.trigger="selectAll(false)">
                         <span class="sw-icon-clear-all"></span>
                     </button>
                 </div>
 
-                <div class="btn-group input-group quick-search hidden-xs hidden-sm">
+                <div class="btn-group input-group quick-search hidden-md-down" role="group">
                     <input type="text" find-target class="form-control" value.two-way="searchText" placeholder="Search">
-                    <button class="btn btn-sm btn-default" title="Search" click.delegate="sendSearch()">
+                    <button class="btn btn-secondary" title="Search" click.delegate="sendSearch()">
                         <span class="sw-icon-filter"></span>
                     </button>
-                    <button class="btn btn-sm btn-default" title="Clear search" click.delegate="clearSearch()">
+                    <button class="btn btn-secondary" title="Clear search" click.delegate="clearSearch()">
                         <span class="sw-icon-cancel"></span>
                     </button>
                 </div>
 
                 <div class="btn-group" role="group">
-					<button class="btn btn-sm btn-default ${  displayMode === 'Grid' ? 'active' : ''}" title="${'actions.show-as-grid'|t}" click.trigger="setDisplayMode('Grid')">
+					<button class="btn btn-secondary ${  displayMode === 'Grid' ? 'active' : ''}" title="${'actions.show-as-grid'|t}" click.trigger="setDisplayMode('Grid')">
 						<span class="sw-icon-gridview"></span>
 					</button>
-					<button class="btn btn-sm btn-default ${ displayMode === 'List' ? 'active' : ''}" title="${'actions.show-as-table'|t}" click.trigger="setDisplayMode('List')">
+					<button class="btn btn-secondary ${ displayMode === 'List' ? 'active' : ''}" title="${'actions.show-as-table'|t}" click.trigger="setDisplayMode('List')">
 						<span class="sw-icon-list"></span>
 					</button>
-                    <button class="btn btn-sm btn-default ${ displayMode === 'Upgrade' ? 'active' : ''}" title="${'actions.show-as-upgrade'|t}" click.trigger="setDisplayMode('Upgrade')">
+                    <button class="btn btn-secondary hidden-sm-down ${ displayMode === 'Upgrade' ? 'active' : ''}" title="${'actions.show-as-upgrade'|t}" click.trigger="setDisplayMode('Upgrade')">
                         <span class="sw-icon-exchange"></span>
+                    </button>
+                    <button class="btn btn-secondary hidden-sm-down ${ referenceTableState }" disabled.bind="referenceTableState === 'disabled'" title="${'actions.show-reference-cataloguenumbers'|t}" click.delegate="toggleCatalogueNumbers()">
+                        <span class="sw-icon-references"></span>
                     </button>
 				</div>
 
-                <div class="btn-group" role="group">
-                    <button class="btn btn-sm btn-default ${ referenceTableState }" disabled.bind="referenceTableState === 'disabled'" title="${'actions.show-reference-cataloguenumbers'|t}" click.delegate="toggleCatalogueNumbers()">
-                        <span class="sw-icon-references"></span>
-                    </button>
-                </div>
-
-				<div class="btn-group sort-actions">
+				<div class="btn-group sort-actions hidden-sm-down" role="group">
                     <div class="dropdown">
-                        <button type="button" class="btn btn-default btn-sm dropdown-toggle sort-selector" data-toggle="dropdown">
+                        <button type="button" class="btn btn-secondary dropdown-toggle sort-selector" data-toggle="dropdown">
                             <span class="selector-text">${'sort.' + options.sort|t | defaultValue:'sort.placeholder'|t}</span>
                             <span class="caret"></span>
                         </button>
@@ -74,15 +71,16 @@
                             <li repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${'sort.' + sortCol|t}</li>
                         </ul>
                     </div>
-                    <button class="btn btn-sm btn-default ${options.sort === 'placeholder' ? 'disabled' : ''}" title="Clear sort" click.trigger="clearSort()">
+                    <button class="btn btn-secondary ${options.sort === 'placeholder' ? 'disabled' : ''}" title="Clear sort" click.trigger="clearSort()">
                         <span class="sw-icon-cancel"></span>
                     </button>
-					<button class="btn btn-sm btn-default ${options.sort === 'placeholder' ? 'disabled' : ''}" click.trigger="toggleSortDirection()">
+					<button class="btn btn-secondary ${options.sort === 'placeholder' ? 'disabled' : ''}" click.trigger="toggleSortDirection()">
 						<span class="${options.sortDirection === 'asc' ? 'sw-icon-sort-up' : 'sw-icon-sort-down'}"></span>
 					</button>
 				</div>
-                <div class="dropdown hidden-xs hidden-sm">
-                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+
+                <div class="dropdown hidden-md-down btn-group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="selector-text">${getFilterText(stampFilter)|t | defaultValue:'filters.filter'|t}</span>
                         <span class="caret"></span>
                     </button>
@@ -90,8 +88,8 @@
                         <li repeat.for="filter of filters" click.trigger="$parent.setFilter($index)">${$parent.getFilterText(filter)|t}</li>
                     </ul>
                 </div>
-                <div class="dropdown hidden-xs hidden-sm">
-                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown hidden-md-down btn-group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="selector-text">${getFilterText(conditionFilter)|t | defaultValue:'conditionFilters.ALL_STAMPS'|t}</span>
                         <span class="caret"></span>
                     </button>
@@ -99,14 +97,13 @@
                         <li repeat.for="filter of conditionFilters" click.trigger="$parent.setConditionFilter($index)">${$parent.getFilterText(filter)|t}</li>
                     </ul>
                 </div>
-                <div class="dropdown hidden-xs hidden-sm">
-                    <button type="button" class="btn btn-default btn-sm dropdown-toggle result-size-selector" data-toggle="dropdown">
+                <div class="dropdown hidden-md-down">
+                    <button type="button" class="btn btn-secondary dropdown-toggle result-size-selector" data-toggle="dropdown">
                         <span class="selector-text">${options.$top | defaultValue:'actions.page-size'|t}</span>
-                        <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li repeat.for="size of pageSizes" click.delegate="$parent.setSize(size)">${size}</li>
-                    </ul>
+                    <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" repeat.for="size of pageSizes" click.delegate="$parent.setSize(size)">${size}</a>
+                    </div>
                 </div>
 
 			</div>

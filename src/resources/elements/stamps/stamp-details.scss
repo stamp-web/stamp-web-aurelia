@@ -1,0 +1,12 @@
+@import "../../../theme/_semantic.scss";
+
+stamp-details {
+    .stamp-description {
+        .help-block {
+            left: calc(25% + #{1.5rem}); // col-3 for the labels
+            position: relative;
+            top: 0.8rem;
+            max-width: 40rem;
+        }
+    }
+}

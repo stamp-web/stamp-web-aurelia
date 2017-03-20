@@ -1,0 +1,40 @@
+@import "../../../theme/_semantic.scss";
+
+stamp-grid {
+    height:         100%;
+    display:        flex;
+    flex-direction: row;
+    align-content:  stretch;
+
+    background-color: $theme-panel-contrast-bg;
+
+    .sw-stamp-grid {
+        flex:     1;
+        position: relative;
+        .scroller {
+            position:   absolute;
+            width:      100%;
+            height:     100%;
+            overflow-y: auto; // if we want it to scroll only
+        }
+        .with-references {
+            height: calc(100% - #{17rem});
+        }
+
+        stamp-card {
+            margin:  $theme-margin-base 0 0 $theme-margin-base;
+        }
+
+        .sw-reference-catalogue-numbers {
+            height:        17rem;
+            width:         100%;
+            position:      absolute;
+            bottom:        0;
+            border:        $theme-border;
+            border-radius: 0 0 $theme-border-radius $theme-border-radius;
+        }
+    }
+
+
+}
+

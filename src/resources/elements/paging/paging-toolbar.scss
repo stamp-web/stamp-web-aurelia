@@ -1,0 +1,52 @@
+@import "../../../theme/_semantic.scss";
+
+paging-toolbar {
+    .paging-component {
+        display: inline-block;
+        float:   left;
+    }
+    div > div {
+        display: inline-block;
+    }
+    .paging-button {
+        padding:          $theme-padding-thinner;
+        color:            $theme-active-color;
+        background-color: $theme-active-bg;
+        border-color:     $theme-border;
+        //&:disabled {
+        //    color: @pagination-disabled-color;
+        //    background-color: @pagination-disabled-bg;
+        //    border-color: @pagination-disabled-border;
+        //}
+        &:hover {
+            color:            $theme-active-color;
+            background-color: $theme-active-bg;
+            border-color:     $theme-active-color;
+            &:disabled {
+                color: $theme-active-color;
+            }
+        }
+    }
+
+    .current-page {
+        position:  relative;
+        padding:   0 0.5rem;
+        font-size: $theme-font-size-xs;
+        .enter-page {
+            border:        $theme-border;
+            border-radius: $theme-border-radius;
+            width:         2.8rem;
+            height:        2.4rem;
+            padding:       0 $theme-padding-thin;
+            &.invalid {
+                border-color: $theme-invalid-color;
+            }
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin:             0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
+
+    }
+}

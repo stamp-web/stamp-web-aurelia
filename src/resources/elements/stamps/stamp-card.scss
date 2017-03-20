@@ -1,0 +1,113 @@
+@import "../../../theme/_semantic.scss";
+
+$card-height: 24rem;
+$card-width: 22rem;
+
+$thumbnail-width: $card-width;
+$thumbnail-height: $card-width;
+
+stamp-card {
+    height:  $card-height;
+    width:   $card-width;
+    display: inline-block;
+
+    .card {
+        width:         100%;
+        height:        100%;
+        cursor:        default;
+        border:        $theme-border-color solid 0.2rem;
+        border-radius: $theme-border-radius;
+
+        font-size:     $theme-font-size-sm;
+        color:         $theme-text-color;
+
+        &::selection {
+            background: transparent;
+        }
+
+        &::-moz-selection {
+            background: transparent;
+        }
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &.selected {
+            border: $theme-focus-color 0.2rem solid;
+            &.highlight {
+                border:     $theme-highlight-color 0.2rem solid;
+                background: lighten($theme-highlight-color, 20%);
+            }
+        }
+
+        .stamp-thumbnail {
+            margin:           $theme-margin-base;
+            height:           $thumbnail-height - 2 * $theme-margin-base;
+            width:            calc(100% - #{$theme-margin-base * 2});
+            background-color: $gray-dark;
+            border-radius:    $theme-border-radius;
+            position:         relative;
+            img {
+                cursor:     pointer;
+                max-width:  $thumbnail-width - 0.4rem;
+                max-height: $thumbnail-height - 0.4rem;
+                position:   absolute;
+                top:        50%;
+                left:       50%;
+                transform:  translate(-50%, -50%);
+            }
+
+            .action-panel {
+                margin-left:  auto;
+                margin-right: auto;
+                margin-top:   $theme-margin-thin;
+                left:         50%;
+                position:     absolute;
+                bottom:       0;
+                transform:    translate(-50%, #{-1 * $theme-margin-base});
+                .btn,
+                .btn > span {
+                    cursor: pointer;
+                }
+                .btn {
+                    padding: $theme-padding-thinner $theme-padding-thin;
+                }
+            }
+        }
+
+        .text-header {
+            width:     100%;
+            display:   flex;
+            flex:      1 1 auto;
+            position:  relative;
+            font-size: $theme-font-size-xs;
+            .text-status {
+                display:       flex;
+                float:         left;
+                padding-right: $theme-padding-base;
+                margin-left:   -1 * $theme-padding-base;
+            }
+            .text {
+                width:      100%;
+                @include nowrap-text;
+                display:    block;
+                padding:    0 $theme-padding-base;
+            }
+        }
+
+        .description {
+            width:      100%;
+            @include nowrap-text;
+            font-size:  $theme-font-size-xs;
+            padding:    $theme-padding-thin $theme-padding-base $theme-padding-base $theme-padding-base;
+        }
+
+    }
+}
+
+

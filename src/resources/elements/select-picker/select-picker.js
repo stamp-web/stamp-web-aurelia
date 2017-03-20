@@ -15,6 +15,7 @@
  */
 import {customElement, bindable, LogManager} from 'aurelia-framework';
 import {bindingMode} from 'aurelia-binding';
+import {EventHelper} from '../../../events/event-managed';
 import {I18N} from 'aurelia-i18n';
 import $ from 'jquery';
 import _ from 'lodash';
@@ -135,7 +136,8 @@ export class Select2Picker {
             } else {
                 this.value = data;
             }
-            this.element.dispatchEvent(new Event("change"));
+            let changeEvent = EventHelper.changeEvent(data);
+            this.element.dispatchEvent(changeEvent);
         }
     }
 
@@ -170,11 +172,11 @@ export class Select2Picker {
         }
     }
 
-    valueChanged(newVal,oldValue) {
-        if( newVal !== oldValue ) {
-            if(typeof newVal !== 'undefined') {
+    valueChanged(newVal, oldValue) {
+        if (newVal !== oldValue) {
+            if (typeof newVal !== 'undefined') {
                 let val = newVal;
-                if( this.multiple ) {
+                if (this.multiple) {
                     if (_.xor((oldValue === null ? [] : oldValue), newVal).length > 0) {
                         let v = [];
                         _.forEach(newVal, vEntry => {
@@ -185,7 +187,7 @@ export class Select2Picker {
                 } else {
                     val = this._convertToInternal(newVal);
                 }
-                if( this.select2.data('select2') !== undefined ) {
+                if (this.select2.data('select2')) {
                     this.select2.val(val).trigger('change');
                 }
             }

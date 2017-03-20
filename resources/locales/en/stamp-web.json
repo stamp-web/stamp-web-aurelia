@@ -11,7 +11,8 @@
         "image-burst": "Stamp Image Bursting Application",
         "new-stamp": "New stamp",
         "select-all": "Select all stamps",
-        "clear-all": "Clear all selected stamps"
+        "clear-all": "Clear all selected stamps",
+        "show-navigation": "Show navigation"
     },
     "footer": {
         "filtering-total": "Stamps matching filter:",
@@ -132,7 +133,8 @@
         "valueInvalid": "Value is not a number"
     },
     "prompts": {
-        "delete-catalogue-number": "Delete catalogue number __number__?"
+        "delete-catalogue-number": "Delete catalogue number __number__?",
+        "delete-item": "Delete __name__?"
     },
     "settings": {
         "album": "Album",

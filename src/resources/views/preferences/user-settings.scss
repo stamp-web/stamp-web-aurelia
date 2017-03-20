@@ -1,0 +1,49 @@
+@import "../../../theme/default/default";
+
+$top-header-height: 5.6rem;
+
+.user-settings {
+    .user-settings-nav {
+        top:      $top-header-height;
+        height:   100%;
+        position: relative;
+
+        .nav-tabs {
+            width: 100%;
+        }
+    }
+    .user-settings-content {
+        height:      100%; // calc(100% - #{$top-header-height});
+        padding-top: $theme-padding-thick;
+        position:    relative;
+        top:         $top-header-height;
+        overflow-y:  auto;
+        width:       100%;
+        .editor-buttons {
+            margin-bottom: $theme-margin-thick;
+        }
+        .list-group-item {
+            &:hover {
+                background-color: lighten($list-group-active-bg, 25%);
+                color:            $list-group-active-text-color;
+                cursor:           pointer;
+            }
+            &.selected {
+                background-color: $list-group-active-bg;
+                color:            $list-group-active-text-color;
+                cursor:           default;
+            }
+        }
+
+        .locale-selector {
+            max-width:    200px;
+            display:      inline-block;
+            margin-right: $theme-margin-base;
+        }
+
+        button.restart {
+            height: $theme-input-height;
+        }
+    }
+
+}

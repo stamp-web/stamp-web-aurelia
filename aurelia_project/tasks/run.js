@@ -6,6 +6,7 @@ import project from '../aurelia.json';
 import build from './build';
 import {CLIOptions} from 'aurelia-cli';
 import proxySettings from './proxy.json';
+import processCSS from './process-css';
 
 function onChange(path) {
     console.log(`File Changed: ${path}`);
@@ -56,10 +57,16 @@ let refresh = gulp.series(
     reload
 );
 
+let refreshCSS = gulp.series(
+    processCSS,
+    build,
+    reload
+);
+
 let watch = function () {
     gulp.watch(project.transpiler.source, refresh).on('change', onChange);
     gulp.watch(project.markupProcessor.source, refresh).on('change', onChange);
-    gulp.watch(project.cssProcessor.source, refresh).on('change', onChange)
+    gulp.watch(project.cssProcessor.source, refreshCSS).on('change', onChange)
 }
 
 let run;

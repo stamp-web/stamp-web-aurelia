@@ -1,0 +1,47 @@
+@import "../../../theme/default/default";
+
+$navbar-brand-height: 4.4rem;
+
+nav-bar {
+    font-size: $theme-font-size-large;
+
+    nav {
+        // z-index: 750;
+        color:            $theme-appbar-color;
+        background-color: $theme-appbar-bg;
+
+        .navbar-brand {
+            height:      $navbar-brand-height;
+            display:     flex;
+            padding-top: 0;
+
+            > span {
+                position:       relative;
+                vertical-align: middle;
+            }
+
+            span:first-child {
+                top:          50%;
+                transform:    translate(0, -50%);
+                margin-right: $theme-margin-base;
+            }
+            span:last-child {
+                font-size:   $theme-font-size-x-large;
+                line-height: $navbar-brand-height
+            }
+        }
+        .sw-icon-pagegen {
+            padding-right: 3.0rem;
+        }
+
+        li.active {
+            a {
+                border-radius: 0.5rem 0.5rem 0 0;
+            }
+        }
+
+    }
+}
+
+
+

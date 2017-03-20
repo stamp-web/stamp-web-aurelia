@@ -1,0 +1,65 @@
+@import "../../../theme/_semantic.scss";
+@import "stamp-common";
+
+stamp-replacement-table {
+
+    position: absolute;
+    top:      0;
+    bottom:   0;
+    left:     0;
+    right:    0;
+    width:    100%;
+    height:   100%;
+
+    .stamp-replacement-header {
+        position: absolute;
+        top:      0;
+        height:   10rem;
+        width:    100%;
+    }
+    .stamp-replacement-table-wrapper {
+        overflow-y: auto;
+        overflow-x: hidden;
+        width:      100%;
+        position:   absolute;
+        top:        10rem;
+        bottom:     4rem;
+        height:     calc(100% - #{14rem});
+
+        tr {
+            height: 3.9rem;
+        }
+        .replacement-value-input {
+            margin-right: $theme-margin-thin;
+        }
+        .unknown {
+            font-style: italic;
+        }
+    }
+
+    .stamp-replacement-footer {
+        bottom:     0;
+        position:   absolute;
+        border-top: $theme-border;
+        padding:    $theme-padding-base;
+        height:     4rem;
+        width:      100%;
+        .filtering-message {
+            font-size: $theme-font-size-sm;
+            .badge {
+                margin-right: $theme-margin-base;
+            }
+        }
+        button {
+            float: right;
+        }
+    }
+
+    .form-control {
+        font-size: $theme-font-size-sm;
+    }
+
+    .sw-icon-ok::before {
+        color: $theme-btn-primary-color;
+    }
+}

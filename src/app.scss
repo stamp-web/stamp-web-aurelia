@@ -1,0 +1,164 @@
+@import "theme/_semantic";
+//@import "../node_modules/bootstrap/less/mixins/buttons.less";
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: inherit;
+}
+
+section {
+    margin: 0 20px;
+}
+
+.app-icon-stampweb {
+    background:      url("resources/images/stamp-web-64x64.png") no-repeat;
+    background-size: 28px 28px;
+    display:         inline-block;
+    width:           28px;
+    height:          28px;
+}
+
+// auto-hide the splash screen when shown
+.splash {
+    display: none;
+}
+
+.page-host {
+    position:   relative;
+    height:     inherit;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+ai-dialog-overlay {
+    background-color: $gray-light;
+    z-index:          10000;
+    &.active {
+        opacity: 0.7;
+    }
+}
+
+.app-bar {
+    /*  box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.75);*/
+    padding-top:   4px;
+    margin-bottom: 0px;
+}
+
+.modal-open .modal {
+    overflow-y: hidden;
+}
+
+.modal-lg {
+    max-width: 600px;
+}
+
+.panel-title {
+    font-size: 1.1em;
+}
+
+.flex {
+    display:    flex;
+    display:    -webkit-flex;
+    flex-grow:  1;
+    align-self: stretch;
+}
+
+.flex-col {
+    display:   flex;
+    display:   -webkit-flex;
+    flex:      1 100%;
+    flex-flow: column nowrap;
+}
+
+.flex-down {
+    display:      flex;
+    flex:         2;
+}
+
+.sw-warning {
+    color: $brand-warning;
+}
+
+
+.packed-col {
+    padding-left: 0;
+}
+
+.panel-heading-with-actions {
+    h4 {
+        display:  inline-block;
+
+        position: relative;
+    }
+    .btn-group {
+        float: right;
+        top:   -1 * $theme-padding-thinner;
+        span {
+            height:    14px;
+            font-size: 0.9em;
+        }
+    }
+}
+
+.mirror-icon {
+    transform: rotate(180deg);
+}
+
+.full-height {
+    height: 100%;
+}
+
+$image-width: 3.6rem;
+$image-size: $theme-padding-thinner * 2 + $image-width;
+
+table {
+
+
+    .stamp-thumbnail {
+        padding:          $theme-thumbnail-padding;
+        margin:           auto;
+        height:           $image-size;
+        width:            $image-size;
+        background-color: transparent;
+        position:         relative;
+        border-radius:    0;
+        img {
+            cursor:     pointer;
+            max-width:  $image-width;
+            max-height: $image-width;
+            position:   absolute;
+            top:        50%;
+            left:       50%;
+            transform:  translate(-50%, -50%);
+        }
+    }
+
+}
+
+* {
+    &::selection {
+        background: transparent;
+    }
+    &::-moz-selection {
+        background: transparent;
+    }
+    input::selection, textarea::selection {
+        background: $theme-active-bg;
+        color:      $theme-active-color;
+    }
+}
+
+#nprogress {
+    .bar {
+        background: $progress-color !important;
+        height:     3px;
+    }
+
+    .peg {
+        box-shadow: 0 0 10px $progress-color, 0 0 5px $progress-working !important;
+    }
+}

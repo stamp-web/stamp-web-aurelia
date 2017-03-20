@@ -51,6 +51,28 @@ export class EventManaged {
     }
 }
 
+export class EventHelper {
+
+    static changeEvent(data) {
+        let changeEvent;
+        if (window.CustomEvent) {
+            changeEvent = new CustomEvent('change', {
+                detail: {
+                    data
+                },
+                bubbles: true
+            });
+        } else {
+            changeEvent = document.createEvent('CustomEvent');
+            changeEvent.initCustomEvent('change', true, true, {
+                detail: data
+            });
+        }
+        return changeEvent;
+
+    }
+}
+
 export var EventNames = {
     calculateImagePath: 'calculate-image-path',
     changeEditMode: 'change-edit-mode',

@@ -1,0 +1,10 @@
+@import "../../../theme/_semantic.scss";
+
+image-preview {
+    background-color: $theme-image-bg;
+    position:         fixed;
+    z-index:          9000;
+    top:              50%;
+    left:             50%;
+    transform:        translate(-50%, -50%);
+}

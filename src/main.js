@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2017 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,7 +21,10 @@ import {Preferences} from 'services/preferences';
 import environment from './environment';
 import Backend from 'i18next-xhr-backend'
 import _ from 'lodash';
+
 const logger = LogManager.getLogger('stamp-web');
+
+require.config({catchError: true, waitSeconds: 30});
 
 if (window.location.href.indexOf('debug=true') >= 0) {
     LogManager.setLevel(LogManager.logLevel.debug);
@@ -68,6 +71,7 @@ function setRoot(aurelia) {
 }
 
 export function configure(aurelia) {
+    configureGlobalLibraries();
     getLang().then(lang => {
         initialize( aurelia, lang );
     }).catch(e => {
@@ -76,7 +80,17 @@ export function configure(aurelia) {
     });
 }
 
+function configureGlobalLibraries() {
+    require(['tether', 'jquery'], (tether, jquery) => {
+        window.Tether = tether;
+        window.jQuery = jquery;
+        require(['bootstrap']);
+    });
+}
+
 function initialize( aurelia, lang ) {
+
+
     aurelia.setupAureliaFinished = false;
     aurelia.setupI18NFinished = false;
     aurelia.use
