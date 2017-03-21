@@ -1,6 +1,6 @@
 @import "../../../theme/_semantic.scss";
 
-$grid-nav-height: 5.5rem;
+$grid-nav-height: 5rem;
 
 stamp-list {
 }
@@ -36,7 +36,7 @@ collapse-panel {
 .stamp-grid-nav {
     top:           $grid-nav-height;
     height:        $grid-nav-height;
-    margin-bottom: $theme-margin-base;
+    margin-bottom: 0;
     border-radius: 0;
     font-size:     $theme-font-size-sm;
     .form-control {

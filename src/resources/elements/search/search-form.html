@@ -3,111 +3,122 @@
     <require from="../select-picker/select-picker"></require>
     <require from="../../value-converters/date-formatter"></require>
     <require from="resources/elements/search/search-form.css"></require>
-    <div>
-        <form class="form-horizontal">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">${'search.form-title'|t}</h4>
-                </div>
-                <div class="panel-body">
-                    <div class="form-group form-group-sm has-feedback">
-                        <label for="search-countryRef" class="col-sm-3 control-label">${'editor.country'|t}</label>
-                        <div class="col-sm-9">
-                            <select-picker items.bind="countries" class="country-selector" disabled.bind="loading" value.two-way="model.countryRef"
-                                           config.bind="{ id: 'search-countryRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm has-feedback">
-                        <label for="search-stampCollectionRef" class="col-sm-3 control-label">${'editor.stamp-collection'|t}</label>
-                        <div class="col-sm-9">
-                            <select-picker items.bind="stampCollections" class="stampCollection-selector" disabled.bind="loading" value.two-way="model.stampCollectionRef"
-                                           config.bind="{ id: 'search-stampCollectionRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.stamp-collection-select' }"></select-picker>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm has-feedback">
-                        <label for="search-albumRef" class="col-sm-3 control-label">Album</label>
-                        <div class="col-sm-9">
-                            <select-picker items.bind="albums" class="album-selector" disabled.bind="loading"  value.two-way="model.albumRef"
-                                           config.bind="{ id: 'search-albumRef', tabIndex: 100, name: 'albumRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.album-select' }">
-                            </select-picker>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <label for="search-catalogueRef" class="col-sm-3 control-label">${'editor.catalogue'|t}</label>
-                        <div class="col-sm-9">
-                            <select-picker items.bind="catalogues" class="catalogue-selector" disabled.bind="loading"  value.two-way="model.catalogueRef"
-                                           config.bind="{ id: 'search-catalogueRef', tabIndex: 105, name: 'catalogueRef', labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
-                            </select-picker>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <label for="search-sellerRef" class="col-sm-3 control-label">${'editor.seller'|t}</label>
-                        <div class="col-sm-9">
-                            <select-picker items.bind="sellers" class="seller-selector" disabled.bind="loading"  value.two-way="model.sellerRef"
-                                           config.bind="{ id: 'search-sellerRef', tabIndex: 110, name: 'sellerRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.seller-select' }">
-                            </select-picker>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <label for="search-purchased" class="col-sm-3 control-label">${'editor.purchased'|t}</label>
-                        <div class="col-sm-9">
-                            <date-picker range="true" id="search-purchased" tabindex="120"
-                                            end-value.two-way="model.purchasedEnd"
-                                            value.two-way="model.purchasedStart">
-                            </date-picker>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <label for="search-createTimestamp" class="col-sm-3 control-label">${'editor.createTimestamp'|t}</label>
-                        <div class="col-sm-9">
-                            <date-picker range="true" id="search-createTimestamp" tabindex="130"
-                                            end-value.two-way="model.createTimestampEnd | dateFormatter"
-                                            value.two-way="model.createTimestampStart | dateFormatter">
-                            </date-picker>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <label for="search-modifyTimestamp" class="col-sm-3 control-label">${'editor.modifyTimestamp'|t}</label>
-                        <div class="col-sm-9">
-                            <date-picker range="true" id="search-modifyTimestamp" tabindex="140"
-                                            end-value.two-way="model.modifyTimestampEnd | dateFormatter"
-                                            value.two-way="model.modifyTimestampStart | dateFormatter">
-                            </date-picker>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-9 advanced-options">
-                            <div class="checkbox">
-                                <label class="${model.deception ? 'disabled' : ''}">
-                                    <input tabindex="150" type="checkbox" checked.bind="model.defects" disabled.bind="model.deception">
-                                    Only stamps with defects
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label class="${model.defects ? 'disabled' : ''}">
-                                    <input tabindex="160" type="checkbox" checked.bind="model.deception" disabled.bind="model.defects">
-                                    Only stamps with deceptive qualities
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
+    <form>
+
+        <div class="form-group row">
+            <label class="panel-title col-form-label col-12">${'search.form-title'|t}</label>
+        </div>
+
+        <div class="form-group row">
+            <label for="search-countryRef" class="col-sm-3 col-form-label">${'editor.country'|t}</label>
+            <div class="col-sm-9">
+                <select-picker items.bind="countries" class="country-selector" disabled.bind="loading"
+                               value.two-way="model.countryRef"
+                               config.bind="{ id: 'search-countryRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
             </div>
-            <div class="search-button-bar">
-                <div class="checkbox col-sm-6" if.bind="showMinimize === true">
-                    <label>
-                        <input type="checkbox" checked.bind="minimizeOnSearch">
-                        <span>${'search.minimize'|t}</span>
+        </div>
+        <div class="form-group row">
+            <label for="search-stampCollectionRef"
+                   class="col-sm-3 col-form-label">${'editor.stamp-collection'|t}</label>
+            <div class="col-sm-9">
+                <select-picker items.bind="stampCollections" class="stampCollection-selector" disabled.bind="loading"
+                               value.two-way="model.stampCollectionRef"
+                               config.bind="{ id: 'search-stampCollectionRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.stamp-collection-select' }"></select-picker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="search-albumRef" class="col-sm-3 col-form-label">Album</label>
+            <div class="col-sm-9">
+                <select-picker items.bind="albums" class="album-selector" disabled.bind="loading"
+                               value.two-way="model.albumRef"
+                               config.bind="{ id: 'search-albumRef', tabIndex: 100, name: 'albumRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.album-select' }">
+                </select-picker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="search-catalogueRef" class="col-sm-3 col-form-label">${'editor.catalogue'|t}</label>
+            <div class="col-sm-9">
+                <select-picker items.bind="catalogues" class="catalogue-selector" disabled.bind="loading"
+                               value.two-way="model.catalogueRef"
+                               config.bind="{ id: 'search-catalogueRef', tabIndex: 105, name: 'catalogueRef', labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
+                </select-picker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="search-sellerRef" class="col-sm-3 col-form-label">${'editor.seller'|t}</label>
+            <div class="col-sm-9">
+                <select-picker items.bind="sellers" class="seller-selector" disabled.bind="loading"
+                               value.two-way="model.sellerRef"
+                               config.bind="{ id: 'search-sellerRef', tabIndex: 110, name: 'sellerRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.seller-select' }">
+                </select-picker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="search-purchased" class="col-sm-3 col-form-label">${'editor.purchased'|t}</label>
+            <div class="col-sm-9">
+                <date-picker range="true" id="search-purchased" tabindex="120"
+                             end-value.two-way="model.purchasedEnd"
+                             value.two-way="model.purchasedStart">
+                </date-picker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="search-createTimestamp" class="col-sm-3 col-form-label">${'editor.createTimestamp'|t}</label>
+            <div class="col-sm-9">
+                <date-picker range="true" id="search-createTimestamp" tabindex="130"
+                             end-value.two-way="model.createTimestampEnd | dateFormatter"
+                             value.two-way="model.createTimestampStart | dateFormatter">
+                </date-picker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="search-modifyTimestamp" class="col-sm-3 col-form-label">${'editor.modifyTimestamp'|t}</label>
+            <div class="col-sm-9">
+                <date-picker range="true" id="search-modifyTimestamp" tabindex="140"
+                             end-value.two-way="model.modifyTimestampEnd | dateFormatter"
+                             value.two-way="model.modifyTimestampStart | dateFormatter">
+                </date-picker>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9 advanced-options">
+                <div class="checkbox">
+                    <label class="${model.deception ? 'disabled' : ''}">
+                        <input tabindex="150" type="checkbox" checked.bind="model.defects"
+                               disabled.bind="model.deception">
+                        Only stamps with defects
                     </label>
                 </div>
-                <div class="editor-buttons ${(showMinimize === true) ? 'col-sm-6' : 'col-sm-12'}">
-                    <button type="button" class="btn btn-sm btn-default ${!loading ? '' : 'disabled'}" click.delegate="reset()">Reset</button>
-                    <button type="button" class="btn btn-sm btn-primary ${!loading ? '' : 'disabled'}" click.delegate="search()" disabled.bind="!valid">Search</button>
+                <div class="checkbox">
+                    <label class="${model.defects ? 'disabled' : ''}">
+                        <input tabindex="160" type="checkbox" checked.bind="model.deception"
+                               disabled.bind="model.defects">
+                        Only stamps with deceptive qualities
+                    </label>
                 </div>
             </div>
+        </div>
 
-        </form>
-    </div>
+
+        <div class="search-button-bar row">
+            <div class="checkbox col-sm-6" if.bind="showMinimize === true">
+                <label>
+                    <input type="checkbox" checked.bind="minimizeOnSearch">
+                    <span>${'search.minimize'|t}</span>
+                </label>
+            </div>
+            <div class="editor-buttons ${(showMinimize === true) ? 'col-sm-6' : 'col-sm-12'}">
+                <button type="button" class="btn btn-secondary ${!loading ? '' : 'disabled'}" click.delegate="reset()">
+                    Reset
+                </button>
+                <button type="button" class="btn btn-primary ${!loading ? '' : 'disabled'}" click.delegate="search()"
+                        disabled.bind="!valid">Search
+                </button>
+            </div>
+        </div>
+
+    </form>
+
 </template>

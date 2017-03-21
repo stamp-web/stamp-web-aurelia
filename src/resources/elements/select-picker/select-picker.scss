@@ -42,7 +42,11 @@ select-picker {
         color: $theme-text-color;
     }
     .select2-selection__clear {
-        color: $theme-text-color;
+        color: $theme-clear-color;
+        top:   -0.2rem;
+    }
+    .select2-selection__arrow {
+        transform: scale(1.1);
     }
 }
 

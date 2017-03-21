@@ -27,6 +27,7 @@ date-picker {
         position:       relative;
         display:        inline-block;
         text-align:     left;
+        font-weight:    normal;
         margin-bottom:  0;
         padding-top:    $theme-padding-thin;
         padding-right:  $theme-padding-thin;
@@ -55,7 +56,7 @@ date-picker {
     position: relative;
     input[type="text"] {
         z-index:                    auto;
-        max-width:                  11rem;
+        max-width:                  11.5rem;
         input::selection, textarea::selection {
             background: $theme-active-bg;
             color:      $theme-active-color;
@@ -81,11 +82,11 @@ date-picker {
     .sw-icon-cancel {
         z-index:   auto;
         position:  absolute;
-        color:     $theme-input-color;
-        right:     1.8rem;
+        color:     $theme-clear-color;
+        right:     1.7rem;
         cursor:    pointer;
-        top:       $theme-padding-thin;
-        transform: scale(0.60);
+        top:       50%;
+        transform: translate(0,-55%) scale(0.7);
         &:focus {
             outline: none;
         }

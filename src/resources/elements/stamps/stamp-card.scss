@@ -70,12 +70,13 @@ stamp-card {
                 position:     absolute;
                 bottom:       0;
                 transform:    translate(-50%, #{-1 * $theme-margin-base});
-                .btn,
-                .btn > span {
+                button {
                     cursor: pointer;
-                }
-                .btn {
                     padding: $theme-padding-thinner $theme-padding-thin;
+
+                    > span {
+                        cursor: pointer;
+                    }
                 }
             }
         }

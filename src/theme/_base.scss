@@ -2,15 +2,8 @@
 
 html {
     font-size: 10px;
-
-    /*@media screen and (min-width: 1200px) {
-        font-size: 20px;
-    }*/
 }
 
-label {
-    font-weight: bold;
-}
 
 input[type="text"] {
     height: $theme-input-height;
@@ -56,5 +49,15 @@ th {
 .form-group.has-error {
     .validation-message {
         color: $brand-danger;
+    }
+}
+
+.table-hover {
+    tbody {
+        tr {
+            &:hover {
+                background: $white-dark !important;
+            }
+        }
     }
 }

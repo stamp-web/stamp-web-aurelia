@@ -47,7 +47,7 @@ $theme-success-color: $green !default;
 
 $theme-link-color: $link-color !default;
 
-$theme-panel-header-bg: $brand-info !default;
+$theme-panel-header-bg: $gray-lighter !default;
 
 $theme-image-bg: $gray-dark !default;
 
@@ -80,16 +80,17 @@ $theme-font-size-x-large: $theme-font-size-base * 1.25; // ~ 17.5px
 //
 
 
-$theme-text-color: $text-color;
+$theme-text-color: $text-color !default;
 $theme-text-disabled-color: $gray-light !default;
 
-$theme-focus-color: $brand-info;
-$theme-highlight-color: $green-pale;
+$theme-focus-color: $brand-info !default;
+$theme-highlight-color: $green-pale !default;
+$theme-clear-color: $red !default;
 
-$theme-panel-bg: $body-bg;
-$theme-panel-contrast-bg: $white-black;
+$theme-panel-bg: $body-bg !default;
+$theme-panel-contrast-bg: $white-dark !default;
 
-$theme-btn-primary-color: $brand-primary;
+$theme-btn-primary-color: $brand-primary !default;
 
 ////** Unit-less `line-height` for use in components like buttons.
 //$line-height-base:        1.428571429; // 20/14
@@ -164,6 +165,7 @@ $theme-action-color: $brand-info !default;
 
 $theme-table-selected-bg: $blue-pale !default;
 
+$theme-form-title-color: $blue !default;
 //
 ////** Width of the `border` for generating carets that indicator dropdowns.
 //$caret-width-base:          4px;

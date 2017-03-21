@@ -1,7 +1,7 @@
 @import "../../../theme/_semantic.scss";
 
 .entity-type {
-    padding: $theme-padding-thick;
+    padding: $theme-padding-thin 0 0 0;
     .list-group-item {
         &:hover {
             background-color: lighten($theme-active-bg, 25%);
@@ -31,6 +31,7 @@
             }
         }
         .sw-create-action {
+            border: none;
             float:      right;
             position:   absolute;
             cursor:     pointer;
@@ -40,9 +41,12 @@
             opacity:    0.2;
             background: transparent;
             padding:    0 $theme-padding-base;
-
+            &:focus, &:active {
+                outline: none !important;
+            }
             &:hover {
                 opacity: 1.0;
+                outline: none !important;
             }
         }
 

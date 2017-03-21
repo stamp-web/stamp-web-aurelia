@@ -1,15 +1,23 @@
 @import "../../../theme/_semantic.scss";
 
 search-form {
+    font-size: $theme-font-size-sm;
+
+    .panel-title {
+        color: $theme-form-title-color;
+    }
     .search-button-bar {
         label {
-            font-size: $theme-font-size-xs;
+            font-size:   $theme-font-size-sm;
+            font-weight: normal;
         }
         .editor-buttons {
-            padding-right: 0;
+            padding-right: $theme-padding-base;
+
             button {
+                font-size: $theme-font-size-sm;
                 &:first-child {
-                    margin-left: $theme-margin-thinner;
+                    margin-left: $theme-margin-thin;
                 }
                 float: right;
             }
@@ -17,8 +25,12 @@ search-form {
         }
     }
     .advanced-options {
-        label:after {
-            content: "";
+        label {
+            font-weight: normal;
+
+            &:after {
+                content: "";
+            }
         }
         .checkbox input[type="checkbox"], .radio input[type="radio"] {
             margin-left: 0;
