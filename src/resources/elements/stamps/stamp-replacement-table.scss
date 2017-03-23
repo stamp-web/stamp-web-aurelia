@@ -55,12 +55,13 @@ stamp-replacement-table {
                 width: 17rem;
 
                 .value-edit {
-                    position: absolute;;
+                    position: relative;
+                    display:  flex;
 
-                    > * {
+                    > input[type="checkbox"] {
                         position: relative;
-                        top: 50%;
-                        transform: translate(0,-50%);
+                        height:   $theme-input-height;
+                        outline:  none;
                     }
 
                     > span {

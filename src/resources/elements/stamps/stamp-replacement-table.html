@@ -74,7 +74,7 @@
                     <span class="value-edit" if.bind="editingRow === $index">
                         <input type="text" class="form-control replacement-value-input" disabled.bind="editingCatalogueNumber.unknown"
                                keydown.delegate="advanceToNextRow($event)" tabindex="0" value.bind="editingCatalogueNumber.value | asNumber:true">
-                        <input type="checkbox" tabindex="1000" checked.bind="editingCatalogueNumber.unknown">
+                        <input type="checkbox" tabindex="1000" checked.bind="editingCatalogueNumber.unknown" click.trigger="changeUnknown(stamp)">
 					    <span>${'editor.no-value-short'|t}</span>
                     </span>
                     <span if.bind="editingRow !== $index">

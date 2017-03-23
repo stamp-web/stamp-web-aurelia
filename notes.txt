@@ -9,6 +9,8 @@ BOOTSTRAP 4 CONVERSION NOTES
 * Date Picker clipped in search panel
 * dropdowns in grid toolbar below the grid
 * hover on date picker icons disappear
-* replace catalogue number not laid out
 * purchase price not laid out
-* using absolute positioning for replacement-table value column does not scroll right
+
+* selecting unknown is changing modified state in replace table, but unchecking it is showing still as modified
+* unknown in replace table is not showing checked state correct
+
