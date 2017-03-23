@@ -47,7 +47,7 @@ $theme-success-color: $green !default;
 
 $theme-link-color: $link-color !default;
 
-$theme-panel-header-bg: $gray-lighter !default;
+$theme-panel-header-bg: $white-dark !default;
 
 $theme-image-bg: $gray-dark !default;
 
@@ -166,6 +166,8 @@ $theme-action-color: $brand-info !default;
 $theme-table-selected-bg: $blue-pale !default;
 
 $theme-form-title-color: $blue !default;
+
+$theme-success-color: $green !default;
 //
 ////** Width of the `border` for generating carets that indicator dropdowns.
 //$caret-width-base:          4px;

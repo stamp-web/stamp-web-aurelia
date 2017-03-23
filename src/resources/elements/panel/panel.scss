@@ -1,0 +1,22 @@
+@import "../../../theme/_semantic.scss";
+
+panel {
+    border:        $theme-border;
+    margin-bottom: $theme-margin-base;
+    display:       block;
+
+    .panel-header {
+        background-color: $theme-panel-contrast-bg;
+        margin-bottom:    $theme-margin-thin;
+        padding:          $theme-padding-thin $theme-padding-base $theme-padding-base;
+        font-size:        $theme-font-size-base;
+        .panel-actions {
+            float: right;
+        }
+    }
+
+    .panel-body {
+        padding:          $theme-padding-base;
+        background-color: $theme-panel-bg;
+    }
+}

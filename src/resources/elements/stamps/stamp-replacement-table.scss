@@ -3,55 +3,138 @@
 
 stamp-replacement-table {
 
-    position: absolute;
-    top:      0;
-    bottom:   0;
-    left:     0;
-    right:    0;
-    width:    100%;
-    height:   100%;
+    display:        flex;
+    flex-direction: column;
+    font-size:      $theme-font-size-sm;
+
+    position:       absolute;
+    top:            0;
+    bottom:         0;
+    left:           0;
+    right:          0;
+    width:          100%;
+    height:         100%;
+
+
 
     .stamp-replacement-header {
-        position: absolute;
-        top:      0;
-        height:   10rem;
-        width:    100%;
+        flex-basis: content;
+        padding:    $theme-padding-thick;
+        width:      100%;
+
+        .row {
+            max-width: 60rem;
+        }
+
+        button {
+            font-size: $theme-font-size-sm;
+        }
+
     }
     .stamp-replacement-table-wrapper {
+        flex-basis: content;
+        flex-grow:  1;
+
         overflow-y: auto;
         overflow-x: hidden;
         width:      100%;
-        position:   absolute;
-        top:        10rem;
-        bottom:     4rem;
-        height:     calc(100% - #{14rem});
 
         tr {
-            height: 3.9rem;
+            height: 3.2rem;
+
+            .value-edit {
+                display: flex;
+            }
+
+            .col-number,
+            .col-condition {
+                width: 17rem;
+            }
+
+            .col-catalogue-value {
+                width: 17rem;
+
+                .value-edit {
+                    position: absolute;;
+
+                    > * {
+                        position: relative;
+                        top: 50%;
+                        transform: translate(0,-50%);
+                    }
+
+                    > span {
+                        vertical-align: middle;
+                        line-height: $theme-input-height;
+                        margin-left: $theme-margin-thin;
+                    }
+
+                }
+                .replacement-value-input {
+                    margin-right: $theme-margin-thin;
+                    max-width:    6em;
+                }
+                .unknown {
+                    font-style: italic;
+                }
+            }
+
+            .col-status {
+                width:      10rem;
+                text-align: center;
+                position:   relative;
+
+                .sw-icon-ok {
+                    margin:    auto;
+                    position:  absolute;
+                    left:      50%;
+                    top:       50%;
+                    transform: translate(-50%, -50%);
+                    &::before {
+                        color: $theme-success-color;
+                    }
+                }
+
+                button {
+                    font-size: $theme-font-size-sm;
+                }
+            }
         }
-        .replacement-value-input {
-            margin-right: $theme-margin-thin;
+
+        .replacement-number-input {
+            max-width: 15rem;
         }
-        .unknown {
-            font-style: italic;
+
+        select-picker {
+            max-width: 15.5rem;
         }
+
     }
 
     .stamp-replacement-footer {
-        bottom:     0;
-        position:   absolute;
-        border-top: $theme-border;
-        padding:    $theme-padding-base;
-        height:     4rem;
-        width:      100%;
+        border-top:   $theme-border;
+        padding:      $theme-padding-thin;
+        padding-left: $theme-padding-base;
+        height:       4rem;
+        width:        100%;
+        display:      flex;
+        position:     relative;
+
         .filtering-message {
-            font-size: $theme-font-size-sm;
+            right:         0;
+            position:      absolute;
+            top:           50%;
+            transform:     translate(0, -50%);
+            //            line-height: calc(4rem - #{2 * $theme-padding-thin});
+            padding-right: $theme-padding-thick;
+            font-size:     $theme-font-size-sm;
             .badge {
                 margin-right: $theme-margin-base;
             }
         }
+
         button {
-            float: right;
+            font-size: $theme-font-size-sm;
         }
     }
 
@@ -59,7 +142,4 @@ stamp-replacement-table {
         font-size: $theme-font-size-sm;
     }
 
-    .sw-icon-ok::before {
-        color: $theme-btn-primary-color;
-    }
 }

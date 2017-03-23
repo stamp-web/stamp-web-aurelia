@@ -231,6 +231,11 @@ export class StampReplacementTable {
         return (stamp.__modified__ );
     }
 
+    setAsModified(stamp) {
+        stamp.__modified__ = true;
+        this.editCount++;
+    }
+
 
 
 }

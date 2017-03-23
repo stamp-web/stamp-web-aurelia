@@ -146,6 +146,7 @@ date-picker {
                     border-bottom: $theme-border;
                 }
                 th {
+                    background-color: $body-bg;
                     font-weight: normal;
                     font-size:   $theme-font-size-xs;
                 }

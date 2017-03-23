@@ -3,3 +3,12 @@
 * purchase editor does not work/show
 * put theme into a separate bundle
 * split UI into a few bundles
+
+
+BOOTSTRAP 4 CONVERSION NOTES
+* Date Picker clipped in search panel
+* dropdowns in grid toolbar below the grid
+* hover on date picker icons disappear
+* replace catalogue number not laid out
+* purchase price not laid out
+* using absolute positioning for replacement-table value column does not scroll right

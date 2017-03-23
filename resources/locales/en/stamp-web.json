@@ -48,6 +48,7 @@
     },
     "editor": {
         "actions": "Actions",
+        "active-catalogue-number": "Active Catalogue Number",
         "album": "Album",
         "album-select": "Select an album",
         "catalogue": "Catalogue",
@@ -82,6 +83,7 @@
         "modifyTimestamp": "Modified",
         "no-value": "No value listed",
         "no-value-short": "No value",
+        "owning-details": "Owning Details",
         "purchase-help": "Specify the amount paid for selected stamps",
         "purchase-error": "Complete the form to save",
         "purchase-percentage": "Percentage",

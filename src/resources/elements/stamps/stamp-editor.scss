@@ -1,13 +1,22 @@
 @import "../../../theme/_semantic.scss";
 
 stamp-editor {
-    width: 100%;
-}
-
-.stamp-editor {
+    width:     100%;
     font-size: $theme-font-size-sm;
-}
 
-.editor-buttons {
-    float: right;
+    .editor-buttons {
+
+        position: relative;
+        right :0;
+
+        button {
+            font-size: $theme-font-size-sm;
+            margin-left: $theme-margin-thin;
+            &:first-child {
+                //margin-left: 0;
+            }
+            float:     right;
+        }
+
+    }
 }
