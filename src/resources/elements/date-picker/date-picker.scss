@@ -29,7 +29,6 @@ date-picker {
         text-align:     left;
         font-weight:    normal;
         margin-bottom:  0;
-        padding-top:    $theme-padding-thin;
         padding-right:  $theme-padding-thin;
         vertical-align: middle;
         ussr-select:    none;
@@ -55,8 +54,10 @@ date-picker {
     z-index:  auto;
     position: relative;
     input[type="text"] {
+        font-size:                  $theme-font-size-sm;
         z-index:                    auto;
         max-width:                  11.5rem;
+        width:                      100%;
         input::selection, textarea::selection {
             background: $theme-active-bg;
             color:      $theme-active-color;
@@ -86,7 +87,7 @@ date-picker {
         right:     1.7rem;
         cursor:    pointer;
         top:       50%;
-        transform: translate(0,-55%) scale(0.7);
+        transform: translate(0, -55%) scale(0.7);
         &:focus {
             outline: none;
         }
@@ -147,8 +148,8 @@ date-picker {
                 }
                 th {
                     background-color: $body-bg;
-                    font-weight: normal;
-                    font-size:   $theme-font-size-xs;
+                    font-weight:      normal;
+                    font-size:        $theme-font-size-xs;
                 }
                 .datepicker-switch, .prev, .next {
                     &:hover {

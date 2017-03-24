@@ -31,7 +31,7 @@
             }
         }
         .sw-create-action {
-            border: none;
+            border:     none;
             float:      right;
             position:   absolute;
             cursor:     pointer;
@@ -90,12 +90,13 @@
 }
 
 .manage-list {
-    height:      calc(100% - #{5.6rem});
-    padding-top: $theme-padding-base;
-    position:    relative;
-    top:         5.6rem;
-    font-size:   $theme-font-size-sm;
-    overflow-y:  hidden;
+    background-color: $theme-panel-contrast-bg;
+    height:           calc(100% - #{5.6rem});
+    padding-top:      $theme-padding-base;
+    position:         relative;
+    top:              5.6rem;
+    font-size:        $theme-font-size-sm;
+    overflow-y:       hidden;
     > .row {
         height: 100%;
         > div {
@@ -103,9 +104,10 @@
         }
     }
     .manage-list-contents {
-        height:   calc(100% - #{4rem});
-        overflow: auto;
-        border:   $theme-border;
+        height:           calc(100% - #{4rem});
+        overflow:         auto;
+        border:           $theme-border;
+        background-color: $theme-panel-bg;
     }
     .actions {
         width: 12rem;

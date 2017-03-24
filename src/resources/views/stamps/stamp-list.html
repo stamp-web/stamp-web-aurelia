@@ -112,13 +112,13 @@
 	</nav>
 	<div class="container-fluid stamp-content" >
 		<div class="row">
-			<div class="col-md-12 col-lg-4 sw-editor-container" if.bind="editorShown">
+			<div class="sw-editor-container ${(!editorShown) ? 'full-content' : ''}" if.bind="displayMode !== 'Upgrade'">
                 <collapse-panel collapsed.bind="!editorShown" name="stamp-list-editor-panel" >
-                    <stamp-editor show.bind="panelContents === 'stamp-editor'" model.bind="editingStamp"></stamp-editor>
-                    <search-form show.bind="panelContents === 'search-panel'"></search-form>
+                    <stamp-editor if.bind="panelContents === 'stamp-editor'" model.bind="editingStamp"></stamp-editor>
+                    <search-form if.bind="panelContents === 'search-panel'"></search-form>
                 </collapse-panel>
 			</div>
-            <div class="col-md-12 ${(editorShown) ? 'col-lg-8' : 'col-lg-12'} full-height">
+            <div class="stamp-list-content ${(editorShown) ? 'editor-shown' : ''} full-height">
                 <stamp-grid if.bind="displayMode === 'Grid'" class="" stamps.bind="stamps"
                             last-selected.bind="lastSelected" edit-id.bind="editingStamp.id" show-catalogue-numbers.bind="referenceMode">
                 </stamp-grid>
@@ -142,13 +142,13 @@
             </div>
             <div class="report-statistics hidden-xs" role="group">
                 <div class="btn-group">
-                    <button class="btn btn-xs btn-default statistics-button ${(reportType==='CatalogueValue') ? 'active' : ''}" title="${'footer-statistics.catalogue-value'|t}" click.trigger="setStatistics('CatalogueValue')" role="button">
+                    <button class="btn btn-secondary statistics-button ${(reportType==='CatalogueValue') ? 'active' : ''}" title="${'footer-statistics.catalogue-value'|t}" click.trigger="setStatistics('CatalogueValue')" role="button">
                         <span class="sw-icon-catalogue"></span>
                     </button>
-                    <button class="btn btn-xs btn-default statistics-button ${(reportType==='CostBasis') ? 'active' : ''}" title="${'footer-statistics.purchased'|t}" click.trigger="setStatistics('CostBasis')" role="button">
+                    <button class="btn btn-secondary statistics-button ${(reportType==='CostBasis') ? 'active' : ''}" title="${'footer-statistics.purchased'|t}" click.trigger="setStatistics('CostBasis')" role="button">
                         <span class="sw-icon-purchased"></span>
                     </button>
-                    <button class="btn btn-xs btn-default statistics-button ${(reportType==='CashValue') ? 'active' : ''}" title="${'footer-statistics.cash-value'|t}" click.trigger="setStatistics('CashValue')" role="button">
+                    <button class="btn btn-secondary statistics-button ${(reportType==='CashValue') ? 'active' : ''}" title="${'footer-statistics.cash-value'|t}" click.trigger="setStatistics('CashValue')" role="button">
                         <span class="sw-icon-cash-value"></span>
                     </button>
                     <input class="value-display" value.bind="reportValue" readonly role="status">

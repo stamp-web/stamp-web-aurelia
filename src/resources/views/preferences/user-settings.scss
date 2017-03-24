@@ -3,25 +3,53 @@
 $top-header-height: 5.6rem;
 
 .user-settings {
-    .user-settings-nav {
-        top:      $top-header-height;
-        height:   100%;
-        position: relative;
+    display:        flex;
+    flex-direction: column;
+    height:         100%;
+    position:       relative;
+    top:            $top-header-height;
+    overflow:       auto;
+    background: $theme-panel-contrast-bg;
 
+    .user-settings-nav {
+        margin-top: $theme-margin-thinner;
+        height:     3.7rem;
+        position:   relative;
+        background: $theme-panel-bg;
         .nav-tabs {
             width: 100%;
+            .nav-link.active {
+                top: 0.2rem;
+                position: relative;
+                background: $theme-panel-contrast-bg;
+                border-bottom: none;
+            }
         }
     }
     .user-settings-content {
-        height:      100%; // calc(100% - #{$top-header-height});
+        font-size:   $theme-font-size-sm;
         padding-top: $theme-padding-thick;
+
         position:    relative;
-        top:         $top-header-height;
-        overflow-y:  auto;
         width:       100%;
-        .editor-buttons {
-            margin-bottom: $theme-margin-thick;
+
+        .card {
+            margin-left: 2rem;
+
+            .card-block {
+                min-width: 50rem;
+            }
+
+            .card-title {
+                color:         $theme-form-title-color;
+                margin-bottom: $theme-margin-thick;
+            }
         }
+
+        input[type="text"], select {
+            font-size: $theme-font-size-sm;
+        }
+
         .list-group-item {
             &:hover {
                 background-color: lighten($list-group-active-bg, 25%);
@@ -44,6 +72,10 @@ $top-header-height: 5.6rem;
         button.restart {
             height: $theme-input-height;
         }
+    }
+
+    .editor-buttons {
+        margin-top: $theme-margin-thick;
     }
 
 }

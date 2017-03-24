@@ -1,68 +1,99 @@
 @import "../../../theme/_semantic.scss";
 
 .purchase-form {
-    width: 50rem;
+    width:     50rem;
+    font-size: $theme-font-size-sm;
 
-    .price-entry {
-        height: 5em;
-    }
-    .price-paid {
-        padding-left: 0;
-        input {
-            width:        7.5rem;
-            margin-right: $theme-margin-thin;
+    ai-dialog-body {
+        display: flex;
+        flex-direction: column;
+
+        .dialog-title {
+            font-size:        $theme-font-size-base;
+            background-color: $theme-appbar-bg;
+            color:            $theme-appbar-color;
+            padding:          $theme-padding-base;
+            margin-left:      -1.7rem;
+            margin-right:     -1.7rem;
+            margin-top:       -1.7rem;
         }
-    }
-    .percentage-not-valid {
-        opacity: 0.5;
-    }
-    .label-value {
-        text-align:   left;
-        padding-left: 0;
-    }
-    .purchase-currency {
-        position: absolute;
-        top:      0;
-        left:     calc(66% + #{$theme-padding-input});
-    }
 
-    .help-block {
-        padding-top:   $theme-input-height;
-        margin-bottom: 0;
-        padding-left:  16.5rem;
-    }
-}
+        .dialog-content {
+            padding-top: $theme-padding-base;
 
-ai-dialog-body {
+            form {
+                padding: 0;
 
-    > div.well {
-        background-color: $theme-appbar-bg;
-        color:            $theme-appbar-color;
-        margin-left:      -1.2rem;
-        margin-right:     -1.2rem;
-        margin-top:       -1.2rem;
+                .label-value {
+                    text-align:   left;
+                    padding-left: $theme-padding-thin;
+                }
+
+                .price-paid {
+                    padding-left: 0;
+                    display:      flex;
+
+                    input {
+                        width:        7.5rem;
+                        margin-right: $theme-margin-thin;
+                        font-size:    $theme-font-size-sm;
+                    }
+                }
+
+                .percentage-not-valid {
+                    opacity: 0.5;
+                }
+
+
+                .checkbox {
+                    padding-left: calc(33% + #{$theme-padding-thin});
+
+                    input {
+                        top:          50%;
+                        transform:    translate(0, -50%);
+                        position:     relative;
+                        margin-right: $theme-margin-thin;
+                    }
+                }
+
+                .purchase-currency {
+                    position:  relative;
+                    top:       50%;
+                    transform: translate(0, -50%);
+                }
+
+                .help-block {
+                    padding-top:   $theme-padding-thin;
+                    margin-bottom: 0;
+                    padding-left:  calc(33% + #{$theme-padding-thin});
+                }
+
+            }
+        }
     }
 }
 
 ai-dialog-footer {
     position: relative;
     height:   5rem;
+
     .process-progress, .messaging {
         width:        60%;
         display:      inline-block;
         float:        left;
-        padding-top:  $theme-padding-thick;
         padding-left: $theme-padding-thin;
         top:          50%;
         transform:    translate(0, -50%);
         left:         0;
-        position:     absolute;
-    }
-    .process-progress {
-        .progress {
-            margin-bottom: $theme-margin-base;
+        position:     relative;
+
+        .progress-bar {
+            height: 1.6rem;
+            padding-top: $theme-padding-thinner;
+            font-size: $theme-font-size-sm;
         }
     }
+
     .messaging {
         text-align: left;
         font-size:  $theme-font-size-sm;
@@ -70,11 +101,17 @@ ai-dialog-footer {
             color: $theme-invalid-color;
         }
     }
+
     .button-actions {
-        position: absolute;
-        right:    $theme-padding-base;
-        bottom:   0;
-        top:      0;
-        float:    right;
+        position:  relative;
+        right:     $theme-padding-base;
+        bottom:    0;
+        top:       50%;
+        transform: translate(0, -50%);
+        float:     right;
+
+        button {
+            margin-left: $theme-margin-thin;
+        }
     }
 }

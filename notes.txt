@@ -6,9 +6,6 @@
 
 
 BOOTSTRAP 4 CONVERSION NOTES
-* Date Picker clipped in search panel
-* hover on date picker icons disappear
-* collapse-panel header is not showing expanded height by default
 * selecting unknown is changing modified state in replace table, but unchecking it is showing still as modified
 * unknown in replace table is not showing checked state correct
 

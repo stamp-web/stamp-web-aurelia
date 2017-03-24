@@ -8,6 +8,18 @@ ownership-editor {
         }
     }
 
+    .owner-price-paid {
+        display: flex;
+        .price-paid {
+            max-width: 11rem;
+        }
+    }
+
+
+    date-picker {
+      //  width: 11rem;
+    }
+
     .form-control {
         &.price-paid {
             width:        9rem;
@@ -23,9 +35,6 @@ ownership-editor {
         margin-bottom: 0;
     }
 
-    .ownership-currency {
-        padding-left: 0;
-    }
 }
 
 

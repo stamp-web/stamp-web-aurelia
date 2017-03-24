@@ -1,9 +1,14 @@
 @import "../../../theme/_semantic.scss";
 
 paging-toolbar {
+
     .paging-component {
         display: inline-block;
         float:   left;
+
+        button {
+            font-size: $theme-font-size-sm;
+        }
     }
     div > div {
         display: inline-block;

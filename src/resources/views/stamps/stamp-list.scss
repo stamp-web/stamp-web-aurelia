@@ -39,16 +39,19 @@ collapse-panel {
     margin-bottom: 0;
     border-radius: 0;
     font-size:     $theme-font-size-sm;
+
     .form-control {
         height:    $theme-input-height;
         font-size: $theme-font-size-sm;
     }
+
     .btn-toolbar {
         width:     100%;
         position:  absolute;
         top:       50%;
         transform: translate(0, -50%);
     }
+
     .btn {
         font-size: $theme-font-size-sm;
         height: $theme-input-height;
@@ -57,6 +60,7 @@ collapse-panel {
             opacity: 0.35;
         }
     }
+
     .btn-group {
         margin-right: $theme-margin-thin;
     }
@@ -92,24 +96,26 @@ collapse-panel {
     border-top:    $theme-border;
     margin:        $theme-margin-thin 0 0 0;
     font-size:     $theme-font-size-sm;
+
     .form-control {
         height: $theme-input-height;
     }
+
     .pagination {
         display: block;
         margin:  0;
     }
+
     .report-statistics {
         float:        right;
         margin-right: $theme-margin-thick;
         display:      inline-block;
         .statistics-button {
-            padding:          $theme-padding-thin / 2;
-            color:            $theme-active-color;
-            background-color: $theme-active-bg;
-            border-color:     $theme-active-color;
+            padding:    $theme-padding-thinner;
+            font-size:  $theme-font-size-sm;
             &.active {
                 background-color: $theme-active-bg;
+                color:            $theme-active-color;
             }
             &:focus {
                 outline: none;
@@ -117,8 +123,7 @@ collapse-panel {
 
             &:hover {
                 color:            $theme-active-color;
-                background-color: $theme-active-bg;
-                border-color:     $theme-active-color;
+                background-color: lighten($theme-active-bg,10%);
                 &:disabled {
                     color: $theme-active-color;
                 }
@@ -136,6 +141,7 @@ collapse-panel {
             font-size:        $theme-font-size-sm;
         }
     }
+
     .btn-toolbar {
         .badge {
             position:    relative;
@@ -173,6 +179,7 @@ collapse-panel {
 
 .sw-editor-container {
     height:                 100%;
+    width: 57rem;
     display:                flex;
     flex-direction:         row;
     -webkit-flex-direction: row;
@@ -180,6 +187,20 @@ collapse-panel {
     align-content:          stretch;
     position:               relative;
     padding:                0;
+
+    &.full-content {
+        display: none;
+    }
+}
+
+.stamp-list-content {
+    width: 100%;
+
+
+    &.editor-shown {
+        width: calc(100% - 57rem);
+    }
+
 }
 
 .sw-dialog-wrapper {
