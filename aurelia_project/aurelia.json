@@ -253,7 +253,7 @@
     ]
   },
   "staticCSS": {
-    "source": "src/static/css/**/*.less",
+    "source": "src/static/css/**/*.scss",
     "displayName": "static-css",
     "id": "static-css"
   }
