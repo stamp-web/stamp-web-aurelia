@@ -1,0 +1,212 @@
+@import "../../../theme/_semantic.scss";
+
+$grid-nav-height: 5rem;
+
+.stamp-content {
+    height:     calc(100% - #{14rem});
+    position:   relative;
+    padding:    0;
+    border-top: $theme-border;
+    top:        $grid-nav-height;
+    > .row {
+        height: 100%;
+        margin: 0;
+
+        .full-height {
+            padding: 0;
+        }
+    }
+}
+
+
+.input-group.quick-search {
+    input.form-control {
+        width: auto;
+    }
+}
+
+collapse-panel {
+    .panel {
+        border-top-left-radius:    0;
+        border-bottom-left-radius: 0;
+    }
+}
+
+.stamp-grid-nav {
+    z-index:       1000;
+    top:           $grid-nav-height;
+    height:        $grid-nav-height;
+    margin-bottom: 0;
+    border-radius: 0;
+    font-size:     $theme-font-size-sm;
+
+    .form-control {
+        height:    $theme-input-height;
+        font-size: $theme-font-size-sm;
+    }
+
+    .btn-toolbar {
+        width:     100%;
+        position:  absolute;
+        top:       50%;
+        transform: translate(0, -50%);
+    }
+
+    .btn {
+        font-size: $theme-font-size-sm;
+        height: $theme-input-height;
+
+        &.disabled {
+            opacity: 0.35;
+        }
+    }
+
+    .btn-group {
+        margin-right: $theme-margin-thin;
+    }
+
+    .sort-actions {
+        margin-right: $theme-margin-thin;
+        .dropdown {
+            float: left;
+        }
+        .sort-selector {
+            width:         100%;
+            text-align:    left;
+            float:         left;
+            border-radius: $theme-border-radius 0 0 $theme-border-radius;
+            .caret {
+                float:    right;
+                top:      0.7rem;
+                position: relative;
+            }
+        }
+    }
+
+    .dropdown-item {
+        font-size: $theme-font-size-sm;
+    }
+}
+
+.stamp-list-footer {
+    bottom:        0px;
+    position:      absolute;
+    width:         100%;
+    border-radius: 0;
+    border-top:    $theme-border;
+    margin:        $theme-margin-thin 0 0 0;
+    font-size:     $theme-font-size-sm;
+
+    .form-control {
+        height: $theme-input-height;
+    }
+
+    .pagination {
+        display: block;
+        margin:  0;
+    }
+
+    .report-statistics {
+        float:        right;
+        margin-right: $theme-margin-thick;
+        display:      inline-block;
+        .statistics-button {
+            padding:    $theme-padding-thinner;
+            font-size:  $theme-font-size-sm;
+            &.active {
+                background-color: $theme-active-bg;
+                color:            $theme-active-color;
+            }
+            &:focus {
+                outline: none;
+            }
+
+            &:hover {
+                color:            $theme-active-color;
+                background-color: lighten($theme-active-bg,10%);
+                &:disabled {
+                    color: $theme-active-color;
+                }
+            }
+        }
+        .value-display {
+            border:           $theme-border;
+            border-radius:    0 $theme-border-radius $theme-border-radius 0;
+            width:            10rem;
+            height:           2.5rem;
+            left:             -0.1rem;
+            position:         relative;
+            background-color: $theme-panel-bg;
+            padding:          0 0.5rem;
+            font-size:        $theme-font-size-sm;
+        }
+    }
+
+    .btn-toolbar {
+        .badge {
+            position:    relative;
+            top:         -0.2rem;
+            font-weight: normal;
+        }
+        float: right;
+    }
+}
+
+
+
+.result-size-selector {
+    width:      6.5rem;
+    text-align: left;
+    .caret {
+        float:    right;
+        top:      0.7rem;
+        position: relative;
+    }
+}
+
+.results-group {
+    float:       right;
+    line-height: $theme-input-height;
+    position:    relative;
+}
+
+.selection-group {
+    margin-right: $theme-margin-base;
+    line-height:  $theme-input-height;
+    position:     relative;
+    float:        right;
+}
+
+.sw-editor-container {
+    height:                 100%;
+    width: 57rem;
+    display:                flex;
+    flex-direction:         row;
+    -webkit-flex-direction: row;
+    -webkit-align-content:  stretch;
+    align-content:          stretch;
+    position:               relative;
+    padding:                0;
+
+    &.full-content {
+        display: none;
+    }
+}
+
+.stamp-list-content {
+    width: 100%;
+
+
+    &.editor-shown {
+        width: calc(100% - 57rem);
+    }
+
+}
+
+.sw-dialog-wrapper {
+    .modal-body {
+        .bootbox-body {
+            @include nowrap-text;
+        }
+    }
+}

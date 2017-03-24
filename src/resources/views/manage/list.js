@@ -14,6 +14,7 @@
  limitations under the License.
  */
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {I18N} from 'aurelia-i18n';
 import {LogManager, bindable} from 'aurelia-framework';
 import {EventNames, StorageKeys} from '../../../events/event-managed';
 import bootbox from 'bootbox';
@@ -37,7 +38,7 @@ let handleKeyDown = function(e) {
 
 export class EntityListManage {
 
-    static inject = [EventAggregator];
+    static inject = [EventAggregator, I18N];
 
     @bindable models;
     @bindable field;
@@ -48,8 +49,9 @@ export class EntityListManage {
     hasIssue = false;
     editingModel;
 
-    constructor(eventBus) {
+    constructor(eventBus, i18n) {
         this.eventBus = eventBus;
+        this.i18n = i18n;
         this.configureSubscriptions();
     }
 
@@ -91,18 +93,19 @@ export class EntityListManage {
     }
 
     remove(model) {
-        var self = this;
-        var _remove = function (m) {
+        let self = this;
+        let _remove = (m) => {
             self.field.service.remove(m).then(function() {
-                var index = _.findIndex(self.models, {id: m.id});
+                let index = _.findIndex(self.models, {id: m.id});
                 self.models.splice(index, 1);
             }).catch(err => {
                 logger.error(err);
             });
         };
+        let msg = this.i18n.tr('prompts.delete-item', {name: model.name});
         bootbox.confirm({
             size: 'small',
-            message: "Delete " + model.name + "?",
+            message: msg,
             callback: function (result) {
                 if (result === true) {
                     _remove.call(self, model);
@@ -118,8 +121,7 @@ export class EntityListManage {
 
     activate(obj) {
         this.models = [];
-        var that = this;
-        that.eventBus.publish(EventNames.selectEntity, obj.path);
+        this.eventBus.publish(EventNames.selectEntity, obj.path);
     }
 
     /**

@@ -7,52 +7,52 @@
 
     <require from="resources/elements/stamps/stamp-replacement-table.css"></require>
     <div class="stamp-replacement-header">
-        <form class="form-horizontal">
-        <div class="form-group form-group-sm">
-            <label for="filter-catalogueRef" class="col-sm-3 control-label">${'editor.filtering-catalogue'|t}</label>
-            <div class="col-sm-3">
+        <form>
+        <div class="form-group row">
+            <label for="filter-catalogueRef" class="col-sm-4 col-form-label">${'editor.filtering-catalogue'|t}</label>
+            <div class="col-sm-8">
                 <select-picker items.bind="catalogues" disabled.bind="loading" value.two-way="model.filterCatalogueRef"
                                config.bind="{ id: 'filter-catalogueRef', tabIndex: 0, labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
                 </select-picker>
             </div>
         </div>
-        <div class="form-group form-group-sm">
-            <label for="replacement-catalogueRef" class="col-sm-3 control-label">${'editor.replacement-catalogue'|t}</label>
-            <div class="col-sm-3">
+        <div class="form-group row">
+            <label for="replacement-catalogueRef" class="col-sm-4 col-form-label">${'editor.replacement-catalogue'|t}</label>
+            <div class="col-sm-8">
                 <select-picker items.bind="catalogues" disabled.bind="loading" value.two-way="model.replacementCatalogueRef"
                                config.bind="{ id: 'replacement-catalogueRef', tabIndex: 0, labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
                 </select-picker>
             </div>
         </div>
         <div>
-            <button type="button" class="btn btn-sm btn-primary ${filterReady ? '' : 'disabled'}" disabled.bind="!filterReady" click.delegate="filterStamps()">${'actions.apply'|t}</button>
+            <button type="button" class="btn btn-primary ${filterReady ? '' : 'disabled'}" disabled.bind="!filterReady" click.delegate="filterStamps()">${'actions.apply'|t}</button>
         </div>
         </form>
     </div>
     <div class="stamp-replacement-table-wrapper">
-        <form class="form-inline">
-        <table class="table table-condensed table-hover">
+        <form>
+        <table class="table table-sm table-hover stamp-table">
             <thead>
             <tr>
-                <th class="image-col hidden-xs" title="${'table.image|t}">&nbsp;</th>
+                <th class="image-col hidden-md-down" title="${'table.image|t}">&nbsp;</th>
                 <th>${'table.country'|t}</th>
-                <th>${'table.description'|t}</th>
-                <th>${'table.catalogue-number'|t}</th>
-                <th>${'table.condition'|t}</th>
-                <th>${'table.catalogue-value'|t}</th>
-                <th>${'table.modified'|t}</th>
+                <th class="hidden-md-down">${'table.description'|t}</th>
+                <th class="col-number">${'table.catalogue-number'|t}</th>
+                <th class="col-condition">${'table.condition'|t}</th>
+                <th class="col-catalogue-value">${'table.catalogue-value'|t}</th>
+                <th class="col-status">${'table.modified'|t}</th>
             </tr>
             </thead>
             <tbody>
             <tr repeat.for="stamp of filteredStamps" click.trigger="select($index)">
-                <td class="image-col hidden-xs">
+                <td class="image-col hidden-md-down">
                     <div class="stamp-thumbnail">
                         <img if.bind="!stamp.wantList" src.one-way="getImagePath(stamp)" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event,stamp)"/>
                     </div>
                 </td>
-                <td class="col-md-3">${ stamp.countryRef | byName:'countries' }</td>
-                <td class="col-md-4">${ stamp.rate + ' ' + stamp.description }</td>
-                <td class="col-md-1">
+                <td>${ stamp.countryRef | byName:'countries' }</td>
+                <td class="hidden-md-down">${ stamp.rate + ' ' + stamp.description }</td>
+                <td class="col-number">
                     <span if.bind="editingRow === $index">
                         <input type="text" class="form-control replacement-number-input" tabindex="0" value.bind="editingCatalogueNumber.number">
                     </span>
@@ -60,7 +60,7 @@
                         ${ getReplacementCatalogueNumber(stamp).number }
                     </span>
                 </td>
-                <td class="col-md-1">
+                <td class="col-condition">
                     <span if.bind="editingRow === $index">
                         <select-picker items.bind="conditions" disabled.bind="loading" value.two-way="editingCatalogueNumber.condition"
                             config.bind="{ id: 'replacement-condition', tabIndex: 0, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
@@ -70,13 +70,13 @@
                         ${ getReplacementCatalogueNumber(stamp).condition|asEnum:'Condition'|t }
                     </span>
                 </td>
-                <td class="col-md-2">
-                    <div class="form-group" if.bind="editingRow === $index">
+                <td class="col-catalogue-value">
+                    <span class="value-edit" if.bind="editingRow === $index">
                         <input type="text" class="form-control replacement-value-input" disabled.bind="editingCatalogueNumber.unknown"
                                keydown.delegate="advanceToNextRow($event)" tabindex="0" value.bind="editingCatalogueNumber.value | asNumber:true">
-                        <input type="checkbox" tabindex="1000" checked.bind="editingCatalogueNumber.unknown">
+                        <input type="checkbox" tabindex="1000" checked.bind="editingCatalogueNumber.unknown" click.trigger="changeUnknown(stamp)">
 					    <span>${'editor.no-value-short'|t}</span>
-                    </div>
+                    </span>
                     <span if.bind="editingRow !== $index">
                         <span show.bind="getReplacementCatalogueNumber(stamp).unknown" class="unknown">
                             ${'table.catalogue-value-unknown'|t}
@@ -86,8 +86,9 @@
                         </span>
                     </span>
                 </td>
-                <td class="editing-status">
+                <td class="col-status">
                     <span if.bind="stamp.__modified__" class="sw-icon-ok"></span>
+                    <button if.bind="!stamp.__modified__" class="btn btn-primary" click.delegate="setAsModified(stamp)">Apply</button>
                 </td>
 
             </tr>
@@ -97,11 +98,11 @@
 
     </div>
     <div class="stamp-replacement-footer">
-        <button type="button" class="btn btn-primary btn-sm ${editCount < 1 ? 'disabled': ''}" disabled.bind="editCount < 1" click.delegate="saveAll()">${'actions.save'|t}
+        <button type="button" class="btn btn-primary ${editCount < 1 ? 'disabled': ''}" disabled.bind="editCount < 1" click.delegate="saveAll()">${'actions.save'|t}
         </button>
-        <span class="filtering-message">
-            <label>${ 'footer.filtering-total'|t}</label> <span class="badge">${filteredStamps.length}</span>
-            <label>${ 'footer.modified-total'|t}</label> <span class="badge">${editCount}</span>
-        </span>
+        <div class="filtering-message">
+            <label>${ 'footer.filtering-total'|t}</label> <span class="badge ${!filteredStamps.length ? 'badge-default': 'badge-primary'}">${filteredStamps.length}</span>
+            <label>${ 'footer.modified-total'|t}</label> <span class="badge ${!editCount ? 'badge-default': 'badge-success'}">${editCount}</span>
+        </div>
     </div>
 </template>

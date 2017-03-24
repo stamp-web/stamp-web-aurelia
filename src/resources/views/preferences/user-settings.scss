@@ -1,0 +1,81 @@
+@import "../../../theme/default/default";
+
+$top-header-height: 5.6rem;
+
+.user-settings {
+    display:        flex;
+    flex-direction: column;
+    height:         100%;
+    position:       relative;
+    top:            $top-header-height;
+    overflow:       auto;
+    background: $theme-panel-contrast-bg;
+
+    .user-settings-nav {
+        margin-top: $theme-margin-thinner;
+        height:     3.7rem;
+        position:   relative;
+        background: $theme-panel-bg;
+        .nav-tabs {
+            width: 100%;
+            .nav-link.active {
+                top: 0.2rem;
+                position: relative;
+                background: $theme-panel-contrast-bg;
+                border-bottom: none;
+            }
+        }
+    }
+    .user-settings-content {
+        font-size:   $theme-font-size-sm;
+        padding-top: $theme-padding-thick;
+
+        position:    relative;
+        width:       100%;
+
+        .card {
+            margin-left: 2rem;
+
+            .card-block {
+                min-width: 50rem;
+            }
+
+            .card-title {
+                color:         $theme-form-title-color;
+                margin-bottom: $theme-margin-thick;
+            }
+        }
+
+        input[type="text"], select {
+            font-size: $theme-font-size-sm;
+        }
+
+        .list-group-item {
+            &:hover {
+                background-color: lighten($list-group-active-bg, 25%);
+                color:            $list-group-active-text-color;
+                cursor:           pointer;
+            }
+            &.selected {
+                background-color: $list-group-active-bg;
+                color:            $list-group-active-text-color;
+                cursor:           default;
+            }
+        }
+
+        .locale-selector {
+            max-width:    200px;
+            display:      inline-block;
+            margin-right: $theme-margin-base;
+        }
+
+        button.restart {
+            height: $theme-input-height;
+        }
+    }
+
+    .editor-buttons {
+        margin-top: $theme-margin-thick;
+    }
+
+}

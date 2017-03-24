@@ -5,37 +5,38 @@
     <require from="../ownerships/ownership-cert"></require>
     <require from="resources/elements/stamps/stamp-card.css"></require>
 
-  <div class="stamp-card ${(selected) ? 'selected' : ''} ${(highlight) ? 'highlight' : ''}" click.trigger="toggleSelection($event)">
-      <div class="card-header">
-          <div class="header-status">
-              <ownership-notes model.one-way="ownership"></ownership-notes>
-              <ownership-cert model.one-way="ownership"></ownership-cert>
-          </div>
-          <span class="header-text">${activeCN.number} ${model.countryRef | byName:'countries' }</span>
-
-      </div>
-
-    <div class="description" title="${model.rate} - ${model.description}">
-      ${model.rate | rateFilter} - ${model.description}
-    </div>
-    <div class="stamp-thumbnail" mouseover.delegate="toggleActions(true)" mouseout.delegate="toggleActions(false)">
-      <img src.bind="imagePath" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event)"/>
-        <div class="btn-group action-panel" role="group" show.bind="showActions">
-            <!--
-            <button type="button" class="btn btn-default" aria-label="View">
-                <span class="sw-icon-info" aria-hidden="true"></span>
-            </button>
-            -->
-            <button type="button" class="btn btn-default" aria-label="Edit" click.trigger="edit()">
-                <span class="sw-icon-edit" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-default" aria-label="Delete" click.trigger="remove()">
-                <span class="sw-icon-trash" aria-hidden="true"></span>
-            </button>
+    <div class="card ${(selected) ? 'selected' : ''} ${(highlight) ? 'highlight' : ''}"
+         click.trigger="toggleSelection($event)">
+        <div class="stamp-thumbnail" mouseover.delegate="toggleActions(true)" mouseout.delegate="toggleActions(false)">
+            <img src.bind="imagePath" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event)"/>
+            <div class="btn-group action-panel" role="group" show.bind="showActions">
+                <!--
+                <button type="button" class="btn btn-default" aria-label="View">
+                    <span class="sw-icon-info" aria-hidden="true"></span>
+                </button>
+                -->
+                <button type="button" class="btn btn-secondary" click.trigger="edit()">
+                    <span class="sw-icon-edit" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-secondary" click.trigger="remove()">
+                    <span class="sw-icon-trash" aria-hidden="true"></span>
+                </button>
+            </div>
         </div>
-    </div>
+        <div class="text-header">
 
-  </div>
+            <span class="text">${activeCN.number} ${model.countryRef | byName:'countries' }</span>
+            <div class="text-status">
+                <ownership-notes model.one-way="ownership" show.bind="ownership.notes || ownership.defects> 0 || ownership.deception > 0"></ownership-notes>
+                <ownership-cert model.one-way="ownership" show.bind="ownership.cert"></ownership-cert>
+            </div>
+        </div>
+        <div class="description" title="${model.rate} - ${model.description}">
+            ${model.rate | rateFilter} - ${model.description}
+        </div>
+
+
+    </div>
 
 
 </template>

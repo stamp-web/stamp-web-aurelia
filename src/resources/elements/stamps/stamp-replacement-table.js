@@ -194,7 +194,13 @@ export class StampReplacementTable {
         this._editSubscribers.push(this.bindingEngine.propertyObserver(cn, 'condition').subscribe(this._checkForModifiedStamp.bind(this)));
     }
 
-    _clearEditSubscribers() {
+    changeUnknown(stamp) {
+        let cn = this.getReplacementCatalogueNumber(stamp);
+        cn.unknown = (!cn.unknown && true);
+        this._checkForModifiedStamp(stamp, cn);
+    }
+
+     _clearEditSubscribers() {
         if( this._editSubscribers ) {
             this._editSubscribers.forEach(sub => {
                 sub.dispose();
@@ -203,10 +209,15 @@ export class StampReplacementTable {
         this._editSubscribers = [];
     }
 
-    _checkForModifiedStamp() {
-        let stamp = this.filteredStamps[this.editingRow];
+    _checkForModifiedStamp(stamp, cn) {
+        if( !stamp ) {
+            stamp = this.filteredStamps[this.editingRow];
+        }
+        if( !cn) {
+            cn = this.getReplacementCatalogueNumber(stamp);
+        }
         let currentModified = stamp.__modified__;
-        let modified = this._markedAsModified(stamp, this.getReplacementCatalogueNumber(stamp));
+        let modified = this._markedAsModified(stamp, cn);
         if( modified !== currentModified ) {
             this.editCount += (modified) ? 1 : -1;
         }
@@ -229,6 +240,11 @@ export class StampReplacementTable {
             cn.__orig__.value !== cn.value ||
             cn.__orig__.unknown !== cn.unknown );
         return (stamp.__modified__ );
+    }
+
+    setAsModified(stamp) {
+        stamp.__modified__ = true;
+        this.editCount++;
     }
 
 

@@ -11,7 +11,8 @@
         "image-burst": "Stamp Image Bursting Application",
         "new-stamp": "New stamp",
         "select-all": "Select all stamps",
-        "clear-all": "Clear all selected stamps"
+        "clear-all": "Clear all selected stamps",
+        "show-navigation": "Show navigation"
     },
     "footer": {
         "filtering-total": "Stamps matching filter:",
@@ -47,6 +48,7 @@
     },
     "editor": {
         "actions": "Actions",
+        "active-catalogue-number": "Active Catalogue Number",
         "album": "Album",
         "album-select": "Select an album",
         "catalogue": "Catalogue",
@@ -81,7 +83,8 @@
         "modifyTimestamp": "Modified",
         "no-value": "No value listed",
         "no-value-short": "No value",
-        "purchase-help": "Specify the amount paid for selected stamps",
+        "owning-details": "Owning Details",
+        "purchase-help": "Specify Purchase Details",
         "purchase-error": "Complete the form to save",
         "purchase-percentage": "Percentage",
         "purchase-stamp-count": "Number of stamps",
@@ -132,7 +135,8 @@
         "valueInvalid": "Value is not a number"
     },
     "prompts": {
-        "delete-catalogue-number": "Delete catalogue number __number__?"
+        "delete-catalogue-number": "Delete catalogue number __number__?",
+        "delete-item": "Delete __name__?"
     },
     "settings": {
         "album": "Album",

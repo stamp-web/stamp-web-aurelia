@@ -2,28 +2,30 @@
 
 	<require from="../../elements/editor-dialog"></require>
     <require from="resources/views/manage/manage.css"></require>
+    <require from="../../elements/select-picker/select-picker"></require>
 
 	<editor-dialog model.bind="editingModel" content.bind="editorContent" icon.bind="editorIcon" title.bind="editorTitle" dialog-id="editorDialog" ></editor-dialog>
 
 	<div class="container-fluid manage-list">
 		<div class="row">
-			<div class="col-sm-2 hidden-xs">
+			<div class="col-md-2 hidden-md-down">
 				<ul class="list-group entity-type">
-					<li class="list-group-item ${($parent.selectedEntity==entity) ? 'selected' : ''} select-${entity.field}" repeat.for="entity of entityModels">
-						<div click.delegate="$parent.setEntity(entity.field)">
+					<li class="list-group-item ${(selectedEntity==entity.field) ? 'selected' : ''} select-${entity.field}" repeat.for="entity of entityModels">
+						<div click.delegate="selectedEntityChanged(entity.field)">
 							<span class="${entity.icon}"></span> ${entity.label}
 						</div>
 						<div>
-							<button type="button" class="btn btn-default btn-xs sw-create-action" click.trigger="$parent.create(entity)" data-toggle="modal" data-target="#editorDialog">
+							<button type="button" class="btn sw-create-action" click.trigger="create(entity)" data-toggle="modal" data-target="#editorDialog">
 								<span class="sw-icon-plus"></span>
 							</button>
 						</div>
-
-
 					</li>
 				</ul>
 			</div>
-			<div class="col-sm-10 list-${selectedEntity.field}">
+			<div class="col-md-12 col-lg-10 list-${selectedEntity}">
+                <select-picker class="hidden-lg-up entity-selection" items.bind="entityModels" value.bind="selectedEntity" change.delegate="selectionChanged($event)"
+                               config.bind="{valueType: 'String', labelProperty: 'label', valueProperty: 'field', filterSearch: false }">
+                </select-picker>
 				<router-view></router-view>
 			</div>
 		</div>

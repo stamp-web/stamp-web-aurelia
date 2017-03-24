@@ -3,3 +3,9 @@
 * purchase editor does not work/show
 * put theme into a separate bundle
 * split UI into a few bundles
+
+
+BOOTSTRAP 4 CONVERSION NOTES
+* selecting unknown is changing modified state in replace table, but unchecking it is showing still as modified
+* unknown in replace table is not showing checked state correct
+

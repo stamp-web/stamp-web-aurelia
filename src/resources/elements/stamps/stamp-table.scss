@@ -1,0 +1,38 @@
+@import "../../../theme/_semantic";
+@import "stamp-common";
+
+stamp-table {
+    height:         100%;
+    width:          100%;
+    display:        flex;
+    overflow-y:     auto;
+    flex-direction: row;
+    align-content:  stretch;
+
+    .grid-footer-container {
+        opacity: 0.01;
+    }
+
+    table {
+        table-layout: fixed;
+        tbody {
+            tr {
+                &.selected {
+                    background-color: $theme-table-selected-bg;
+                    &:hover {
+                        background-color: darken($theme-table-selected-bg, 5%);
+                    }
+                    &.highlight {
+                        background-color: lighten($theme-highlight-color, 10%);
+                    }
+                }
+
+            }
+        }
+        * {
+            cursor: default;
+        }
+    }
+;
+
+}

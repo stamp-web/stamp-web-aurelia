@@ -17,8 +17,6 @@ import {LogManager} from 'aurelia-framework';
 import {I18N} from 'aurelia-i18n';
 import {Router} from 'aurelia-router';
 
-import 'bootstrap';
-
 const logger = LogManager.getLogger('stamp-web');
 
 export class App {

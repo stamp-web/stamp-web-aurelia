@@ -1,34 +1,30 @@
 <template>
     <require from="resources/elements/nav/nav-bar.css"></require>
 
-	<nav class="navbar navbar-inverse navbar-fixed-top app-bar" role="navigation">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#collapsible-header">
-				<span class="sr-only">Toggle Navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">
-				<span class="app-icon-stampweb"></span>
-				<span>${router.title|t}</span>
-			</a>
-		</div>
-
-		<div class="collapse navbar-collapse" id="collapsible-header">
-			<ul class="nav navbar-nav">
-				<li role="presentation">
-					<a href="#/settings">
-                        <span class="hidden-xs sw-icon-settings" aria-hidden="true" title="${'nav.settings'|t}"></span>
-                        <span class="visible-xs"> ${'nav.settings'|t}</span>
+	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top app-bar" role="navigation">
+        <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse"
+                data-target="#navbar-items">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <span class="app-icon-stampweb"></span>
+            <span>${router.title|t}</span>
+        </a>
+		<div class="navbar-collapse collapse" id="navbar-items">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="#/settings">
+                        <span class="hidden-sm-down">
+                            <span class="sw-icon-settings" title="${'nav.settings'|t}"></span>
+                        </span>
+                        <span class="hidden-md-up"> ${'nav.settings'|t}</span>
                     </a>
 				</li>
-				<li role="presentation" repeat.for="row of router.navigation" class="${row.isActive ? 'active' : ''}">
-					<a href.bind="row.href">${row.title|t}</a>
+				<li repeat.for="row of router.navigation" class="nav-item ${row.isActive ? 'active' : ''}">
+					<a class="nav-link" href.bind="row.href">${row.title|t}</a>
 				</li>
 			</ul>
-            <ul class="nav navbar-nav navbar-right">
+            <!-- <ul class="nav navbar-nav navbar-right">
                 <li role="presentation">
                     <a href="http://www.drakeserver.com/javaws/tools/stamp-imageparsing.jnlp" title="${'nav.image-burst'|t}">
                         <span class="hidden-xs sw-icon-imageburst"></span>
@@ -42,6 +38,7 @@
                     </a>
                 </li>
             </ul>
+            -->
 		</div>
 	</nav>
 </template>

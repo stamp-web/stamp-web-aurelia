@@ -4,10 +4,10 @@
 
     <div class="paging-component">
         <div class="btn-group" role="group">
-            <button class="btn btn-xs btn-default first-page paging-button" title="Show the first page" click.trigger="selectPage(0)" disabled.bind="page < 1">
+            <button class="btn first-page paging-button" title="Show the first page" click.trigger="selectPage(0)" disabled.bind="page < 1">
                 <span class="sw-icon-to-start"></span>
             </button>
-            <button class="btn btn-xs btn-default back-page mirror-icon paging-button" aria-label="Previous" title="Show the previous page" click.trigger="selectPage(page - 1)" disabled.bind="page < 1">
+            <button class="btn back-page mirror-icon paging-button" aria-label="Previous" title="Show the previous page" click.trigger="selectPage(page - 1)" disabled.bind="page < 1">
                 <span class="sw-icon-forward mirror-icon"></span>
             </button>
         </div>
@@ -17,15 +17,15 @@
                         keyup.delegate="filterKey($event)" disabled.bind="total < 1" value.bind="page | zeroBased" /> of ${total}
         </div>
         <div class="btn-group" role="group">
-            <button class="btn btn-xs btn-default next-page paging-button" aria-label="Next" title="Show the next page" click.trigger="selectPage(page + 1)" disabled.bind="page + 1 >= total">
+            <button class="btn next-page paging-button" aria-label="Next" title="Show the next page" click.trigger="selectPage(page + 1)" disabled.bind="page + 1 >= total">
                 <span class="sw-icon-forward"></span>
             </button>
-            <button class="btn btn-xs btn-default last-page paging-button" title="Show the last page" click.trigger="selectPage(total-1)" disabled.bind="page + 1 >= total">
+            <button class="btn last-page paging-button" title="Show the last page" click.trigger="selectPage(total-1)" disabled.bind="page + 1 >= total">
                 <span class="sw-icon-to-end"></span>
             </button>
         </div>
 
-        <button class="btn btn-xs btn-default refresh-page paging-button" title="Refresh the page" click.trigger="refresh()" disabled.bind="total < 1">
+        <button class="btn refresh-page paging-button" title="Refresh the page" click.trigger="refresh()" disabled.bind="total < 1">
             <span class="sw-icon-refresh"></span>
         </button>
     </div>

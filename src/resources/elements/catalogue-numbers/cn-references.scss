@@ -1,0 +1,79 @@
+@import "../../../theme/_semantic.scss";
+
+.sw-catalogue-number-table {
+    margin:    $theme-margin-base;
+    font-size: $theme-font-size-sm;
+
+    .sw-catalogue-number-content {
+        display:    block;
+        height:     100%;
+        max-height: 15.5rem;
+
+        table {
+            .editing-row td {
+                padding-left: $theme-padding-thin;
+            }
+
+            td {
+                padding-left: $theme-padding-base + $theme-padding-thin;
+            }
+            .col-primary {
+                width: 3rem;
+            }
+            .col-condition {
+                width: 17rem;
+            }
+            .col-catalogue-value,
+            .col-number {
+                width: 7.5rem;
+            }
+
+            .col-actions {
+                width:        9.5rem;
+                padding-left: $theme-padding-thin;
+            }
+
+            input[type="text"] {
+                font-size: $theme-font-size-sm;
+            }
+        }
+    }
+    thead {
+        border: $theme-border;
+    }
+    tbody {
+        border-right:  $theme-border;
+        border-left:   $theme-border;
+        border-bottom: $theme-border;
+    }
+
+    .editing-row {
+        .editable-cell {
+            width: 100%;
+        }
+
+        .form-control {
+            font-size: $theme-font-size-base;
+            height:    $theme-input-height;
+        }
+
+        .action-edit-ok {
+            color: $theme-success-color;
+        }
+
+        .action-edit-cancel {
+            color: $theme-invalid-color;
+        }
+
+        .actions {
+            padding-top: $theme-padding-thinner;
+        }
+    }
+
+    .cn-row {
+    }
+
+    .row-being-edited {
+        display: none;
+    }
+}

@@ -1,44 +1,58 @@
 <template>
-	<require from="../../value-converters/empty-text"></require>
+    <require from="../../value-converters/empty-text"></require>
     <require from="../select-picker/select-picker"></require>
+    <require from="../panel/panel"></require>
     <require from="resources/elements/stamps/stamp-details.css"></require>
 
-	<div class="panel panel-default">
-		<div class="panel-heading panel-heading-with-actions">
-			<h4 class="panel-title">${'editor.details-title'|t}</h4>
-            <div class="panel-actions btn-group">
-                <button class="btn btn-xs btn-default ${(model.wantList) ? '' : 'active'}" show.bind="!editing" type="button" click.delegate="changeEditMode('stamp')" title="${'editor.createStamp-hint'|t}">
+    <panel heading-text="${'editor.details-title'|t}">
+        <span slot="actions">
+            <div class="btn-group">
+                <button class="btn btn-sm btn-secondary ${(model.wantList) ? '' : 'active'}" show.bind="!editing"
+                        type="button" click.delegate="changeEditMode('stamp')" title="${'editor.createStamp-hint'|t}">
                     <span class="sw-icon-stamp"></span>
                 </button>
-                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" if.bind="!editing" type="button" click.delegate="changeEditMode('wantList')" title="${'editor.createWantlist-hint'|t}">
+                <button class="btn btn-sm btn-secondary ${(model.wantList) ? 'active' : ''}" if.bind="!editing"
+                        type="button"
+                        click.delegate="changeEditMode('wantList')" title="${'editor.createWantlist-hint'|t}">
                     <span class="sw-icon-wantlist"></span>
                 </button>
-                <button class="btn btn-xs btn-default ${(model.wantList) ? 'active' : ''}" show.bind="editing" type="button" click.delegate="changeEditMode('create')" title="${'editor.createStamp-hint'|t}">
+                <button class="btn btn-sm btn-secondary ${(model.wantList) ? 'active' : ''}" show.bind="editing"
+                        type="button"
+                        click.delegate="changeEditMode('create')" title="${'editor.createStamp-hint'|t}">
                     <span class="sw-icon-plus"></span>
                 </button>
             </div>
-		</div>
-		<div class="panel-body" validation-renderer="bootstrap-form">
-			<div class="form-group form-group-sm has-feedback">
-				<label for="details-countryRef" class="col-sm-3 control-label">${'editor.country'|t}</label>
-				<div class="col-sm-9">
-                    <select-picker items.bind="countries" disabled.bind="loading" class="country-selector" value.bind="model.countryRef"
-                        config.bind="{ id: 'details-countryRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
-				</div>
-			</div>
-			<div class="form-group form-group-sm has-feedback">
-				<label for="details-rate" class="col-sm-3 control-label">${'editor.rate'|t}</label>
-				<div class="col-sm-3">
-					<input type="text" autocomplete="off" tabindex="51" required aria-required="true" class="form-control" value.bind="model.rate | emptyText & validate:rules" id="details-rate" aria-describedby="rateStatus">
-				</div>
-			</div>
-			<div class="form-group form-group-sm stamp-description">
-				<label for="details-description" class="col-sm-3 control-label">${'editor.description'|t}</label>
-				<div class="col-sm-9">
-					<input type="text" autocomplete="off" tabindex="52" class="form-control" id="details-description" value.bind="model.description | emptyText & validate:rules" aria-describedby="descriptionStatus">
-				</div>
-			</div>
-		</div>
-	</div>
+        </span>
+        <span slot="content">
+            <form validation-renderer="bootstrap-form">
+            <div class="form-group row">
+                <label for="details-countryRef" class="col-sm-3 col-form-label">${'editor.country'|t}</label>
+                <div class="col-sm-9">
+                    <select-picker items.bind="countries" disabled.bind="loading" class="country-selector"
+                                   value.bind="model.countryRef"
+                                   config.bind="{ id: 'details-countryRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="details-rate" class="col-sm-3 col-form-label">${'editor.rate'|t}</label>
+                <div class="col-sm-3">
+                    <input type="text" autocomplete="off" tabindex="51" required aria-required="true"
+                           class="form-control"
+                           value.bind="model.rate | emptyText & validate:rules" id="details-rate"
+                           aria-describedby="rateStatus">
+                </div>
+            </div>
+            <div class="form-group row description">
+                <label for="details-description" class="col-sm-3 col-form-label">${'editor.description'|t}</label>
+                <div class="col-sm-9">
+                    <input type="text" autocomplete="off" tabindex="52" class="form-control" id="details-description"
+                           value.bind="model.description | emptyText & validate:rules"
+                           aria-describedby="descriptionStatus">
+                </div>
+            </div>
+        </form>
+        </span>
+    </panel>
+
 
 </template>

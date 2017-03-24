@@ -89,10 +89,11 @@ class ManageList {
         let dialog = this.driver.findElement({css: '.bootbox-confirm'});
         this.driver.wait(until.elementIsVisible(dialog), 500);
         let handler = confirm ? 'confirm' : 'cancel';
+        this.driver.sleep(250);
         dialog.findElement({css: 'button[data-bb-handler="' + handler + '"]'}).click();
         this.driver.wait(until.elementIsNotVisible(dialog), 500);
-        this.driver.sleep(125);
-        return  this.driver.wait(until.elementIsVisible(this.getTable()), 250);
+        this.driver.sleep(250);
+        return this.driver.wait(until.elementIsVisible(this.getTable()), 250);
     }
 
     getTable() {

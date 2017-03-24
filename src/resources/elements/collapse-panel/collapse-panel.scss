@@ -1,0 +1,39 @@
+@import "../../../theme/_semantic.scss";
+
+$collapse-header-height: 3rem;
+
+collapse-panel {
+    width:      100%;
+    height:     100%;
+
+    .card {
+        height: 100%;
+
+        > .panel {
+            border: $theme-border;
+            height: 100%;
+        }
+
+        .card-title {
+            height:           $collapse-header-height;
+            background-color: $theme-panel-header-bg;
+
+            h4.panel-title {
+                color:        $theme-form-title-color;
+                padding-left: $theme-padding-base;
+                padding-top:  $theme-padding-base;
+            }
+        }
+        .card-block {
+            //height:     calc(100% - #{$collapse-header-height});
+            padding-top: 0;
+            overflow-y:  auto;
+            overflow-x:  hidden;
+        }
+        .btn-close {
+            position: absolute;
+            top:      0.5rem;
+            right:    0.5rem;
+        }
+    }
+}

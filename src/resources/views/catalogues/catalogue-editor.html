@@ -3,34 +3,34 @@
 	<require from="../../value-converters/by-name"></require>
     <require from="../../elements/select-picker/select-picker"></require>
 	<form class="form-horizontal">
-		<div class="form-group form-group-sm">
-			<label for="editor-catalogueType" class="col-sm-3 control-label">${'editor.catalogue-type'|t}</label>
+		<div class="form-group row">
+			<label for="editor-catalogueType" class="col-sm-3">${'editor.catalogue-type'|t}</label>
 			<div class="col-sm-9">
                 <select-picker items.bind="catalogueTypes" class="catalogue-type-selector" value.two-way="model.type"
                                config.bind="{ id: 'editor-catalogueType', tabIndex: 100, name: 'type', labelProperty: 'description', valueProperty: 'ordinal', caption: 'editor.catalogue-type-select' }">
                 </select-picker>
 			</div>
 		</div>
-        <div class="form-group form-group-sm">
-            <label for="editor-issue" class="col-sm-3 control-label">${'editor.issue'|t}</label>
+        <div class="form-group row">
+            <label for="editor-issue" class="col-sm-3">${'editor.issue'|t}</label>
             <div class="col-sm-2">
                 <input id="editor-issue" tabindex="110" class="form-control" type="text" value.bind="model.issue">
             </div>
         </div>
-		<div class="form-group form-group-sm">
-			<label for="editor-name" class="col-sm-3 control-label">${'editor.name'|t}</label>
+		<div class="form-group row">
+			<label for="editor-name" class="col-sm-3">${'editor.name'|t}</label>
 			<div class="col-sm-9">
 				<input id="editor-name" tabindex="120" class="form-control" type="text" value.bind="model.name | emptyText">
 			</div>
 		</div>
-		<div class="form-group form-group-sm">
-			<label for="editor-desc" class="col-sm-3 control-label">${'editor.description'|t}</label>
+		<div class="form-group row">
+			<label for="editor-desc" class="col-sm-3">${'editor.description'|t}</label>
 			<div class="col-sm-9">
 				<textarea id="editor-desc" tabindex="130" value.bind="model.description | emptyText" class="form-control" rows="4"></textarea>
 			</div>
 		</div>
-        <div class="form-group form-group-sm">
-            <label for="editor-code" class="col-sm-3 control-label">${'editor.currencyCode'|t}</label>
+        <div class="form-group row">
+            <label for="editor-code" class="col-sm-3">${'editor.currencyCode'|t}</label>
             <div class="col-sm-3">
                 <select-picker class="currency-selector" items.bind="codes" value.two-way="model.code"
                                config.bind="{ id: 'editor-code', tabindex: 140, valueType: 'String', labelProperty: 'description', valueProperty: 'keyName', filterSearch: false, caption: 'editor.currencyCode-select' }">

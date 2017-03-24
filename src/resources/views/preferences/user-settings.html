@@ -3,79 +3,86 @@
     <require from="../../elements/select-picker/select-picker"></require>
     <require from="resources/views/preferences/user-settings.css"></require>
 
-    <div class="container-fluid">
-        <div class="row user-settings container-fluid">
-            <div class="col-sm-2">
-                <ul class="list-group">
-                    <li class="list-group-item ${($parent.selectedView === viewModel) ? 'selected' : ''}" repeat.for="viewModel of viewModels">
-                        <div click.delegate="$parent.selectView(viewModel)">${viewModel|t}</div>
-                    </li>
-                </ul>
+    <div class="container-fluid user-settings">
+        <div class="row user-settings-nav">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" repeat.for="viewModel of viewModels">
+                    <a class="nav-link ${($parent.selectedView === viewModel) ? 'active' : ''}"
+                       click.delegate="$parent.selectView(viewModel)" href="#${viewModel}" role="tab">${viewModel|t}</a>
+                </li>
 
-            </div>
-            <div class="col-sm-8 container-fluid">
-                <form class="form-horizontal">
-                    <div class="panel panel-default" show.bind="selectedView === EDITOR">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">${'settings.editor'|t}</h4>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group form-group-sm">
-                                <label for="settings-countryRef" class="col-sm-3 control-label">${'settings.country'|t}</label>
-                                <div class="col-sm-9">
-                                    <select-picker items.bind="countries" class="country-selector" disabled.bind="loading"  value.two-way="model.stamps.countryRef"
-                                                   config.bind="{ id: 'settings-countryRef',labelProperty: 'name',tabIndex: 100, valueProperty: 'id', filterSearch: true, caption: 'settings.country-select' }"></select-picker>
-                                </div>
+            </ul>
+        </div>
+
+
+        <div class="row user-settings-content">
+            <form>
+                <div class="card" show.bind="selectedView === EDITOR">
+                    <div class="card-block">
+                        <h4 class="card-title">${'settings.editor'|t}</h4>
+                        <div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label"
+                                       for="settings-countryRef">${'settings.country'|t}</label>
+                                <select-picker items.bind="countries" class="country-selector col-sm-9"
+                                               disabled.bind="loading" value.two-way="model.stamps.countryRef"
+                                               config.bind="{ id: 'settings-countryRef',labelProperty: 'name',tabIndex: 100, valueProperty: 'id', filterSearch: true, caption: 'settings.country-select' }"></select-picker>
                             </div>
-                            <div class="form-group form-group-sm">
-                                <label for="settings-albumRef" class="col-sm-3 control-label">${'settings.album'|t}</label>
-                                <div class="col-sm-9">
-                                    <select-picker items.bind="albums" class="album-selector" disabled.bind="loading"  value.two-way="model.stamps.albumRef"
-                                                   config.bind="{ id: 'settings-albumRef',labelProperty: 'name',tabIndex: 150, valueProperty: 'id', filterSearch: true, caption: 'settings.album-select' }"></select-picker>
-                                </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label"
+                                       for="settings-albumRef">${'settings.album'|t}</label>
+                                <select-picker items.bind="albums" class="album-selector col-sm-9"
+                                               disabled.bind="loading"
+                                               value.two-way="model.stamps.albumRef"
+                                               config.bind="{ id: 'settings-albumRef',labelProperty: 'name',tabIndex: 150, valueProperty: 'id', filterSearch: true, caption: 'settings.album-select' }"></select-picker>
                             </div>
-                            <div class="form-group form-group-sm">
-                                <label for="settings-stampCollectionRef" class="col-sm-3 control-label">${'settings.stampCollection'|t}</label>
-                                <div class="col-sm-9">
-                                    <select-picker items.bind="stampCollections" class="stampCollection-selector" disabled.bind="loading"  value.two-way="model.stamps.stampCollectionRef"
-                                                   config.bind="{ id: 'settings-stampCollectionRef',labelProperty: 'name',tabIndex: 200, valueProperty: 'id', filterSearch: true, caption: 'settings.stampCollection-select' }"></select-picker>
-                                </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="settings-stampCollectionRef">${'settings.stampCollection'|t}</label>
+
+                                <select-picker items.bind="stampCollections" class="stamp-collection-selector col-sm-9"
+                                               disabled.bind="loading"
+                                               value.two-way="model.stamps.stampCollectionRef"
+                                               config.bind="{ id: 'settings-stampCollectionRef',labelProperty: 'name',tabIndex: 200, valueProperty: 'id', filterSearch: true, caption: 'settings.stampCollection-select' }"></select-picker>
                             </div>
-                            <div class="form-group form-group-sm">
-                                <label for="settings-sellerRef" class="col-sm-3 control-label">${'settings.seller'|t}</label>
-                                <div class="col-sm-9">
-                                    <select-picker items.bind="sellers" class="seller-selector" disabled.bind="loading"  value.two-way="model.stamps.sellerRef"
-                                                   config.bind="{ id: 'settings-sellerRef',labelProperty: 'name',tabIndex: 250, valueProperty: 'id', filterSearch: true, caption: 'settings.seller-select' }"></select-picker>
-                                </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label"
+                                       for="settings-sellerRef">${'settings.seller'|t}</label>
+                                <select-picker items.bind="sellers" class="seller-selector col-sm-9"
+                                               disabled.bind="loading"
+                                               value.two-way="model.stamps.sellerRef"
+                                               config.bind="{ id: 'settings-sellerRef',labelProperty: 'name',tabIndex: 250, valueProperty: 'id', filterSearch: true, caption: 'settings.seller-select' }"></select-picker>
                             </div>
-                            <div class="form-group form-group-sm">
-                                <label for="settings-catalogueRef" class="col-sm-3 control-label">${'settings.catalogue'|t}</label>
-                                <div class="col-sm-9">
-                                    <select-picker items.bind="catalogues" class="catalogue-selector" disabled.bind="loading"  value.two-way="model.stamps.catalogueRef"
-                                                   config.bind="{ id: 'settings-catalogueRef',labelProperty: 'displayName',tabIndex: 300, valueProperty: 'id', filterSearch: true, caption: 'settings.catalogue-select' }">
-                                    </select-picker>
-                                </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="settings-catalogueRef">${'settings.catalogue'|t}</label>
+                                <select-picker items.bind="catalogues" class="catalogue-selector col-sm-9"
+                                               disabled.bind="loading" value.two-way="model.stamps.catalogueRef"
+                                               config.bind="{ id: 'settings-catalogueRef',labelProperty: 'displayName',tabIndex: 300, valueProperty: 'id', filterSearch: true, caption: 'settings.catalogue-select' }">
+                                </select-picker>
                             </div>
-                            <div class="form-group form-group-sm">
-                                <label for="settings-condition" class="col-sm-3 control-label">${'settings.condition'|t}</label>
-                                <div class="col-sm-4">
-                                    <select-picker class="condition-selector" items.bind="conditions" value.two-way="model.stamps.condition"
+                            <div class="form-group row">
+                                <label for="settings-condition" class="col-sm-3 col-form-label">${'settings.condition'|t}</label>
+                                <div class="col-sm-9">
+                                    <select-picker class="condition-selector" items.bind="conditions"
+                                                   value.two-way="model.stamps.condition"
                                                    config.bind="{ id: 'settings-condition', labelProperty: 'description',tabIndex: 350, valueProperty: 'ordinal', filterSearch: false, caption: 'settings.condition-select' }">
                                     </select-picker>
                                 </div>
                             </div>
-                            <div class="form-group form-group-sm">
-                                <label for="settings-grade" class="col-sm-3 control-label">${'settings.grade'|t}</label>
-                                <div class="col-sm-4">
-                                    <select-picker class="grade-selector" items.bind="grades" value.two-way="model.stamps.grade"
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label"
+                                       for="settings-grade">${'settings.grade'|t}</label>
+                                <div class="col-sm-9">
+                                    <select-picker class="grade-selector" items.bind="grades"
+                                                   value.two-way="model.stamps.grade"
                                                    config.bind="{ id: 'settings-grade', labelProperty: 'description', tabIndex: 400, valueProperty: 'ordinal', filterSearch: false, caption: 'settings.grade-select' }">
                                     </select-picker>
                                 </div>
                             </div>
-                            <div class="form-group form-group-sm">
-                                <label for="settings-currencyCode" class="col-sm-3 control-label">${'settings.currencyCode'|t}</label>
-                                <div class="col-sm-2">
-                                    <select-picker class="currency-selector" items.bind="codes" value.two-way="model.currency.CurrencyCode"
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="settings-currencyCode">${'settings.currencyCode'|t}</label>
+                                <div class="col-sm-9">
+                                    <select-picker class="currency-selector " items.bind="codes"
+                                                   value.two-way="model.currency.CurrencyCode"
                                                    config.bind="{ id: 'settings-currencyCode', valueType: 'String', labelProperty: 'description', tabIndex: 450, valueProperty: 'keyName', filterSearch: false, caption: 'settings.currencyCode-select' }">
                                     </select-picker>
                                 </div>
@@ -83,85 +90,108 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default" show.bind="selectedView === REFERENCE">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">${'settings.reference'|t}</h4>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group form-group-sm">
+                </div>
+            </form>
+
+            <form>
+                <div class="card" show.bind="selectedView === REFERENCE">
+                    <div class="card-block">
+                        <h4 class="card-title">${'settings.reference'|t}</h4>
+                        <div>
+                            <div class="form-group row">
                                 <label for="settings-catalogueRefSecondary" class="col-sm-3 control-label">${'settings.catalogue-secondary'|t}</label>
                                 <div class="col-sm-9">
-                                    <select-picker items.bind="catalogues" class="catalogue-selector" disabled.bind="loading"  value.two-way="model.stamps.catalogueRefSecondary"
+                                    <select-picker items.bind="catalogues" class="catalogue-selector"
+                                                   disabled.bind="loading"
+                                                   value.two-way="model.stamps.catalogueRefSecondary"
                                                    config.bind="{ id: 'settings-catalogueRefSecondary',labelProperty: 'displayName', tabIndex: 500, valueProperty: 'id', filterSearch: true, caption: 'settings.catalogue-select' }">
                                     </select-picker>
                                 </div>
                             </div>
-                            <div class="form-group form-group-sm">
+                            <div class="form-group row">
                                 <label for="settings-conditionSecondary" class="col-sm-3 control-label">${'settings.condition-secondary'|t}</label>
                                 <div class="col-sm-4">
-                                    <select-picker class="condition-selector" items.bind="conditions" value.two-way="model.stamps.conditionSecondary"
+                                    <select-picker class="condition-selector" items.bind="conditions"
+                                                   value.two-way="model.stamps.conditionSecondary"
                                                    config.bind="{ id: 'settings-conditionSecondary', labelProperty: 'description',tabIndex: 550, valueProperty: 'ordinal', filterSearch: false, caption: 'settings.condition-select' }">
                                     </select-picker>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </form>
 
-                    <div class="panel panel-default" show.bind="selectedView === SERVER">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">${'settings.server'|t}</h4>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group form-group-sm">
+            <form>
+                <div class="card" show.bind="selectedView === SERVER">
+                    <div class="card-block">
+                        <h4 class="card-title">${'settings.server'|t}</h4>
+                        <div>
+                            <div class="form-group row">
                                 <label for="settings-imagePath" class="col-sm-3 control-label">${'settings.imagePath'|t}</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" tabindex="600" value.bind="model.stamps.imagePath" id="settings-imagePath">
+                                    <input type="text" class="form-control" tabindex="600"
+                                           value.bind="model.stamps.imagePath" id="settings-imagePath">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default" show.bind="selectedView === USER">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">${'settings.user'|t}</h4>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group form-group-sm">
-                                <label for="settings-locale" class="col-sm-3 control-label">${'settings.preferredLocale'|t}</label>
-                                <div class="col-sm-4">
-                                    <select-picker class="locale-selector" items.bind="locales" value.two-way="model.user.locale"
+                </div>
+            </form>
+
+            <form>
+                <div class="card" show.bind="selectedView === USER">
+                    <div class="card-block">
+                        <h4 class="card-title">${'settings.user'|t}</h4>
+                        <div>
+                            <div class="form-group row">
+                                <label class="col-3 control-label" for="settings-locale">${'settings.preferredLocale'|t}</label>
+                                <div class="col-9">
+                                    <select-picker class="locale-selector" items.bind="locales"
+                                                   value.two-way="model.user.locale"
                                                    config.bind="{ id: 'settings-locale', valueType: 'String', labelProperty: 'description', tabIndex: 650, valueProperty: 'keyName', filterSearch: false, caption: 'settings.locale-select' }">
                                     </select-picker>
-                                    <button class="btn btn-sm btn-primary restart" click.delegate="restartApp()" show.bind="allowReset">${'actions.restart-app'|t}</button>
+                                    <button class="btn btn-primary restart" click.delegate="restartApp()"
+                                            show.bind="allowReset">${'actions.restart-app'|t}
+                                    </button>
                                 </div>
                             </div>
-                            <div class="form-group form-group-sm">
+                            <div class="form-group row">
                                 <label for="settings-pageSize" class="col-sm-3 control-label">${'settings.pageSize'|t}</label>
-                                <div class="col-sm-2">
-                                    <select id="settings-pageSize" tabindex="700" class="pageSize-selector form-control" value.bind="model.stamps.pageSize">
-                                        <option repeat.for="size of pageSizes" model.bind="size">${size}</option>
+                                <div class="col-9">
+                                    <select id="settings-pageSize" tabindex="700"
+                                            class="pageSize-selector form-control"
+                                            value.bind="model.stamps.pageSize">
+                                        <option repeat.for="size of pageSizes" model.bind="size">${size}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group form-group-sm">
+                            <div class="form-group row">
                                 <label for="settings-applyCatalogueImagePrefix" class="col-sm-3 control-label">${'settings.applyCatalogueImagePrefix'|t}</label>
-                        <span class="col-sm-9">
-                            <input type="checkbox" tabindex="750" checked.bind="model.stamps.applyCatalogueImagePrefix" id="settings-applyCatalogueImagePrefix">
-                            <span>${'settings.applyCatalogueImagePrefix-hint'|t}</span>
-                        </span>
+                                <span class="col-9">
+                                    <input type="checkbox" tabindex="750"
+                                           checked.bind="model.stamps.applyCatalogueImagePrefix"
+                                           id="settings-applyCatalogueImagePrefix">
+                                    <span>${'settings.applyCatalogueImagePrefix-hint'|t}</span>
+                                </span>
                             </div>
                         </div>
                     </div>
-                </form>
-                <div class="editor-buttons">
-                    <button type="button" disabled.bind="!valid" class="btn btn-sm btn-primary" tabindex="800" click.trigger="save()">${'actions.save'|t}</button>
-                    <button type="button" disabled.bind="!valid" class="btn btn-sm btn-default" tabindex="820" click.trigger="reset()">${'actions.reset'|t}</button>
                 </div>
-            </div>
+            </form>
+
+        </div>
+        <div class="editor-buttons">
+            <button type="button" disabled.bind="!valid" class="btn btn-primary" tabindex="800"
+                    click.trigger="save()">${'actions.save'|t}
+            </button>
+            <button type="button" disabled.bind="!valid" class="btn btn-secondary" tabindex="820"
+                    click.trigger="reset()">${'actions.reset'|t}
+            </button>
         </div>
     </div>
 
 
-
-
-
 </template>
+@Jkhai125

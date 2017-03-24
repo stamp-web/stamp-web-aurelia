@@ -1,0 +1,142 @@
+@import "../../../theme/_semantic.scss";
+
+.entity-type {
+    padding: $theme-padding-thin 0 0 0;
+    .list-group-item {
+        &:hover {
+            background-color: lighten($theme-active-bg, 25%);
+            color:            $theme-active-color;
+            cursor:           pointer;
+
+            .sw-create-action {
+                color: $theme-active-color;
+            }
+        }
+        &.selected {
+            background-color: $theme-active-bg;
+            color:            $theme-active-color;
+            cursor:           default;
+
+            .sw-create-action {
+                color: $theme-active-color;
+            }
+        }
+        div {
+            display: inline-block;
+            &:last-child {
+                float: right;
+            }
+            &:first-child {
+                width: calc(100% - #{35px});
+            }
+        }
+        .sw-create-action {
+            border:     none;
+            float:      right;
+            position:   absolute;
+            cursor:     pointer;
+            right:      0;
+            top:        50%;
+            transform:  translate(0, -50%);
+            opacity:    0.2;
+            background: transparent;
+            padding:    0 $theme-padding-base;
+            &:focus, &:active {
+                outline: none !important;
+            }
+            &:hover {
+                opacity: 1.0;
+                outline: none !important;
+            }
+        }
+
+    }
+
+}
+
+.manage-list-toolbar {
+    height: 4rem;
+    .col-sm-2, .col-sm-4 {
+        padding-right: 0;
+    }
+
+    input {
+        width:     auto;
+        font-size: $theme-font-size-sm;
+    }
+
+    button {
+        width:        3.2rem;
+        padding-left: 0.6rem;
+        height:       2.8rem;
+        font-size:    $theme-font-size-sm;
+    }
+
+    label {
+        text-align:     right;
+        float:          left;
+        padding-right:  $theme-padding-base;
+        vertical-align: middle;
+        display:        inline-block;
+        line-height:    $theme-input-height;
+    }
+
+    .total {
+        float: right;
+        label.total-results {
+            font-weight: normal;
+        }
+    }
+}
+
+.manage-list {
+    background-color: $theme-panel-contrast-bg;
+    height:           calc(100% - #{5.6rem});
+    padding-top:      $theme-padding-base;
+    position:         relative;
+    top:              5.6rem;
+    font-size:        $theme-font-size-sm;
+    overflow-y:       hidden;
+    > .row {
+        height: 100%;
+        > div {
+            height: 100%;
+        }
+    }
+    .manage-list-contents {
+        height:           calc(100% - #{4rem});
+        overflow:         auto;
+        border:           $theme-border;
+        background-color: $theme-panel-bg;
+    }
+    .actions {
+        width: 12rem;
+    }
+
+    .col-count, .col-actions {
+        min-width: 12rem;
+        width:     12rem;
+    }
+    .col-name {
+        max-width: 50rem;
+        width:     40%;
+    }
+
+    .entity-list {
+        td, th {
+            cursor:    default;
+            font-size: $theme-font-size-sm;
+        }
+    }
+
+    .entity-selection {
+        width:     100%;
+        max-width: 25rem;
+        height:    $theme-input-height;
+        margin:    0 auto $theme-margin-thick auto;
+        font-size: $theme-font-size-sm;
+    }
+
+}
+
+
