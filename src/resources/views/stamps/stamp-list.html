@@ -68,7 +68,7 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${'sort.' + sortCol|t}</li>
+                            <li class="dropdown-item" repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${'sort.' + sortCol|t}</li>
                         </ul>
                     </div>
                     <button class="btn btn-secondary ${options.sort === 'placeholder' ? 'disabled' : ''}" title="Clear sort" click.trigger="clearSort()">
@@ -85,7 +85,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li repeat.for="filter of filters" click.trigger="$parent.setFilter($index)">${$parent.getFilterText(filter)|t}</li>
+                        <li class="dropdown-item" repeat.for="filter of filters" click.trigger="$parent.setFilter($index)">${$parent.getFilterText(filter)|t}</li>
                     </ul>
                 </div>
                 <div class="dropdown hidden-md-down btn-group">
@@ -94,16 +94,16 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li repeat.for="filter of conditionFilters" click.trigger="$parent.setConditionFilter($index)">${$parent.getFilterText(filter)|t}</li>
+                        <li class="dropdown-item" repeat.for="filter of conditionFilters" click.trigger="$parent.setConditionFilter($index)">${$parent.getFilterText(filter)|t}</li>
                     </ul>
                 </div>
                 <div class="dropdown hidden-md-down">
                     <button type="button" class="btn btn-secondary dropdown-toggle result-size-selector" data-toggle="dropdown">
                         <span class="selector-text">${options.$top | defaultValue:'actions.page-size'|t}</span>
                     </button>
-                    <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" repeat.for="size of pageSizes" click.delegate="$parent.setSize(size)">${size}</a>
-                    </div>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-item" repeat.for="size of pageSizes" click.delegate="$parent.setSize(size)">${size}</li>
+                    </ul>
                 </div>
 
 			</div>
@@ -134,10 +134,10 @@
             <paging-toolbar page.bind="pageInfo.active" total.bind="pageInfo.total"></paging-toolbar>
             <div class="btn-toolbar" role="toolbar">
                 <div class="results-group">
-                    ${'footer.total'|t}: <span class="badge">${pageInfo.active * options.$top + 1} - ${pageInfo.active * options.$top + stamps.length}</span> of <span class="badge">${stampCount}</span>
+                    ${'footer.total'|t}: <span class="">${pageInfo.active * options.$top + 1} - ${pageInfo.active * options.$top + stamps.length}</span> of <span class="badge">${stampCount}</span>
                 </div>
                 <div class="selection-group">
-                    ${'footer.totalSelected'|t}: <span class="badge">${selectedCount}</span>
+                    ${'footer.totalSelected'|t}: <span class="">${selectedCount}</span>
                 </div>
             </div>
             <div class="report-statistics hidden-xs" role="group">

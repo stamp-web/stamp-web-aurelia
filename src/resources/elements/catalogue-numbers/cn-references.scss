@@ -5,10 +5,38 @@
     font-size: $theme-font-size-sm;
 
     .sw-catalogue-number-content {
-        overflow-y: auto;
         display:    block;
         height:     100%;
         max-height: 15.5rem;
+
+        table {
+            .editing-row td {
+                padding-left: $theme-padding-thin;
+            }
+
+            td {
+                padding-left: $theme-padding-base + $theme-padding-thin;
+            }
+            .col-primary {
+                width: 3rem;
+            }
+            .col-condition {
+                width: 17rem;
+            }
+            .col-catalogue-value,
+            .col-number {
+                width: 7.5rem;
+            }
+
+            .col-actions {
+                width:        9.5rem;
+                padding-left: $theme-padding-thin;
+            }
+
+            input[type="text"] {
+                font-size: $theme-font-size-sm;
+            }
+        }
     }
     thead {
         border: $theme-border;
@@ -30,7 +58,7 @@
         }
 
         .action-edit-ok {
-            color: $theme-btn-primary-color;
+            color: $theme-success-color;
         }
 
         .action-edit-cancel {

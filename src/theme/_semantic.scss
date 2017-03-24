@@ -43,7 +43,7 @@ $link-hover-decoration: underline;
 
 $theme-warning-color: $brand-warning;
 $theme-invalid-color: $brand-danger;
-$theme-success-color: $green !default;
+$theme-success-color: $brand-success !default;
 
 $theme-link-color: $link-color !default;
 
@@ -589,16 +589,11 @@ $theme-pill-color-bg: $gray-light;
 //
 ////** Tooltip max width
 //$tooltip-max-width:           250px;
-////** Tooltip text color
-//$tooltip-color:                 $text-color;
-////** Tooltip background color
-//$tooltip-bg:                  $cream;
-//$tooltip-opacity:             .95;
-//
-////** Tooltip arrow width
-//$tooltip-arrow-width:         5px;
-////** Tooltip arrow color
-//$tooltip-arrow-color:         $tooltip-bg;
+//$theme-tooltip-color: $text-color !default;
+//$theme-tooltip-bg: $cream !default;
+$theme-tooltip-opacity: 0.98 !default;
+$theme-tooltip-arrow-width: 0.5rem !default;
+//$theme-tooltip-arrow-color: $tooltip-bg !default;
 //
 //
 ////== Popovers

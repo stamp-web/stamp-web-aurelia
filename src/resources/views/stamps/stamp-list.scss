@@ -2,17 +2,14 @@
 
 $grid-nav-height: 5rem;
 
-stamp-list {
-}
-
 .stamp-content {
-    height:     calc(100% - #{11rem});
+    height:     calc(100% - #{14rem});
     position:   relative;
     padding:    0;
     border-top: $theme-border;
     top:        $grid-nav-height;
     > .row {
-        height: calc(100% - #{$grid-nav-height + 0.5rem});
+        height: 100%;
         margin: 0;
 
         .full-height {
@@ -20,6 +17,7 @@ stamp-list {
         }
     }
 }
+
 
 .input-group.quick-search {
     input.form-control {
@@ -35,6 +33,7 @@ collapse-panel {
 }
 
 .stamp-grid-nav {
+    z-index:       1000;
     top:           $grid-nav-height;
     height:        $grid-nav-height;
     margin-bottom: 0;
@@ -51,6 +50,7 @@ collapse-panel {
         transform: translate(0, -50%);
     }
     .btn {
+        font-size: $theme-font-size-sm;
         height: $theme-input-height;
 
         &.disabled {
@@ -60,11 +60,33 @@ collapse-panel {
     .btn-group {
         margin-right: $theme-margin-thin;
     }
+
+    .sort-actions {
+        margin-right: $theme-margin-thin;
+        .dropdown {
+            float: left;
+        }
+        .sort-selector {
+            width:         100%;
+            text-align:    left;
+            float:         left;
+            border-radius: $theme-border-radius 0 0 $theme-border-radius;
+            .caret {
+                float:    right;
+                top:      0.7rem;
+                position: relative;
+            }
+        }
+    }
+
+    .dropdown-item {
+        font-size: $theme-font-size-sm;
+    }
 }
 
 .stamp-list-footer {
     bottom:        0px;
-    position:      relative;
+    position:      absolute;
     width:         100%;
     border-radius: 0;
     border-top:    $theme-border;
@@ -124,23 +146,7 @@ collapse-panel {
     }
 }
 
-.sort-actions {
-    margin-right: $theme-margin-thin;
-    .dropdown {
-        float: left;
-    }
-    .sort-selector {
-        width:         15rem;
-        text-align:    left;
-        float:         left;
-        border-radius: $theme-border-radius 0 0 $theme-border-radius;
-        .caret {
-            float:    right;
-            top:      0.7rem;
-            position: relative;
-        }
-    }
-}
+
 
 .result-size-selector {
     width:      6.5rem;

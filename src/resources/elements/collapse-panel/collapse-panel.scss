@@ -5,9 +5,9 @@ $collapse-header-height: 3rem;
 collapse-panel {
     width:      100%;
     height:     100%;
-    overflow-y: auto;
 
     .card {
+        height: 100%;
 
         > .panel {
             border: $theme-border;
@@ -27,7 +27,7 @@ collapse-panel {
         .card-block {
             //height:     calc(100% - #{$collapse-header-height});
             padding-top: 0;
-            overflow-y:  hidden;
+            overflow-y:  auto;
             overflow-x:  hidden;
         }
         .btn-close {

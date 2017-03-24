@@ -7,67 +7,67 @@
 
     <section class="sw-catalogue-number-table">
         <div class="sw-catalogue-number-content">
-            <table class="table table-hover">
+            <table class="table table-sm table-hover">
                 <thead>
                 <tr>
-                    <th>
-                        <button type="button" class="btn btn-default btn-xs" show.bind='modelCopy' title="${'actions.add-cn'|t}" click.delegate="add()">
+                    <th class="col-primary">
+                        <button type="button" class="btn btn-primary btn-sm" show.bind='modelCopy' title="${'actions.add-cn'|t}" click.delegate="add()">
                             <span class="sw-icon-plus"></span>
                         </button>
                     </th>
-                    <th>${'editor.catalogue' | t}</th>
-                    <th>${'editor.condition' | t}</th>
-                    <th>${'editor.catalogue-number' | t}</th>
-                    <th>${'editor.catalogue-value' | t}</th>
-                    <th>${'editor.actions' | t}</th>
+                    <th class="col-catalogue">${'editor.catalogue' | t}</th>
+                    <th class="col-condition">${'editor.condition' | t}</th>
+                    <th class="col-number">${'editor.catalogue-number' | t}</th>
+                    <th class="col-catalogue-value">${'editor.catalogue-value' | t}</th>
+                    <th class="col-actions">${'editor.actions' | t}</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr repeat.for="number of modelCopy.catalogueNumbers" class="cn-row ${(number.editing === true) ? 'editing-row' : ''}">
                     <template if.bind="!number.editing">
-                        <td><span if.bind="number.active" class="sw-icon-key"></span></td>
-                        <td class="col-md-3">${number.catalogueRef | byName:'catalogues' }</td>
-                        <td class="col-md-2">${number.condition | asEnum:'Condition' | t}</td>
-                        <td class="col-md-2">${number.number}</td>
-                        <td class="col-md-2">${number.unknown ? 'editor.catalogue-value-unknown' : number.value | asCurrencyFormatted:number.currencyCode | t}</td>
-                        <td class="col-md-2">
+                        <td class="col-primary"><span if.bind="number.active" class="sw-icon-key"></span></td>
+                        <td class="col-catalogue">${number.catalogueRef | byName:'catalogues' }</td>
+                        <td class="col-condition">${number.condition | asEnum:'Condition' | t}</td>
+                        <td class="col-number">${number.number}</td>
+                        <td class="col-catalogue-value">${number.unknown ? 'editor.catalogue-value-unknown' : number.value | asCurrencyFormatted:number.currencyCode | t}</td>
+                        <td class="col-actions">
                             <div class="btn-group actions">
-                                <button type="button" class="btn btn-default btn-xs" title="${'actions.make-active'|t}" show.bind="!number.active" click.delegate="$parent.makeActive(number)">
+                                <button type="button" class="btn btn-secondary btn-sm" title="${'actions.make-active'|t}" show.bind="!number.active" click.delegate="makeActive(number)">
                                     <span class="sw-icon-target"></span>
                                 </button>
-                                <button type="button" class="btn btn-default btn-xs" title="${'actions.edit-cn'|t}" click.delegate="$parent.edit(number, $index)">
+                                <button type="button" class="btn btn-secondary btn-sm" title="${'actions.edit-cn'|t}" click.delegate="edit(number, $index)">
                                     <span class="sw-icon-edit"></span>
                                 </button>
-                                <button type="button" class="btn btn-default btn-xs" title="${'actions.remove-cn'|t}" show.bind="!number.active" click.trigger="$parent.remove(number)">
+                                <button type="button" class="btn btn-secondary btn-sm" title="${'actions.remove-cn'|t}" show.bind="!number.active" click.trigger="remove(number)">
                                     <span class="sw-icon-trash"></span>
                                 </button>
                             </div>
                         </td>
                     </template>
                     <template if.bind="number.editing === true">
-                        <td><span if.bind="number.active" class="sw-icon-key"></span></td>
-                        <td class="col-md-3">
-                            <select-picker class="editable-cell" items.bind="$parent.catalogues" disabled.bind="loading" validate="catalogueRef" value.two-way="number.catalogueRef"
+                        <td class="col-primary"><span if.bind="number.active" class="sw-icon-key"></span></td>
+                        <td class="col-catalogue">
+                            <select-picker class="editable-cell" items.bind="catalogues" disabled.bind="loading" validate="catalogueRef" value.two-way="number.catalogueRef"
                                            config.bind="{ id: 'cn-catalogueRef', tabIndex: 70, labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
                             </select-picker>
                         </td>
-                        <td class="col-md-2">
-                            <select-picker class="editable-cell" items.bind="$parent.conditions" disabled.bind="loading" value.two-way="number.condition"
+                        <td class="col-condition">
+                            <select-picker class="editable-cell" items.bind="conditions" disabled.bind="loading" value.two-way="number.condition"
                                            config.bind="{ id: 'cn-condition', tabIndex: 75, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
                             </select-picker>
                         </td>
-                        <td class="col-md-2">
+                        <td class="col-number">
                             <input type="text" tabindex="80" autofocus class="form-control" id="cn-number" validate="number" value.bind="number.number">
                         </td>
-                        <td class="col-md-2">
+                        <td class="col-catalogue-value">
                             <input type="text" tabindex="85" class="form-control" id="cn-value" value.bind="number.value" >
                         </td>
-                        <td class="col-md-2">
+                        <td class="col-actions">
                             <div class="btn-group actions">
-                                <button type="button" class="btn btn-default btn-xs" click.delegate="$parent.save(number)" title="${'actions.save-changes'|t}">
+                                <button type="button" class="btn btn-secondary btn-sm" click.delegate="save(number)" title="${'actions.save-changes'|t}">
                                     <span class="sw-icon-ok action-edit-ok"></span>
                                 </button>
-                                <button type="button" class="btn btn-default btn-xs" click.delegate="$parent.cancel(number)" title="${'actions.cancel-changes'|t}">
+                                <button type="button" class="btn btn-secondary btn-sm" click.delegate="cancel(number)" title="${'actions.cancel-changes'|t}">
                                     <span class="sw-icon-cancel action-edit-cancel"></span>
                                 </button>
                             </div>

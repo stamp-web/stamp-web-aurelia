@@ -1,4 +1,5 @@
 @import 'semantic';
+@import 'bootstrap-overrides';
 
 html {
     font-size: 10px;
@@ -51,6 +52,7 @@ th {
         color: $brand-danger;
     }
 }
+
 
 .table-hover {
     tbody {

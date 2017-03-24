@@ -1,10 +1,10 @@
 @import "../../../theme/_semantic.scss";
 
 stamp-grid {
-    height:         100%;
-    display:        flex;
-    flex-direction: row;
-    align-content:  stretch;
+    height:           100%;
+    display:          flex;
+    flex-direction:   row;
+    align-content:    stretch;
 
     background-color: $theme-panel-contrast-bg;
 
@@ -18,23 +18,24 @@ stamp-grid {
             overflow-y: auto; // if we want it to scroll only
         }
         .with-references {
-            height: calc(100% - #{17rem});
+            height: calc(100% - #{14rem});
         }
 
         stamp-card {
-            margin:  $theme-margin-base 0 0 $theme-margin-base;
+            margin: $theme-margin-base 0 0 $theme-margin-base;
         }
 
         .sw-reference-catalogue-numbers {
-            height:        17rem;
-            width:         100%;
-            position:      absolute;
-            bottom:        0;
-            border:        $theme-border;
-            border-radius: 0 0 $theme-border-radius $theme-border-radius;
+            background-color: $theme-panel-bg;
+            height:           14rem;
+            width:            100%;
+            position:         absolute;
+            bottom:           0;
+            overflow:         auto;
+            border-top:       $theme-border;
+            border-radius:    0 0 $theme-border-radius $theme-border-radius;
         }
     }
-
 
 }
 
