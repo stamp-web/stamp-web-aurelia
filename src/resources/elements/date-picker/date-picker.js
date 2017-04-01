@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2017 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -56,8 +56,8 @@ export class DatePicker {
             todayBtn: "linked",
             todayHighlight: true,
             templates: {
-                leftArrow: '<span class="sw-icon-previous"></span>',
-                rightArrow: '<span class="sw-icon-next"></span>'
+                leftArrow: '<i class="sw-icon-previous"></i>',
+                rightArrow: '<i class="sw-icon-next"></i>'
             },
             container: $(this.element).parent(),
             startDate: this.startDate,

@@ -6,7 +6,8 @@ html {
 }
 
 
-input[type="text"] {
+input[type="text"],
+input[type='number'] {
     height: $theme-input-height;
     font-size: $theme-font-size-sm;
 }

@@ -26,6 +26,10 @@ editor-dialog {
         input[type='text'], input[type='number'], textarea {
             font-size: $theme-font-size-sm;
         }
+
+        .checkbox {
+            height: 1.6rem;
+        }
     }
 
     .modal-footer {

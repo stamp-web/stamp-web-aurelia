@@ -8,6 +8,10 @@ ownership-editor {
         }
     }
 
+    textarea.form-control {
+        font-size: $theme-font-size-sm;
+    }
+
     .owner-price-paid {
         display: flex;
         .price-paid {
