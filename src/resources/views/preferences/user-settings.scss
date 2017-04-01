@@ -9,7 +9,7 @@ $top-header-height: 5.6rem;
     position:       relative;
     top:            $top-header-height;
     overflow:       auto;
-    background: $theme-panel-contrast-bg;
+    background:     $theme-panel-contrast-bg;
 
     .user-settings-nav {
         margin-top: $theme-margin-thinner;
@@ -19,9 +19,9 @@ $top-header-height: 5.6rem;
         .nav-tabs {
             width: 100%;
             .nav-link.active {
-                top: 0.2rem;
-                position: relative;
-                background: $theme-panel-contrast-bg;
+                top:           $theme-padding-thinner;
+                position:      relative;
+                background:    $theme-panel-contrast-bg;
                 border-bottom: none;
             }
         }
@@ -38,16 +38,22 @@ $top-header-height: 5.6rem;
 
             .card-block {
                 min-width: 50rem;
+
+                select {
+                    font-size: $theme-font-size-sm;
+                }
+
+                .catalogue-prefix {
+                    top:       50%;
+                    transform: translate(0, -50%);
+                    position:  relative;
+                }
             }
 
             .card-title {
                 color:         $theme-form-title-color;
                 margin-bottom: $theme-margin-thick;
             }
-        }
-
-        input[type="text"], select {
-            font-size: $theme-font-size-sm;
         }
 
         .list-group-item {

@@ -3,7 +3,7 @@
 catalogue-number-details {
 
     .sw-conversion {
-        font-size: 1.2em;
+        font-size: $theme-font-size-xs;
         position:  absolute;
         &.sw-convert {
             color:  $theme-action-color;

@@ -8,6 +8,18 @@ html {
 
 input[type="text"] {
     height: $theme-input-height;
+    font-size: $theme-font-size-sm;
+}
+
+input[type="checkbox"] {
+    line-height: $theme-input-height;
+    position:    relative;
+    top:         50%;
+    transform:   translate(0, -50%);
+}
+
+select, textarea {
+    font-size: $theme-font-size-sm;
 }
 
 button {
@@ -17,7 +29,10 @@ button {
             cursor: default;
         }
     }
+}
 
+th {
+    background-color: $gray-lighter;
 }
 
 /**
@@ -43,23 +58,8 @@ button {
     max-width: 15rem;
 }
 
-th {
-    background-color: $gray-lighter;
-}
-
 .form-group.has-error {
     .validation-message {
         color: $brand-danger;
-    }
-}
-
-
-.table-hover {
-    tbody {
-        tr {
-            &:hover {
-                background: $white-dark !important;
-            }
-        }
     }
 }

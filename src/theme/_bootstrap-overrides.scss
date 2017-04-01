@@ -15,3 +15,12 @@ $tooltip-opacity: $theme-tooltip-opacity;
     }
 }
 
+.table-hover {
+    tbody {
+        tr {
+            &:hover {
+                background: $white-dark !important;
+            }
+        }
+    }
+}

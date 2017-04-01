@@ -39,14 +39,15 @@ export class EventManaged {
         this.unsubscribe(channels);
     }
 
-    unsubscribe() {
+    unsubscribe(channels) {
         let remove = (channel) => {
             _.forEach(this._subscribers[channel], sub => {
                 sub.dispose();
             });
+            this._subscribers[channel] = [];
         };
-        _.forEach(arguments, arg => {
-            remove(arg);
+        _.forEach(channels, ch => {
+            remove(ch);
         });
     }
 }
