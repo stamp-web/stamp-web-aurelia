@@ -21,11 +21,11 @@ import _ from 'lodash';
 export class EnumSymbol {
 
     sym = Symbol.for(name);
-    ordinal:number;
-    description:string;
-    keyName:string;
+    ordinal;
+    description;
+    keyName;
 
-    constructor(name:string, {ordinal, description}) {
+    constructor(name, {ordinal, description}) {
         if (!Object.is(ordinal, undefined)) {
             this.ordinal = ordinal;
         }
@@ -163,7 +163,9 @@ export const Defects = new Enum({
     CHANGELING: {ordinal: 8192, description: 'defects.CHANGELING'},
     CRACKED_GUM: {ordinal: 16384, description: 'defects.CRACKED_GUM'},
     TONED_GUM: {ordinal: 32768, description: 'defects.TONED_GUM'},
-    HEAVILY_HINGED: {ordinal: 65536, description: 'defects.HEAVILY_HINGED'}
+    HEAVILY_HINGED: {ordinal: 65536, description: 'defects.HEAVILY_HINGED'},
+    ALBUM_TRANSFER: {ordinal: 131072, description: 'defects.ALBUM_TRANSFER'},
+    PAPER_ADHESION: {ordinal: 262144, description: 'defects.PAPER_ADHESION'}
 });
 
 export const Deceptions = new Enum({

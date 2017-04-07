@@ -247,7 +247,9 @@
         "CHANGELING": "Changeling",
         "CRACKED_GUM": "Cracked gum",
         "TONED_GUM": "Toned gum",
-        "HEAVILY_HINGED": "Heavily hinged"
+        "HEAVILY_HINGED": "Heavily hinged",
+        "ALBUM_TRANSFER": "Album transfer",
+        "PAPER_ADHESION": "Paper adhesion"
     },
     "deceptions": {
         "FAKE_CANCEL": "Fake cancel",
