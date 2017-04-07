@@ -66,11 +66,13 @@
         allTestFiles.push(file);
       }
     });
+    console.log(allTestFiles);
 
     require(allTestFiles, window.__karma__.start);
   }
 
   karma.loaded = function() {}; // make it async
   patchRequireJS(karma.files, requirejs.load, locationPathname);
-  requireTests();
+
+   requireTests();
 })(window);

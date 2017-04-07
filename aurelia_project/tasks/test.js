@@ -1,4 +1,3 @@
-import gulp from 'gulp';
 import {Server as Karma} from 'karma';
 import {CLIOptions} from 'aurelia-cli';
 import {gulp} from 'gulp';
@@ -20,4 +19,4 @@ export function selenium(done) {
         });
 }
 
-export default unit;
+export default unit

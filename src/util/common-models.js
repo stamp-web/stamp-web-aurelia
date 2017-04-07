@@ -102,7 +102,7 @@ export const Condition = new Enum({
 
     MINT: {ordinal: 0, description: 'condition.MLH'},
     MINT_NH: {ordinal: 1, description: 'condition.MNH'},
-    MING_NG: {ordinal: 4, description: 'condition.MNG'},
+    MINT_NG: {ordinal: 4, description: 'condition.MNG'},
     MINT_HH: {ordinal: 5, description: 'condition.MHH'},
     USED: {ordinal: 2, description: 'condition.U'},
     CTO: {ordinal: 3, description: 'condition.CTO'},
@@ -190,6 +190,42 @@ export const ConditionFilter = new Enum({
     ONLY_USED: {ordinal: 2, description: 'conditionFilters.ONLY_USED'},
     ONLY_POSTAL_HISTORY: {ordinal: 3, description: 'conditionFilters.ONLY_POSTAL_HISTORY'}
 });
+
+export var ConditionHelper = function() {
+    return {
+        /**
+         * Will determine if the source is a match by condition against the comparison condition
+         * @tested
+         *
+         * @param source
+         * @param compareTo
+         * @returns {boolean}
+         */
+        matchesByClassification: (source, compareTo) => {
+            let val = false;
+            let c = num => {
+                return num === compareTo;
+            };
+            switch( source ) {
+                case 0:
+                case 1:
+                case 4:
+                case 5:
+                    val = _.findIndex([Condition.MINT.ordinal,Condition.MINT_NG.ordinal,Condition.MINT_HH.ordinal,Condition.MINT_NH.ordinal], c) > -1;
+                    break;
+                case 2:
+                case 3:
+                    val = _.findIndex([Condition.USED.ordinal, Condition.CTO.ordinal], c) > -1;
+                    break;
+                case 6:
+                case 7:
+                    val = _.findIndex([Condition.ON_PAPER.ordinal, Condition.COVER], c) > -1;
+                    break;
+            }
+            return val;
+        }
+    }
+}();
 
 export var CatalogueHelper = function() {
     return {

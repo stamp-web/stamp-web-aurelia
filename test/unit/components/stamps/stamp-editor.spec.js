@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2017 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ describe('StampEditorComponent test suite', () => {
                     id: 0,
                     catalogueRef: -1,
                     value: 0.0,
-                    condition: 0,
+                    condition: 2,
                     number: '',
                     active: true,
                     unknown: false
@@ -81,7 +81,7 @@ describe('StampEditorComponent test suite', () => {
                 done();
             });
             let models = [ _.cloneDeep(editor.duplicateModel) ];
-            editor.processExistenceResults(models);
+            editor.processExistenceResults(models, editor.duplicateModel.catalogueNumbers[0]);
         });
 
         it('match on same catalogue type', (done) => {
@@ -96,7 +96,7 @@ describe('StampEditorComponent test suite', () => {
             clone.catalogueNumbers[0].catalogueRef = 46;
 
             let models = [ clone ];
-            editor.processExistenceResults(models);
+            editor.processExistenceResults(models, editor.duplicateModel.catalogueNumbers[0]);
         });
 
         it('no match on edit of existing stamp', (done) => {
@@ -109,7 +109,25 @@ describe('StampEditorComponent test suite', () => {
             });
             let clone = _.cloneDeep( editor.duplicateModel);
             let models = [ clone ];
-            editor.processExistenceResults(models);
+            editor.processExistenceResults(models, editor.duplicateModel.catalogueNumbers[0]);
+            setTimeout( () => {
+                done();
+            }, 500);
+        });
+
+        it('no match on edit of stamp with different non-compatible condition', (done) => {
+            editor.duplicateModel.wantList = false;
+            editor.duplicateModel.id = 500;
+            editor.duplicateModel.catalogueNumbers[0].catalogueRef = 21;
+            editor.duplicateModel.catalogueNumbers[0].number = '45a';
+            eventBus.subscribe(EventNames.conflictExists, result => {
+                fail("Should not have subscribed");
+            });
+            let clone = _.cloneDeep( editor.duplicateModel);
+            clone.catalogueNumbers[0].condition = 0;
+
+            let models = [ clone ];
+            editor.processExistenceResults(models, editor.duplicateModel.catalogueNumbers[0]);
             setTimeout( () => {
                 done();
             }, 500);

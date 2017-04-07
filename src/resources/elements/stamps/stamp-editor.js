@@ -15,7 +15,7 @@
  */
 import {customElement, bindable, computedFrom, LogManager} from 'aurelia-framework';
 import {BindingEngine} from 'aurelia-binding';
-import {CurrencyCode, Condition, CatalogueHelper} from '../../../util/common-models';
+import {CurrencyCode, Condition, CatalogueHelper, ConditionHelper} from '../../../util/common-models';
 import {Stamps} from '../../../services/stamps';
 import {Countries} from '../../../services/countries';
 import {Catalogues} from '../../../services/catalogues';
@@ -77,6 +77,7 @@ export class StampEditorComponent extends EventManaged {
     createMode = false;
     usedInlineImagePath = false;
     useCataloguePrefix = false;
+    compareWithCondition = false;
     preferences = [];
     duplicateModel;
     loaded = false;
@@ -239,7 +240,8 @@ export class StampEditorComponent extends EventManaged {
                     };
                     this.stampService.find(opts).then(results => {
                         if (results.models.length > 0) {
-                            this.processExistenceResults(results.models);
+                            let comparator = (this.compareWithCondition) ? cn : undefined;
+                            this.processExistenceResults(results.models, comparator);
                         }
                     });
                 }
@@ -247,7 +249,7 @@ export class StampEditorComponent extends EventManaged {
         }, 350, { 'maxWait': 1000})();
     }
 
-    processExistenceResults(models) {
+    processExistenceResults(models, activeCN) {
         if( this.duplicateModel.wantList === false ) { // if the object IS the wantlist leave it there for conversion
             _.remove(models, {id: this.duplicateModel.id});
         }
@@ -258,7 +260,7 @@ export class StampEditorComponent extends EventManaged {
             let matchingStamps = _.remove(models, m => {
                 let cn = _.find(m.catalogueNumbers, { active: true });
                 let cnType = _.find(this.catalogues, { id: cn.catalogueRef}).type;
-                return ( cnType === catalogueType );
+                return ( cnType === catalogueType && (!activeCN || (activeCN && ConditionHelper.matchesByClassification(cn.condition, activeCN.condition))));
             });
             if( matchingStamps.length > 0 ) {
                 let index = _.findIndex(matchingStamps, {wantList: true});
@@ -290,6 +292,9 @@ export class StampEditorComponent extends EventManaged {
             this.usedInlineImagePath = ( p && p.value === 'true');
             let catPrefix = _.find(this.preferences, { name: 'applyCatalogueImagePrefix', category: 'stamps'});
             this.useCataloguePrefix = ( catPrefix && catPrefix.value === 'true');
+            let compareWithCondition = _.find(this.preferences, { name: 'compareWithCondition', category: 'stamps'});
+            this.compareWithCondition = ( compareWithCondition && compareWithCondition.value === 'true');
+
             if( this.duplicateModel && (this.duplicateModel.id <= 0) || alwaysProcess === true) {
                 let m = this.duplicateModel;
                 if( m ) {

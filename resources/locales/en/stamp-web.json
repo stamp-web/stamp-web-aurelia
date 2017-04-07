@@ -146,6 +146,8 @@
         "catalogue": "Catalogue",
         "catalogue-secondary": "Catalogue",
         "catalogue-select": "Select a catalogue",
+        "compareWithCondition": "Use Condition Comparison",
+        "compareWithCondition-hint": "Include condition when comparing stamps",
         "condition": "Condition",
         "condition-select": "Select a condition",
         "condition-secondary": "Condition",

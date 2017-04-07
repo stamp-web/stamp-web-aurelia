@@ -61,7 +61,8 @@ export class UserSettings {
         { name: 'CurrencyCode', category: 'currency', type: String, defaultValue: 'USD' },
         { name: 'imagePath', category: 'stamps', type: String },
         { name: 'locale', category: 'user', type: String, defaultValue: 'en' },
-        { name: 'applyCatalogueImagePrefix', category: 'stamps', type: Boolean, defaultValue: true }
+        { name: 'applyCatalogueImagePrefix', category: 'stamps', type: Boolean, defaultValue: true },
+        { name: 'compareWithCondition', category: 'stamps', type: Boolean, defaultValue: true }
     ];
 
     EDITOR = 'settings.editor';
