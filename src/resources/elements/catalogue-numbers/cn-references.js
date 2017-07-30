@@ -96,9 +96,9 @@ export class CatalogueNumberReferences {
     }
 
     save(num) { //eslint-disable-line no-unused-vars
-        let self = this;
-        self.stampService.save(this.modelCopy).then( stamp => {
-            self.modelChanged(stamp);
+        this.stampService.save(this.modelCopy).then( stamp => {
+            this.modelChanged(stamp);
+            num.editing = false;
         });
     }
 
