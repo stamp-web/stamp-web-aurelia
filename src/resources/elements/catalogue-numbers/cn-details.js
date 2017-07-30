@@ -88,9 +88,9 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
     }
 
     playConflict() {
-        var audioElm = $('audio#sw-exist-sound');
+        let audioElm = $('audio#sw-exist-sound');
         if( audioElm.length > 0 ) {
-            var audio = audioElm[0];
+            let audio = audioElm[0];
             if( audio.readyState >= 4 ) {
                 audio.play();
             }
@@ -164,10 +164,9 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
     }
 
     _loadCatalogues() {
-        var self = this;
         this.catalogueService.find(this.catalogueService.getDefaultSearchOptions()).then(results => {
-            self.catalogues = results.models;
-            self.loading = false;
+            this.catalogues = results.models;
+            this.loading = false;
             if( this.model.catalogueRef > 0 ) {
                 this._catalogueChanged(this.model.catalogueRef);
             }

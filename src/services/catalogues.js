@@ -33,13 +33,26 @@ export class Catalogues extends EntityManaged {
         };
     }
 
+    sortFunc(m) {
+        return -1 * m.issue;
+    }
+
+
     getResourceName() {
         return "catalogues";
     }
 
+    _generateDisplayName(catalogue) {
+        catalogue.displayName = catalogue.issue + " - " + catalogue.name;
+    }
+
+    _postSave(model) {
+        this._generateDisplayName(model);
+    }
+
     _postfind(models) {
         _.each(models, catalogue => {
-            catalogue.displayName = catalogue.issue + " - " + catalogue.name;
+            this._generateDisplayName(catalogue);
         });
     }
 

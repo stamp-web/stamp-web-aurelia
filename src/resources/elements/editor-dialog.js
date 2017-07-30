@@ -54,7 +54,8 @@ export class EditorDialog extends EventManaged {
             $("#" + that.dialogId).modal('hide');
         });
         this.subscribe(EventNames.actionError, msg => {
-            this.errorMsg = msg;
+            let m = (msg === 'Internal Server Error') ? this.i18n.tr('errors.server-unavailable') : msg;
+            this.errorMsg = m;
         });
         this.subscribe(EventNames.valid, val => {
             this.errorMsg = val === true ? '' : this.i18n.tr('messages.resolveErrors');

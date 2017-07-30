@@ -16,7 +16,7 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {I18N} from 'aurelia-i18n';
 import {LogManager, bindable} from 'aurelia-framework';
-import {EventNames, StorageKeys} from '../../../events/event-managed';
+import {EventNames, StorageKeys, KeyCodes} from '../../../events/event-managed';
 import bootbox from 'bootbox';
 import {Operators, Predicate} from 'odata-filter-parser';
 import _ from 'lodash';
@@ -31,7 +31,7 @@ let handleKeyDown = function(e) {
     var self = this;
     if (e.keyCode === 27) {
         self.clear();
-    } else if (e.keyCode === 13 ) {
+    } else if (e.keyCode === KeyCodes.VK_ENTER ) {
         e.preventDefault();
     }
 };

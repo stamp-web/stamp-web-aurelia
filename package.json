@@ -23,7 +23,7 @@
     "jquery": "2.2.3",
     "moment": "^2.14.1",
     "nprogress": "0.2.0",
-    "odata-filter-parser": "^0.2.9",
+    "odata-filter-parser": "^0.2.13",
     "requirejs": "^2.3.2",
     "select2": "4.0.3",
     "tether": "^1.4.0",

@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="btn-group input-group quick-search hidden-md-down" role="group">
-                    <input type="text" find-target class="form-control" value.two-way="searchText" placeholder="Search">
+                    <input type="text" find-target class="form-control" value.two-way="searchText" placeholder="Search" keydown.trigger="processKeyFilter($event)">
                     <button class="btn btn-secondary" title="Search" click.delegate="sendSearch()">
                         <span class="sw-icon-filter"></span>
                     </button>
@@ -68,7 +68,7 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li class="dropdown-item" repeat.for="sortCol of sortColumns" click.trigger="$parent.setSort(sortCol)">${'sort.' + sortCol|t}</li>
+                            <li class="dropdown-item" repeat.for="sortCol of sortColumns" click.trigger="setSort(sortCol)">${'sort.' + sortCol|t}</li>
                         </ul>
                     </div>
                     <button class="btn btn-secondary ${options.sort === 'placeholder' ? 'disabled' : ''}" title="Clear sort" click.trigger="clearSort()">
@@ -85,7 +85,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-item" repeat.for="filter of filters" click.trigger="$parent.setFilter($index)">${$parent.getFilterText(filter)|t}</li>
+                        <li class="dropdown-item" repeat.for="filter of filters" click.trigger="setFilter($index)">${getFilterText(filter)|t}</li>
                     </ul>
                 </div>
                 <div class="dropdown hidden-md-down btn-group">
@@ -94,7 +94,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-item" repeat.for="filter of conditionFilters" click.trigger="$parent.setConditionFilter($index)">${$parent.getFilterText(filter)|t}</li>
+                        <li class="dropdown-item" repeat.for="filter of conditionFilters" click.trigger="setConditionFilter($index)">${getFilterText(filter)|t}</li>
                     </ul>
                 </div>
                 <div class="dropdown hidden-md-down">
@@ -102,7 +102,7 @@
                         <span class="selector-text">${options.$top | defaultValue:'actions.page-size'|t}</span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-item" repeat.for="size of pageSizes" click.delegate="$parent.setSize(size)">${size}</li>
+                        <li class="dropdown-item" repeat.for="size of pageSizes" click.delegate="setSize(size)">${size}</li>
                     </ul>
                 </div>
 

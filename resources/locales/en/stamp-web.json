@@ -14,6 +14,9 @@
         "clear-all": "Clear all selected stamps",
         "show-navigation": "Show navigation"
     },
+    "errors": {
+        "server-unavailable": "Server is unavailable"
+    },
     "footer": {
         "filtering-total": "Stamps matching filter:",
         "modified-total": "Stamps to modify:",
@@ -66,7 +69,7 @@
         "createTimestamp": "Created",
         "createWantlist-hint": "Create a wanted stamp",
         "currencyCode": "Currency",
-        "currencyCode-select": "Select a currency",
+        "currencyCode-select": "Select",
         "deceptions": "Deceptions",
         "deceptions-select": "Select deceptive practices",
         "defects": "Defects",

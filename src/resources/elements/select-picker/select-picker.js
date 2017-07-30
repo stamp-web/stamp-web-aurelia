@@ -125,7 +125,7 @@ export class Select2Picker {
      */
     onSelect(e) {
         if( e.params && e.params.data ) {
-            let data = e.params.data.id;
+            let data = e.params.data[this.valueProperty];
             if( this.multiple === true && typeof data === 'string' ) {
                 let val = data;
                 data = (this.value) ? _.clone(this.value) : [];
@@ -156,7 +156,7 @@ export class Select2Picker {
                 if( this.value) {
                     newArr = _.clone(this.value);
                     _.remove(newArr, el => {
-                        return el === e.params.data.id;
+                        return el === e.params.data[this.valueProperty];
                     });
                 }
                 this.value = newArr;

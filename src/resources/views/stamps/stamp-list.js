@@ -22,7 +22,7 @@ import {Stamps} from '../../../services/stamps';
 import {Preferences} from '../../../services/preferences';
 import {PurchaseForm} from './purchase-form';
 import {SessionContext} from '../../../services/session-context';
-import {EventNames, StorageKeys, EventManaged} from '../../../events/event-managed';
+import {EventNames, StorageKeys, EventManaged, KeyCodes} from '../../../events/event-managed';
 import {LocationHelper} from '../../../util/location-helper';
 import {StampFilter, ConditionFilter, CurrencyCode} from '../../../util/common-models';
 import {PredicateUtilities} from '../../../util/object-utilities';
@@ -317,8 +317,19 @@ export class StampList extends EventManaged {
     }
 
     clearSearch() {
-        this.searchText = "";
+        this.searchText = '';
         this.sendSearch();
+    }
+
+    processKeyFilter($event) {
+        if ($event.keyCode === KeyCodes.VK_ESCAPE) {
+            this.clearSearch();
+        }
+        else if ($event.keyCode === KeyCodes.VK_ENTER) {
+            this.sendSearch();
+            $event.preventDefault();
+        }
+        return true;
     }
 
     sendSearch() {
@@ -326,9 +337,9 @@ export class StampList extends EventManaged {
         if( this.searchText && this.searchText !== "") {
             this.currentFilters.unshift( new Predicate({
                 subject: 'description',
-                operators: Operators.EQUALS,
+                operator: Operators.LIKE, // LIKE is not supported?
                 value: this.searchText
-            })/*Predicate.contains( 'description', this.searchText )*/);
+            }));
         }
         this.search();
     }
@@ -534,6 +545,21 @@ export class StampList extends EventManaged {
         this.setupSubscriptions();
     }
 
+    _processCurrentFilter($filter) {
+        let f = Parser.parse($filter);
+        if (f) {
+            this.currentFilters = f.flatten();
+            let descriptionFilter =_.find(this.currentFilters, f => {
+                return f.subject === 'description';
+            });
+            if(descriptionFilter) {
+                this.searchText = descriptionFilter.value;
+            }
+            logger.debug(this.currentFilters);
+            SessionContext.setSearchCondition(f);
+        }
+    }
+
     activate(params, routeConfig) { //eslint-disable-line no-unused-lets
         let t = new Date().getTime();
         let self = this;
@@ -545,12 +571,7 @@ export class StampList extends EventManaged {
                 this.countries = result ? result.models : [];
                 let $filter = LocationHelper.getQueryParameter("$filter");
                 if ($filter) {
-                    let f = Parser.parse($filter);
-                    if (f) {
-                        this.currentFilters = f.flatten();
-                        logger.debug(this.currentFilters);
-                        SessionContext.setSearchCondition(f);
-                    }
+                    this._processCurrentFilter($filter);
                 } else if (result && result.total > 0) {
                     let indx = Math.floor(Math.random() * result.total);
                     this.currentFilters.push(new Predicate({

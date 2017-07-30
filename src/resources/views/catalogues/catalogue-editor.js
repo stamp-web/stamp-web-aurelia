@@ -15,14 +15,41 @@
  */
 import $ from 'jquery';
 import _ from 'lodash';
+import {bindable} from 'aurelia-framework';
+import {BindingEngine} from 'aurelia-binding';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {NewInstance} from 'aurelia-dependency-injection';
+import {I18N} from 'aurelia-i18n';
+import {ValidationRules, ValidationController, validateTrigger} from 'aurelia-validation';
+import {EventNames} from '../../../events/event-managed';
 
 import {CurrencyCode, CatalogueType} from '../../../util/common-models';
 
 export class catalogueEditor {
 
-    model;
+    static inject = [EventAggregator, BindingEngine,  I18N, NewInstance.of(ValidationController)];
+
+    @bindable model;
+
     codes = CurrencyCode.symbols();
     catalogueTypes = CatalogueType.symbols();
+
+
+    _modelSubscribers = [];
+
+    constructor(eventBus, bindingEngine, i18n, validationController) {
+        this.eventBus = eventBus;
+        this.bindingEngine = bindingEngine;
+        this.i18n = i18n;
+        this.validationController = validationController;
+        this.validationController.validationTigger = validateTrigger.manual;
+    }
+
+    deactivate() {
+        this._modelSubscribers.forEach(sub => {
+            sub.dispose();
+        });
+    }
 
     activate(options) {
         this.model = options;
@@ -31,5 +58,29 @@ export class catalogueEditor {
                 $('#editor-issue').focus();
             }, 125)(this);
         }
+        this.setupValidation();
+        this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'name').subscribe(this._validate.bind(this)));
+        this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'issue').subscribe(this._validate.bind(this)));
+        _.debounce( () => {
+            this._validate();
+        }, 125)(this);
     }
+
+    _validate() {
+        this.validationController.validate().then( result => {
+            this.eventBus.publish(EventNames.valid, result.valid);
+        });
+    }
+
+    setupValidation() {
+        ValidationRules
+            .ensure('name')
+            .required().withMessage(this.i18n.tr('messages.nameRequired'))
+            .ensure('issue')
+            .satisfies(obj => obj > 1000)
+            .on(this.model);
+
+    }
+
 }
+

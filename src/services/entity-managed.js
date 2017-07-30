@@ -35,6 +35,10 @@ export class EntityManaged extends BaseService {
         };
     }
 
+    sortFunc(m) {
+        return m.name.toUpperCase();
+    }
+
     countStamps() {
         var q = new Promise((resolve, reject) => {
             let href = this.baseHref + '/rest/' + this.getResourceName() + '/!countStamps';

@@ -32,23 +32,23 @@
             </thead>
             <tbody>
             <tr repeat.for="model of models | filterByName:filterText">
-                <td if.bind="$parent.hasIssue" class="hidden-md-down">${model.issue}</td>
+                <td if.bind="hasIssue" class="hidden-md-down">${model.issue}</td>
                 <td class="col-name">${model.name}</td>
                 <td>
                     <div class="btn-group actions" role="group">
-                        <button type="button" class="btn btn-secondary edit-action hidden-md-down" click.delegate="$parent.edit(model)" data-toggle="modal" data-target="#editorDialog">
+                        <button type="button" class="btn btn-secondary edit-action hidden-md-down" click.delegate="edit(model)" data-toggle="modal" data-target="#editorDialog">
                             <span class="sw-icon-edit"></span>
                         </button>
-                        <button type="button" class="btn btn-secondary delete-action hidden-md-down" click.trigger="$parent.remove(model)">
+                        <button type="button" class="btn btn-secondary delete-action hidden-md-down" click.trigger="remove(model)">
                             <span class="sw-icon-trash"></span>
                         </button>
-                        <button type="button" class="btn btn-secondary view-action" title="View stamps for ${model.name}" click.delegate="$parent.viewStamps(model)">
+                        <button type="button" class="btn btn-secondary view-action" title="View stamps for ${model.name}" click.delegate="viewStamps(model)">
                             <i class="sw-icon-search"></i>
                         </button>
                     </div>
                 </td>
                 <td>${model.stampCount | stampCount}</td>
-                <td if.bind="$parent.hasIssue" class="hidden-md-down">${model.code}</td>
+                <td if.bind="hasIssue" class="hidden-md-down">${model.code}</td>
                 <td class="hidden-md-down">${model.description}</td>
             </tr>
             </tbody>

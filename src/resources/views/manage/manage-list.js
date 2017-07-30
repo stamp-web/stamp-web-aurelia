@@ -160,7 +160,8 @@ export class ManageList {
                     this.eventBus.publish(EventNames.close);
                 }).catch(err => {
                     logger.debug(err);
-                    this.eventBus.publish(EventNames.actionError, err.message);
+                    let msg = err.message ? err.message : err.statusText;
+                    this.eventBus.publish(EventNames.actionError, msg);
                 });
             }
         }));

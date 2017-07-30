@@ -27,9 +27,9 @@ const logger = LogManager.getLogger('services');
 class ParameterHelper {
 
     toParameters(options) {
-        var s = "";
-        var keys = Object.keys(options);
-        for (var k = 0; k < keys.length; k++) {
+        let s = "";
+        let keys = Object.keys(options);
+        for (let k = 0; k < keys.length; k++) {
             if (s.length > 1) {
                 s += "&";
             }
@@ -97,11 +97,11 @@ export class BaseService {
      * @return Whether to use the cache result or not.
      */
     useCachedResult(params) {
-        var theParams = this.monitoredParams(params);
-        var cacheAndNew = function (newParams, currentParams) {
+        let theParams = this.monitoredParams(params);
+        let cacheAndNew = function (newParams, currentParams) {
             return (typeof newParams._dc === 'undefined' && typeof currentParams._dc !== 'undefined');
         };
-        var sameCache = function (newParams, currentParams) {
+        let sameCache = function (newParams, currentParams) {
             return newParams._dc === currentParams._dc;
         };
         if (this.models.length > 0 && ObjectUtilities.isEqual(theParams, this.parameters) &&
@@ -132,7 +132,7 @@ export class BaseService {
         if (this.lastCache.id === +id) {
             return this.lastCache.model;
         }
-        for (var i = 0, len = this.models.length; i < len; i++) {
+        for (let i = 0, len = this.models.length; i < len; i++) {
             if (this.models[i].id === +id) {
                 this.lastCache.id = +id;
                 this.lastCache.model = this.models[i];
@@ -156,13 +156,13 @@ export class BaseService {
     }
 
     remove(model) {
-        var self = this;
+        let self = this;
         return new Promise((resolve, reject) => {
             if( model.id <= 0 ) {
                 reject("Can not delete a non-persisted item from " + self.getCollectionName());
                 return;
             }
-            var href = self.baseHref + '/rest/' + this.getResourceName() + "/" + model.id;
+            let href = self.baseHref + '/rest/' + this.getResourceName() + "/" + model.id;
             self.http.delete(href).then(response => {
                 if (response.statusCode === 204) {
                     self.eventBus.publish(EventNames.deleteSuccessful, { type: self.getCollectionName(), id: model.id});
@@ -180,6 +180,8 @@ export class BaseService {
         // do nothing
     }
 
+    _postSave(model) {} //eslint-disable-line no-unused-vars
+
     updateLocalEntry(model) {
         if( this.loaded && this.models.length > 0 ) {
             let m = _.find(this.models, { id: model.id });
@@ -195,20 +197,20 @@ export class BaseService {
     }
 
     find(options) {
-        var self = this;
-        var q = new Promise((resolve, reject) => {
-            var opts = _.extend({}, self.getDefaultSearchOptions(), options);
+        let self = this;
+        let q = new Promise((resolve, reject) => {
+            let opts = _.extend({}, self.getDefaultSearchOptions(), options);
             if (!self.loaded || !self.useCachedResult(opts)) {
                 logger.debug("[" + self.getCollectionName() + "] retrieving items");
                 self.eventBus.publish(EventNames.loadingStarted);
-                var href = self.baseHref + '/rest/' + self.getResourceName();
+                let href = self.baseHref + '/rest/' + self.getResourceName();
                 if (opts) {
                     href += '?' + self.paramHelper.toParameters(opts);
                 }
                 self.http.get(href).then(response => {
                     self.loaded = true;
                     if (response.statusCode === 200 && response.response) {
-                        var resp = response.content;
+                        let resp = response.content;
                         self.models = resp[self.getCollectionName()];
                         self._postfind(self.models);
                         self.total = resp.total;
@@ -263,29 +265,32 @@ export class BaseService {
         return retVal;
     }
 
+    sortFunc(m) {
+        return m;
+    }
+
     save(model, opts) {
         let self = this;
         return new Promise((resolve, reject) => {
-            var href = this.baseHref + '/rest/' + self.getResourceName() + ((model.id > 0 ) ? "/" + model.id : "");
+            let href = this.baseHref + '/rest/' + self.getResourceName() + ((model.id > 0 ) ? "/" + model.id : "");
              if( opts ) {
                 href += '?' + this.paramHelper.toParameters(opts);
             }
-            var body = JSON.stringify(model);
-            this.http[(model.id > 0 ) ? 'put' : 'post'](href, body).then(response => {
+            let body = JSON.stringify(model);
+            let updating = model.id > 0;
+            this.http[(updating) ? 'put' : 'post'](href, body).then(response => {
                 if ((response.statusCode === 200 || response.statusCode === 201) && response.response) {
-                    var retModel = response.content;
-                    var m = _.find(self.models, {id: retModel.id});
+                    let retModel = response.content;
+                    self._postSave(retModel);
+                    let m = _.find(self.models, {id: retModel.id});
                     if (m) {
                         _.merge(m, retModel);
                     } else {
                         m = retModel;
-                        var index = 0;
-                        for (index = 0; index < self.models.length; index++) {
-                            if (m.name < self.models[index].name) {
-                                break;
-                            }
+                        let index = _.sortedIndexBy(self.models, m, this.sortFunc);
+                        if( index < 0 ) {
+                            index = self.models.length -1;
                         }
-                        index = Math.max(index, self.models.length - 1);
                         self.models.splice(index, 0, m);
                     }
                     self.eventBus.publish(EventNames.saveSuccessful, { type: self.getCollectionName(), model: m});

@@ -7,8 +7,8 @@
         <div class="row user-settings-nav">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item" repeat.for="viewModel of viewModels">
-                    <a class="nav-link ${($parent.selectedView === viewModel) ? 'active' : ''}"
-                       click.delegate="$parent.selectView(viewModel)" href="#${viewModel}" role="tab">${viewModel|t}</a>
+                    <a class="nav-link ${(selectedView === viewModel) ? 'active' : ''}"
+                       click.delegate="selectView(viewModel)" href="#${viewModel}" role="tab">${viewModel|t}</a>
                 </li>
 
             </ul>
