@@ -72,6 +72,8 @@ $theme-panel-contrast-bg: $white-dark !default;
 
 $theme-btn-primary-color: $brand-primary !default;
 
+$theme-badge-color: $theme-text-color;
+
 $theme-margin-base: 1.0rem !default;
 $theme-margin-thick: 2.0rem !default;
 $theme-margin-thin: 0.5rem !default;
@@ -114,7 +116,7 @@ $theme-appbar-bg:    $brand-primary;
 
 ////== Pills
 
-$theme-pill-color-bg: $gray-light;
+$theme-pill-color-bg: $white-black;
 
 ////== Tooltips
 //$tooltip-max-width:           250px;

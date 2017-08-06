@@ -143,12 +143,11 @@ collapse-panel {
     }
 
     .btn-toolbar {
-        .badge {
-            position:    relative;
-            top:         -0.2rem;
-            font-weight: normal;
-        }
         float: right;
+
+        .selection-group {
+            margin-left: $theme-margin-base;
+        }
     }
 }
 
