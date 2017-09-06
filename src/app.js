@@ -35,7 +35,7 @@ export class App {
             {
                 route: ['', 'stamp-list'],
                 name: 'stamp-list',
-                moduleId: './resources/views/stamps/stamp-list',
+                moduleId: './views/stamps/stamp-list',
                 nav: true,
                 title: this.i18n.tr('nav.stamps')
             },

@@ -34,11 +34,21 @@ section {
     overflow-y: hidden;
 }
 
-ai-dialog-overlay {
+ux-dialog-overlay {
     background-color: $gray-light;
-    z-index:          10000;
+    z-index:          5000 !important;
     &.active {
         opacity: 0.7;
+    }
+}
+
+ux-dialog-container {
+    z-index: 5000 !important;
+
+    ai-dialog-footer {
+        display:          block;
+        background-color: $theme-panel-bg;
+        width:            100%;
     }
 }
 

@@ -16,19 +16,21 @@
 import {inject, LogManager, computedFrom} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {I18N} from 'aurelia-i18n';
-import {Countries} from '../../../services/countries';
+import {Countries} from '../../services/countries';
 import {Router} from 'aurelia-router';
-import {Stamps} from '../../../services/stamps';
-import {Preferences} from '../../../services/preferences';
+import {Stamps} from '../../services/stamps';
+import {Preferences} from '../../services/preferences';
 import {PurchaseForm} from './purchase-form';
-import {SessionContext} from '../../../services/session-context';
-import {EventNames, StorageKeys, EventManaged, KeyCodes} from '../../../events/event-managed';
-import {LocationHelper} from '../../../util/location-helper';
-import {StampFilter, ConditionFilter, CurrencyCode} from '../../../util/common-models';
-import {PredicateUtilities} from '../../../util/object-utilities';
-import {ImagePreviewEvents} from '../../elements/image-preview/image-preview';
+import {SessionContext} from '../../services/session-context';
+import {EventNames, StorageKeys, EventManaged, KeyCodes} from '../../events/event-managed';
+import {LocationHelper} from '../../util/location-helper';
+import {StampFilter, ConditionFilter, CurrencyCode} from '../../util/common-models';
+import {PredicateUtilities} from '../../util/object-utilities';
+
+import {ImagePreviewEvents} from '../../resources/elements/image-preview/image-preview';
+import {asCurrencyValueConverter} from '../../resources/value-converters/as-currency-formatted';
+
 import {Predicate, Operators, Parser} from 'odata-filter-parser';
-import {asCurrencyValueConverter} from '../../value-converters/as-currency-formatted';
 import bootbox from 'bootbox';
 import {DialogService} from 'aurelia-dialog';
 import _ from 'lodash';
@@ -405,23 +407,17 @@ export class StampList extends EventManaged {
             // TODO Need to toggle editor without toggling
         });
 
-        this.subscribe(EventNames.deleteSuccessful, obj => {
-            if (obj && obj.type === this.stampService.getCollectionName()) {
-                _.remove(this.stamps, {id: obj.id});
-            }
-        });
         this.subscribe(EventNames.toggleStampSelection, this.stampSelected.bind(this));
 
         this.subscribe(EventNames.stampRemove, stamp => {
-            let _remove = function (model) {
+            let removeCallback = function (model) {
                 if (this.editingStamp && stamp.id === this.editingStamp.id) { // remove editing stamp
                     this.editingStamp = null;
                     this.editorShown = false;
                 }
-                this.stampService.remove(model).then(function() {
+                this.stampService.remove(model).then(() => {
                     this.eventBus.publish(EventNames.stampCount, { stamp: model, increment: false });
-                    let index = _.findIndex(this.stamps, {id: model.id});
-                    this.stamps.splice(index, 1);
+                    this._removeStamp(model);
                 }).catch(err => {
                     logger.error(err);
                 });
@@ -433,12 +429,19 @@ export class StampList extends EventManaged {
                 message: "Delete " + stamp.rate + ' - ' + stamp.description + "?",
                 callback: (result) => {
                     if (result === true) {
-                        _remove.call(this, stamp);
+                        removeCallback.call(this, stamp);
 
                     }
                 }
             });
         });
+    }
+
+    _removeStamp(obj) {
+        let idx = _.findIndex(this.stamps, {id: obj.id});
+        if( idx > 0 ) {
+            this.stamps.splice(idx,1);
+        }
     }
 
     stampSelected(obj) {

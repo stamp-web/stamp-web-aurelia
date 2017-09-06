@@ -1,4 +1,4 @@
-@import "../../../theme/_semantic.scss";
+@import "../../theme/_semantic.scss";
 
 .purchase-form {
     width:     50rem;
@@ -13,13 +13,11 @@
             background-color: $theme-appbar-bg;
             color:            $theme-appbar-color;
             padding:          $theme-padding-base;
-            margin-left:      -1.7rem;
-            margin-right:     -1.7rem;
-            margin-top:       -1.7rem;
         }
 
         .dialog-content {
-            padding-top: $theme-padding-base;
+            padding:          $theme-padding-thick;
+            background-color: $theme-panel-bg;
 
             form {
                 padding: 0;
@@ -47,6 +45,7 @@
 
                 .checkbox {
                     padding-left: calc(33% + #{$theme-padding-thin});
+                    width:        100%;
 
                     input {
                         top:          50%;
@@ -64,6 +63,7 @@
 
                 .help-block {
                     padding-top:   $theme-padding-thin;
+                    width:         100%;
                     margin-bottom: 0;
                     padding-left:  calc(33% + #{$theme-padding-thin});
                 }
@@ -74,14 +74,14 @@
 }
 
 ai-dialog-footer {
-    position: relative;
-    height:   5rem;
+    position:         relative;
+    height:           5rem;
 
     .process-progress, .messaging {
         width:        60%;
         display:      inline-block;
         float:        left;
-        padding-left: $theme-padding-thin;
+        padding-left: $theme-padding-thick;
         top:          50%;
         transform:    translate(0, -50%);
         left:         0;

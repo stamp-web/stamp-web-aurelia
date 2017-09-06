@@ -19,9 +19,10 @@ import {BindingEngine} from 'aurelia-binding';
 import {NewInstance} from 'aurelia-dependency-injection';
 import {ValidationRules, ValidationController, validateTrigger} from 'aurelia-validation';
 import {I18N} from 'aurelia-i18n';
-import {ValidationHelper} from '../../../util/validation-helper';
-import {CurrencyCode} from '../../../util/common-models';
-import {Stamps} from '../../../services/stamps';
+import {ValidationHelper} from '../../util/validation-helper';
+import {CurrencyCode} from '../../util/common-models';
+import {Stamps} from '../../services/stamps';
+
 import _ from 'lodash';
 
 
