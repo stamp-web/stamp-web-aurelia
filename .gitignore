@@ -7,3 +7,4 @@ scripts/dep-bundle.js
 scripts/vendor-bundle.js
 resources/css/splash.css
 resources/css/print.css
+*.map

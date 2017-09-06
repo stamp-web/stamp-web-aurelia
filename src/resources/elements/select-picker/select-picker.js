@@ -91,8 +91,9 @@ export class Select2Picker {
 
         const $select = $(select);
         $select.css('width', '100%');
-        $select.on("select2:unselect", this.onUnselect.bind(this));
-        $select.on("select2:select", this.onSelect.bind(this));
+        $select.on('select2:select', this.onSelect.bind(this));
+        $select.on('select2:unselecting', this.onUnselecting.bind(this));
+        $select.on('select2:unselect', this.onUnselect.bind(this));
         // the old values may have been assigned to the selector from previous edits
         $select.val(undefined);
         this.select2 = $select.select2(options);
@@ -150,6 +151,12 @@ export class Select2Picker {
     }
 
     onUnselect(e) {
+        _.defer(() => {
+            $(this.select2).off('select2:opening');
+        });
+    }
+
+    onUnselecting(e) {
         if( e.params && e.params.data ) {
             if( this.multiple) {
                 let newArr = [];
@@ -170,6 +177,9 @@ export class Select2Picker {
                 this.value = newValue;
             }
         }
+        $(this.select2).on('select2:opening', e => {
+            e.preventDefault();
+        });
     }
 
     valueChanged(newVal, oldValue) {
@@ -198,7 +208,7 @@ export class Select2Picker {
      * Handle the conversion of the type from the modeled value to the String equivalence of the value used by select2
      */
     _convertToInternal(val) {
-        if( typeof val === 'undefined') {
+        if( typeof val === 'undefined' || !val) {
             return undefined;
         }
         let retValue = val;

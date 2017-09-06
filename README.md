@@ -84,6 +84,16 @@ To run the unit tests, first ensure that you have followed the steps above in or
 1. You can now run the tests with this command:
 
   ```shell
-  au test
+   au test
   ```
+  
+## Running the Integration Tests
+
+Webdriver for NodeJS is used for the integration tests.  To run these tests execute:
+
+  ```shell
+  mocha --timeout=8000 manage-test.js
+  ```
+  
+from the selenium folder under test
 
