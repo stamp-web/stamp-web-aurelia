@@ -236,7 +236,8 @@ export class StampEditorComponent extends EventManaged {
                 let cn = this.duplicateModel.activeCatalogueNumber;
                 if (cn.catalogueRef > 0 && cn.number && cn.number !== '') {
                     let opts = {
-                        $filter: '((countryRef eq ' + this.duplicateModel.countryRef + ') and (number eq \'' + cn.number + '\'))'
+                        $filter: '((countryRef eq ' + this.duplicateModel.countryRef + ') and (number eq \'' + cn.number + '\'))',
+                        noCache: true
                     };
                     this.stampService.find(opts).then(results => {
                         if (results.models.length > 0) {
@@ -429,7 +430,7 @@ export class StampEditorComponent extends EventManaged {
         this.createMode = (newModel && newModel.id <= 0);
         if (newModel) {
             this._resetValidity();
-            this.duplicateModel = _.clone(newModel, true);
+            this.duplicateModel = _.cloneDeep(newModel);
             if( this.preferenceService.loaded ) {
                 this.processPreferences(this.duplicateModel.id <= 0);
             }

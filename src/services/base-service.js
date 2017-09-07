@@ -209,15 +209,21 @@ export class BaseService {
                 }
                 self.http.get(href).then(response => {
                     self.loaded = true;
+                    let total = 0;
+                    let models = [];
                     if (response.statusCode === 200 && response.response) {
                         let resp = response.content;
-                        self.models = resp[self.getCollectionName()];
-                        self._postfind(self.models);
-                        self.total = resp.total;
+                        models = resp[self.getCollectionName()];;
+                        total = resp.total;
+                        self._postfind(models);
+                        if( !opts.noCache ) {
+                            self.models = models;
+                            self.total = total;
+                        }
                     }
                     self.eventBus.publish(EventNames.loadingFinished);
                     self.parameters = opts;
-                    resolve({models: self.models, total: self.total});
+                    resolve({models: models, total: total});
                 }).catch(reason => {
                     self.eventBus.publish(EventNames.loadingFinished);
                     reject(reason);

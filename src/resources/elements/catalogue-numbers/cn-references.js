@@ -61,7 +61,7 @@ export class CatalogueNumberReferences {
     modelChanged(newModel) {
         if (newModel) {
             let self = this;
-            this.modelCopy = _.clone(newModel, true);
+            this.modelCopy = _.cloneDeep(newModel);
             this.modelCopy.catalogueNumbers.forEach(catNum => {
                 catNum.currencyCode = self.determineCurrencyCode(catNum.catalogueRef);
             });

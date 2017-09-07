@@ -21,9 +21,9 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {NewInstance} from 'aurelia-dependency-injection';
 import {I18N} from 'aurelia-i18n';
 import {ValidationRules, ValidationController, validateTrigger} from 'aurelia-validation';
-import {EventNames} from '../../../events/event-managed';
 
-import {CurrencyCode, CatalogueType} from '../../../util/common-models';
+import {EventNames} from '../../events/event-managed';
+import {CurrencyCode, CatalogueType} from '../../util/common-models';
 
 export class catalogueEditor {
 

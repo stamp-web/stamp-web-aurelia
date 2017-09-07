@@ -393,12 +393,20 @@ export class StampList extends EventManaged {
             this.editingStamp = this._cloneStamp(stamp);
             this.editorShown = true;
         });
+
         this.subscribe(EventNames.stampEditorCancel, () => {
             this.editorShown = false;
         });
+
         this.subscribe(EventNames.stampSaved, result => {
             if( !result.remainOpen) {
                 this.editorShown = false;
+            }
+            if( _.get(this.lastSelected, 'id') === _.get(result, 'stamp.id')) {
+                this.lastSelected = null;
+                _.defer(() => { // tickle lastSelected
+                    this.lastSelected = result.stamp;
+                });
             }
             // TODO Need to toggle editor without toggling
         });
