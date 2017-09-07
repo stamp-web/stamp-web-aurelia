@@ -54,4 +54,45 @@ describe('StampListComponent test suite', () => {
         });
 
     });
+
+    describe('_cloneStamp tests', () => {
+
+        it('verify full deep cloning', () => {
+           let s = {
+               id: 6000,
+               rate: '1d',
+               description: 'blue',
+               catalogueNumbers: [
+                   {
+                       id:           6001,
+                       catalogueRef: 19,
+                       condition:    0,
+                       number:       '19a',
+                       value:        25.4
+                   }
+               ],
+               ownerships: [
+                   {
+                       id: 6002,
+                       albumRef: 14,
+                       condition: 0,
+                       grade: 0,
+                       pricePaid: 5.50
+                   }
+               ]
+           };
+
+           let cloned = list._cloneStamp(s);
+
+           cloned.rate = '2d';
+           cloned.catalogueNumbers[0].catalogueRef = 23;
+           cloned.ownerships[0].grade = 1;
+
+           expect(s.rate).toBe('1d');
+           expect(s.catalogueNumbers[0].catalogueRef).toBe(19);
+           expect(s.ownerships[0].grade).toBe(0);
+
+
+        });
+    });
 });

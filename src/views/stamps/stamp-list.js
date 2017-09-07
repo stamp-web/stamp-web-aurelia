@@ -200,10 +200,6 @@ export class StampList extends EventManaged {
         this.search();
     }
 
-    pageSizeChanged(newSize) {
-        console.log(newSize);
-    }
-
     get selectedCount() {
         return this.stampService.getSelected().length;
     }
@@ -394,7 +390,7 @@ export class StampList extends EventManaged {
         this.subscribe(EventNames.stampEdit, stamp => {
             this.lastSelected = stamp;
             this.panelContents = 'stamp-editor';
-            this.editingStamp = stamp;
+            this.editingStamp = this._cloneStamp(stamp);
             this.editorShown = true;
         });
         this.subscribe(EventNames.stampEditorCancel, () => {
@@ -454,7 +450,7 @@ export class StampList extends EventManaged {
                     let selected = this.stampService.getSelected();
                     this.lastSelected = ( selected && selected.length > 0) ? selected[selected.length - 1] : undefined;
                     if( this.lastSelected && this.editorShown ) {
-                        this.editingStamp = this.lastSelected;
+                        this.editingStamp = this._cloneStamp(this.lastSelected);
                     } else {
                         this.editorShown = false;
                     }
@@ -471,11 +467,15 @@ export class StampList extends EventManaged {
                     this.stampService.select(obj.model);
                 }
                 this.lastSelected = obj.model;
-                if( this.editorShown ) {
-                    this.editingStamp = obj.model;
+                if( this.editorShown && _.get(this.editingStamp, 'id') !== obj.model.id) {
+                    this.editingStamp = this._cloneStamp(obj.model);
                 }
             }
         }
+    }
+
+    _cloneStamp(stamp) {
+        return _.cloneDeep(stamp);
     }
 
     handleFullSizeImage(stamp) {
