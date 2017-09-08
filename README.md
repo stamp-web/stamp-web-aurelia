@@ -8,12 +8,12 @@ stamp-web-aurelia is the web front-end for managing collections of stamps and le
 
 *Browsing by a country*
 
-![Screen shot from Stamp-Web](http://i1178.photobucket.com/albums/x373/jadrake/stamp-web_zpsomt92mvs.png)
+![Screen shot from Stamp-Web](https://imgur.com/RP8hyHh)
 
 
 *Creating a new stamp form*
 
-![Screen shot showing Editing in Stamp-Web](http://i1178.photobucket.com/albums/x373/jadrake/stamp-web-edit_zps1wbvstmc.png)
+![Screen shot showing Editing in Stamp-Web]https://imgur.com/1f8SF9h)
 
 ## Build Status
 
