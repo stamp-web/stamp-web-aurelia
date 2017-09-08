@@ -63,9 +63,14 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
 
     setupValidation() {
         ValidationHelper.defineCurrencyValueRule( ValidationRules, 'number-validator');
-        ValidationRules.ensure('number')
+        ValidationHelper.defineNumericRangeRule( ValidationRules, 'catalogue-selection',0);
+        ValidationRules
+            .ensure('number')
             .maxLength(25).withMessage(this.i18n.tr('messages.numberInvalid'))
             .required().withMessage(this.i18n.tr('messages.numberRequired'))
+            .ensure('catalogueRef')
+            .required().withMessage(this.i18n.tr('messages.catalgoueRequired'))
+            .satisfiesRule('catalogue-selection').withMessage(this.i18n.tr('messages.catalogueRequired'))
             .ensure('value')
             .satisfiesRule('number-validator').withMessage(this.i18n.tr('messages.currencyInvalid'))
             .on(this.model);
@@ -130,8 +135,10 @@ export class CatalogueNumberDetailsComponent extends EventManaged {
         if (catalogueRef > 0) {
             this.selectedCatalogue = _.find(this.catalogues, {id: +catalogueRef});
             if( this.selectedCatalogue ) {
-                this._sendNotifications();
+                this._validateAndSendNotifiation();
             }
+        } else {
+            this._validate();
         }
     }
 

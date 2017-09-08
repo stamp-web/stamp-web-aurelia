@@ -18,7 +18,8 @@ collapse-panel {
             height:           $collapse-header-height;
             background-color: $theme-panel-header-bg;
 
-            h4.panel-title {
+            .panel-title {
+                height:       2.0rem;
                 color:        $theme-form-title-color;
                 padding-left: $theme-padding-base;
                 padding-top:  $theme-padding-base;

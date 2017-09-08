@@ -1,11 +1,16 @@
 @import "../../../theme/_semantic.scss";
 
 stamp-details {
-    .description {
+    .has-error {
         .help-block {
-            left: calc(25% + #{$theme-margin-thick}); // col-3 for the labels
-            position: relative;
-            top: 0.8rem;
+            font-size: $theme-font-size-xs;
+        }
+    }
+    .description, .countryRef {
+        .help-block {
+            left:      calc(25% + #{$theme-margin-thick}); // col-3 for the labels
+            position:  relative;
+            top:       0.2rem;
             max-width: 40rem;
         }
     }

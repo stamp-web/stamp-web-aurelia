@@ -8,58 +8,58 @@
     <panel heading-text="${'editor.active-catalogue-number'|t}">
         <span slot="content">
             <form validation-renderer="bootstrap-form">
+                <div class="form-group row catalogueRef">
+                    <label for="cn-catalogueRef" class="col-sm-3 col-form-label">Catalogue</label>
+                    <div class="col-sm-9">
+                        <select-picker items.bind="catalogues" disabled.bind="loading" value.bind="model.catalogueRef & validate:rules"
+                                       config.bind="{ id: 'cn-catalogueRef', tabIndex: 70, labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
+                        </select-picker>
+                    </div>
+			    </div>
                 <div class="form-group row">
-				<label for="cn-catalogueRef" class="col-sm-3 col-form-label">Catalogue</label>
-				<div class="col-sm-9">
-                    <select-picker items.bind="catalogues" disabled.bind="loading" value.bind="model.catalogueRef"
-                                   config.bind="{ id: 'cn-catalogueRef', tabIndex: 70, labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
-                    </select-picker>
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="cn-condition" class="col-sm-3 col-form-label">Condition</label>
-				<div class="col-sm-4">
-                    <select-picker items.bind="conditions" disabled.bind="loading" value.bind="model.condition"
-                                   config.bind="{ id: 'cn-condition', tabIndex: 75, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
-                    </select-picker>
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="cn-number" class="col-sm-3 col-form-label">${'editor.catalogue-number'|t}</label>
-				<div class="col-sm-3">
-					<input type="text" autocomplete="off" tabindex="80" class="form-control" id="cn-number" value.bind="model.number & validate:rules">
-				</div>
-				<div class="col-sm-1 packed-col">
-					<span title.bind="conflictMessage" class="control-label sw-conversion ${icon}" click.trigger="convert()" disabled.bind="conversionModel !== undefined"></span>
-                    <audio id="sw-exist-sound">
-                        <source src="resources/sound/ring.ogg" type="audio/ogg">
-                        <source src="resources/sound/ring.mp3" type="audio/mpeg">
-                    </audio>
-				</div>
-                <span id="inputNumberStatus" class="sr-only"></span>
-			</div>
-			<div class="form-group row">
-				<label for="cn-value" class="col-sm-3 col-form-label"  disabled.bind="model.unknown">${'editor.catalogue-value'|t}</label>
-				<div class="col-sm-6 value-field">
-					<input type="text" autocomplete="off" tabindex="85" class="form-control" id="cn-value" disabled.bind="model.unknown" value.bind="model.value & validate:rules" >
-                    <span if.bind="selectedCatalogue" class="sw-currency-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></span>
-				</div>
+                    <label for="cn-condition" class="col-sm-3 col-form-label">Condition</label>
+                    <div class="col-sm-4">
+                        <select-picker items.bind="conditions" disabled.bind="loading" value.bind="model.condition"
+                                       config.bind="{ id: 'cn-condition', tabIndex: 75, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
+                        </select-picker>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="cn-number" class="col-sm-3 col-form-label">${'editor.catalogue-number'|t}</label>
+                    <div class="col-sm-3">
+                        <input type="text" autocomplete="off" tabindex="80" class="form-control" id="cn-number" value.bind="model.number & validate:rules">
+                    </div>
+                    <div class="col-sm-1 packed-col">
+                        <span title.bind="conflictMessage" class="control-label sw-conversion ${icon}" click.trigger="convert()" disabled.bind="conversionModel !== undefined"></span>
+                        <audio id="sw-exist-sound">
+                            <source src="resources/sound/ring.ogg" type="audio/ogg">
+                            <source src="resources/sound/ring.mp3" type="audio/mpeg">
+                        </audio>
+                    </div>
+                    <span id="inputNumberStatus" class="sr-only"></span>
+                </div>
+                <div class="form-group row">
+                    <label for="cn-value" class="col-sm-3 col-form-label"  disabled.bind="model.unknown">${'editor.catalogue-value'|t}</label>
+                    <div class="col-sm-6 value-field">
+                        <input type="text" autocomplete="off" tabindex="85" class="form-control" id="cn-value" disabled.bind="model.unknown" value.bind="model.value & validate:rules" >
+                        <span if.bind="selectedCatalogue" class="sw-currency-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></span>
+                    </div>
 
-			</div>
-			<div class="checkbox row">
-				<span class="col-sm-3"></span>
-                <label class="col-sm-9">
-                    <input type="checkbox" tabindex="90" checked.bind="model.unknown" change.trigger="unknownChanged()">
-                    <span>No value listed</span>
-                </label>
-			</div>
-			<div class="checkbox row">
-				<span class="col-sm-3"></span>
-                <label class="col-sm-9">
-					<input type="checkbox" tabindex="95" checked.bind="model.nospace">
-					<span>No album space available</span>
-				</label>
-			</div>
+                </div>
+                <div class="checkbox row">
+                    <span class="col-sm-3"></span>
+                    <label class="col-sm-9">
+                        <input type="checkbox" tabindex="90" checked.bind="model.unknown" change.trigger="unknownChanged()">
+                        <span>No value listed</span>
+                    </label>
+                </div>
+                <div class="checkbox row">
+                    <span class="col-sm-3"></span>
+                    <label class="col-sm-9">
+                        <input type="checkbox" tabindex="95" checked.bind="model.nospace">
+                        <span>No album space available</span>
+                    </label>
+                </div>
             </form>
         </span>
     </panel>

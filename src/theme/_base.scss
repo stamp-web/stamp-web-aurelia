@@ -63,6 +63,12 @@ th {
     .validation-message {
         color: $brand-danger;
     }
+    .help-block {
+        vertical-align: middle;
+        line-height:    $theme-input-height;
+        font-size:      $theme-error-font-size;
+        font-style:     italic;
+    }
 }
 
 ai-dialog {

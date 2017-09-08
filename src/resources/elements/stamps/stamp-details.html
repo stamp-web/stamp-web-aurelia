@@ -25,11 +25,11 @@
         </span>
         <span slot="content">
             <form validation-renderer="bootstrap-form">
-            <div class="form-group row">
+            <div class="form-group row countryRef">
                 <label for="details-countryRef" class="col-sm-3 col-form-label">${'editor.country'|t}</label>
                 <div class="col-sm-9">
                     <select-picker items.bind="countries" disabled.bind="loading" class="country-selector"
-                                   value.bind="model.countryRef"
+                                   value.bind="model.countryRef & validate:rules"
                                    config.bind="{ id: 'details-countryRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
                 </div>
             </div>

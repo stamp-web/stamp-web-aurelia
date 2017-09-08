@@ -29,6 +29,12 @@ catalogue-number-details {
         }
     }
 
+    .catalogueRef.has-error {
+        .help-block {
+            left:     calc(25% + #{$theme-margin-thick}); // col-3 for the labels
+            position: relative;
+        }
+    }
     .help-block {
         margin-bottom: 0;
     }

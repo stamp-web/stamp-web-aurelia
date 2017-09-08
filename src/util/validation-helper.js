@@ -26,7 +26,7 @@ export var ValidationHelper = {
 
     defineNumericRangeRule: (ValidationRules, name, min, max) => {
         ValidationRules.customRule(name, (value, obj) => {
-            return _.isNil(value) || value === '' || (value > min && value < max);
+            return value > min && value < (max || Number.MAX_VALUE);
         });
     },
 

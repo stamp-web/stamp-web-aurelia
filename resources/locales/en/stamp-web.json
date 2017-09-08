@@ -125,6 +125,8 @@
         "format": "MM/DD/YYYY"
     },
     "messages": {
+        "catalogueRequired": "Catalogue is required",
+        "countryRequired": "Country is required",
         "currencyInvalid": "Not a currency value",
         "descriptionRequired": "Description is required",
         "rateRequired": "Denomination is required",

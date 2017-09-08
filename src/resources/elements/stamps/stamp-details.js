@@ -21,6 +21,7 @@ import {I18N} from 'aurelia-i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../../events/event-managed';
 import {Countries} from '../../../services/countries';
+import {ValidationHelper} from '../../../util/validation-helper';
 
 import $ from 'jquery';
 
@@ -89,6 +90,7 @@ export class StampDetailsComponent extends EventManaged {
             this.eventBus.publish(EventNames.checkExists, {model: this.model});
             this.eventBus.publish(EventNames.calculateImagePath, { model: this.model});
         }
+        this._validate();
     }
 
     changeEditMode(mode) {
@@ -96,13 +98,16 @@ export class StampDetailsComponent extends EventManaged {
     }
 
     setupValidation() {
+        ValidationHelper.defineNumericRangeRule( ValidationRules, 'country-selection',0);
         ValidationRules
             .ensure('rate')
             .required().withMessage(this.i18n.tr('messages.rateRequired'))
             .ensure('description')
             .required().withMessage(this.i18n.tr('messages.descriptionRequired'))
+            .ensure('countryRef')
+            .required().withMessage(this.i18n.tr('messages.countryRequired'))
+            .satisfiesRule('country-selection').withMessage(this.i18n.tr('messages.countryRequired'))
             .on(this.model);
-
     }
 
     loadCountries() {

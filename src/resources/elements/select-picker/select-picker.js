@@ -127,19 +127,29 @@ export class Select2Picker {
     onSelect(e) {
         if( e.params && e.params.data ) {
             let data = e.params.data.id;
-            if( this.multiple === true && typeof data === 'string' ) {
+            if( this.multiple === true ) {
                 let val = data;
-                data = (this.value) ? _.clone(this.value) : [];
+                data = (this.value) ? _.clone(this.value) : this._getClearedValue();
                 data.push(val);
                 this.value = _.uniq(data); // prevent duplicates
             } else if ( this.valueType === 'Number') {
-                this.value = data ? Number.parseInt(data) : -1;
+                this.value = data ? Number.parseInt(data) : this._getClearedValue();
             } else {
                 this.value = data;
             }
             let changeEvent = EventHelper.changeEvent(data);
             this.element.dispatchEvent(changeEvent);
         }
+    }
+
+    _getClearedValue() {
+        let value = '';
+        if( this.multiple === true ) {
+            value = [];
+        } else if ( this.valueType === 'Number') {
+            value = -1;
+        }
+        return value;
     }
 
     getBoundValue(item) {
@@ -157,26 +167,9 @@ export class Select2Picker {
     }
 
     onUnselecting(e) {
-        if( e.params && e.params.data ) {
-            if( this.multiple) {
-                let newArr = [];
-                if( this.value) {
-                    newArr = _.clone(this.value);
-                    _.remove(newArr, el => {
-                        return el === e.params.data.id;
-                    });
-                }
-                this.value = newArr;
-            } else {
-                let newValue = "";
-                switch(this.valueType) {
-                    case 'Number':
-                        newValue = -1;
-                        break;
-                }
-                this.value = newValue;
-            }
-        }
+        this.value = this._getClearedValue();
+        this.element.dispatchEvent(EventHelper.changeEvent(this.value));
+
         $(this.select2).on('select2:opening', e => {
             e.preventDefault();
         });
