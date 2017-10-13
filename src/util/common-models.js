@@ -107,7 +107,8 @@ export const Condition = new Enum({
     USED: {ordinal: 2, description: 'condition.U'},
     CTO: {ordinal: 3, description: 'condition.CTO'},
     COVER: {ordinal: 6, description: 'condition.COVER'},
-    ON_PAPER: {ordinal: 7, description: 'condition.ON_PAPER'}
+    ON_PAPER: {ordinal: 7, description: 'condition.ON_PAPER'},
+    MANUSCRIPT: {ordinal: 8, description: 'condition.MANUSCRIPT'}
 });
 
 export const Grade = new Enum({
@@ -215,7 +216,7 @@ export var ConditionHelper = function() {
                     break;
                 case 2:
                 case 3:
-                    val = _.findIndex([Condition.USED.ordinal, Condition.CTO.ordinal], c) > -1;
+                    val = _.findIndex([Condition.USED.ordinal, Condition.CTO.ordinal, Condition.MANUSCRIPT.ordinal], c) > -1;
                     break;
                 case 6:
                 case 7:

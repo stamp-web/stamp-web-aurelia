@@ -218,7 +218,8 @@
         "U": "Used",
         "CTO": "Cancel to order",
         "COVER": "Used on cover",
-        "ON_PAPER": "Used on paper"
+        "ON_PAPER": "Used on paper",
+        "MANUSCRIPT": "Used with manusript"
     },
     "currencyCode": {
         "USD": "USD",

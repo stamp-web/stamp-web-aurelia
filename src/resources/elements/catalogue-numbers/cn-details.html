@@ -17,9 +17,9 @@
                     </div>
 			    </div>
                 <div class="form-group row">
-                    <label for="cn-condition" class="col-sm-3 col-form-label">Condition</label>
-                    <div class="col-sm-4">
-                        <select-picker items.bind="conditions" disabled.bind="loading" value.bind="model.condition"
+                    <label for="cn-condition" class="col-3 col-form-label">Condition</label>
+                    <div class="col-9">
+                        <select-picker class="condition-selector" items.bind="conditions" disabled.bind="loading" value.bind="model.condition"
                                        config.bind="{ id: 'cn-condition', tabIndex: 75, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
                         </select-picker>
                     </div>

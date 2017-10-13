@@ -19,7 +19,7 @@ import {valueConverter} from 'aurelia-framework';
 @valueConverter("asCurrencyFormatted")
 export class asCurrencyValueConverter {
 
-    toView(value, currency) {
+    toView(value, currency = 'USD') {
         if (typeof value !== 'undefined') {
 
             if( +value > 0 && currency ) {

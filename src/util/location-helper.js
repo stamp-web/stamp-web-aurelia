@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2017 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,10 +14,41 @@
  limitations under the License.
  */
 
+import _ from 'lodash';
+
 function LocationHelperFn() {
 
     return {
-        getQueryParameter: function (key, default_) {
+        loadResource: (filename, filetype = 'js') => {
+            return new Promise((resolve,reject) => {
+                let fileRef;
+                if (filetype == 'js') {
+                    fileRef = document.createElement('script');
+                    fileRef.setAttribute('type', 'text/javascript');
+                    fileRef.setAttribute('src', filename);
+                }
+                else if (filetype == 'css') {
+                    fileRef = document.createElement('link');
+                    fileRef.setAttribute('rel', 'stylesheet');
+                    fileRef.setAttribute('type', 'text/css');
+                    fileRef.setAttribute('href', filename);
+                }
+                if (fileRef) {
+                    fileRef.onload = () => {
+                        resolve();
+                    };
+                    fileRef.onerror = e => {
+                        reject(e);
+                    };
+                    _.defer(() => {
+                        document.getElementsByTagName("head")[0].appendChild(fileRef);
+                    })
+
+                }
+            });
+        },
+
+        getQueryParameter: (key, default_) => {
             if (default_ == null) {
                 default_ = null;
             }
