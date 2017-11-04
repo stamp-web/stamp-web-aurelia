@@ -96,7 +96,7 @@ function initialize( aurelia, lang ) {
     aurelia.use
         .standardConfiguration()
         .feature('resources')
-   /*   .plugin('aurelia-ui-virtualization')
+   /*
         .plugin('aurelia-html-import-template-loader')
         */
         .plugin('aurelia-dialog', config => {
@@ -124,7 +124,8 @@ function initialize( aurelia, lang ) {
                 aurelia.setupI18NFinished = true;
                 setRoot(aurelia);
             });
-        });
+        })
+        .plugin('aurelia-ui-virtualization');
     if (environment.debug) {
         aurelia.use.developmentLogging();
     }
