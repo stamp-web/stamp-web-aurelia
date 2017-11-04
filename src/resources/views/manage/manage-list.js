@@ -87,7 +87,7 @@ export class ManageList {
                 editTitle: 'Edit Catalogue',
                 createTitle: 'Create Catalogue',
                 service: catalogueService,
-                editor: 'resources/views/catalogues/catalogue-editor',
+                editor: 'views/catalogues/catalogue-editor',
                 icon: 'sw-icon-catalogue'
             }
         ];
