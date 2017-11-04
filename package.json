@@ -13,6 +13,7 @@
     "aurelia-dialog": "1.0.0-rc.1.0.3",
     "aurelia-http-client": "1.1.1",
     "aurelia-i18n": "1.6.2",
+    "aurelia-ui-virtualization": "^1.0.0-beta.3.0.2",
     "aurelia-validation": "1.1.1",
     "bluebird": "^3.4.1",
     "blueimp-load-image": "2.6.1",
