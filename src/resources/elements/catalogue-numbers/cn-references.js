@@ -80,6 +80,7 @@ export class CatalogueNumberReferences {
     }
 
     edit(num, index) { //eslint-disable-line no-unused-vars
+        num.original = _.clone(num);
         num.editing = true;
     }
 
@@ -93,12 +94,20 @@ export class CatalogueNumberReferences {
             }
         }
         num.editing = false;
+        this._revert(num);
+    }
+
+    _revert(num) {
+        let orig = num.original;
+        delete num.original;
+        _.merge(num, orig);
     }
 
     save(num) { //eslint-disable-line no-unused-vars
         this.stampService.save(this.modelCopy).then( stamp => {
-            this.modelChanged(stamp);
+            delete num.original;
             num.editing = false;
+            this.modelChanged(stamp);
         });
     }
 
