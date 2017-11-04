@@ -8,3 +8,4 @@ scripts/vendor-bundle.js
 resources/css/splash.css
 resources/css/print.css
 *.map
+package-lock.json
