@@ -218,7 +218,8 @@
         "U": "Used",
         "CTO": "Cancel to order",
         "COVER": "Used on cover",
-        "ON_PAPER": "Used on paper"
+        "ON_PAPER": "Used on paper",
+        "MANUSCRIPT": "Manuscript cancel"
     },
     "currencyCode": {
         "USD": "USD",
@@ -256,7 +257,8 @@
         "TONED_GUM": "Toned gum",
         "HEAVILY_HINGED": "Heavily hinged",
         "ALBUM_TRANSFER": "Album transfer",
-        "PAPER_ADHESION": "Paper adhesion"
+        "PAPER_ADHESION": "Paper adhesion",
+        "SOILED": "Soiled paper"
     },
     "deceptions": {
         "FAKE_CANCEL": "Fake cancel",

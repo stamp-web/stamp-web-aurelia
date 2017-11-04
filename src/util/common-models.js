@@ -107,7 +107,8 @@ export const Condition = new Enum({
     USED: {ordinal: 2, description: 'condition.U'},
     CTO: {ordinal: 3, description: 'condition.CTO'},
     COVER: {ordinal: 6, description: 'condition.COVER'},
-    ON_PAPER: {ordinal: 7, description: 'condition.ON_PAPER'}
+    ON_PAPER: {ordinal: 7, description: 'condition.ON_PAPER'},
+    MANUSCRIPT: {ordinal: 8, description: 'condition.MANUSCRIPT'}
 });
 
 export const Grade = new Enum({
@@ -165,7 +166,8 @@ export const Defects = new Enum({
     TONED_GUM: {ordinal: 32768, description: 'defects.TONED_GUM'},
     HEAVILY_HINGED: {ordinal: 65536, description: 'defects.HEAVILY_HINGED'},
     ALBUM_TRANSFER: {ordinal: 131072, description: 'defects.ALBUM_TRANSFER'},
-    PAPER_ADHESION: {ordinal: 262144, description: 'defects.PAPER_ADHESION'}
+    PAPER_ADHESION: {ordinal: 262144, description: 'defects.PAPER_ADHESION'},
+    SOILED: {ordinal: 524288, description: 'defects.SOILED'}
 });
 
 export const Deceptions = new Enum({
