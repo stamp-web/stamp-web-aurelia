@@ -98,14 +98,15 @@ export class CatalogueNumberReferences {
             inlineRow.remove();
             let index = _.findIndex(this.modelCopy.catalogueNumbers, {id: 0});
             if (index >= 0) {
-                this.modelCopy.catalogueNumbers.splice(1, index);
+                this.modelCopy.catalogueNumbers.splice(index, 1);
             }
+        } else {
+            this._revert(num);
         }
-        num.editing = false;
-        this._revert(num);
     }
 
     _revert(num) {
+        num.editing = false;
         let orig = num.original;
         delete num.original;
         _.merge(num, orig);
@@ -169,27 +170,16 @@ export class CatalogueNumberReferences {
                 }
             }
         });
-
     }
 
     makeActive(num) {
-        let activeNum;
-        for( let i = 0; i < this.modelCopy.catalogueNumbers.length; i++ ) {
-            let cn = this.modelCopy.catalogueNumbers[i];
-            if( cn.active === true ) {
-                activeNum = cn;
-                break;
-            }
-        }
+        let activeNum = _.find(this.modelCopy.catalogueNumbers, {active: true});;
         if( activeNum.id === num.id ) {
             throw new Error("Can not set active as active!");
         } else {
-            this.catalogueNumberService.makeActive(num.id).then( stamp => { //eslint-disable-line no-unused-vars
-                activeNum.active = false;
-                num.active = true;
-            }).catch( err => {
-                logger.error(err);
-            });
+            activeNum.active = false;
+            num.active = true;
+            this.save(num);
         }
     }
 }

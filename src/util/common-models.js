@@ -275,7 +275,7 @@ export var StampHelper = function() {
         calculateImagePath: (stamp, includeUsedInPath, useCataloguePrefix, countryService, catalogueService) => {
             let path = '';
             if (stamp.wantList === false) {
-                let cn = stamp.activeCatalogueNumber;
+                let cn = _.find(stamp.catalogueNumbers, {active: true});
                 if (stamp.countryRef > 0 && cn.number !== '') {
                     let country = countryService.getById(stamp.countryRef);
                     if (country) {

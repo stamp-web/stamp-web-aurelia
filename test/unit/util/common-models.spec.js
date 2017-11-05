@@ -86,13 +86,13 @@ describe('StampHelper test suite', () => {
                 wantList:         false,
                 catalogueNumbers: [
                     {
+                        active:       true,
                         number:       '26a',
                         condition:    0,
                         catalogueRef: 21
                     }
                 ]
             };
-            stamp.activeCatalogueNumber = stamp.catalogueNumbers[0];
 
         });
 
@@ -107,7 +107,7 @@ describe('StampHelper test suite', () => {
         it('proper matches for used stamp with path', () => {
             countryServiceSpy.getById.and.returnValue(country);
             catalogueServiceSpy.getById.and.returnValue(michelCatalogue);
-            stamp.activeCatalogueNumber.condition = 2;
+            stamp.catalogueNumbers[0].condition = 2;
 
             let path = StampHelper.calculateImagePath(stamp, true, false, countryServiceSpy, catalogueServiceSpy);
             expect(path).toEqual('Germany/used/26a.jpg');
@@ -117,7 +117,7 @@ describe('StampHelper test suite', () => {
         it('proper matches for used stamp without path', () => {
             countryServiceSpy.getById.and.returnValue(country);
             catalogueServiceSpy.getById.and.returnValue(michelCatalogue);
-            stamp.activeCatalogueNumber.condition = 2;
+            stamp.catalogueNumbers[0].condition = 2;
 
             let path = StampHelper.calculateImagePath(stamp, false, false, countryServiceSpy, catalogueServiceSpy);
             expect(path).toEqual('Germany/26a.jpg');
@@ -127,7 +127,7 @@ describe('StampHelper test suite', () => {
         it('proper matches for on cover stamp with path', () => {
             countryServiceSpy.getById.and.returnValue(country);
             catalogueServiceSpy.getById.and.returnValue(michelCatalogue);
-            stamp.activeCatalogueNumber.condition = 6;
+            stamp.catalogueNumbers[0].condition = 6;
 
             let path = StampHelper.calculateImagePath(stamp, true, false, countryServiceSpy, catalogueServiceSpy);
             expect(path).toEqual('Germany/on-cover/26a.jpg');
@@ -137,8 +137,8 @@ describe('StampHelper test suite', () => {
         it('proper matches for used stamp with path and scott catalogue', () => {
             countryServiceSpy.getById.and.returnValue(country);
             catalogueServiceSpy.getById.and.returnValue(scottCatalogue);
-            stamp.activeCatalogueNumber.condition = 6;
-            stamp.activeCatalogueNumber.catalogueRef = 15;
+            stamp.catalogueNumbers[0].condition = 6;
+            stamp.catalogueNumbers[0].catalogueRef = 15;
 
             let path = StampHelper.calculateImagePath(stamp, true, true, countryServiceSpy, catalogueServiceSpy);
             expect(path).toEqual('Germany/on-cover/sc26a.jpg');
