@@ -225,11 +225,77 @@ export var ConditionHelper = function() {
                     break;
             }
             return val;
+        },
+
+        /**
+         * Whether the condition ID (ordinal) matches on of the conditions classified as "used"
+         *
+         * @tested
+         * @param conditionId
+         * @returns {boolean}
+         */
+        isUsed: conditionId => {
+            let usedConditions = [
+                Condition.USED.ordinal,
+                Condition.CTO.ordinal,
+                Condition.MANUSCRIPT.ordinal];
+            return (usedConditions.indexOf(conditionId) >= 0);
+        },
+
+        /**
+         * Whether the condition ID (ordinal) matches on of the conditions classified as "on cover/on paper"
+         *
+         * @tested
+         * @param conditionId
+         * @returns {boolean}
+         */
+        isOnCover: conditionId => {
+            let usedConditions = [
+                Condition.COVER.ordinal,
+                Condition.ON_PAPER.ordinal];
+            return (usedConditions.indexOf(conditionId) >= 0);
         }
+
     }
 }();
 
-export var CatalogueHelper = function() {
+export var StampHelper = function() {
+    return {
+        /**
+         * Calculate an image path from the provided data
+         * @tested
+         *
+         * @param stamp - The stamp to use to calculate the image path for
+         * @param includeUsedInPath - whether to include "used" or "on-cover" in path
+         * @param useCataloguePrefix - whether to include the catalogue prefix
+         * @param countryService - country service
+         * @param catalogueService - catalogue service
+         * @returns {string}
+         */
+        calculateImagePath: (stamp, includeUsedInPath, useCataloguePrefix, countryService, catalogueService) => {
+            let path = '';
+            if (stamp.wantList === false) {
+                let cn = stamp.activeCatalogueNumber;
+                if (stamp.countryRef > 0 && cn.number !== '') {
+                    let country = countryService.getById(stamp.countryRef);
+                    if (country) {
+                        path = country.name + '/';
+                        if (includeUsedInPath && (ConditionHelper.isUsed(cn.condition) || ConditionHelper.isOnCover(cn.condition))) {
+                            path += (ConditionHelper.isOnCover(cn.condition)) ? 'on-cover/' : 'used/';
+                        }
+                        if (useCataloguePrefix && cn.catalogueRef > 0) {
+                            path += CatalogueHelper.getImagePrefix(catalogueService.getById(cn.catalogueRef));
+                        }
+                        path += cn.number + '.jpg';
+                    }
+                }
+            }
+            return path;
+        }
+    };
+}();
+
+export let CatalogueHelper = function() {
     return {
         getImagePrefix: catalogue => {
             let prefix = "";

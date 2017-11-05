@@ -173,6 +173,10 @@
         "server": "Server Settings",
         "stampCollection": "Stamp Collection",
         "stampCollection-select": "Select a stamp collection",
+        "updateNumberOnEdit": "Set image path on change",
+        "updateNumberOnEdit-hint": "Update image path on number change",
+        "usedInlineImagePath": "Use condition in image paths",
+        "usedInlineImagePath-hint": "Insert 'used' or 'on-cover' in the image path",
         "user": "User Settings"
     },
     "manage": {

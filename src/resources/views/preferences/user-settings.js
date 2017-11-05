@@ -62,7 +62,9 @@ export class UserSettings {
         { name: 'imagePath', category: 'stamps', type: String },
         { name: 'locale', category: 'user', type: String, defaultValue: 'en' },
         { name: 'applyCatalogueImagePrefix', category: 'stamps', type: Boolean, defaultValue: true },
-        { name: 'compareWithCondition', category: 'stamps', type: Boolean, defaultValue: true }
+        { name: 'compareWithCondition', category: 'stamps', type: Boolean, defaultValue: true },
+        { name: 'usedInlineImagePath', category: 'stamps', type: Boolean, defaultValue: false},
+        { name: 'updateNumberOnEdit', category: 'stamps', type: Boolean, defaultValue: false}
     ];
 
     EDITOR = 'settings.editor';
