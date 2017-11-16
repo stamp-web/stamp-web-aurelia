@@ -9,3 +9,8 @@ resources/css/splash.css
 resources/css/print.css
 *.map
 package-lock.json
+test/coverage
+test/prettify.css
+test/prettify.js
+test/sorter.js
+test/base.css

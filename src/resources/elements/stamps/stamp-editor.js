@@ -15,7 +15,7 @@
  */
 import {customElement, bindable, computedFrom, LogManager} from 'aurelia-framework';
 import {BindingEngine} from 'aurelia-binding';
-import {CurrencyCode, Condition, CatalogueHelper, ConditionHelper} from '../../../util/common-models';
+import {CurrencyCode, Condition, CatalogueHelper, ConditionHelper, StampHelper} from '../../../util/common-models';
 import {Stamps} from '../../../services/stamps';
 import {Countries} from '../../../services/countries';
 import {Catalogues} from '../../../services/catalogues';
@@ -206,23 +206,10 @@ export class StampEditorComponent extends EventManaged {
         let self = this;
         this.calculateImagePathFn = setTimeout(function () {
             let m = self.duplicateModel;
-            if( m.wantList === false && m.stampOwnerships && m.stampOwnerships.length > 0 && (self.createMode === true || _.first(m.stampOwnerships).img === '' ) ) {
-                let cn = m.activeCatalogueNumber;
-                if( m.countryRef > 0 && cn.number !== '') {
-                    let country = self.countryService.getById( m.countryRef );
-                    if( country ) {
-                        let path = country.name + '/';
-                        if( !self.usedInlineImagePath && (self.usedConditions.indexOf(cn.condition) >= 0 ) ) {
-                            path += (cn.condition === Condition.COVER.ordinal) ? 'on-cover/' : 'used/';
-                        }
-                        if( self.useCataloguePrefix === true && cn.catalogueRef > 0 ) {
-                            path += CatalogueHelper.getImagePrefix(self.catalogueService.getById( cn.catalogueRef ));
-                        }
-                        path += cn.number + '.jpg';
-                        let owner = _.first(m.stampOwnerships);
-                        owner.img = path;
-                    }
-                }
+            if(!_.isEmpty(m.stampOwnerships) && (self.createMode === true || _.first(m.stampOwnerships).img === '' )) {
+                let path = StampHelper.calculateImagePath(m, self.usedInlineImagePath, self.useCataloguePrefix, self.countryService, self.catalogueService);
+                let owner = _.first(m.stampOwnerships);
+                owner.img = path;
             }
             this.calculateImagePathFn = undefined;
         }, 500);

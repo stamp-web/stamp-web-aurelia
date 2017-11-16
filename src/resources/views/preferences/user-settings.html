@@ -177,16 +177,32 @@
                                 </span>
                             </div>
                             <div class="form-group row">
+                                <label for="settings-usedInlineImagePath" class="col-sm-3 control-label">${'settings.usedInlineImagePath'|t}</label>
+                                <span class="col-9">
+                                    <input type="checkbox" tabindex="760"
+                                           checked.bind="model.stamps.usedInlineImagePath"
+                                           id="settings-usedInlineImagePath">
+                                    <label class="catalogue-prefix">${'settings.usedInlineImagePath-hint'|t}</label>
+                                </span>
+                            </div>
+                            <div class="form-group row">
                                 <label for="settings-compareWithCondition" class="col-sm-3 control-label">${'settings.compareWithCondition'|t}</label>
                                 <span class="col-9">
-                                    <input type="checkbox" tabindex="750"
+                                    <input type="checkbox" tabindex="770"
                                            checked.bind="model.stamps.compareWithCondition"
                                            id="settings-compareWithCondition">
                                     <label class="catalogue-prefix">${'settings.compareWithCondition-hint'|t}</label>
                                 </span>
                             </div>
-
-
+                            <div class="form-group row">
+                                <label for="settings-updateNumberOnEdit" class="col-sm-3 control-label">${'settings.updateNumberOnEdit'|t}</label>
+                                <span class="col-9">
+                                    <input type="checkbox" tabindex="780"
+                                           checked.bind="model.stamps.updateNumberOnEdit"
+                                           id="settings-updateNumberOnEdit">
+                                    <label class="catalogue-prefix">${'settings.updateNumberOnEdit-hint'|t}</label>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

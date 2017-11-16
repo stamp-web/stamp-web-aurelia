@@ -1,9 +1,10 @@
 import {bindable, inject, customElement, LogManager} from 'aurelia-framework';
 import {Catalogues} from '../../../services/catalogues';
 import {Stamps} from '../../../services/stamps';
+import {Countries} from '../../../services/countries';
 import {CatalogueNumbers} from '../../../services/catalogueNumbers';
 import {Preferences} from '../../../services/preferences';
-import {Condition} from '../../../util/common-models';
+import {Condition, StampHelper} from '../../../util/common-models';
 import {I18N} from 'aurelia-i18n';
 
 import $ from 'jquery';
@@ -15,45 +16,52 @@ const logger = LogManager.getLogger('cn-references');
 
 @customElement('catalogue-number-references')
 @bindable('model')
-@inject(Element, I18N, Catalogues, CatalogueNumbers, Stamps, Preferences)
+@inject(Element, I18N, Catalogues, CatalogueNumbers, Stamps, Countries, Preferences)
 export class CatalogueNumberReferences {
 
     modelCopy;
-    updateTemplate;
-    editSlot;
+
     catalogues = [];
 
     defaultCondition = -1;
     defaultCatalogue = null;
+    updateImagePath = false;
+    usedInlineImagePath = false;
+    useCataloguePrefix = false;
 
     conditions = Condition.symbols();
     number;
 
-    constructor(element, i18next, catalogueService, catalogueNumberService, stampService, preferenceService) {
+    constructor(element, i18next, catalogueService, catalogueNumberService, stampService, countryService, preferenceService) {
         this.element = $(element);
         this.i18next = i18next;
         this.catalogueService = catalogueService;
         this.catalogueNumberService = catalogueNumberService;
         this.stampService = stampService;
+        this.countryService = countryService;
         this.preferenceService = preferenceService;
     }
 
     bind() {
-        let self = this;
         // Using a promise here, but not bind (view-models) do not use promises to block
         Promise.all([
-            self.catalogueService.find(self.catalogueService.getDefaultSearchOptions()).then(results => {
-                self.catalogues = results.models;
+            this.catalogueService.find(this.catalogueService.getDefaultSearchOptions()).then(results => {
+                this.catalogues = results.models;
             }),
-            self.preferenceService.find(self.preferenceService.getDefaultSearchOptions()).then(results => { //eslint-disable-line no-unused-vars
-                let cond = self.preferenceService.getByNameAndCategory('condition', 'stamps');
+            // image calculation will require them to be initialized
+            this.countryService.find(this.countryService.getDefaultSearchOptions()),
+            this.preferenceService.find(this.preferenceService.getDefaultSearchOptions()).then(results => { //eslint-disable-line no-unused-vars
+                let cond = this.preferenceService.getByNameAndCategory('condition', 'stamps');
                 if( cond ) {
-                    self.defaultCondition = +cond.value;
+                    this.defaultCondition = +cond.value;
                 }
-                let cat = self.preferenceService.getByNameAndCategory('catalogueRefSecondary', 'stamps');
+                let cat = this.preferenceService.getByNameAndCategory('catalogueRefSecondary', 'stamps');
                 if( cat ) {
-                    self.defaultCatalogue = +cat.value;
+                    this.defaultCatalogue = +cat.value;
                 }
+                this.updateImagePath = this.preferenceService.getByNameAndCategory('updateNumberOnEdit', 'stamps') || false;
+                this.useCataloguePrefix = this.preferenceService.getByNameAndCategory('applyCatalogueImagePrefix', 'stamps') || false;
+                this.usedInlineImagePath = this.preferenceService.getByNameAndCategory('usedInlineImagePath', 'stamps') || false;
             })
         ]);
     }
@@ -80,6 +88,7 @@ export class CatalogueNumberReferences {
     }
 
     edit(num, index) { //eslint-disable-line no-unused-vars
+        num.original = _.clone(num);
         num.editing = true;
     }
 
@@ -89,16 +98,36 @@ export class CatalogueNumberReferences {
             inlineRow.remove();
             let index = _.findIndex(this.modelCopy.catalogueNumbers, {id: 0});
             if (index >= 0) {
-                this.modelCopy.catalogueNumbers.splice(1, index);
+                this.modelCopy.catalogueNumbers.splice(index, 1);
             }
+        } else {
+            this._revert(num);
         }
+    }
+
+    _revert(num) {
         num.editing = false;
+        let orig = num.original;
+        delete num.original;
+        _.merge(num, orig);
+    }
+
+    calculateImagePath(stamp) {
+        if(!_.isEmpty(stamp.stampOwnerships)) {
+            let path = StampHelper.calculateImagePath(stamp, this.usedInlineImagePath, this.useCataloguePrefix, this.countryService, this.catalogueService);
+            let owner = _.first(stamp.stampOwnerships);
+            owner.img = path;
+        }
     }
 
     save(num) { //eslint-disable-line no-unused-vars
+        if( this.updateImagePath && num.active ) {
+            this.calculateImagePath(this.modelCopy);
+        }
         this.stampService.save(this.modelCopy).then( stamp => {
-            this.modelChanged(stamp);
+            delete num.original;
             num.editing = false;
+            this.modelChanged(stamp);
         });
     }
 
@@ -141,27 +170,16 @@ export class CatalogueNumberReferences {
                 }
             }
         });
-
     }
 
     makeActive(num) {
-        let activeNum;
-        for( let i = 0; i < this.modelCopy.catalogueNumbers.length; i++ ) {
-            let cn = this.modelCopy.catalogueNumbers[i];
-            if( cn.active === true ) {
-                activeNum = cn;
-                break;
-            }
-        }
+        let activeNum = _.find(this.modelCopy.catalogueNumbers, {active: true});;
         if( activeNum.id === num.id ) {
             throw new Error("Can not set active as active!");
         } else {
-            this.catalogueNumberService.makeActive(num.id).then( stamp => { //eslint-disable-line no-unused-vars
-                activeNum.active = false;
-                num.active = true;
-            }).catch( err => {
-                logger.error(err);
-            });
+            activeNum.active = false;
+            num.active = true;
+            this.save(num);
         }
     }
 }

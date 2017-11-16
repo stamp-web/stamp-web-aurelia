@@ -173,6 +173,10 @@
         "server": "Server Settings",
         "stampCollection": "Stamp Collection",
         "stampCollection-select": "Select a stamp collection",
+        "updateNumberOnEdit": "Set image path on change",
+        "updateNumberOnEdit-hint": "Update image path on number change",
+        "usedInlineImagePath": "Use condition in image paths",
+        "usedInlineImagePath-hint": "Insert 'used' or 'on-cover' in the image path",
         "user": "User Settings"
     },
     "manage": {
@@ -219,7 +223,7 @@
         "CTO": "Cancel to order",
         "COVER": "Used on cover",
         "ON_PAPER": "Used on paper",
-        "MANUSCRIPT": "Used with manusript"
+        "MANUSCRIPT": "Manuscript cancel"
     },
     "currencyCode": {
         "USD": "USD",
@@ -257,7 +261,8 @@
         "TONED_GUM": "Toned gum",
         "HEAVILY_HINGED": "Heavily hinged",
         "ALBUM_TRANSFER": "Album transfer",
-        "PAPER_ADHESION": "Paper adhesion"
+        "PAPER_ADHESION": "Paper adhesion",
+        "SOILED": "Soiled paper"
     },
     "deceptions": {
         "FAKE_CANCEL": "Fake cancel",
