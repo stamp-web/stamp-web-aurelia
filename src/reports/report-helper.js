@@ -54,7 +54,7 @@ export class ReportHelper {
                 tr.push({ text: col.name || col.type, style: 'tableHeader'});
             });
             model.headerRows = 1;
-            model.widths = ['*', 'auto', 'auto'];
+            model.widths = ['auto', '*', 'auto', 'auto'];
             model.body.push(tr);
         }
 
@@ -63,11 +63,14 @@ export class ReportHelper {
             _.forEach(config.cols, col => {
                 let val = _.get(stamp, col.value);
                 switch (col.type) {
+                    case 'catalogueNumber':
+                        row.push(val);
+                        break;
                     case 'condition':
                         row.push(this.converter.fromCondition(val));
                         break;
                     case 'currencyValue':
-                        let currencyCode = _.get(stamp, col.code);
+                        let currencyCode = _.get(stamp, col.code, 'EUR');
                         let v = this.converter.fromCurrencyValue(val, currencyCode);
                         row.push(v);
                         break;

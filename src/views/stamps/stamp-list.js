@@ -154,9 +154,10 @@ export class StampList extends EventManaged {
         let title = 'Test';
         let tmodel = this.reportHelper.generateTableModel(this.stamps, {
             cols: [
+                {name: 'Number', type: 'catalogueNumber', value: 'activeCatalogueNumber.number'},
                 {name: 'Description', type: 'text', value: 'rate', additional: ['description']},
                 {name: 'Condition', type: 'condition', value: 'activeCatalogueNumber.condition'},
-                {name: 'Cat. Value', type: 'currencyValue', value: 'activeCatalogueNumber.value'}
+                {name: 'Cat. Value', type: 'currencyValue', value: 'activeCatalogueNumber.value', additional: ['activeCatalogueNumber.code']}
             ]
         });
         let styles = this.reportHelper.getStandardStyleDefinition();
