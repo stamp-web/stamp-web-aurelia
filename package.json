@@ -29,7 +29,7 @@
         "popper.js": "1.12.5",
         "requirejs": "^2.3.2",
         "select2": "4.0.3",
-        "tether": "^1.4.0",
+        "tether": "^1.4.3",
         "text": "github:requirejs/text"
     },
     "peerDependencies": {},
