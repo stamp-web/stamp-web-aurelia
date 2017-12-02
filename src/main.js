@@ -81,9 +81,10 @@ export function configure(aurelia) {
 }
 
 function configureGlobalLibraries() {
-    require(['tether', 'jquery'], (tether, jquery) => {
+    require(['tether', 'jquery', 'popper.js'], (tether, jquery, popper) => {
         window.Tether = tether;
         window.jQuery = jquery;
+        window.Popper = popper;
         require(['bootstrap']);
     });
 }
