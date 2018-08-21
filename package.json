@@ -18,7 +18,7 @@
         "bluebird": "^3.4.1",
         "blueimp-load-image": "2.6.1",
         "bootbox": "4.4.0",
-        "bootstrap": "^4.0.0-alpha.6",
+        "bootstrap": "4.0.0-alpha.6",
         "bootstrap-datepicker": "1.6.4",
         "i18next-xhr-backend": "^0.5.3",
         "jquery": "3.2.1",
@@ -29,7 +29,7 @@
         "popper.js": "1.12.5",
         "requirejs": "^2.3.2",
         "select2": "4.0.3",
-        "tether": "^1.4.0",
+        "tether": "^1.4.3",
         "text": "github:requirejs/text"
     },
     "peerDependencies": {},
