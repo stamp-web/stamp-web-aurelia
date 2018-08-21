@@ -82,7 +82,7 @@ export class StampEditorComponent extends EventManaged {
     duplicateModel;
     loaded = false;
 
-    usedConditions = [ Condition.USED.ordinal, Condition.CTO.ordinal, Condition.COVER.ordinal, Condition.ON_PAPER.ordinal];
+    usedConditions = [ Condition.USED.ordinal, Condition.CTO.ordinal, Condition.COVER.ordinal, Condition.ON_PAPER.ordinal, Condition.MANUSCRIPT.ordinal];
     /* Session cached values (overriding preference values) */
     cachedValues = {
         purchased: null

@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2017 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -24,12 +24,13 @@ import {PurchaseForm} from './purchase-form';
 import {SessionContext} from '../../services/session-context';
 import {EventNames, StorageKeys, EventManaged, KeyCodes} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
-import {StampFilter, ConditionFilter, CurrencyCode} from '../../util/common-models';
+import {StampFilter, ConditionFilter, Condition, CurrencyCode} from '../../util/common-models';
 import {PredicateUtilities} from '../../util/object-utilities';
 
 import {ImagePreviewEvents} from '../../resources/elements/image-preview/image-preview';
 import {asCurrencyValueConverter} from '../../resources/value-converters/as-currency-formatted';
-
+import {PdfGenerator} from '../../reports/pdf-generator';
+import {ReportHelper} from '../../reports/report-helper';
 import {Predicate, Operators, Parser} from 'odata-filter-parser';
 import bootbox from 'bootbox';
 import {DialogService} from 'aurelia-dialog';
@@ -39,15 +40,15 @@ const logger = LogManager.getLogger('stamp-list');
 
 function createStamp(wantList) {
     return {
-        id: 0,
-        wantList: wantList,
-        countryRef: -1,
+        id:               0,
+        wantList:         wantList,
+        countryRef:       -1,
         catalogueNumbers: [],
-        stampOwnerships: []
+        stampOwnerships:  []
     };
 }
 
-@inject(Element, EventAggregator, Router, Stamps, Countries, Preferences, asCurrencyValueConverter, I18N, DialogService)
+@inject(Element, EventAggregator, Router, Stamps, Countries, Preferences, asCurrencyValueConverter, I18N, DialogService, PdfGenerator, ReportHelper)
 export class StampList extends EventManaged {
 
     stamps = [];
@@ -69,32 +70,32 @@ export class StampList extends EventManaged {
 
     pageSize = 500;
 
-    sortColumns = ['number', 'value', 'pricePaid' ];
+    sortColumns = ['number', 'value', 'pricePaid'];
 
     filters = StampFilter.symbols();
     stampFilter = StampFilter.ALL;
 
-   conditionFilters = ConditionFilter.symbols();
-   conditionFilter = ConditionFilter.ALL;
+    conditionFilters = ConditionFilter.symbols();
+    conditionFilter = ConditionFilter.ALL;
 
     currentFilters = [];
 
     pageSizes = [100, 250, 500, 1000, 2500, 5000];
 
     pageInfo = {
-        total: 1,
+        total:  1,
         active: 0
     };
 
     options = {
-        $filter: "",
-        $top: 250,
-        $skip: 0,
-        sort: this.sortColumns[0],
+        $filter:       "",
+        $top:          250,
+        $skip:         0,
+        sort:          this.sortColumns[0],
         sortDirection: 'asc'
     };
 
-    constructor(element, eventBus, router, stampService, countryService, preferenceService, currencyFormatter, i18next, dialogService) {
+    constructor(element, eventBus, router, stampService, countryService, preferenceService, currencyFormatter, i18next, dialogService, pdfGenerator, reportHelper) {
         super(eventBus);
         this.element = element;
         this.stampService = stampService;
@@ -104,21 +105,23 @@ export class StampList extends EventManaged {
         this.router = router;
         this.i18next = i18next;
         this.dialogService = dialogService;
+        this.pdfGenerator = pdfGenerator;
+        this.reportHelper = reportHelper;
     }
 
     bind() {
         this._searchHandler = this.processSearchRequest.bind(this);
-        SessionContext.addContextListener(SessionContext.SEARCH_CHANGE, this._searchHandler );
+        SessionContext.addContextListener(SessionContext.SEARCH_CHANGE, this._searchHandler);
     };
 
     unbind() {
-        SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this._searchHandler );
+        SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this._searchHandler);
     };
 
     processSearchRequest(data, oldData) { //eslint-disable-line no-unused-lets
         let self = this;
         let options = (!self.options) ? {} : self.options;
-        if( data ) {
+        if (data) {
             options.$filter = data.serialize();
             self.currentFilters = data.flatten();
             logger.debug(self.currentFilters);
@@ -133,8 +136,8 @@ export class StampList extends EventManaged {
             selected = _.filter(selected, {wantList: false});
             if (selected.length > 0) {
                 let purchaseModel = {
-                    price: 0.0,
-                    currency: CurrencyCode.USD.key,
+                    price:          0.0,
+                    currency:       CurrencyCode.USD.key,
                     updateExisting: true,
                     selectedStamps: selected
                 };
@@ -147,11 +150,41 @@ export class StampList extends EventManaged {
         }
     }
 
+    print() {
+        let title = 'Test';
+        let tmodel = this.reportHelper.generateTableModel(this.stamps, {
+            cols: [
+                {name: 'Number', type: 'catalogueNumber', value: 'activeCatalogueNumber.number'},
+                {name: 'Description', type: 'text', value: 'rate', additional: ['description']},
+                {name: 'Condition', type: 'condition', value: 'activeCatalogueNumber.condition'},
+                {name: 'Cat. Value', type: 'currencyValue', value: 'activeCatalogueNumber.value', additional: ['activeCatalogueNumber.code']}
+            ]
+        });
+        let styles = this.reportHelper.getStandardStyleDefinition();
+        let opts = {
+            content: []
+        };
+
+        opts.content.push(this.reportHelper.generateText(`Wantlist: ${title}`, 'header'));
+        opts.content.push(this.reportHelper.generateText(`Total number of stamps: ${this.stamps.length}`, 'text'));
+        opts.content.push({table: tmodel, style: 'table', layout: {
+            hLineColor: (i, node) => {
+                return '#aaa';
+            },
+            vLineColor: (i, node) => {
+                return '#aaa';
+            }
+        }});
+        opts.styles = styles;
+        console.log(opts);
+        this.pdfGenerator.printReport(opts);
+    }
+
     selectAll(select) {
-        if( !select ) {
+        if (!select) {
             this.stampService.clearSelected();
-            if( this.editingStamp ) {
-                if( this.editorShown ) {
+            if (this.editingStamp) {
+                if (this.editorShown) {
                     this.editorShown = false;
                 }
                 this.editingStamp = undefined;
@@ -173,8 +206,8 @@ export class StampList extends EventManaged {
         opt.$reportType = reportType;
         self.reportValue = self.i18next.tr('footer-statistics.calculating');
 
-        self.stampService.executeReport(opt).then( result => {
-            if( +result.value > 0 ) {
+        self.stampService.executeReport(opt).then(result => {
+            if (+result.value > 0) {
                 self.reportValue = self.currencyFormatter.toView(+result.value, result.code);
             } else {
                 self.reportValue = "";
@@ -206,7 +239,7 @@ export class StampList extends EventManaged {
 
     setConditionFilter(ordinal) {
 
-        this.currentFilters = PredicateUtilities.removeMatches( 'condition', this.currentFilters );
+        this.currentFilters = PredicateUtilities.removeMatches('condition', this.currentFilters);
 
         this.conditionFilter = ConditionFilter.get(ordinal);
         let conditions = [];
@@ -215,7 +248,7 @@ export class StampList extends EventManaged {
                 conditions = [0, 1, 4, 5];
                 break;
             case 2:
-                conditions = [2, 3, 7];
+                conditions = [2, 3, Condition.ON_PAPER.ordinal, Condition.MANUSCRIPT.ordinal];
                 break;
             case 3:
                 conditions = [6];
@@ -226,7 +259,7 @@ export class StampList extends EventManaged {
             for (let i = 0; i < conditions.length; i++) {
                 predicates.push(new Predicate({
                     subject: 'condition',
-                    value: conditions[i]
+                    value:   conditions[i]
                 }));
             }
             this.currentFilters.push((predicates.length === 1 ) ? predicates[0] : Predicate.concat(Operators.OR, predicates));
@@ -237,14 +270,14 @@ export class StampList extends EventManaged {
 
 
     setFilter(ordinal) {
-        this.currentFilters = PredicateUtilities.removeMatches( 'wantList', this.currentFilters );
+        this.currentFilters = PredicateUtilities.removeMatches('wantList', this.currentFilters);
 
         this.stampFilter = StampFilter.get(ordinal);
 
         let theFilter = new Predicate({
             subject: 'wantList'
         });
-        switch(ordinal) {
+        switch (ordinal) {
             case 1:
                 theFilter.value = 0;
                 break;
@@ -254,7 +287,7 @@ export class StampList extends EventManaged {
             default:
                 theFilter = null;
         }
-        if( theFilter ) {
+        if (theFilter) {
             this.currentFilters.push(theFilter);
         }
         this.search();
@@ -270,7 +303,7 @@ export class StampList extends EventManaged {
 
     setSort(attr) {
         this.options.sort = attr;
-        if( !this.options.sortDirection ) {
+        if (!this.options.sortDirection) {
             this.options.sortDirection = 'asc';
         }
         this.search();
@@ -290,7 +323,7 @@ export class StampList extends EventManaged {
         if (action === 'create-stamp' || action === 'create-wantList') {
             this.editingStamp = createStamp((action === 'create-wantList'));
             this.panelContents = "stamp-editor";
-        } else if ( action === 'search-panel' ) {
+        } else if (action === 'search-panel') {
             this.panelContents = action;
         }
         this.editorShown = true;
@@ -331,12 +364,12 @@ export class StampList extends EventManaged {
     }
 
     sendSearch() {
-        this.currentFilters = PredicateUtilities.removeMatches( 'description', this.currentFilters );
-        if( this.searchText && this.searchText !== "") {
-            this.currentFilters.unshift( new Predicate({
-                subject: 'description',
+        this.currentFilters = PredicateUtilities.removeMatches('description', this.currentFilters);
+        if (this.searchText && this.searchText !== "") {
+            this.currentFilters.unshift(new Predicate({
+                subject:  'description',
                 operator: Operators.LIKE, // LIKE is not supported?
-                value: this.searchText
+                value:    this.searchText
             }));
         }
         this.search();
@@ -350,10 +383,10 @@ export class StampList extends EventManaged {
             opts.$orderby = cOpts.sort + " " + cOpts.sortDirection;
         }
         opts.$top = cOpts.$top > -1 ? cOpts.$top : 100;
-        if( this.currentFilters && this.currentFilters.length > 0 ) {
+        if (this.currentFilters && this.currentFilters.length > 0) {
             let current = [];
-            this.currentFilters.forEach( f => {
-                current.push( f );
+            this.currentFilters.forEach(f => {
+                current.push(f);
             });
             let predicate = (current.length > 1) ? Predicate.concat(Operators.AND, current) : this.currentFilters[0];
             opts.$filter = predicate.serialize();
@@ -399,10 +432,10 @@ export class StampList extends EventManaged {
         });
 
         this.subscribe(EventNames.stampSaved, result => {
-            if( !result.remainOpen) {
+            if (!result.remainOpen) {
                 this.editorShown = false;
             }
-            if( _.get(this.lastSelected, 'id') === _.get(result, 'stamp.id')) {
+            if (_.get(this.lastSelected, 'id') === _.get(result, 'stamp.id')) {
                 this.lastSelected = null;
                 _.defer(() => { // tickle lastSelected
                     this.lastSelected = result.stamp;
@@ -420,7 +453,7 @@ export class StampList extends EventManaged {
                     this.editorShown = false;
                 }
                 this.stampService.remove(model).then(() => {
-                    this.eventBus.publish(EventNames.stampCount, { stamp: model, increment: false });
+                    this.eventBus.publish(EventNames.stampCount, {stamp: model, increment: false});
                     this._removeStamp(model);
                 }).catch(err => {
                     logger.error(err);
@@ -428,10 +461,10 @@ export class StampList extends EventManaged {
             };
 
             bootbox.confirm({
-                size: 'large',
+                size:      'large',
                 className: 'sw-dialog-wrapper',
-                message: "Delete " + stamp.rate + ' - ' + stamp.description + "?",
-                callback: (result) => {
+                message:   "Delete " + stamp.rate + ' - ' + stamp.description + "?",
+                callback:  (result) => {
                     if (result === true) {
                         removeCallback.call(this, stamp);
 
@@ -443,39 +476,39 @@ export class StampList extends EventManaged {
 
     _removeStamp(obj) {
         let idx = _.findIndex(this.stamps, {id: obj.id});
-        if( idx > 0 ) {
-            this.stamps.splice(idx,1);
+        if (idx > 0) {
+            this.stamps.splice(idx, 1);
         }
     }
 
     stampSelected(obj) {
         if (obj && obj.model) {
             if (this.stampService.isSelected(obj.model)) {
-                if( this.lastSelected.id !== obj.model.id ) {
+                if (this.lastSelected.id !== obj.model.id) {
                     this.lastSelected = obj.model;
                 } else {
                     this.stampService.unselect(obj.model);
                     let selected = this.stampService.getSelected();
                     this.lastSelected = ( selected && selected.length > 0) ? selected[selected.length - 1] : undefined;
-                    if( this.lastSelected && this.editorShown ) {
+                    if (this.lastSelected && this.editorShown) {
                         this.editingStamp = this._cloneStamp(this.lastSelected);
                     } else {
                         this.editorShown = false;
                     }
                 }
             } else {
-                if( obj.shiftKey && !!this.lastSelected ) {
+                if (obj.shiftKey && !!this.lastSelected) {
                     let lastIndex = _.indexOf(this.stamps, this.lastSelected);
                     let nowIndex = _.indexOf(this.stamps, obj.model);
                     let nowSelected = _.slice(this.stamps, Math.min(nowIndex, lastIndex), Math.max(nowIndex, lastIndex) + 1);
-                    _.each( nowSelected, s => {
+                    _.each(nowSelected, s => {
                         this.stampService.select(s);
                     });
                 } else {
                     this.stampService.select(obj.model);
                 }
                 this.lastSelected = obj.model;
-                if( this.editorShown && _.get(this.editingStamp, 'id') !== obj.model.id) {
+                if (this.editorShown && _.get(this.editingStamp, 'id') !== obj.model.id) {
                     this.editingStamp = this._cloneStamp(obj.model);
                 }
             }
@@ -490,10 +523,10 @@ export class StampList extends EventManaged {
         if (stamp && !_.isEmpty(stamp.stampOwnerships)) {
             let oldImage = this.fullSizeImage;
             this.fullSizeImage = this.imagePath + '/' + _.first(stamp.stampOwnerships).img;
-            if( oldImage === this.fullSizeImage ) {
+            if (oldImage === this.fullSizeImage) {
                 this.imageShown = false; // tickle the image shown to force the proper state
             }
-            _.defer( () => {
+            _.defer(() => {
                 this.imageShown = true;
             });
         }
@@ -535,9 +568,9 @@ export class StampList extends EventManaged {
      * Reset the display to the initial state (scroll top)
      */
     resetDisplay() {
-        _.defer( () => {
+        _.defer(() => {
             let targetElement = '.stamp-content';
-            switch(this.displayMode) {
+            switch (this.displayMode) {
                 case 'List':
                     targetElement += ' stamp-table';
                     break;
@@ -560,10 +593,10 @@ export class StampList extends EventManaged {
         let f = Parser.parse($filter);
         if (f) {
             this.currentFilters = f.flatten();
-            let descriptionFilter =_.find(this.currentFilters, f => {
+            let descriptionFilter = _.find(this.currentFilters, f => {
                 return f.subject === 'description';
             });
-            if(descriptionFilter) {
+            if (descriptionFilter) {
                 this.searchText = descriptionFilter.value;
             }
             logger.debug(this.currentFilters);
@@ -577,7 +610,7 @@ export class StampList extends EventManaged {
         this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');
 
         return new Promise((resolve, reject) => {
-            Promise.all([this.countryService.find(), this.preferenceService.find()]).then( (results) => {
+            Promise.all([this.countryService.find(), this.preferenceService.find()]).then((results) => {
                 let result = (results && results.length > 0 ) ? results[0] : undefined;
                 this.countries = result ? result.models : [];
                 let $filter = LocationHelper.getQueryParameter("$filter");
@@ -587,11 +620,11 @@ export class StampList extends EventManaged {
                     let indx = Math.floor(Math.random() * result.total);
                     this.currentFilters.push(new Predicate({
                         subject: 'countryRef',
-                        value: this.countries[indx].id
+                        value:   this.countries[indx].id
                     }));
                 }
                 let $orderby = LocationHelper.getQueryParameter("$orderby");
-                if( $orderby && $orderby.length > 1 ) {
+                if ($orderby && $orderby.length > 1) {
                     let orderParts = $orderby.split(' ');
 
                     this.options.sort = orderParts[0];
@@ -599,19 +632,19 @@ export class StampList extends EventManaged {
                 }
 
                 let $top = this.preferenceService.getByNameAndCategory('pageSize', 'stamps');
-                if( $top ) {
+                if ($top) {
                     this.options.$top = +$top.value;
                 }
                 let $skip = LocationHelper.getQueryParameter("$skip");
-                if( $skip ) {
+                if ($skip) {
                     this.options.$skip = $skip;
                 }
 
                 // extract image path from preferences.
                 let _imagePath = this.preferenceService.getByNameAndCategory('imagePath', 'stamps');
-                this.imagePath = ( !_.isEmpty(_imagePath)) ?  _imagePath.value : this._defaultImagePath;
+                this.imagePath = ( !_.isEmpty(_imagePath)) ? _imagePath.value : this._defaultImagePath;
 
-                this.search().then( () => {
+                this.search().then(() => {
                     logger.debug("StampGrid initialization time: " + ((new Date().getTime()) - t) + "ms");
                     resolve();
                 });

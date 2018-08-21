@@ -1,0 +1,28 @@
+{
+    "header": {
+        "fontSize": 14,
+        "margin": [0, 0, 0, 10],
+        "bold": true
+    },
+    "subheader": {
+        "fontSize": 12,
+        "bold": true
+    },
+    "table": {
+        "fontSize": 8,
+        "hLineColor": "gray"
+    },
+    "tableHeader": {
+        "fontSize": 8,
+        "fillColor": "#656565",
+        "color": "#fff"
+    },
+    "text": {
+        "fontSize": 8,
+        "margin": [0, 0, 0, 10],
+        "color": "#444"
+    },
+    "quote": {
+        "italics": true
+    }
+}
