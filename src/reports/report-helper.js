@@ -119,14 +119,14 @@ export class ReportValueConverter {
                 break;
             case Condition.USED.ordinal:
             case Condition.CTO.ordinal:
-                value = '(.)';
+                value = 'u';
                 break;
             case Condition.MANUSCRIPT.ordinal:
                 value = '~';
                 break;
             case Condition.COVER.ordinal:
             case Condition.ON_PAPER.ordinal:
-                value = '[.]';
+                value = 'op';
                 break;
             default:
                 console.log('no condition converter for ', condition);

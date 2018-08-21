@@ -24,7 +24,7 @@ import {PurchaseForm} from './purchase-form';
 import {SessionContext} from '../../services/session-context';
 import {EventNames, StorageKeys, EventManaged, KeyCodes} from '../../events/event-managed';
 import {LocationHelper} from '../../util/location-helper';
-import {StampFilter, ConditionFilter, CurrencyCode} from '../../util/common-models';
+import {StampFilter, ConditionFilter, Condition, CurrencyCode} from '../../util/common-models';
 import {PredicateUtilities} from '../../util/object-utilities';
 
 import {ImagePreviewEvents} from '../../resources/elements/image-preview/image-preview';
