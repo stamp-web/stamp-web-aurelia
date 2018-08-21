@@ -56,6 +56,9 @@
                     <button class="btn btn-secondary hidden-sm-down ${ displayMode === 'Upgrade' ? 'active' : ''}" title="${'actions.show-as-upgrade'|t}" click.trigger="setDisplayMode('Upgrade')">
                         <span class="sw-icon-exchange"></span>
                     </button>
+                    <button class="btn btn-secondary hidden-sm-down" title="${'actions.print'|t}" click.trigger="print()">
+                        <span class="sw-icon-print"></span>
+                    </button>
                     <button class="btn btn-secondary hidden-sm-down ${ referenceTableState }" disabled.bind="referenceTableState === 'disabled'" title="${'actions.show-reference-cataloguenumbers'|t}" click.delegate="toggleCatalogueNumbers()">
                         <span class="sw-icon-references"></span>
                     </button>

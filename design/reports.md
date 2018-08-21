@@ -29,6 +29,7 @@ from the view and allow the client to make a call to the server without a size l
 ## Want List Report
 * Show "Wantlist: {Title}"
 * Show generation time
+* Total number of stamps
 * Show table with the following columns
   * Number (primary/active)
   * Rate + Description

@@ -369,6 +369,30 @@
       "src": "fontawesome"
     },
     {
+      "uid": "81bb68665e8e595505272a746db07c7a",
+      "css": "used",
+      "code": 61842,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "bf882b30900da12fca090d9796bc3030",
+      "css": "envelope",
+      "code": 59447,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "25b34dea4784f72c710454f32ff8fa2b",
+      "css": "star",
+      "code": 59448,
+      "src": "entypo"
+    },
+    {
+      "uid": "823a9e02e643318116fea40a00190e4e",
+      "css": "mint",
+      "code": 59449,
+      "src": "fontawesome"
+    },
+    {
       "uid": "fb41c3a521c66ffd5a8492ee2c53e783",
       "css": "calendar",
       "code": 59427,

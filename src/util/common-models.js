@@ -217,7 +217,7 @@ export var ConditionHelper = function() {
                     break;
                 case 2:
                 case 3:
-                    val = _.findIndex([Condition.USED.ordinal, Condition.CTO.ordinal], c) > -1;
+                    val = _.findIndex([Condition.USED.ordinal, Condition.CTO.ordinal, Condition.MANUSCRIPT.ordinal], c) > -1;
                     break;
                 case 6:
                 case 7:
