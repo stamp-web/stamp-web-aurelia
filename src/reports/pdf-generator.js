@@ -1,5 +1,5 @@
 /**
- Copyright 2017 Jason Drake
+ Copyright 2018 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,11 +13,18 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+import {inject, LogManager} from 'aurelia-framework';
+import {EventAggregator} from 'aurelia-event-aggregator';
+import {EventNames} from "../events/event-managed";
 
 import _ from 'lodash';
 
+@inject(EventAggregator)
 export class PdfGenerator {
-    constructor() {
+
+    constructor(eventAggregator) {
+        this.eventAggregrator = eventAggregator;
+        this.logger = LogManager.getLogger('PdfGenerator');
     }
 
     initialize() {
@@ -40,7 +47,8 @@ export class PdfGenerator {
             let docDefinition = opts;
             pdfMake.createPdf(docDefinition).print();
         }).catch(e => {
-            console.log("error", e);
+            this.logger.warn("Error printing.", e);
+            this.eventAggregrator.publish(EventNames.popupBlocked);
         });
 
     }

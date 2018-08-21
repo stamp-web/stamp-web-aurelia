@@ -15,7 +15,8 @@
         "show-navigation": "Show navigation"
     },
     "errors": {
-        "server-unavailable": "Server is unavailable"
+        "server-unavailable": "Server is unavailable",
+        "popup-blocked": "Opening the PDF is blocked by the browser.  Check your browser settings."
     },
     "footer": {
         "filtering-total": "Stamps matching filter:",

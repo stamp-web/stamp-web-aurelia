@@ -1,6 +1,6 @@
 import {customElement, bindable} from 'aurelia-framework';
 
-@customElement('Panel')
+@customElement('panel')
 export class Panel {
 
     @bindable headingText;

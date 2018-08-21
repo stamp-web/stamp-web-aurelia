@@ -1,5 +1,5 @@
 /**
- Copyright 2017 Jason Drake
+ Copyright 2018 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -409,6 +409,10 @@ export class StampList extends EventManaged {
         this.subscribe(EventNames.stampCreate, () => {
             this.editingStamp = createStamp(false /* Not a wantlist */);
             this.editorShown = true;
+        });
+
+        this.subscribe(EventNames.popupBlocked, () => {
+            bootbox.alert(this.i18next.tr('errors.popup-blocked'));
         });
 
         this.subscribe(EventNames.panelCollapsed, config => {
