@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2018 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ export class Select2Picker {
         if( this.config.id ) {
             this.id = this.config.id;
         } else {
-            this.id = "select-" + parseInt(Math.random() * 16384, 10);
+            this.id = 'select-' + parseInt(Math.random() * 16384, 10);
         }
 
         if( this.config.multiple === true || this.multiple === 'true' ) {
@@ -115,7 +115,7 @@ export class Select2Picker {
         if( select ) {
             const $select = $(select);
             if( $select.data('select2')) { // depending on the destory state need to check whether it still thinks it is a select2
-                $select.select2("destroy");
+                $select.select2('destroy');
             }
         }
     }
@@ -201,7 +201,7 @@ export class Select2Picker {
      * Handle the conversion of the type from the modeled value to the String equivalence of the value used by select2
      */
     _convertToInternal(val) {
-        if( typeof val === 'undefined' || !val) {
+        if( typeof val === 'undefined' || _.isNil(val)) {
             return undefined;
         }
         let retValue = val;

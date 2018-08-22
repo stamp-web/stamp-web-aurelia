@@ -233,7 +233,9 @@
         "GBP": "GBP",
         "AUD": "AUD",
         "JYP": "JYP",
-        "SEK": "SEK"
+        "SEK": "SEK",
+        "ITL": "ITL",
+        "DEM": "DEM"
     },
     "grade": {
         "XF": "Extra-Fine (XF)",

@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2018 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -128,7 +128,9 @@ export const CurrencyCode = new Enum({
     GBP: {ordinal: 3, description: 'currencyCode.GBP'},
     AUD: {ordinal: 4, description: 'currencyCode.AUD'},
     JYP: {ordinal: 5, description: 'currencyCode.JYP'},
-    SEK: {ordinal: 6, description: 'currencyCode.SEK'}
+    SEK: {ordinal: 6, description: 'currencyCode.SEK'},
+    ITL: {ordinal: 7, description: 'currencyCode.ITL'},
+    DEM: {ordinal: 8, description: 'currencyCode.DEM'}
 });
 
 export const UserLocale = new Enum({

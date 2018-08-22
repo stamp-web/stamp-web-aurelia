@@ -1,5 +1,5 @@
 /**
- Copyright 2015 Jason Drake
+ Copyright 2018 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,16 +16,20 @@
 import {valueConverter} from 'aurelia-framework';
 
 
-@valueConverter("asCurrencyFormatted")
+@valueConverter('asCurrencyFormatted')
 export class asCurrencyValueConverter {
 
     toView(value, currency = 'USD') {
         if (typeof value !== 'undefined') {
 
             if( +value > 0 && currency ) {
-                return value.toLocaleString("en", {style: "currency", currency: currency, minimumFractionDigits: 2});
+                return value.toLocaleString('en', {
+                    style: 'currency',
+                    currencyDisplay: 'symbol',
+                    currency: currency
+                });
             }
         }
-        return "-";
+        return '-';
     }
 }
