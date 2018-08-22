@@ -39,7 +39,11 @@ describe('asCurrencyFormattedConverter test suite', () => {
         });
 
         it('test handling of Yen values', () => {
-            expect(new asCurrencyValueConverter().toView(5600, 'JPY')).toBe('¥5,600.00');
+            expect(new asCurrencyValueConverter().toView(5600, 'JPY')).toBe('¥5,600');
+        });
+
+        it('test handling of Italian Lira values', () => {
+            expect(new asCurrencyValueConverter().toView(5600, 'ITL')).toBe('ITL5,600');
         });
     });
 
