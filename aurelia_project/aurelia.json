@@ -251,7 +251,7 @@
                     },
                     {
                         "name": "bootbox",
-                        "path": "../node_modules/bootbox",
+                        "path": "../node_modules/bootbox/dist",
                         "main": "bootbox.min",
                         "deps": [
                             "bootstrap"

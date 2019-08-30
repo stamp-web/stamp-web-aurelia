@@ -150,19 +150,20 @@ export class CatalogueNumberReferences {
 
     remove(num) {
         let self = this;
-        let _remove = function(m) {
-            self.catalogueNumberService.remove(m).then( result => {
-                if( result === true ) {
-                    let index = _.findIndex(self.modelCopy.catalogueNumbers, { id: m.id });
-                    self.modelCopy.catalogueNumbers.splice(index, 1);
+        let _remove = m => {
+            this.catalogueNumberService.remove(m).then(result => {
+                if (result === true) {
+                    let index = _.findIndex(this.modelCopy.catalogueNumbers, {id: m.id});
+                    this.modelCopy.catalogueNumbers.splice(index, 1);
                 }
-            }).catch( err => {
+            }).catch(err => {
                 logger.debug("Error removing", err);
             });
         };
+        let msg = this.i18next.tr("prompts.delete-catalogue-number", {number: num.number});
         bootbox.confirm({
-            size: 'small',
-            message: self.i18next.tr("prompts.delete-catalogue-number", { number: num.number } ),
+            size:     'small',
+            message:  msg,
             callback: function (result) {
                 if (result === true) {
                     _remove.call(self, num);

@@ -141,8 +141,8 @@
         "valueInvalid": "Value is not a number"
     },
     "prompts": {
-        "delete-catalogue-number": "Delete catalogue number __number__?",
-        "delete-item": "Delete __name__?"
+        "delete-catalogue-number": "Delete catalogue number {{number}}?",
+        "delete-item": "Delete {{name}}?"
     },
     "settings": {
         "album": "Album",
