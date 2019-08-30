@@ -52,7 +52,7 @@
         "colors": "^1.1.2",
         "connect-history-api-fallback": "^1.2.0",
         "expect.js": "^0.3.1",
-        "gulp": "github:gulpjs/gulp#4.0",
+        "gulp": "^4.0",
         "gulp-babel": "^6.1.2",
         "gulp-changed-in-place": "^2.0.3",
         "gulp-clean-css": "3.0.4",
