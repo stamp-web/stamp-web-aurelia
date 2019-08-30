@@ -136,16 +136,12 @@
                     "aurelia-task-queue",
                     "aurelia-templating",
                     "aurelia-templating-binding",
+                    "aurelia-ui-virtualization",
                     "text",
                     {
                         "name": "aurelia-dialog",
                         "path": "../node_modules/aurelia-dialog/dist/amd",
                         "main": "aurelia-dialog"
-                    },
-                    {
-                        "name": "aurelia-ui-virtualization",
-                        "path": "../node_modules/aurelia-ui-virtualization/dist/amd",
-                        "main": "index"
                     },
                     {
                         "name": "aurelia-validation",
