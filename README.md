@@ -72,7 +72,7 @@ You can access both the web-services and the application server through port 900
 
 ### Accessing the Demo Services
 
-Another way to access the web-services is using the reverse proxy to the demo system located at http://drake-server.ddns.net:9080/stamp-webservices.  You can change this setting via "stamp-webservices" variable in the file aurelia_project/tasks/proxy.json
+Another way to access the web-services is using the reverse proxy to the demo system located at http://drake-server.ddns.net:9008/stamp-webservices.  You can change this setting via "stamp-webservices" variable in the file aurelia_project/tasks/proxy.json
 
 If you take this later approach, please note that the performance will not be great since you will be reverse proxying to a remote data service.  Also note, this is a demo machine so I would appreciate it if you didn't completely corrupt the data (this is not my production data, but if I have to continually manage the system due to misuse I will close it down to outside connections)
 
