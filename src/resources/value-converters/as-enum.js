@@ -22,7 +22,7 @@ export class asEnumValueConverter {
     toView(value, selector) {
         if (!isNaN(value)) {
             let enumValues;
-            switch( selector ) {
+            switch (selector) {
                 case 'Condition':
                     enumValues = Condition;
                     break;
@@ -30,8 +30,11 @@ export class asEnumValueConverter {
                     enumValues = Grade;
 
             }
-            if( enumValues ) {
-                return enumValues.get(value).display;
+            if (enumValues) {
+                let v = enumValues.get(value);
+                if (v) {
+                    return v.display;
+                }
             }
 
         }

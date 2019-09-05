@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {StringUtil} from '../../src/util/object-utilities';
+import {StringUtil} from 'util/object-utilities';
 
 describe('StringUtil test suite', () => {
 

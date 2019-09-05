@@ -13,8 +13,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {StampEditorComponent} from '../../../../src/resources/elements/stamps/stamp-editor';
-import {EventNames} from '../../../../src/events/event-managed';
+import {StampEditorComponent} from 'resources/elements/stamps/stamp-editor';
+import {EventNames} from 'events/event-managed';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 import _ from 'lodash';

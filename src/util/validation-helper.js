@@ -17,10 +17,13 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import _ from 'lodash';
 
 export var ValidationHelper = {
+    _currencyEvaluate: value => {
+        return (_.isEmpty(value)) || (new RegExp(/^\d*(\.\d{0,2})?$/).test(value));
+    },
 
     defineCurrencyValueRule: (ValidationRules, name) => {
         ValidationRules.customRule(name, (value, obj) => {
-            return (_.isEmpty(value)) || (new RegExp(/^\d+(\.\d{0,2})?$/).test(value));
+            return this._currencyEvaluate(value);
         });
     },
 

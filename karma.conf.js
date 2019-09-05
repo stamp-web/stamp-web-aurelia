@@ -11,7 +11,7 @@ let output = project.platform.output;
 let appSrc = project.build.bundles.map(x => path.join(output, x.name));
 let entryIndex = appSrc.indexOf(path.join(output, project.build.loader.configTarget));
 let entryBundle = appSrc.splice(entryIndex, 1)[0];
-let files = [entryBundle].concat(testSrc).concat(appSrc);
+let files = [entryBundle].concat('scripts/dep-bundle.js').concat(testSrc).concat(appSrc);
 
 module.exports = function (config) {
     config.set({
@@ -35,7 +35,7 @@ module.exports = function (config) {
             dir:  'test/coverage/bundled'
         },
         'babelPreprocessor': {options: project.transpiler.options},
-        reporters:           ['progress', 'coverage', 'karma-remap-istanbul'],
+        reporters:           ['progress', 'coverage'],
         port:                9876,
         colors:              true,
         logLevel:            config.LOG_INFO,

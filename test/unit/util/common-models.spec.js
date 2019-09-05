@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {EnumeratedTypeHelper, ConditionHelper, StampHelper, Condition, Defects} from '../../../src/util/common-models';
+import {EnumeratedTypeHelper, ConditionHelper, StampHelper, Condition, Defects} from 'util/common-models';
 import _ from 'lodash';
 
 describe('EnumeratedTypeHelper test suite', () => {

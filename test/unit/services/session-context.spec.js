@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {SessionContext} from '../../../src/services/session-context';
+import {SessionContext} from 'services/session-context';
 
 describe('SessionContext test suite', () => {
     let obj;

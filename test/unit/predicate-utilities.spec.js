@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {PredicateUtilities} from '../../src/util/object-utilities';
+import {PredicateUtilities} from 'util/object-utilities';
 import ODataParser from 'odata-filter-parser';
 
 let Predicate = ODataParser.Predicate;

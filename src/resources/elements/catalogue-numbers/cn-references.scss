@@ -25,7 +25,9 @@
             }
             .col-catalogue-value,
             .col-number {
-                width: 7.5rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 9.5rem;
             }
 
             .col-actions {

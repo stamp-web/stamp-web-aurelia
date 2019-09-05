@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2019 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {asCurrencyValueConverter} from '../../../src/resources/value-converters/as-currency-formatted';
+import {asCurrencyValueConverter} from 'resources/value-converters/as-currency-formatted';
 
 describe('asCurrencyFormattedConverter test suite', () => {
 
@@ -43,7 +43,7 @@ describe('asCurrencyFormattedConverter test suite', () => {
         });
 
         it('test handling of Italian Lira values', () => {
-            expect(new asCurrencyValueConverter().toView(5600, 'ITL')).toBe('ITL5,600');
+            expect(new asCurrencyValueConverter().toView(5600, 'ITL')).toBe('ITL 5,600');
         });
     });
 

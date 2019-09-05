@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-import {StampList} from '../../../../src/views/stamps/stamp-list';
-import {Stamps} from '../../../../src/services/stamps';
+import {StampList} from 'views/stamps/stamp-list';
+import {Stamps} from 'services/stamps';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('StampListComponent test suite', () => {

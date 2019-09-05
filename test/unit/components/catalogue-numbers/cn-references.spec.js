@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {CatalogueNumberReferences} from '../../../../src/resources/elements/catalogue-numbers/cn-references';
+import {CatalogueNumberReferences} from 'resources/elements/catalogue-numbers/cn-references';
 
 describe('CatalogueNumberReferences test suite', () => {
 
