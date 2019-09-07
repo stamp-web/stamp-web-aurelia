@@ -47,11 +47,13 @@ paging-toolbar {
                 border-color: $theme-invalid-color;
             }
         }
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin:             0; /* <-- Apparently some margin are still there even though it's hidden */
-        }
+        input[type="number"] {
+            -moz-appearance: textfield;
 
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }
     }
 }

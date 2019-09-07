@@ -50,9 +50,11 @@ date-picker {
 }
 
 .date-control {
-    display:  inline-block;
-    z-index:  auto;
+    display:  inline-flex;
+    min-width: 10.5rem;
     position: relative;
+    z-index:  auto;
+
     input[type="text"] {
         z-index:                    auto;
         max-width:                  11.5rem;
