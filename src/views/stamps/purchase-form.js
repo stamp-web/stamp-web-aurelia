@@ -15,7 +15,6 @@
  */
 import {DialogController} from 'aurelia-dialog';
 import {bindable, LogManager} from 'aurelia-framework';
-import {BindingEngine} from 'aurelia-binding';
 import {NewInstance} from 'aurelia-dependency-injection';
 import {ValidationRules, ValidationController, validateTrigger} from 'aurelia-validation';
 import {I18N} from 'aurelia-i18n';
@@ -33,7 +32,7 @@ export class PurchaseForm {
     @bindable model;
 
     static inject() {
-        return [DialogController, I18N, BindingEngine, Stamps, NewInstance.of(ValidationController)];
+        return [DialogController, I18N, Stamps, NewInstance.of(ValidationController)];
     }
     catalogueTotal = 0.0;
     percentage = 0.0;
@@ -43,10 +42,9 @@ export class PurchaseForm {
     errorMessage = "";
     isValid = false;
 
-    constructor(controller, i18n, bindingEngine, stampService, validationController) {
+    constructor(controller, i18n, stampService, validationController) {
         this.controller = controller;
         this.i18n = i18n;
-        this.bindingEngine = bindingEngine;
         this.stampService = stampService;
         this.validationController = validationController;
         this.validationController.validateTrigger = validateTrigger.manual;

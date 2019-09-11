@@ -16,9 +16,18 @@
                     <div class="price-entry form-group row">
                         <label for="price-paid" class="col-4 col-form-label">${'editor.purchase-total'|t}</label>
                         <div class="col-8 price-paid">
-                            <input type="text" tabindex="0" class="form-control" id="price-paid" autofocus
-                                   value.bind="model.price & validate:rules" keyup.delegate="priceChanged()">
-                            <select-picker items.bind="codes" class="currency-selector purchase-currency" value.bind="model.currency" value-type="String"
+                            <input type="text"
+                                   tabindex="0"
+                                   class="form-control"
+                                   id="price-paid"
+                                   autofocus
+                                   autocomplete="off"
+                                   value.bind="model.price & validate:rules"
+                                   keyup.delegate="priceChanged()">
+                            <select-picker items.bind="codes"
+                                           class="currency-selector purchase-currency"
+                                           value.bind="model.currency"
+                                           value-type="String"
                                            config.bind="{ id: 'currency-code', tabIndex: 0, name: 'code', noSearch: true, allowClear: false, labelProperty: 'description', valueProperty: 'keyName' }">
                             </select-picker>
 
