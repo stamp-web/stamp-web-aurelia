@@ -37,14 +37,17 @@ select-picker {
         .select2-selection__rendered {
             padding-left: $theme-padding-base;
         }
+
+        .select2-selection__clear {
+            color:     $theme-clear-color;
+            top:       -0.4rem;
+            transform: scale(1.5);
+        }
     }
     .select2-search__field {
         color: $theme-text-color;
     }
-    .select2-selection__clear {
-        color: $theme-clear-color;
-        top:   -0.2rem;
-    }
+
     .select2-selection__arrow {
         transform: scale(1.1);
     }

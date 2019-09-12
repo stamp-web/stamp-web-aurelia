@@ -2,21 +2,39 @@
 
 $tooltip-opacity: $theme-tooltip-opacity;
 
-.dropdown-menu {
-    .dropdown-item {
-        &:hover {
-            background-color: $brand-primary;
-            color:            $white;
+.stamp-web-editor {
+    .dropdown-menu {
+        .dropdown-item {
+            &:hover {
+                background-color: $brand-primary;
+                color:            $white;
+            }
         }
     }
-}
 
-.table-hover {
-    tbody {
-        tr {
-            &:hover {
-                background: $white-dark !important;
+    .table-hover {
+        tbody {
+            tr {
+                &:hover {
+                    background: $white-dark !important;
+                }
+            }
+        }
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        border-color: $gray-light;
+        color: $theme-text-color;
+
+
+        &:not(:disabled):not(.disabled) {
+            &.active {
+                background-color: $gray-light;
+                border-color: $gray-light;
+                color: $theme-text-color;
             }
         }
     }
 }
+
