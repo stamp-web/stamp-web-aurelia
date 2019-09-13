@@ -46,7 +46,7 @@ editor-dialog {
             text-align: left;
             font-size: $theme-font-size-sm;
             i {
-                color: $brand-danger;
+                color: $theme-invalid-color;
             }
         }
     }

@@ -3,18 +3,18 @@
 @import "../../../node_modules/bootstrap/scss/mixins";
 
 body {
-	background-color: $gray-500;
+	background-color: $gray-700;
 	overflow-y: hidden;
 }
 
 .splash {
-	background-color: #eee;
-	color: #232323;
+	background-color: $gray-300;
+	color: $gray-900;
 	text-align: center;
 	margin: 10% 0 0 0;
 	box-sizing: border-box;
 	padding: 10px;
-	box-shadow: 10px 4px 30px $gray-700;
+	box-shadow: 10px 4px 30px $gray-900;
 	border-radius: 8px;
 	border: 1px solid #dcdcdc;
 	width: 300px;
@@ -51,7 +51,7 @@ body {
 	}
 	.version {
 		font-size: 0.8em;
-        color: #8888ff;
+        color: $blue;
 		line-height: 18px;
 	}
 	.message {

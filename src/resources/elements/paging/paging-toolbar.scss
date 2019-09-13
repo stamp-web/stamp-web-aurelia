@@ -1,36 +1,28 @@
 @import "../../../theme/_semantic.scss";
 
 paging-toolbar {
+    align-items: center;
+    display: inline-flex;
 
     .paging-component {
-        display: inline-block;
+        align-items: center;
+        display: inline-flex;
         float:   left;
 
         button {
             font-size: $theme-font-size-sm;
         }
+
+        > * {
+            align-items: center;
+            display: inline-flex;
+        }
     }
     div > div {
         display: inline-block;
     }
-    .paging-button {
+    .btn-secondary {
         padding:          $theme-padding-thinner;
-        color:            $theme-active-color;
-        background-color: $theme-active-bg;
-        border-color:     $theme-border;
-        //&:disabled {
-        //    color: @pagination-disabled-color;
-        //    background-color: @pagination-disabled-bg;
-        //    border-color: @pagination-disabled-border;
-        //}
-        &:hover {
-            color:            $theme-active-color;
-            background-color: $theme-active-bg;
-            border-color:     $theme-active-color;
-            &:disabled {
-                color: $theme-active-color;
-            }
-        }
     }
 
     .current-page {
@@ -48,6 +40,8 @@ paging-toolbar {
             }
         }
         input[type="number"] {
+            margin-left: $theme-margin-thin;
+            margin-right: $theme-margin-thin;
             -moz-appearance: textfield;
 
             &::-webkit-inner-spin-button {

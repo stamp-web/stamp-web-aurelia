@@ -12,7 +12,6 @@ export default function processCSS() {
     return gulp.src(project.cssProcessor.source, {sourcemaps: true})
         .pipe(sass({
             includePaths: [
-                bootstrap,
                 theme
             ]
         }).on('error', sass.logError))

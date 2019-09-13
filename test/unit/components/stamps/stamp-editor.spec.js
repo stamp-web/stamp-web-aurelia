@@ -1,5 +1,5 @@
 /**
- Copyright 2017 Jason Drake
+ Copyright 2019 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -70,14 +70,17 @@ describe('StampEditorComponent test suite', () => {
                 rate: '',
                 description: ''
             }
+
+
         });
 
         it('match on same exact catalogue reference', (done) => {
             editor.duplicateModel.catalogueNumbers[0].catalogueRef = 21;
             editor.duplicateModel.catalogueNumbers[0].number = '45a';
-            eventBus.subscribe(EventNames.conflictExists, result => {
+            let sub = eventBus.subscribe(EventNames.conflictExists, result => {
                 expect(result).not.toBe(null);
                 expect(result.conversionModel).not.toBe(null);
+                sub.dispose();
                 done();
             });
             let models = [ _.cloneDeep(editor.duplicateModel) ];
@@ -87,9 +90,10 @@ describe('StampEditorComponent test suite', () => {
         it('match on same catalogue type', (done) => {
             editor.duplicateModel.catalogueNumbers[0].catalogueRef = 21;
             editor.duplicateModel.catalogueNumbers[0].number = '45a';
-            eventBus.subscribe(EventNames.conflictExists, result => {
+            let sub = eventBus.subscribe(EventNames.conflictExists, result => {
                 expect(result).not.toBe(null);
                 expect(result.conversionModel).not.toBe(null);
+                sub.dispose();
                 done();
             });
             let clone = _.cloneDeep( editor.duplicateModel);
@@ -104,13 +108,14 @@ describe('StampEditorComponent test suite', () => {
             editor.duplicateModel.id = 500;
             editor.duplicateModel.catalogueNumbers[0].catalogueRef = 21;
             editor.duplicateModel.catalogueNumbers[0].number = '45a';
-            eventBus.subscribe(EventNames.conflictExists, result => {
+            let sub = eventBus.subscribe(EventNames.conflictExists, result => {
                 fail("Should not have subscribed");
             });
             let clone = _.cloneDeep( editor.duplicateModel);
             let models = [ clone ];
             editor.processExistenceResults(models, editor.duplicateModel.catalogueNumbers[0]);
-            setTimeout( () => {
+            _.delay( () => {
+                sub.dispose();
                 done();
             }, 500);
         });
@@ -120,7 +125,7 @@ describe('StampEditorComponent test suite', () => {
             editor.duplicateModel.id = 500;
             editor.duplicateModel.catalogueNumbers[0].catalogueRef = 21;
             editor.duplicateModel.catalogueNumbers[0].number = '45a';
-            eventBus.subscribe(EventNames.conflictExists, result => {
+            let sub = eventBus.subscribe(EventNames.conflictExists, result => {
                 fail("Should not have subscribed");
             });
             let clone = _.cloneDeep( editor.duplicateModel);
@@ -128,7 +133,8 @@ describe('StampEditorComponent test suite', () => {
 
             let models = [ clone ];
             editor.processExistenceResults(models, editor.duplicateModel.catalogueNumbers[0]);
-            setTimeout( () => {
+            _.delay( () => {
+                sub.dispose();
                 done();
             }, 500);
         });

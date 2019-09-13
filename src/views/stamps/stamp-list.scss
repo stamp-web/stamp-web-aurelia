@@ -7,7 +7,6 @@ $grid-nav-height: 5rem;
     position:   relative;
     padding:    0;
     border-top: $theme-border;
-    top:        $grid-nav-height;
     > .row {
         height: 100%;
         margin: 0;
@@ -20,6 +19,8 @@ $grid-nav-height: 5rem;
 
 
 .input-group.quick-search {
+    display: flex !important;
+
     input.form-control {
         width: auto;
     }
@@ -34,7 +35,6 @@ collapse-panel {
 
 .stamp-grid-nav {
     z-index:       1000;
-    top:           $grid-nav-height;
     height:        $grid-nav-height;
     margin-bottom: 0;
     border-radius: 0;
@@ -88,46 +88,39 @@ collapse-panel {
     }
 }
 
-.navbar.stamp-list-footer {
-    bottom:        0px;
-    position:      absolute;
-    width:         100%;
-    border-radius: 0;
-    border-top:    $theme-border;
-    margin:        $theme-margin-thin 0 0 0;
-    font-size:     $theme-font-size-sm;
+.stamp-list-footer {
+    border-top: $theme-border;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    font-size: $theme-font-size-sm;
+    padding: 0 $theme-padding-base;
+    margin:  $theme-margin-thin 0 0 0;
+    width: 100%;
 
     .form-control {
         height: $theme-input-height;
     }
 
-    .pagination {
-        display: block;
-        margin:  0;
+    > * {
+        flex: 0 1 auto;
+    }
+
+    paging-toolbar {
+        flex-grow: 1;
     }
 
     .report-statistics {
-        float:        right;
         margin-right: $theme-margin-thick;
-        display:      inline-block;
+        display:      inline-flex;
+
+        .btn-group {
+            align-items: center;
+        }
         .statistics-button {
             padding:    $theme-padding-thinner;
             font-size:  $theme-font-size-sm;
-            &.active {
-                background-color: $theme-active-bg;
-                color:            $theme-active-color;
-            }
-            &:focus {
-                outline: none;
-            }
 
-            &:hover {
-                color:            $theme-active-color;
-                background-color: lighten($theme-active-bg,10%);
-                &:disabled {
-                    color: $theme-active-color;
-                }
-            }
         }
         .value-display {
             border:           $theme-border;
@@ -139,6 +132,32 @@ collapse-panel {
             background-color: $theme-panel-bg;
             padding:          0 0.5rem;
             font-size:        $theme-font-size-sm;
+        }
+    }
+
+    .stat-info {
+        display: flex;
+        height: $theme-input-height;
+        justify-self: right;
+
+        * {
+            flex: 1 1 auto;
+        }
+
+        > div {
+            align-items: center;
+            display: flex;
+            flex-wrap: nowrap;
+
+            * {
+                align-items: center;
+                display: inline-flex;
+                height: $theme-input-height;
+            }
+
+            &:first-child {
+                margin-right: $theme-margin-base;
+            }
         }
     }
 
@@ -161,19 +180,6 @@ collapse-panel {
         top:      0.7rem;
         position: relative;
     }
-}
-
-.results-group {
-    float:       right;
-    line-height: $theme-input-height;
-    position:    relative;
-}
-
-.selection-group {
-    margin-right: $theme-margin-base;
-    line-height:  $theme-input-height;
-    position:     relative;
-    float:        right;
 }
 
 .sw-editor-container {

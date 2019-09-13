@@ -56,7 +56,7 @@ export class OwnershipNotesCustomElement {
     getPopupText() {
         let text = '';
         if( this.hasDefects) {
-            let values = EnumeratedTypeHelper.asArray( Defects, this.model.defects );
+            let values = EnumeratedTypeHelper.asEnumArray( Defects, this.model.defects );
             let dText = '';
             if( values && values.length > 0 ) {
                 _.forEach( values, (val, index) => {
@@ -67,7 +67,7 @@ export class OwnershipNotesCustomElement {
             text += '<label class="tooltip-label">' + this.i18n.tr('tooltip.defects') + '</label>' + dText;
         }
         if( this.hasDeception) {
-            let values = EnumeratedTypeHelper.asArray( Deceptions, this.model.deception );
+            let values = EnumeratedTypeHelper.asEnumArray( Deceptions, this.model.deception );
             let dText = '';
             if( values && values.length > 0 ) {
                 _.forEach( values, (val, index) => {

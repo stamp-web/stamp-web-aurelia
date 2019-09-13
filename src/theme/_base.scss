@@ -32,7 +32,12 @@ button {
 }
 
 th {
-    background-color: $gray-lighter;
+    background-color: $table-head-bg;
+}
+
+
+:focus {
+    outline: transparent auto 1px;
 }
 
 /**
@@ -61,7 +66,7 @@ th {
 
 .form-group.has-error {
     .validation-message {
-        color: $brand-danger;
+        color: $theme-invalid-color;
     }
     .help-block {
         vertical-align: middle;

@@ -2,15 +2,18 @@
 
 $tooltip-opacity: $theme-tooltip-opacity;
 
+////////////////////////////////////////////////////////////////////
+// Bootstrap variables for components
+////////////////////////////////////////////////////////////////////
+$navbar-brand-font-size: $theme-font-size-xx-large;
+$navbar-brand-height: 4.4rem;
+$card-color: $body-color;
+$card-bg: $body-bg;
+$dropdown-link-hover-color: $body-bg;
+$dropdown-link-hover-bg: theme-color("primary");
+
+
 .stamp-web-editor {
-    .dropdown-menu {
-        .dropdown-item {
-            &:hover {
-                background-color: $brand-primary;
-                color:            $white;
-            }
-        }
-    }
 
     .table-hover {
         tbody {
@@ -23,14 +26,12 @@ $tooltip-opacity: $theme-tooltip-opacity;
     }
 
     .btn-secondary {
-        background-color: transparent;
         border-color: $gray-light;
         color: $theme-text-color;
 
 
         &:not(:disabled):not(.disabled) {
             &.active {
-                background-color: $gray-light;
                 border-color: $gray-light;
                 color: $theme-text-color;
             }

@@ -16,18 +16,18 @@
 		<form class="navbar-form" role="search">
 			<div class="btn-toolbar" role="toolbar">
 				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-secondary hidden-sm-down" title="${'nav.new-stamp'|t}" click.trigger="showEditor('create-stamp')">
+					<button type="button" class="btn btn-secondary d-none d-md-block" title="${'nav.new-stamp'|t}" click.trigger="showEditor('create-stamp')">
 						<span class="sw-icon-plus"></span>
 					</button>
                     <button class="btn btn-secondary" title="${'nav.search'|t}" click.trigger="showEditor('search-panel')">
                         <span class="sw-icon-search"></span>
                     </button>
-                    <button class="btn btn-secondary hidden-sm-down ${selectedCount > 0 ? '' : 'disabled'}" title="${'actions.purchase'|t}" click.delegate="purchase()">
+                    <button class="btn btn-secondary d-none d-md-block ${selectedCount > 0 ? '' : 'disabled'}" title="${'actions.purchase'|t}" click.delegate="purchase()">
                         <span class="sw-icon-purchased"></span>
                     </button>
 				</div>
 
-                <div class="btn-group hidden-sm-down" role="group">
+                <div class="btn-group d-none d-md-block" role="group">
                     <button type="button" class="btn btn-secondary" title="${'nav.select-all'|t}" click.trigger="selectAll(true)">
                         <span class="sw-icon-select-all"></span>
                     </button>
@@ -36,7 +36,7 @@
                     </button>
                 </div>
 
-                <div class="btn-group input-group quick-search hidden-md-down" role="group">
+                <div class="btn-group input-group quick-search d-none d-lg-block" role="group">
                     <input type="text" find-target class="form-control" value.two-way="searchText" placeholder="Search" keydown.trigger="processKeyFilter($event)">
                     <button class="btn btn-secondary" title="Search" click.delegate="sendSearch()">
                         <span class="sw-icon-filter"></span>
@@ -53,18 +53,18 @@
 					<button class="btn btn-secondary ${ displayMode === 'List' ? 'active' : ''}" title="${'actions.show-as-table'|t}" click.trigger="setDisplayMode('List')">
 						<span class="sw-icon-list"></span>
 					</button>
-                    <button class="btn btn-secondary hidden-sm-down ${ displayMode === 'Upgrade' ? 'active' : ''}" title="${'actions.show-as-upgrade'|t}" click.trigger="setDisplayMode('Upgrade')">
+                    <button class="btn btn-secondary d-none d-md-block ${ displayMode === 'Upgrade' ? 'active' : ''}" title="${'actions.show-as-upgrade'|t}" click.trigger="setDisplayMode('Upgrade')">
                         <span class="sw-icon-exchange"></span>
                     </button>
-                    <button class="btn btn-secondary hidden-sm-down" title="${'actions.print'|t}" click.trigger="print()">
+                    <button class="btn btn-secondary d-none d-md-block" title="${'actions.print'|t}" click.trigger="print()">
                         <span class="sw-icon-print"></span>
                     </button>
-                    <button class="btn btn-secondary hidden-sm-down ${ referenceTableState }" disabled.bind="referenceTableState === 'disabled'" title="${'actions.show-reference-cataloguenumbers'|t}" click.delegate="toggleCatalogueNumbers()">
+                    <button class="btn btn-secondary d-none d-md-block ${ referenceTableState }" disabled.bind="referenceTableState === 'disabled'" title="${'actions.show-reference-cataloguenumbers'|t}" click.delegate="toggleCatalogueNumbers()">
                         <span class="sw-icon-references"></span>
                     </button>
 				</div>
 
-				<div class="btn-group sort-actions hidden-sm-down" role="group">
+				<div class="btn-group sort-actions d-none d-md-block" role="group">
                     <div class="dropdown">
                         <button type="button" class="btn btn-secondary dropdown-toggle sort-selector" data-toggle="dropdown">
                             <span class="selector-text">${'sort.' + options.sort|t | defaultValue:'sort.placeholder'|t}</span>
@@ -82,7 +82,7 @@
 					</button>
 				</div>
 
-                <div class="dropdown hidden-md-down btn-group">
+                <div class="dropdown d-none d-lg-block btn-group">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="selector-text">${getFilterText(stampFilter)|t | defaultValue:'filters.filter'|t}</span>
                         <span class="caret"></span>
@@ -91,7 +91,7 @@
                         <li class="dropdown-item" repeat.for="filter of filters" click.trigger="setFilter($index)">${getFilterText(filter)|t}</li>
                     </ul>
                 </div>
-                <div class="dropdown hidden-md-down btn-group">
+                <div class="dropdown d-none d-xl-block btn-group">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="selector-text">${getFilterText(conditionFilter)|t | defaultValue:'conditionFilters.ALL_STAMPS'|t}</span>
                         <span class="caret"></span>
@@ -100,7 +100,7 @@
                         <li class="dropdown-item" repeat.for="filter of conditionFilters" click.trigger="setConditionFilter($index)">${getFilterText(filter)|t}</li>
                     </ul>
                 </div>
-                <div class="dropdown hidden-md-down">
+                <div class="dropdown d-none d-xl-block">
                     <button type="button" class="btn btn-secondary dropdown-toggle result-size-selector" data-toggle="dropdown">
                         <span class="selector-text">${options.$top | defaultValue:'actions.page-size'|t}</span>
                     </button>
@@ -132,18 +132,9 @@
 		</div>
 	</div>
 	<image-preview image.bind="fullSizeImage" shown.bind="imageShown" bounds-selector=".stamp-content"></image-preview>
-	<nav class="navbar navbar-default stamp-list-footer">
-		<form class="navbar-form" role="footer">
+	<div class="stamp-list-footer">
             <paging-toolbar page.bind="pageInfo.active" total.bind="pageInfo.total"></paging-toolbar>
-            <div class="btn-toolbar" role="toolbar">
-                <div class="results-group">
-                    ${'footer.total'|t}: <span>${pageInfo.active * options.$top + 1} - ${pageInfo.active * options.$top + stamps.length}</span> of <span>${stampCount}</span>
-                </div>
-                <div class="selection-group">
-                    ${'footer.totalSelected'|t}: <span>${selectedCount}</span>
-                </div>
-            </div>
-            <div class="report-statistics hidden-xs" role="group">
+            <div class="report-statistics" role="group">
                 <div class="btn-group">
                     <button class="btn btn-secondary statistics-button ${(reportType==='CatalogueValue') ? 'active' : ''}" title="${'footer-statistics.catalogue-value'|t}" click.trigger="setStatistics('CatalogueValue')" role="button">
                         <span class="sw-icon-catalogue"></span>
@@ -156,11 +147,16 @@
                     </button>
                     <input class="value-display" value.bind="reportValue" readonly role="status">
                 </div>
-
             </div>
-
-		</form>
-	</nav>
+            <div class="stat-info">
+                <div class="results-group">
+                    ${'footer.total'|t}: ${pageInfo.active * options.$top + 1} - ${pageInfo.active * options.$top + stamps.length} of ${stampCount}
+                </div>
+                <div class="selection-group">
+                    ${'footer.totalSelected'|t}: ${selectedCount}
+                </div>
+            </div>
+	</div>
 
 
 </template>

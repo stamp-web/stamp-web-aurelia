@@ -1,44 +1,31 @@
 <template>
     <require from="resources/elements/nav/nav-bar.css"></require>
 
-	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top app-bar" role="navigation">
-        <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse"
-                data-target="#navbar-items">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+	<nav class="navbar navbar-dark bg-primary navbar-expand-lg navbar-expand-md">
         <a class="navbar-brand" href="#">
             <span class="app-icon-stampweb"></span>
-            <span>${router.title|t}</span>
+            ${router.title|t}
         </a>
-		<div class="navbar-collapse collapse" id="navbar-items">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbar-items" aria-controls="navbarText" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+		<div class="collapse navbar-collapse" id="navbar-items">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
 					<a class="nav-link" href="#/settings">
-                        <span class="hidden-sm-down">
+                        <span class="d-none d-md-block">
                             <span class="sw-icon-settings" title="${'nav.settings'|t}"></span>
                         </span>
-                        <span class="hidden-md-up"> ${'nav.settings'|t}</span>
+                        <span class="d-md-none"> ${'nav.settings'|t}</span>
                     </a>
 				</li>
 				<li repeat.for="row of router.navigation" class="nav-item ${row.isActive ? 'active' : ''}">
 					<a class="nav-link" href.bind="row.href">${row.title|t}</a>
 				</li>
 			</ul>
-            <!-- <ul class="nav navbar-nav navbar-right">
-                <li role="presentation">
-                    <a href="http://www.drakeserver.com/javaws/tools/stamp-imageparsing.jnlp" title="${'nav.image-burst'|t}">
-                        <span class="hidden-xs sw-icon-imageburst"></span>
-                        <span class="visible-xs">${'nav.image-burst'|t}</span>
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="http://www.drakeserver.com/javaws/tools/stamp-pagegen.jnlp" title="${'nav.page-gen'|t}">
-                        <span class="hidden-xs sw-icon-catalogue sw-icon-pagegen"></span>
-                        <span class="visible-xs">${'nav.page-gen'|t}</span>
-                    </a>
-                </li>
-            </ul>
-            -->
 		</div>
 	</nav>
 </template>

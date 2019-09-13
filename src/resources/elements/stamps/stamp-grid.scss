@@ -6,12 +6,11 @@ stamp-grid {
     flex-direction:   row;
     align-content:    stretch;
 
-    background-color: $theme-panel-contrast-bg;
-
     .sw-stamp-grid {
         flex:     1;
         position: relative;
         .scroller {
+            background-color: $theme-panel-contrast-bg;
             position:   absolute;
             width:      100%;
             height:     100%;
