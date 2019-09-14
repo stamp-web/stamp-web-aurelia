@@ -101,6 +101,8 @@ $theme-padding-input: 0.15rem !default;
 $theme-border-color: theme-color("secondary") !default;
 $theme-border-radius: $border-radius !default;
 $theme-border: 1px solid $theme-border-color !default;
+$theme-border-disabled: 1px solid theme-color("disabled");
+$theme-btn-border: 1px solid theme-color("disabled");
 
 $theme-active-color:    theme-color("light") !default;
 $theme-active-bg:       theme-color("primary") !default;
@@ -119,13 +121,11 @@ $theme-input-height: 2.8rem !default;
 
 
 // Navbar
-
 $theme-appbar-color: theme-color("light");
 $theme-appbar-bg: theme-color("primary");
 
 
 // Pills
-
 $theme-pill-color-bg: $gray-200;
 
 // Tooltips

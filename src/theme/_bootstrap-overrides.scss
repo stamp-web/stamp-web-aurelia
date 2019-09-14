@@ -26,15 +26,25 @@ $dropdown-link-hover-bg: theme-color("primary");
     }
 
     .btn-secondary {
-        border-color: $gray-light;
+        border: $theme-btn-border;
         color: $theme-text-color;
 
 
         &:not(:disabled):not(.disabled) {
-            &.active {
-                border-color: $gray-light;
+            &.active, &:active {
+                border: $theme-btn-border;
                 color: $theme-text-color;
+
+                &:focus {
+                    box-shadow: none;
+                }
             }
+            &:focus, &.focus {
+                box-shadow: none;
+            }
+        }
+        &:disabled, &.disabled, &.hover, &:hover {
+            border: $theme-btn-border;
         }
     }
 }

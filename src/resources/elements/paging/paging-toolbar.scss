@@ -25,6 +25,10 @@ paging-toolbar {
         padding:          $theme-padding-thinner;
     }
 
+    .refresh-page {
+        margin-left: $theme-margin-thin;
+    }
+
     .current-page {
         position:  relative;
         padding:   0 0.5rem;
@@ -42,12 +46,6 @@ paging-toolbar {
         input[type="number"] {
             margin-left: $theme-margin-thin;
             margin-right: $theme-margin-thin;
-            -moz-appearance: textfield;
-
-            &::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
         }
     }
 }

@@ -9,6 +9,12 @@ input[type="text"],
 input[type='number'] {
     height:    $theme-input-height;
     font-size: $theme-font-size-sm;
+    -moz-appearance: textfield;
+
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 }
 
 input[type="checkbox"] {
