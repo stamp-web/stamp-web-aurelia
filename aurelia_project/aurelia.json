@@ -12,24 +12,23 @@
         "fileExtension": ".js",
         "options": {
             "plugins": [
-                "transform-es2015-modules-amd"
+                "@babel/plugin-transform-modules-amd"
             ]
         },
         "source": "src/**/*.js"
     },
     "markupProcessor": {
-        "id": "none",
-        "displayName": "None",
-        "fileExtension": ".html",
-        "source": "src/**/*.html"
+        "source": ["src/**/*.html"]
     },
     "cssProcessor": {
-        "id": "sass",
-        "displayName": "Sass",
-        "fileExtension": ".scss",
         "source": [
             "src/**/*.scss",
             "!src/static/**/*.scss"
+        ]
+    },
+    "jsonProcessor": {
+        "source": [
+            "src/**/*.json"
         ]
     },
     "editor": {
@@ -40,6 +39,14 @@
         "id": "karma",
         "displayName": "Karma",
         "source": "test/unit/**/*.js"
+    },
+    "platform": {
+        "port": 9000,
+        "host": "localhost",
+        "open": false,
+        "index": "index.html",
+        "baseDir": ".",
+        "output": "scripts"
     },
     "paths": {
         "root": "src",
@@ -57,8 +64,7 @@
     "build": {
         "targets": [
             {
-                "id": "web",
-                "displayName": "Web",
+                "baseDir": ".",
                 "output": "scripts"
             }
         ],
@@ -73,13 +79,15 @@
                         ".html",
                         ".css"
                     ],
-                    "stub": true
+                    "stub": false
                 }
             ]
         },
         "options": {
             "minify": "stage & prod",
-            "sourcemaps": ""
+            "sourcemaps": "dev & stage",
+            "rev": "prod",
+            "cache": "dev & stage"
         },
         "bundles": [
             {
@@ -88,12 +96,6 @@
                     "[**/*.js]",
                     "[**/*.{css,html}]",
                     "![**/theme/*.css]"
-                ]
-            },
-            {
-                "name": "bootstrap-theme.js",
-                "source": [
-                    "[**/theme/*.css]"
                 ]
             },
             {
@@ -114,29 +116,12 @@
                         "path": "../node_modules/popper.js/dist/umd",
                         "main": "popper.js"
                     },
-                    "aurelia-binding",
                     "aurelia-bootstrapper",
-                    "aurelia-dependency-injection",
-                    "aurelia-event-aggregator",
-                    "aurelia-framework",
-                    "aurelia-history",
                     "aurelia-history-browser",
-                    "aurelia-http-client",
-                    "aurelia-loader",
                     "aurelia-loader-default",
-                    "aurelia-logging",
                     "aurelia-logging-console",
-                    "aurelia-metadata",
-                    "aurelia-pal",
                     "aurelia-pal-browser",
-                    "aurelia-path",
-                    "aurelia-polyfills",
-                    "aurelia-route-recognizer",
-                    "aurelia-router",
-                    "aurelia-task-queue",
-                    "aurelia-templating",
                     "aurelia-templating-binding",
-                    "aurelia-ui-virtualization",
                     "text",
                     {
                         "name": "aurelia-dialog",

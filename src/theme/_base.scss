@@ -1,5 +1,5 @@
-@import 'bootstrap-overrides';
 @import 'semantic';
+@import 'bootstrap-overrides';
 
 html {
     font-size: 10px;
@@ -9,6 +9,12 @@ input[type="text"],
 input[type='number'] {
     height:    $theme-input-height;
     font-size: $theme-font-size-sm;
+    -moz-appearance: textfield;
+
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 }
 
 input[type="checkbox"] {
@@ -32,7 +38,12 @@ button {
 }
 
 th {
-    background-color: $gray-lighter;
+    background-color: $table-head-bg;
+}
+
+
+:focus {
+    outline: transparent auto 1px;
 }
 
 /**
@@ -61,7 +72,7 @@ th {
 
 .form-group.has-error {
     .validation-message {
-        color: $brand-danger;
+        color: $theme-invalid-color;
     }
     .help-block {
         vertical-align: middle;

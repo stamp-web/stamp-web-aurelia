@@ -25,10 +25,6 @@ stamp-card {
             background: transparent;
         }
 
-        &::-moz-selection {
-            background: transparent;
-        }
-
         &:first-child {
             margin-left: 0;
         }
@@ -49,7 +45,7 @@ stamp-card {
             margin:           $theme-margin-base;
             height:           $thumbnail-height - 2 * $theme-margin-base;
             width:            calc(100% - #{$theme-margin-base * 2});
-            background-color: $gray-dark;
+            background-color: $gray-900;
             border-radius:    $theme-border-radius;
             position:         relative;
             img {

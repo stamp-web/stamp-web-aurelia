@@ -58,7 +58,6 @@ let refresh = gulp.series(
 );
 
 let refreshCSS = gulp.series(
-    processCSS,
     build,
     reload
 );

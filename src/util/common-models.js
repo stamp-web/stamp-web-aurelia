@@ -326,7 +326,7 @@ var determineShiftedValues = (total, highestValue) => {
 
 export var EnumeratedTypeHelper = function () {
     return {
-        asArray: (type, value) => {
+        asEnumArray: (type, value) => {
             if( value === undefined ) {
                 return [];
             }

@@ -1,9 +1,42 @@
 // Variables
 // --------------------------------------------------
-
-@import 'color-mappings';
 @import 'mixins';
-@import '../../node_modules/bootstrap/scss/variables';
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+
+$red:                   #d9534f;
+$orange:                #f0ad4e;
+$blue:                  #337ab7;
+$green:                 #2b9b5f;
+$white:                 #fff;
+$white-black:           #f0f0f0;
+$white-dark:            #f9f9f9;
+$white-medium:          #fdfdfd;
+$gray-light:            #ccc;
+$gray-lighter:          #eee;
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Bootstrap variable overrides - Globals
+//
+///////////////////////////////////////////////////////////////////////////////
+$theme-colors: (
+                   "info": lighten($blue, 35%),
+                   "warning": $orange,
+                   "primary": $blue,
+                   "secondary": $gray-300,
+                   "disabled": $gray-600,
+    "success": $green
+               );
+
+$body-bg: $white;
+$body-color: $gray-800;
+
+
+$progress-color: lighten(theme-color("success"), 15%);
+$progress-working:  $white;
 
 
 //== Colors
@@ -11,45 +44,22 @@
 //## Gray and brand colors for use across Bootstrap.
 
 
-$gray-base:              #000;
-$gray-darker:            lighten($gray-base, 13.5%); // #222
-$gray-dark:              lighten($gray-base, 20%);   // #333
-
-$brand-primary:         $blue !default; //darken(#428bca, 2.5%); // #337ab7
-$brand-success:         $green !default;
-$brand-info:            $blue-bright !default;
-$brand-warning:         $orange !default;
-$brand-danger:          $red !default;
-
+$brand-primary: theme-color("primary") !default; //darken(#428bca, 2.5%); // #337ab7
 
 $line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
 
 
-//== Scaffolding
-//
-//## Settings for some of the most global styles.
-
-//** Background color for `<body>`.
-$body-bg:               $white !default;
-//** Global text color on `<body>`.
-$text-color:            $gray-dark !default;
-
-//** Global textual link color.
-$link-color:            $brand-primary !default;
-//** Link hover color set via `darken()` function.
-$link-hover-color:      darken($link-color, 15%);
-//** Link hover decoration.
+$link-color: theme-color("primary") !default;
+$link-hover-color: darken($link-color, 15%);
 $link-hover-decoration: underline;
 
-$theme-warning-color: $brand-warning;
-$theme-invalid-color: $brand-danger;
-$theme-success-color: $brand-success !default;
+$theme-warning-color: theme-color("warning");
+$theme-invalid-color: theme-color("danger");
+$theme-success-color: theme-color("success") !default;
 
 $theme-link-color: $link-color !default;
 
-$theme-panel-header-bg: $white-dark !default;
-
-$theme-image-bg: $gray-dark !default;
+$theme-image-bg: theme-color("dark") !default;
 
 //== Typography
 //
@@ -59,18 +69,18 @@ $theme-font-size-xs: $theme-font-size-base * 0.71; // ~ 10px
 $theme-font-size-sm: $theme-font-size-base * 0.875; // ~ 12px
 $theme-font-size-large: $theme-font-size-base * 1.14; // ~ 16px
 $theme-font-size-x-large: $theme-font-size-base * 1.25; // ~ 17.5px
+$theme-font-size-xx-large: $theme-font-size-base * 1.35; // ~ 19px
 
-$theme-text-color: $text-color !default;
-$theme-text-disabled-color: $gray-light !default;
+$theme-text-color: $body-color !default;
+$theme-text-disabled-color: theme-color("disabled") !default;
 
-$theme-focus-color: $brand-info !default;
-$theme-highlight-color: $green-pale !default;
+$theme-focus-color: theme-color("info") !default;
+$theme-highlight-color: darken(theme-color("info"), 5%) !default;
 $theme-clear-color: $red !default;
 
-$theme-panel-bg: $body-bg !default;
-$theme-panel-contrast-bg: $white-dark !default;
-
-$theme-btn-primary-color: $brand-primary !default;
+$theme-panel-bg: $body-bg;
+$theme-panel-contrast-bg: darken($theme-panel-bg, 3%) !default;
+$theme-panel-header-bg: $gray-100 !default;
 
 $theme-badge-color: $theme-text-color;
 
@@ -88,47 +98,40 @@ $theme-padding-thin: 0.5rem !default;
 $theme-padding-thinner: 0.2rem !default;
 $theme-padding-input: 0.15rem !default;
 
-$theme-border-color: $gray-light !default;
+$theme-border-color: theme-color("secondary") !default;
 $theme-border-radius: $border-radius !default;
 $theme-border: 1px solid $theme-border-color !default;
+$theme-border-disabled: 1px solid theme-color("disabled");
+$theme-btn-border: 1px solid theme-color("disabled");
 
-//** Global color for active items (e.g., navs or dropdowns).
-$theme-active-color:    $white !default;
-//** Global background color for active items (e.g., navs or dropdowns).
-$theme-active-bg:       $brand-primary !default;
+$theme-active-color:    theme-color("light") !default;
+$theme-active-bg:       theme-color("primary") !default;
 
-$theme-action-color: $brand-info !default;
+$theme-action-color: theme-color("info") !default;
 
-$theme-table-selected-bg: $blue-pale !default;
+$theme-table-selected-bg: $theme-highlight-color !default;
 
-$theme-success-color: $green !default;
+$theme-success-color: theme-color("success") !default;
 
-//== Forms
-$theme-form-title-color: $blue !default;
-$theme-input-border-color: $gray-light !default;
-$theme-input-color: $gray !default;
+// Forms
+$theme-form-title-color: theme-color("primary") !default;
+$theme-input-border-color: $input-border-color !default;
+$theme-input-color: $input-color !default;
 $theme-input-height: 2.8rem !default;
 
 
-////== Navbar
+// Navbar
+$theme-appbar-color: theme-color("light");
+$theme-appbar-bg: theme-color("primary");
 
-$theme-appbar-color: $gray-lighter;
-$theme-appbar-bg:    $brand-primary;
 
+// Pills
+$theme-pill-color-bg: $gray-200;
 
-////== Pills
-
-$theme-pill-color-bg: $white-black;
-
-////== Tooltips
-//$tooltip-max-width:           250px;
-//$theme-tooltip-color: $text-color !default;
-//$theme-tooltip-bg: $cream !default;
+// Tooltips
 $theme-tooltip-opacity: 0.98 !default;
 $theme-tooltip-arrow-width: 0.5rem !default;
 
-////== Thumbnails
-$theme-thumbnail-padding:           0.4rem;
-
-
+// Thumbnails
+$theme-thumbnail-padding: 0.4rem;
 

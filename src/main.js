@@ -125,8 +125,7 @@ function initialize( aurelia, lang ) {
                 aurelia.setupI18NFinished = true;
                 setRoot(aurelia);
             });
-        })
-        .plugin('aurelia-ui-virtualization');
+        });
     if (environment.debug) {
         aurelia.use.developmentLogging();
     }

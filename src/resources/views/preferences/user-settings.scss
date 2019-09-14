@@ -59,12 +59,12 @@ $top-header-height: 5.6rem;
         .list-group-item {
             &:hover {
                 background-color: lighten($list-group-active-bg, 25%);
-                color:            $list-group-active-text-color;
+                color:            $list-group-action-active-color;
                 cursor:           pointer;
             }
             &.selected {
                 background-color: $list-group-active-bg;
-                color:            $list-group-active-text-color;
+                color:            $list-group-action-active-color;
                 cursor:           default;
             }
         }
