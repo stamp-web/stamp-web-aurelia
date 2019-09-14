@@ -1,10 +1,7 @@
 node_modules
 .idea
 .DS_STORE
-scripts/app-bundle*
-scripts/bootstrap-theme.js
-scripts/dep-bundle.js
-scripts/vendor-bundle.js
+scripts/**/*.js
 resources/css/splash.css
 resources/css/print.css
 *.map

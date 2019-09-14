@@ -4,7 +4,8 @@
     "platform": {
         "id": "web",
         "displayName": "Web",
-        "output": "scripts"
+        "output": "scripts",
+        "index": "index.html"
     },
     "transpiler": {
         "id": "babel",
@@ -65,7 +66,8 @@
         "targets": [
             {
                 "baseDir": ".",
-                "output": "scripts"
+                "output": "scripts",
+                "index": "index.html"
             }
         ],
         "loader": {
