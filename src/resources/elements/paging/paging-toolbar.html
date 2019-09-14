@@ -24,8 +24,7 @@
                    change.delegate="validatePage()"
                    keyup.delegate="filterKey($event)"
                    disabled.bind="total < 1"
-                   value.bind="page | zeroBased" /
-            > of ${total}
+                   value.bind="page | zeroBased"> of ${total}
         </div>
         <div class="btn-group" role="group">
             <button class="btn btn-secondary next-page" aria-label="Next" title="Show the next page" click.trigger="selectPage(page + 1)" disabled.bind="page + 1 >= total">

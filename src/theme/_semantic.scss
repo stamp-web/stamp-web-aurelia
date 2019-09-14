@@ -23,12 +23,14 @@ $gray-lighter:          #eee;
 //
 ///////////////////////////////////////////////////////////////////////////////
 $theme-colors: (
+                   "danger": $red,
                    "info": lighten($blue, 35%),
+                   "light": $gray-300,
                    "warning": $orange,
                    "primary": $blue,
                    "secondary": $gray-300,
                    "disabled": $gray-600,
-    "success": $green
+                   "success": $green
                );
 
 $body-bg: $white;
@@ -111,6 +113,8 @@ $theme-action-color: theme-color("info") !default;
 
 $theme-table-selected-bg: $theme-highlight-color !default;
 
+$theme-modal-bg: $gray-600;
+
 $theme-success-color: theme-color("success") !default;
 
 // Forms
@@ -121,7 +125,7 @@ $theme-input-height: 2.8rem !default;
 
 
 // Navbar
-$theme-appbar-color: theme-color("light");
+$theme-appbar-color: $body-bg;
 $theme-appbar-bg: theme-color("primary");
 
 

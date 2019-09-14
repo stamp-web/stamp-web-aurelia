@@ -23,6 +23,11 @@ $dropdown-link-hover-bg: theme-color("primary");
                 }
             }
         }
+
+        td.d-md-block, th.d-md-block,
+        td.d-lg-block, th.d-lg-block {
+            display: table-cell !important;
+        }
     }
 
     .btn-secondary {

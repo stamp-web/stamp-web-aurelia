@@ -10,13 +10,13 @@
     <table class="table table-condensed table-hover stamp-table">
         <thead>
             <tr>
-                <th class="image-col hidden-sm-down" title="${'table.image|t}">&nbsp;</th>
+                <th class="image-col d-none d-md-block" title="${'table.image|t}">&nbsp;</th>
                 <th>${'table.country'|t}</th>
                 <th>${'table.description'|t}</th>
                 <th>${'table.catalogue-number'|t}</th>
                 <th>${'table.catalogue-value'|t}</th>
-                <th class="icon-col hidden-sm-down" title="${'table.certification'|t}">&nbsp;</th> <!-- cert -->
-                <th class="icon-col hidden-sm-down" title="${'table.notes'|t}">&nbsp;</th> <!-- notes -->
+                <th class="icon-col d-none d-md-block" title="${'table.certification'|t}">&nbsp;</th> <!-- cert -->
+                <th class="icon-col d-none d-md-block" title="${'table.notes'|t}">&nbsp;</th> <!-- notes -->
                 <th>${'table.condition'|t}</th>
                 <th>${'table.grade'|t}</th>
                 <th>${'table.price-paid'|t}</th>
@@ -26,7 +26,7 @@
             <tr repeat.for="stamp of models" class="${stamp.selected ? 'selected' : ''} ${stamp.id === $parent.lastSelected.id ? 'highlight' : ''}"
                 dblclick.trigger="edit(stamp)"
                 click.trigger="toggleSelection($event, stamp)">
-                <td class="image-col hidden-sm-down">
+                <td class="image-col d-none d-md-block">
                     <div class="stamp-thumbnail">
                         <img if.bind="!stamp.wantList" src.one-way="getImagePath(stamp)" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event,stamp)"/>
                     </div>
@@ -35,8 +35,8 @@
                 <td class="col-md-4">${ stamp.rate + ' ' + stamp.description }</td>
                 <td class="col-md-1">${ getActiveCatalogueNumber(stamp).number }</td>
                 <td class="col-md-1">${ getActiveCatalogueNumber(stamp).value|asCurrencyFormatted:getCurrencyCode(getActiveCatalogueNumber(stamp)) }</td>
-                <td class="icon-col hidden-sm-down"><ownership-cert model.one-way="getOwnership(stamp)"></ownership-cert></td>
-                <td class="icon-col hidden-sm-down"><ownership-notes model.one-way="getOwnership(stamp)"></ownership-notes></td>
+                <td class="icon-col d-none d-md-block"><ownership-cert model.one-way="getOwnership(stamp)"></ownership-cert></td>
+                <td class="icon-col d-none d-md-block"><ownership-notes model.one-way="getOwnership(stamp)"></ownership-notes></td>
                 <td class="col-md-1">${ getOwnership(stamp).condition|asEnum:'Condition'|t }</td>
                 <td class="col-md-1">${ getOwnership(stamp).grade|asEnum:'Grade'|t }</td>
                 <td class="col-md-1">${ getOwnership(stamp).pricePaid|asCurrencyFormatted:getOwnership(stamp).code }</td>

@@ -7,7 +7,6 @@ $top-header-height: 5.6rem;
     flex-direction: column;
     height:         100%;
     position:       relative;
-    top:            $top-header-height;
     overflow:       auto;
     background:     $theme-panel-contrast-bg;
 
@@ -18,12 +17,20 @@ $top-header-height: 5.6rem;
         background: $theme-panel-bg;
         .nav-tabs {
             width: 100%;
-            .nav-link.active {
-                top:           $theme-padding-thinner;
-                position:      relative;
-                background:    $theme-panel-contrast-bg;
-                border-bottom: none;
+            .nav-link {
+                .active {
+                    position:      relative;
+                    background:    $theme-panel-contrast-bg;
+                    border-bottom: none;
+                    padding-bottom: $theme-padding-base;
+                }
+
+                .focus, &:hover {
+                    border-color: transparent;
+                }
             }
+
+
         }
     }
     .user-settings-content {
@@ -38,6 +45,7 @@ $top-header-height: 5.6rem;
 
             .card-block {
                 min-width: 50rem;
+                padding: $theme-padding-thick;
 
                 select {
                     font-size: $theme-font-size-sm;
@@ -82,6 +90,10 @@ $top-header-height: 5.6rem;
 
     .editor-buttons {
         margin-top: $theme-margin-thick;
+
+        .btn {
+            font-size: $theme-font-size-base;
+        }
     }
 
 }

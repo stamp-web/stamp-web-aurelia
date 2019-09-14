@@ -56,7 +56,9 @@
                 </div>
             </div>
             <div class="messaging" if.bind="!processing">
-                <i class="sw-icon-attention" show.bind="!isValid"></i> ${'editor.purchase-error'|t}
+                <span show.bind="!isValid">
+                    <i class="sw-icon-attention"></i> ${'editor.purchase-error'|t}
+                </span>
             </div>
             <div class="button-actions">
                 <!---->

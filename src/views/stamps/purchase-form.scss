@@ -74,18 +74,14 @@
 }
 
 ai-dialog-footer {
-    position:         relative;
-    height:           5rem;
+    align-items: center;
+    height: 5rem;
 
     .process-progress, .messaging {
-        width:        60%;
-        display:      inline-block;
-        float:        left;
+        align-items: center;
+        flex: 1 1 auto;
+        display: inline-flex;
         padding-left: $theme-padding-thick;
-        top:          50%;
-        transform:    translate(0, -50%);
-        left:         0;
-        position:     relative;
 
         .progress-bar {
             height: 1.6rem;
@@ -103,14 +99,10 @@ ai-dialog-footer {
     }
 
     .button-actions {
-        position:  relative;
-        right:     $theme-padding-base;
-        bottom:    0;
-        top:       50%;
-        transform: translate(0, -50%);
-        float:     right;
+        flex: 0 0 auto;
+        margin-right: $theme-margin-base;
 
-        button {
+        button.btn {
             margin-left: $theme-margin-thin;
         }
     }

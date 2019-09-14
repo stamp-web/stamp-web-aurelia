@@ -41,7 +41,6 @@ th {
     background-color: $table-head-bg;
 }
 
-
 :focus {
     outline: transparent auto 1px;
 }
@@ -70,15 +69,24 @@ th {
     max-width: 15rem;
 }
 
-.form-group.has-error {
-    .validation-message {
-        color: $theme-invalid-color;
+.form-group {
+    &.has-error {
+        .validation-message {
+            color: $theme-invalid-color;
+        }
+        .help-block {
+            vertical-align: middle;
+            line-height:    $theme-input-height;
+            font-size:      $theme-error-font-size;
+            font-style:     italic;
+        }
     }
-    .help-block {
-        vertical-align: middle;
-        line-height:    $theme-input-height;
-        font-size:      $theme-error-font-size;
-        font-style:     italic;
+}
+
+.form-control {
+    &:focus, &.focus {
+        box-shadow: none !important;
+        border-color: $theme-input-border-color !important;
     }
 }
 
@@ -90,5 +98,10 @@ ai-dialog {
 
 ai-dialog-footer {
     border-top: 0.1rem solid $theme-border-color;
+
+    button.btn {
+        font-size: $theme-font-size-base;
+    }
 }
+
 

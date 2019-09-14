@@ -36,18 +36,16 @@ editor-dialog {
         position: relative;
 
         .messaging {
-            display: inline-block;
-            float: left;
-            padding-left: $theme-padding-base;
-            top: 50%;
-            transform: translate(0,-50%);
-            left: 0;
-            position: absolute;
-            text-align: left;
+            flex: 1 1 auto;
+            
             font-size: $theme-font-size-sm;
             i {
                 color: $theme-invalid-color;
             }
+        }
+
+        button.btn {
+            font-size: $theme-font-size-base;
         }
     }
 

@@ -55,9 +55,20 @@
 }
 
 .manage-list-toolbar {
+    align-items: center;
+    display: flex !important;
     height: 4rem;
-    .col-sm-2, .col-sm-4 {
-        padding-right: 0;
+    margin-bottom: $theme-margin-thin;
+    width: 100%;
+
+    .filter {
+        align-items: center;
+        display: inline-flex;
+        flex: 1 0 auto;
+    }
+
+    .total {
+        flex: 0 1 auto;
     }
 
     input {
@@ -68,44 +79,47 @@
     button {
         width:        3.2rem;
         padding-left: 0.6rem;
-        height:       2.8rem;
+        height:       $theme-input-height;
         font-size:    $theme-font-size-sm;
     }
 
     label {
-        text-align:     right;
-        float:          left;
         padding-right:  $theme-padding-base;
-        vertical-align: middle;
         display:        inline-block;
-        line-height:    $theme-input-height;
-    }
-
-    .total {
-        width: 100%;
-        label {
-            text-align:    right;
-            width:         100%;
-            padding-right: $theme-padding-base * 1.5;
-        }
-
     }
 }
 
 .manage-list {
     background-color: $theme-panel-contrast-bg;
-    height:           calc(100% - #{5.6rem});
-    padding-top:      $theme-padding-base;
-    position:         relative;
-    top:              5.6rem;
+    height:           calc(100% - #{5.4rem});
+    padding: $theme-padding-base;
     font-size:        $theme-font-size-sm;
     overflow-y:       hidden;
     > .row {
         height: 100%;
         > div {
-            height: 100%;
+            height: calc(100% - #{5.6rem});
         }
     }
+
+    .manage-list-content-wrapper {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        width: 100%;
+
+        .entity-contents {
+            width: 26rem;
+        }
+
+        .entity-table {
+            margin-left: $theme-margin-thick;
+            margin-right: $theme-margin-thin;
+            margin-bottom: $theme-margin-thin;
+            width: 100%;
+        }
+    }
+
     .manage-list-contents {
         height:           calc(100% - #{4rem});
         overflow:         auto;

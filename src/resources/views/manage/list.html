@@ -3,18 +3,16 @@
     <require from="../../value-converters/filter-by-name"></require>
     <require from="../../attributes/find-target"></require>
 
-    <div class="manage-list-toolbar hidden-md-down row">
-        <div class="col-sm-10">
-            <form class="form-inline">
+    <div class="manage-list-toolbar d-none d-lg-block">
+        <div class="filter">
                 <label for="filter-text">${'manage.filter'|t}</label>
                 <input id="filter-text" ref="filterInput" find-target class="form-control"
                        placeholder="${'manage.filterPlaceholder'|t}" type="text" value.bind="filterText">
                 <button class="input-group-addon btn" disabled.bind="filterText===''" click.delegate="clear()">
                     <span class="sw-icon-cancel"></span>
                 </button>
-            </form>
         </div>
-        <div class="col-sm-2 hidden-md-down total">
+        <div class="total">
             <label>${'manage.totalResults'|t} ${models.length}</label>
         </div>
     </div>
@@ -22,24 +20,24 @@
         <table class="table table-hover entity-list">
             <thead>
             <tr>
-                <th if.bind="hasIssue" class="hidden-md-down">Issue</th>
+                <th if.bind="hasIssue" class="d-none d-lg-block">Issue</th>
                 <th class="col-name">Name</th>
                 <th class="col-actions">Actions</th>
                 <th class="col-count">Count</th>
-                <th if.bind="hasIssue" class="hidden-md-down">Currency</th>
-                <th class="hidden-md-down">Description</th>
+                <th if.bind="hasIssue" class="d-none d-lg-block">Currency</th>
+                <th class="d-none d-lg-block">Description</th>
             </tr>
             </thead>
             <tbody>
             <tr repeat.for="model of models | filterByName:filterText">
-                <td if.bind="hasIssue" class="hidden-md-down">${model.issue}</td>
+                <td if.bind="hasIssue" class="d-none d-lg-block">${model.issue}</td>
                 <td class="col-name">${model.name}</td>
                 <td>
                     <div class="btn-group actions" role="group">
-                        <button type="button" class="btn btn-secondary edit-action hidden-md-down" click.delegate="edit(model)" data-toggle="modal" data-target="#editorDialog">
+                        <button type="button" class="btn btn-secondary edit-action d-none d-lg-block" click.delegate="edit(model)" data-toggle="modal" data-target="#editorDialog">
                             <span class="sw-icon-edit"></span>
                         </button>
-                        <button type="button" class="btn btn-secondary delete-action hidden-md-down" click.trigger="remove(model)">
+                        <button type="button" class="btn btn-secondary delete-action d-none d-lg-block" click.trigger="remove(model)">
                             <span class="sw-icon-trash"></span>
                         </button>
                         <button type="button" class="btn btn-secondary view-action" title="View stamps for ${model.name}" click.delegate="viewStamps(model)">
@@ -48,8 +46,8 @@
                     </div>
                 </td>
                 <td>${model.stampCount | stampCount}</td>
-                <td if.bind="hasIssue" class="hidden-md-down">${model.code}</td>
-                <td class="hidden-md-down">${model.description}</td>
+                <td if.bind="hasIssue" class="d-none d-lg-block">${model.code}</td>
+                <td class="d-none d-lg-block">${model.description}</td>
             </tr>
             </tbody>
         </table>

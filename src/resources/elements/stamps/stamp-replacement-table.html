@@ -34,9 +34,9 @@
         <table class="table table-sm table-hover stamp-table">
             <thead>
             <tr>
-                <th class="image-col hidden-md-down" title="${'table.image|t}">&nbsp;</th>
+                <th class="image-col d-none d-lg-block" title="${'table.image|t}">&nbsp;</th>
                 <th>${'table.country'|t}</th>
-                <th class="hidden-md-down">${'table.description'|t}</th>
+                <th class="d-none d-lg-block">${'table.description'|t}</th>
                 <th class="col-number">${'table.catalogue-number'|t}</th>
                 <th class="col-condition">${'table.condition'|t}</th>
                 <th class="col-catalogue-value">${'table.catalogue-value'|t}</th>
@@ -45,13 +45,13 @@
             </thead>
             <tbody>
             <tr repeat.for="stamp of filteredStamps" click.trigger="select($index)">
-                <td class="image-col hidden-md-down">
+                <td class="image-col d-none d-lg-block">
                     <div class="stamp-thumbnail">
                         <img if.bind="!stamp.wantList" src.one-way="getImagePath(stamp)" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event,stamp)"/>
                     </div>
                 </td>
                 <td>${ stamp.countryRef | byName:'countries' }</td>
-                <td class="hidden-md-down">${ stamp.rate + ' ' + stamp.description }</td>
+                <td class="d-none d-lg-block">${ stamp.rate + ' ' + stamp.description }</td>
                 <td class="col-number">
                     <input if.bind="editingRow === $index" type="text" class="form-control replacement-number-input" tabindex="0" value.bind="editingCatalogueNumber.number">
                     <span if.bind="editingRow !== $index">

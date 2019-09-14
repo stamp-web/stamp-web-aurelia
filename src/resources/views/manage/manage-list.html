@@ -7,8 +7,8 @@
 	<editor-dialog model.bind="editingModel" content.bind="editorContent" icon.bind="editorIcon" title.bind="editorTitle" dialog-id="editorDialog" ></editor-dialog>
 
 	<div class="container-fluid manage-list">
-		<div class="row">
-			<div class="col-md-2 hidden-md-down">
+		<div class="manage-list-content-wrapper">
+			<div class="entity-contents d-none d-lg-block">
 				<ul class="list-group entity-type">
 					<li class="list-group-item ${(selectedEntity==entity.field) ? 'selected' : ''} select-${entity.field}" repeat.for="entity of entityModels">
 						<div click.delegate="selectedEntityChanged(entity.field)">
@@ -22,8 +22,8 @@
 					</li>
 				</ul>
 			</div>
-			<div class="col-md-12 col-lg-10 list-${selectedEntity}">
-                <select-picker class="hidden-lg-up entity-selection" items.bind="entityModels" value.bind="selectedEntity" change.delegate="selectionChanged($event)"
+			<div class="entity-table list-${selectedEntity}">
+                <select-picker class="d-lg-none entity-selection" items.bind="entityModels" value.bind="selectedEntity" change.delegate="selectionChanged($event)"
                                config.bind="{valueType: 'String', labelProperty: 'label', valueProperty: 'field', filterSearch: false }">
                 </select-picker>
 				<router-view></router-view>
