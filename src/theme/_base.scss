@@ -80,6 +80,16 @@ th {
             font-size:      $theme-error-font-size;
             font-style:     italic;
         }
+
+        input[type="text"],
+        input[type="number"] {
+            border-color: $theme-invalid-color !important;
+        }
+        .select2-container--default {
+            .select2-selection--single {
+                border-color: $theme-invalid-color;
+            }
+        }
     }
 }
 

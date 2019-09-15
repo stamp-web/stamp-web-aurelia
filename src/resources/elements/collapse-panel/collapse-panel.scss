@@ -15,8 +15,10 @@ collapse-panel {
         }
 
         .card-title {
-            height:           $collapse-header-height;
+            height: $collapse-header-height;
             background-color: $theme-panel-header-bg;
+            margin-bottom: 0;
+            padding-bottom: $theme-padding-base + $theme-padding-thin;
 
             .panel-title {
                 height:       2.0rem;
@@ -26,7 +28,7 @@ collapse-panel {
             }
         }
         .card-block {
-            //height:     calc(100% - #{$collapse-header-height});
+            height: calc(100% - #{$collapse-header-height});
             padding-top: 0;
             overflow-y:  auto;
             overflow-x:  hidden;

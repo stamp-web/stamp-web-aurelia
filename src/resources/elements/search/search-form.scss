@@ -3,10 +3,18 @@
 search-form {
     font-size: $theme-font-size-sm;
 
+    form {
+        padding: $theme-padding-base $theme-padding-thick;
+    }
+
     .panel-title {
         color: $theme-form-title-color;
     }
     .search-button-bar {
+        align-items: center;
+        border-top: $theme-border;
+        height: 4.5rem;
+
         label {
             font-size:   $theme-font-size-sm;
             font-weight: normal;
@@ -31,13 +39,17 @@ search-form {
                 content: "";
             }
         }
-        .checkbox input[type="checkbox"], .radio input[type="radio"] {
-            margin-left: 0;
-        }
+
     }
     label {
         &.disabled {
             color: $theme-text-disabled-color;
         }
+    }
+
+    .checkbox input[type="checkbox"], .radio input[type="radio"] {
+        margin-left: 0;
+        top: 0.2rem;
+        transform: none;
     }
 }

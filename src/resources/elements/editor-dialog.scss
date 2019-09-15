@@ -22,6 +22,7 @@ editor-dialog {
 
     .modal-body {
         font-size: $theme-font-size-sm;
+        padding: $theme-padding-base $theme-padding-thick;
 
         input[type='text'], input[type='number'], textarea {
             font-size: $theme-font-size-sm;

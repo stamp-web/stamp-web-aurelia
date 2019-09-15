@@ -5,9 +5,11 @@ stamp-editor {
     font-size: $theme-font-size-sm;
 
     .editor-buttons {
-
-        position: relative;
-        right :0;
+        align-items: start;
+        display: flex;
+        flex-direction: row-reverse;
+        height: 4rem;
+        padding-right: $theme-padding-thin;
 
         button {
             font-size: $theme-font-size-sm;

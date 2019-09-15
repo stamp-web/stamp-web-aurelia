@@ -3,7 +3,7 @@
     <require from="../../value-converters/filter-by-name"></require>
     <require from="../../attributes/find-target"></require>
 
-    <div class="manage-list-toolbar d-none d-lg-block">
+    <div class="manage-list-toolbar d-none d-lg-flex">
         <div class="filter">
                 <label for="filter-text">${'manage.filter'|t}</label>
                 <input id="filter-text" ref="filterInput" find-target class="form-control"
@@ -20,17 +20,17 @@
         <table class="table table-hover entity-list">
             <thead>
             <tr>
-                <th if.bind="hasIssue" class="d-none d-lg-block">Issue</th>
+                <th if.bind="hasIssue" class="d-none d-lg-table-cell">Issue</th>
                 <th class="col-name">Name</th>
                 <th class="col-actions">Actions</th>
                 <th class="col-count">Count</th>
-                <th if.bind="hasIssue" class="d-none d-lg-block">Currency</th>
-                <th class="d-none d-lg-block">Description</th>
+                <th if.bind="hasIssue" class="d-none d-lg-table-cell">Currency</th>
+                <th class="d-none d-lg-table-cell">Description</th>
             </tr>
             </thead>
             <tbody>
             <tr repeat.for="model of models | filterByName:filterText">
-                <td if.bind="hasIssue" class="d-none d-lg-block">${model.issue}</td>
+                <td if.bind="hasIssue" class="d-none d-lg-table-cell">${model.issue}</td>
                 <td class="col-name">${model.name}</td>
                 <td>
                     <div class="btn-group actions" role="group">
@@ -46,8 +46,8 @@
                     </div>
                 </td>
                 <td>${model.stampCount | stampCount}</td>
-                <td if.bind="hasIssue" class="d-none d-lg-block">${model.code}</td>
-                <td class="d-none d-lg-block">${model.description}</td>
+                <td if.bind="hasIssue" class="d-none d-lg-table-cell">${model.code}</td>
+                <td class="d-none d-lg-table-cell">${model.description}</td>
             </tr>
             </tbody>
         </table>

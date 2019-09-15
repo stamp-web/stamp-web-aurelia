@@ -90,8 +90,8 @@ collapse-panel {
     flex-direction: row;
     flex-wrap: nowrap;
     font-size: $theme-font-size-sm;
-    padding: 0 $theme-padding-base;
-    margin:  $theme-margin-thin 0 0 0;
+    padding: $theme-padding-thinner $theme-padding-base;
+    margin: 0;
     width: 100%;
 
     .form-control {
@@ -190,6 +190,13 @@ collapse-panel {
 
     &.full-content {
         display: none;
+    }
+
+    collapse-panel {
+        .card {
+            border-bottom-color: transparent;
+            border-top-color: transparent;
+        }
     }
 }
 
