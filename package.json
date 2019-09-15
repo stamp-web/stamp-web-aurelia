@@ -70,6 +70,7 @@
         "karma-coverage": "^2.0.1",
         "karma-firefox-launcher": "^1.2.0",
         "karma-jasmine": "^2.0.1",
+        "karma-junit-reporter": "^1.2.0",
         "karma-remap-istanbul": "0.6.0",
         "karma-sourcemap-loader": "^0.3.7",
         "minimatch": "^3.0.4",

@@ -47,7 +47,9 @@ describe('asCurrencyFormattedConverter test suite', () => {
         });
 
         it('test handling of Italian Lira values', () => {
-            expect(new asCurrencyValueConverter().toView(5600, 'ITL')).toBe('ITL 5,600.00');
+            let value = new asCurrencyValueConverter().toView(5600, 'ITL');
+            expect(value).toContain('ITL');
+            expect(value).toContain('5,600.00');
         });
     });
 

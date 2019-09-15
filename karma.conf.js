@@ -1,5 +1,7 @@
 const path = require('path');
 const project = require('./aurelia_project/aurelia.json');
+const _ = require('lodash');
+
 const karmaConfig = project.unitTestRunner;
 
 let testSrc = [
@@ -28,20 +30,24 @@ module.exports = function(config) {
                 'text-summary': null,
                 json: 'test/coverage/coverage.json',
                 lcovonly: 'test/coverage/lcov.info',
-                html: 'test/coverage/mapped'
+                //html: 'test/coverage/mapped'
             }
+        },
+        junitReporter: {
+            outputDir: 'test/junit',
+            useBrowserName: false
         },
         preprocessors: {
             [karmaConfig.source]: [project.transpiler.id],
             [appSrc]: ['sourcemap'],
-           // 'scripts/app*.js': ['coverage']
+            'scripts/app*.js': ['coverage']
         },
         coverageReporter:    {
             type: 'html',
             dir:  'test/coverage/bundled'
         },
         'babelPreprocessor': { options: transpilerOptions },
-        reporters: ['progress', 'coverage'/*,  'karma-remap-istanbul'*/],
+        reporters: ['progress', 'coverage',  'junit'/*'karma-remap-istanbul'*/],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
