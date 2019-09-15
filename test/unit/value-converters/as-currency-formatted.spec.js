@@ -38,12 +38,16 @@ describe('asCurrencyFormattedConverter test suite', () => {
             expect(new asCurrencyValueConverter().toView(undefined, 'USD')).toBe('-');
         });
 
+        it('test euro currency', () => {
+            expect(new asCurrencyValueConverter().toView(67000.75, 'EUR')).toBe('€67,000.75');
+        });
+
         it('test handling of Yen values', () => {
             expect(new asCurrencyValueConverter().toView(5600, 'JPY')).toBe('¥5,600');
         });
 
         it('test handling of Italian Lira values', () => {
-            expect(new asCurrencyValueConverter().toView(5600, 'ITL')).toBe('ITL 5,600');
+            expect(new asCurrencyValueConverter().toView(5600, 'ITL')).toBe('ITL 5,600.00');
         });
     });
 

@@ -26,21 +26,18 @@ describe('EnumeratedTypeHelper test suite', () => {
             expect(_.isEmpty(v)).toBe(true);
         });
 
-        xit('single defect is determined', () => {
+        it('single defect is determined', () => {
             let v = EnumeratedTypeHelper.asEnumArray(Defects, Defects.CLIPPED.ordinal);
-            expect(v).not.toBe(null);
             expect(v.length).toBe(1);
-            expect(v[0]).toBe(Defects.CLIPPED);
+            expect(v[0].toString()).toEqual(Defects.CLIPPED.toString());
 
             v = EnumeratedTypeHelper.asEnumArray(Defects, Defects.FADING.ordinal);
-            expect(v).not.toBe(null);
             expect(v.length).toBe(1);
-            expect(v[0]).toBe(Defects.FADING);
+            expect(v[0].toString()).toBe(Defects.FADING.toString());
         });
 
-        xit('multiple defects are determined', () => {
+        it('multiple defects are determined', () => {
             let v = EnumeratedTypeHelper.asEnumArray(Defects, Defects.CLIPPED.ordinal + Defects.BLEEDING.ordinal + Defects.CREASED.ordinal);
-            expect(v).not.toBe(null);
             expect(v.length).toBe(3);
             expect(_.findIndex(v, Defects.CLIPPED)).toBeGreaterThan(-1);
             expect(_.findIndex(v, Defects.BLEEDING)).toBeGreaterThan(-1);

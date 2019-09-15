@@ -49,6 +49,7 @@ module.exports = function(config) {
         browsers: [
             //'Chrome',
             'ChromeHeadless',
+            'FirefoxHeadless'
         ],
         customLaunchers: {
             'ChromeHeadless': {
@@ -58,6 +59,12 @@ module.exports = function(config) {
                     '--headless',
                     '--disable-gpu',
                     '--remote-debugging-port=9222'
+                ]
+            },
+            'FirefoxHeadless': {
+                base: 'Firefox',
+                flags: [
+                    '-headless'
                 ]
             }
         },

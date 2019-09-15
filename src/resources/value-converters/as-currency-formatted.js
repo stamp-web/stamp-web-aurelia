@@ -21,12 +21,13 @@ export class asCurrencyValueConverter {
 
     toView(value, currency = 'USD') {
         if (typeof value !== 'undefined') {
-
+            let minFractions = (currency === 'JPY') ? 0 : 2;
             if( +value > 0 && currency ) {
                 return value.toLocaleString('en', {
                     style: 'currency',
                     currencyDisplay: 'symbol',
-                    currency: currency
+                    currency: currency,
+                    minimumFractionDigits: minFractions
                 });
             }
         }

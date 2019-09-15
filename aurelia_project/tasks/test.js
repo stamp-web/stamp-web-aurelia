@@ -4,10 +4,12 @@ import {gulp} from 'gulp';
 import {mocha} from 'gulp-mocha';
 
 export function unit(done) {
-  new Karma({
-    configFile: __dirname + '/../../karma.conf.js',
-    singleRun: !CLIOptions.hasFlag('watch')
-  }, done).start();
+    let browsers = CLIOptions.hasFlag('browsers') ? [CLIOptions.getFlagValue('browsers')] : ['ChromeHeadless', 'FirefoxHeadless'];
+    new Karma({
+        configFile: __dirname + '/../../karma.conf.js',
+        browsers:   browsers,
+        singleRun:  !CLIOptions.hasFlag('watch')
+    }, done).start();
 }
 
 export function selenium(done) {

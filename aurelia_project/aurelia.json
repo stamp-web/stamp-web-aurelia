@@ -95,9 +95,15 @@
             {
                 "name": "app-bundle.js",
                 "source": [
-                    "[**/*.js]",
+                    "[**/*.js]"
+                ]
+            },
+            {
+                "name": "app-bundle-nonjs.js",
+                "source": [
                     "[**/*.{css,html}]",
-                    "![**/theme/*.css]"
+                    "![**/theme/*.css]",
+                    "![**/static/*.css]"
                 ]
             },
             {
@@ -222,6 +228,9 @@
                         "main": "js/bootstrap.min",
                         "deps": [
                             "jquery"
+                        ],
+                        "resources": [
+                            "![scss/**]"
                         ],
                         "exports": "$"
                     },

@@ -68,6 +68,7 @@
         "karma-babel-preprocessor": "8.0.0",
         "karma-chrome-launcher": "^1.0.1",
         "karma-coverage": "^2.0.1",
+        "karma-firefox-launcher": "^1.2.0",
         "karma-jasmine": "^2.0.1",
         "karma-remap-istanbul": "0.6.0",
         "karma-sourcemap-loader": "^0.3.7",
