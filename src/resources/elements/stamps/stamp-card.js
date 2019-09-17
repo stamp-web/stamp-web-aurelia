@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2019 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import {Preferences} from '../../../services/preferences';
 import _ from 'lodash';
 import $ from 'jquery';
 
-var defaultImagePath = "http://drake-server.ddns.net:9001/Thumbnails/";
+var defaultImagePath = "https://drake-server.ddns.net/Thumbnails/";
 
 @customElement('stamp-card')
 @inject(Element, EventAggregator, BindingEngine, Preferences)

@@ -1,5 +1,5 @@
 /**
- Copyright 2018 Jason Drake
+ Copyright 2019 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ export class StampList extends EventManaged {
     displayMode = 'Grid';
     imageShown = false;
     imagePath;
-    _defaultImagePath = 'http://drake-server.ddns.net:9001/Pictures/Stamps';
+    _defaultImagePath = 'https://drake-server.ddns.net/Pictures/Stamps';
     editorShown = false;
     panelContents = "stamp-editor";
     subscribers = [];
