@@ -1,3 +1,8 @@
 {
-    "stamp-webservices": "https://localhost:9001"
+    "http": {
+        "stamp-webservices": "http://localhost:9001"
+    },
+    "https": {
+        "stamp-webservices": "https://localhost:9001"
+    }
 }
