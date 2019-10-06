@@ -64,7 +64,8 @@ function LocationHelperFn() {
         },
 
         resolvePath: (path, _default) => {
-            return (!_.isEmpty(path) ? path.value  + (path.value.endsWith('/') ? '' : '/') : _default);
+            let val = !_.isEmpty(path) && path.value ? path.value : _default;
+            return val + (val.endsWith('/') ? '' : '/');
         }
     };
 }
