@@ -90,9 +90,10 @@ export class StampCard {
                 });
                 let path = owner.img;
                 if (path) {
-                    var index = path.lastIndexOf('/');
+                    let index = path.lastIndexOf('/');
                     path = path.substring(0, index + 1) + "thumb-" + path.substring(index + 1);
-                    this.imagePath = defaultImagePath + path;
+                    let ppath = this.prefService.getByNameAndCategory('imagePath', 'stamps');
+                    this.imagePath = (ppath ? ppath : defaultImagePath) + path;
                     return;
                 }
             }
