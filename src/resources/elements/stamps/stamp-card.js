@@ -93,7 +93,7 @@ export class StampCard {
                     let index = path.lastIndexOf('/');
                     path = path.substring(0, index + 1) + "thumb-" + path.substring(index + 1);
                     let ppath = this.prefService.getByNameAndCategory('imagePath', 'stamps');
-                    this.imagePath = (ppath ? ppath : defaultImagePath) + path;
+                    this.imagePath = (!_.isEmpty(ppath) ? ppath.value : defaultImagePath) + path;
                     return;
                 }
             }
