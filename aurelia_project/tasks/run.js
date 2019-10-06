@@ -7,6 +7,7 @@ import build from './build';
 import {CLIOptions} from 'aurelia-cli';
 import proxySettings from './proxy.json';
 import processCSS from './process-css';
+import _ from 'lodash';
 
 function onChange(path) {
     console.log(`File Changed: ${path}`);
@@ -17,8 +18,11 @@ function reload(done) {
     done();
 }
 
+let nonTLS = CLIOptions.hasFlag('httpOnly');
+let proxyValue = _.get(proxySettings, ((nonTLS) ? 'http' : 'https') + '.stamp-webservices');
+
 var stampWebServicesProxy = proxy('/stamp-webservices', {
-    target: proxySettings['stamp-webservices'],
+    target: proxyValue,
     changeOrigin: true,
     logLevel: 'debug',
     secure: false
