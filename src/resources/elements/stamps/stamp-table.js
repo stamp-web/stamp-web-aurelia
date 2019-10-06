@@ -15,15 +15,18 @@
  */
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
+
 import {Catalogues} from '../../../services/catalogues';
+import {Preferences} from '../../../services/preferences';
 import {EventNames} from '../../../events/event-managed';
+import {LocationHelper} from '../../../util/location-helper';
 
 import _ from 'lodash';
 
-var defaultImagePath = "https://drake-server.ddns.net/Thumbnails/";
+var defaultImagePath = 'https://drake-server.ddns.net/Thumbnails/';
 
 @customElement('stamp-table')
-@inject(Element, EventAggregator, Catalogues)
+@inject(Element, EventAggregator, Catalogues, Preferences)
 @bindable('stamps')
 @bindable('lastSelected')
 @bindable('total')
@@ -34,18 +37,34 @@ export class StampTable {
     lastTime = 0;
 
 
-    constructor(element, eventBus, catalogueService) {
+    constructor(element, eventBus, catalogueService, prefService) {
         this.catalogueService = catalogueService;
+        this.prefService = prefService;
         this.eventBus = eventBus;
         this.element = element;
     }
 
     bind() {
-        this.catalogueService.find(this.catalogueService.getDefaultSearchOptions).then(result => {
-            this.catalogues = result.models;
-            this.models = this.stamps;
-        });
 
+        let cataloguePromise = this.catalogueService.find(this.catalogueService.getDefaultSearchOptions());
+        let prefPromise = this.prefService.find(this.prefService.getDefaultSearchOptions());
+
+        Promise.all([cataloguePromise, prefPromise]).then(results => {
+            this._processCatalogues(results[0]);
+            this._processPreferences();
+            this.models = this.stamps;
+            this.loading = false;
+        });
+    }
+
+    _processCatalogues(results) {
+        this.catalogues = results.models;
+
+    }
+
+    _processPreferences() {
+        let path = this.prefService.getByNameAndCategory('thumbPath', 'stamps');
+        this.thumbnailPath = LocationHelper.resolvePath(path, defaultImagePath);
     }
 
     stampsChanged(newValues) {
@@ -82,7 +101,7 @@ export class StampTable {
             if( img && img !== '' ) {
                 var index = img.lastIndexOf('/');
                 img = img.substring(0, index + 1) + "thumb-" + img.substring(index + 1);
-                path = defaultImagePath + img;
+                path = this.thumbnailPath + img;
             }
         }
         return path;

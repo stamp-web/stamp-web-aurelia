@@ -60,6 +60,7 @@ export class UserSettings {
         { name: 'pageSize', category: 'stamps', type: Number, defaultValue: 100 },
         { name: 'CurrencyCode', category: 'currency', type: String, defaultValue: 'USD' },
         { name: 'imagePath', category: 'stamps', type: String },
+        { name: 'thumbPath', category: 'stamps', type: String },
         { name: 'locale', category: 'user', type: String, defaultValue: 'en' },
         { name: 'applyCatalogueImagePrefix', category: 'stamps', type: Boolean, defaultValue: true },
         { name: 'compareWithCondition', category: 'stamps', type: Boolean, defaultValue: true },

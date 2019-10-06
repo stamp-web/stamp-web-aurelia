@@ -17,12 +17,15 @@ import {customElement, bindable, computedFrom, LogManager} from 'aurelia-framewo
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {BindingEngine} from 'aurelia-binding';
 import {Stamps} from '../../../services/stamps';
+import {Preferences} from '../../../services/preferences';
 import {EventNames, KeyCodes} from '../../../events/event-managed';
 import {Catalogues} from '../../../services/catalogues';
 import {Condition} from '../../../util/common-models';
+import {LocationHelper} from '../../../util/location-helper';
 
 import _ from 'lodash';
 import $ from 'jquery';
+
 
 const defaultImagePath = "https://drake-server.ddns.net/Thumbnails/";
 const logger = LogManager.getLogger('stamp-replacement-table');
@@ -47,15 +50,16 @@ export class StampReplacementTable {
 
 
     static inject() {
-        return [Element, BindingEngine, EventAggregator, Catalogues, Stamps];
+        return [Element, BindingEngine, EventAggregator, Catalogues, Stamps, Preferences];
     }
 
-    constructor(element, bindingEngine, eventBus, catalogues, stamps) {
+    constructor(element, bindingEngine, eventBus, catalogues, stamps, prefService) {
         this.element = element;
         this.bindingEngine = bindingEngine;
         this.eventBus = eventBus;
         this.catalogueService = catalogues;
         this.stampsService = stamps;
+        this.prefService = prefService;
     }
 
     stampsChanged(newList, oldList) {
@@ -77,13 +81,27 @@ export class StampReplacementTable {
 
     attached( ) {
         this.loading = true;
-        this.catalogueService.find(this.catalogueService.getDefaultSearchOptions()).then(results => {
-            this.catalogues = results.models;
+        let cataloguePromise = this.catalogueService.find(this.catalogueService.getDefaultSearchOptions());
+        let prefPromise = this.prefService.find(this.prefService.getDefaultSearchOptions());
+
+        Promise.all([cataloguePromise, prefPromise]).then(results => {
+            this._processCatalogues(results[0]);
+            this._processPreferences();
             this.loading = false;
         });
+
         this._editSubscribers = [];
         this._modelSubscribers = [];
         this._modelSubscribers.push(this.bindingEngine.propertyObserver(this, 'editingRow').subscribe(this.editingRowChanged.bind(this)));
+    }
+
+    _processCatalogues(results) {
+        this.catalogues = results.models;
+    }
+
+    _processPreferences() {
+        let path = this.prefService.getByNameAndCategory('thumbPath', 'stamps');
+        this.thumbnailPath = LocationHelper.resolvePath(path, defaultImagePath);
     }
 
     detached( ) {
@@ -146,7 +164,7 @@ export class StampReplacementTable {
             if( img && img !== '' ) {
                 var index = img.lastIndexOf('/');
                 img = img.substring(0, index + 1) + "thumb-" + img.substring(index + 1);
-                path = defaultImagePath + img;
+                path = this.thumbnailPath + img;
             }
         }
         return path;

@@ -18,6 +18,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {BindingEngine} from 'aurelia-binding';
 import {EventNames} from '../../../events/event-managed';
 import {Preferences} from '../../../services/preferences';
+import {LocationHelper} from '../../../util/location-helper';
 import _ from 'lodash';
 import $ from 'jquery';
 
@@ -92,8 +93,8 @@ export class StampCard {
                 if (path) {
                     let index = path.lastIndexOf('/');
                     path = path.substring(0, index + 1) + "thumb-" + path.substring(index + 1);
-                    let ppath = this.prefService.getByNameAndCategory('imagePath', 'stamps');
-                    this.imagePath = (!_.isEmpty(ppath) ? ppath.value : defaultImagePath) + path;
+                    let ppath = this.prefService.getByNameAndCategory('thumbPath', 'stamps');
+                    this.imagePath = LocationHelper.resolvePath(ppath, defaultImagePath) + path;
                     return;
                 }
             }

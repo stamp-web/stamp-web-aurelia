@@ -61,6 +61,10 @@ function LocationHelperFn() {
             } else {
                 return decodeURIComponent(qs[1]);
             }
+        },
+
+        resolvePath: (path, _default) => {
+            return (!_.isEmpty(path) ? path.value  + (path.value.endsWith('/') ? '' : '/') : defaultImagePath);
         }
     };
 }
