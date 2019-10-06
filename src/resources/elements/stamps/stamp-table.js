@@ -23,7 +23,7 @@ import {LocationHelper} from '../../../util/location-helper';
 
 import _ from 'lodash';
 
-var defaultImagePath = 'https://drake-server.ddns.net/Thumbnails/';
+const defaultImagePath = 'https://drake-server.ddns.net/Thumbnails/';
 
 @customElement('stamp-table')
 @inject(Element, EventAggregator, Catalogues, Preferences)

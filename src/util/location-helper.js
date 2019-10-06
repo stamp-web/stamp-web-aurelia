@@ -64,7 +64,7 @@ function LocationHelperFn() {
         },
 
         resolvePath: (path, _default) => {
-            return (!_.isEmpty(path) ? path.value  + (path.value.endsWith('/') ? '' : '/') : defaultImagePath);
+            return (!_.isEmpty(path) ? path.value  + (path.value.endsWith('/') ? '' : '/') : _default);
         }
     };
 }
