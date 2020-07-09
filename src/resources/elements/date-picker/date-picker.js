@@ -200,7 +200,8 @@ export class DatePicker {
      * @private
      */
     formatDisplay(val) {
-        return val ? (moment(_.isString(val) ? new Date(val) : val).format(this.dateDisplayFormat)) : undefined;
+        return val ? (
+            moment(_.isString(val) ? new Date(val) : val).format(this.dateDisplayFormat)) : undefined;
     }
 
     /**
