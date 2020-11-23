@@ -14,7 +14,11 @@ let appSrc = project.build.bundles.map(x => path.join(output, x.name));
 let entryIndex = appSrc.indexOf(path.join(output, project.build.loader.configTarget));
 let entryBundle = appSrc.splice(entryIndex, 1)[0];
 let sourceMaps = [{pattern:'scripts/**/*.js.map', included: false}];
-let files = [entryBundle].concat('scripts/dep-bundle.js').concat(testSrc).concat(appSrc).concat(sourceMaps);
+let files = [entryBundle].concat('scripts/dep-bundle.js')
+    .concat({pattern: "node_modules/reflect-metadata/Reflect.js", include: true })
+    .concat(testSrc)
+    .concat(appSrc)
+    .concat(sourceMaps);
 let transpilerOptions = project.transpiler.options;
 transpilerOptions.sourceMap = 'inline';
 
@@ -54,7 +58,7 @@ module.exports = function(config) {
         autoWatch: true,
         browsers: [
             //'Chrome',
-           // 'ChromeHeadless',
+            'ChromeHeadless',
             'FirefoxHeadless'
         ],
         customLaunchers: {
