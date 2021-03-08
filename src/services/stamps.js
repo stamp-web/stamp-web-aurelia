@@ -38,6 +38,20 @@ export class Stamps extends BaseService {
         return "stamps";
     }
 
+    purchase(stamps, purchasePrice, currencyCode) {
+        let q = new Promise((resolve, reject) => {
+            let ids = _.map(stamps, s => s.id);
+            let body = JSON.stringify({stamps: ids, pricePaid: purchasePrice, currencyCode});
+            let href = this.baseHref + '/rest/' + this.getResourceName() + '/purchase';
+            this.http.post(href, body).then(response => {
+                resolve();
+            }).catch(reason => {
+                reject(reason);
+            });
+        });
+        return q;
+    }
+
     executeReport(options) {
         let opts = _.extend({}, this.getDefaultSearchOptions(), options);
         let self = this;

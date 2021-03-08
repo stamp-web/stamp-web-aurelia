@@ -48,13 +48,6 @@
             </div>
         </ai-dialog-body>
         <ai-dialog-footer>
-            <div class="process-progress" if.bind="processing">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow.bind="25" aria-valuemin="0" aria-valuemax="100">
-                        ${processingCount / model.selectedStamps.length | asPercentage}
-                    </div>
-                </div>
-            </div>
             <div class="messaging" if.bind="!processing">
                 <span show.bind="!isValid">
                     <i class="sw-icon-attention"></i> ${'editor.purchase-error'|t}

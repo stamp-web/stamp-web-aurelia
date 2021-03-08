@@ -141,10 +141,10 @@ export class StampList extends EventManaged {
                     updateExisting: true,
                     selectedStamps: selected
                 };
-                this.dialogService.open({viewModel: PurchaseForm, model: purchaseModel}).then(() => {
-                    // post-process any purchases
-                }).catch(() => {
-                    // handle cancel
+                this.dialogService.open({viewModel: PurchaseForm, model: purchaseModel}).whenClosed(response => {
+                    if(!response.wasCancelled) {
+                        this.search(true);
+                    }
                 });
             }
         }
@@ -536,9 +536,12 @@ export class StampList extends EventManaged {
         }
     }
 
-    search() {
+    search(forceRefresh) {
         return new Promise((resolve, reject) => {
             let opts = this.buildOptions();
+            if (forceRefresh) {
+                opts._dc = (new Date()).getTime();
+            }
             this.stampService.clearSelected();
             this.stampService.find(opts).then(result => {
                 this.router.navigate(this.router.generate('stamp-list', opts));

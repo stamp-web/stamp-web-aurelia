@@ -61,39 +61,19 @@ export class PurchaseForm {
     }
 
     save() {
-        let self = this;
         let results = [];
-        self.processing = true;
-        self.processingCount = 0;
-        self.errorMessage = "";
-        let count = self.model.selectedStamps.length;
-        _.each( self.model.selectedStamps, function(stamp) {
-            if(stamp.stampOwnerships && stamp.stampOwnerships.length > 0) {
-                let owner = stamp.stampOwnerships[0];
-                if( owner.pricePaid > 0.0 && self.model.updateExisting || owner.pricePaid <= 0.0 ) {
-                    owner.pricePaid = +(stamp.activeCatalogueNumber.value / self.catalogueTotal * self.model.price).toFixed(2);
-                    owner.code = self.model.currency;
-                    let promise = self.stampService.save(stamp);
-                    results.push(promise);
-                    promise.then( () => {
-                        self.processingCount++;
-                        $('.progress-bar').css('width', self.processingCount * 1.0 / count * 100 + '%'); // need to manipulate the width
-                    });
+        this.processing = true;
+        this.errorMessage = "";
 
-                }
-            }
+        this.stampService.purchase(this.model.selectedStamps, this.model.price, this.model.currency).then(() => {
+            $('.progress-bar').css('width', '100%');
+            this.processing = false;
+            this.controller.ok();
+        }).catch(err => {
+            this.processing = false;
+            this.errorMessage = (err.statusText) ? err.statusText : err;
         });
-        Promise.all(results).then( () => {
-            logger.debug("Completed saving updates for " + results.length);
-            self.processing = false;
-            _.defer( () => {
-                this.controller.ok();
-            });
-        }).catch( err => {
-            self.processing = false;
-            self.errorMessage = (err.statusText) ? err.statusText : err;
-        });
-    }
+   }
 
     activate(model) {
         model.currency = model.currency || CurrencyCode.USD.toString();
