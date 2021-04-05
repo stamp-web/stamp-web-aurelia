@@ -110,4 +110,16 @@ export class OwnershipEditor extends EventManaged {
             logger.error(err);
         });
     }
+
+    imgPathFocus(evt) {
+        let input = evt.target;
+        if (input && this.model.img) {
+            let idx = this.model.img.lastIndexOf('.');
+            if (idx > 0) {
+                let elm = $(input)[0];
+                elm.scrollLeft = elm.scrollWidth; // scroll to end
+                elm.setSelectionRange(idx, idx);
+            }
+        }
+    }
 }

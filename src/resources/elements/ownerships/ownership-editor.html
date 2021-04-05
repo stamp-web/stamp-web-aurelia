@@ -85,6 +85,7 @@
                 <label for="owner-img" class="col-3 col-form-label">Image Path</label>
                 <div class="col-9">
                     <input type="text" tabindex="120" required aria-required="true" class="form-control"
+                           focus.trigger="imgPathFocus($event)"
                            value.bind="model.img | emptyText" id="owner-img">
                 </div>
             </div>
