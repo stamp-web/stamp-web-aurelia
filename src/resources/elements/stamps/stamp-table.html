@@ -28,7 +28,7 @@
                 click.trigger="toggleSelection($event, stamp)">
                 <td class="image-col d-none d-md-table-cell">
                     <div class="stamp-thumbnail">
-                        <img if.bind="!stamp.wantList" src.one-way="getImagePath(stamp)" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event,stamp)"/>
+                        <img if.bind="!stamp.wantList" src.one-way="getImagePath(stamp)" loading="lazy" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event,stamp)"/>
                     </div>
                 </td>
                 <td class="col-md-3">${ stamp.countryRef | byName:'countries' }</td>

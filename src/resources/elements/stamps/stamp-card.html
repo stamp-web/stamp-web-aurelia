@@ -8,7 +8,7 @@
     <div class="card ${(selected) ? 'selected' : ''} ${(highlight) ? 'highlight' : ''}"
          click.trigger="toggleSelection($event)">
         <div class="stamp-thumbnail" mouseover.delegate="toggleActions(true)" mouseout.delegate="toggleActions(false)">
-            <img src.bind="imagePath" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event)"/>
+            <img src.bind="imagePath" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event)" loading="lazy"/>
             <div class="btn-group action-panel" role="group" show.bind="showActions">
                 <!--
                 <button type="button" class="btn btn-default" aria-label="View">

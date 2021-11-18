@@ -47,7 +47,7 @@
             <tr repeat.for="stamp of filteredStamps" click.trigger="select($index)">
                 <td class="image-col d-none d-lg-table-cell">
                     <div class="stamp-thumbnail">
-                        <img if.bind="!stamp.wantList" src.one-way="getImagePath(stamp)" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event,stamp)"/>
+                        <img if.bind="!stamp.wantList" src.one-way="getImagePath(stamp)" loading="lazy" onerror.bind="notFoundImage()" click.trigger="showFullSizeImage($event,stamp)"/>
                     </div>
                 </td>
                 <td>${ stamp.countryRef | byName:'countries' }</td>
