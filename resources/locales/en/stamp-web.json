@@ -130,6 +130,7 @@
         "countryRequired": "Country is required",
         "currencyInvalid": "Not a currency value",
         "descriptionRequired": "Description is required",
+        "rateMaxLength": "Denomination exceeds 25 characters",
         "rateRequired": "Denomination is required",
         "totalPurchaseCurrencyInvalid": "Total purchase not a currency value",
         "totalPurchaseNumber": "Total purchase out of allowed range",

@@ -102,6 +102,7 @@ export class StampDetailsComponent extends EventManaged {
         ValidationRules
             .ensure('rate')
             .required().withMessage(this.i18n.tr('messages.rateRequired'))
+            .maxLength(25).withMessage(this.i18n.tr('messages.rateMaxLength'))
             .ensure('description')
             .required().withMessage(this.i18n.tr('messages.descriptionRequired'))
             .ensure('countryRef')
