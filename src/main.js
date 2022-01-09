@@ -82,9 +82,9 @@ export function configure(aurelia) {
 
 function configureGlobalLibraries() {
 
-    require(['jquery','bootstrap'], (jquery, bootstrap) => {
+    require(['jquery','popper.js','bootstrap'], (jquery, popper, bootstrap) => {
         window.jQuery = jquery;
-        //window.Popper = popper;
+        window.Popper = popper;
         window.Bootstrap = bootstrap;
     });
 }

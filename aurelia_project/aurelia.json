@@ -109,6 +109,11 @@
                 "dependencies": [
                     "lodash",
                     "jquery",
+                    {
+                        "name": "popper.js",
+                        "path": "../node_modules/@popperjs/core/dist/umd",
+                        "main": "popper.js"
+                    },
                     "aurelia-bootstrapper",
                     "aurelia-history-browser",
                     "aurelia-loader-default",
@@ -201,7 +206,8 @@
                         "path": "../node_modules/bootstrap/dist",
                         "main": "js/bootstrap.bundle.min",
                         "deps": [
-                            "jquery"
+                            "jquery",
+                            "popper.js"
                         ],
                         "resources": [
                             "![scss/**]"
