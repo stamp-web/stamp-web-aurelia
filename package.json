@@ -66,6 +66,7 @@
         "jest": "^27.4.7",
         "jest-cli": "^27.4.7",
         "jest-createspyobj": "^2.0.0",
+        "jest-junit": "^13.0.0",
         "jest-transform-stub": "^2.0.0",
         "minimatch": "^3.0.4",
         "mocha": "^6.2.0",
@@ -104,6 +105,12 @@
         ],
         "testEnvironment": "node",
         "collectCoverage": true,
+        "reporters": [
+            "default", [ "jest-junit", {
+                "outputDirectory": "test/junit",
+                "outputName": "TESTS.xml"
+            }]
+        ],
         "collectCoverageFrom": [
             "src/**/*.js",
             "!**/*.spec.js",
