@@ -1,7 +1,7 @@
 {
     "name": "stamp-web-aurelia",
     "description": "An HTML-5 application used to manage stamp collections built with the Aurelia client application framework.",
-    "version": "6.0.0",
+    "version": "6.2.0",
     "repository": {
         "type": "git",
         "url": "git://github.com/stamp-web/stamp-web-aurelia.git"
@@ -12,6 +12,8 @@
     "license": "Apache-2.0",
     "author": "Jason Drake (jadrake75@gmail.com)",
     "dependencies": {
+        "@jest/core": "^27.4.7",
+        "@popperjs/core": "^2.11.2",
         "aurelia-animator-css": "^1.0.4",
         "aurelia-bootstrapper": "^2.3.3",
         "aurelia-dialog": "2.0.0",
@@ -20,8 +22,7 @@
         "aurelia-validation": "1.1.1",
         "bluebird": "^3.4.1",
         "blueimp-load-image": "2.6.1",
-        "bootbox": "^5.3.2",
-        "bootstrap": "4.3.1",
+        "bootstrap": "^5.0.2",
         "bootstrap-datepicker": "1.6.4",
         "i18next-xhr-backend": "^0.5.3",
         "jquery": "^3.5.1",
@@ -30,22 +31,21 @@
         "nprogress": "0.2.0",
         "odata-filter-parser": "^0.2.13",
         "pdfmake": "^0.1.32",
-        "popper.js": "^1.14.7",
         "requirejs": "^2.3.2",
-        "select2": "4.0.3",
-        "tether": "^1.4.3"
+        "select2": "4.0.3"
     },
-    "peerDependencies": {},
     "devDependencies": {
         "@babel/core": "^7.4.0",
+        "@babel/eslint-parser": "^7.16.5",
         "@babel/plugin-proposal-class-properties": "^7.4.0",
         "@babel/plugin-proposal-decorators": "^7.4.0",
         "@babel/preset-env": "^7.4.2",
         "@babel/register": "^7.4.0",
         "aurelia-cli": "^2.0.0",
+        "aurelia-loader-nodejs": "^1.1.0",
+        "aurelia-pal-nodejs": "^2.0.0",
         "aurelia-testing": "^1.0.0",
-        "aurelia-tools": "^2.0.0",
-        "babel-eslint": "^10.0.1",
+        "babel-jest": "^27.4.6",
         "browser-sync": "^2.26.3",
         "connect-history-api-fallback": "^1.6.0",
         "debounce": "^1.2.0",
@@ -55,24 +55,18 @@
         "gulp-babel": "^8.0.0",
         "gulp-cache": "^1.1.3",
         "gulp-clean-css": "^4.2.0",
-        "gulp-eslint": "^5.0.0",
+        "gulp-dart-sass": "^1.0.2",
+        "gulp-eslint": "^6.0.0",
         "gulp-htmlmin": "^5.0.1",
         "gulp-mocha": "^7.0.1",
-        "gulp-notify": "^3.2.0",
+        "gulp-notify": "^4.0.0",
         "gulp-plumber": "^1.2.1",
         "gulp-rename": "^1.4.0",
-        "gulp-sass": "4.0.2",
         "http-proxy-middleware": "^0.19.1",
-        "jasmine-core": "3.4.0",
-        "karma": "^4.3.0",
-        "karma-babel-preprocessor": "8.0.0",
-        "karma-chrome-launcher": "^1.0.1",
-        "karma-coverage": "^2.0.2",
-        "karma-firefox-launcher": "^1.2.0",
-        "karma-jasmine": "^2.0.1",
-        "karma-junit-reporter": "^1.2.0",
-        "karma-remap-istanbul": "^0.6.0",
-        "karma-sourcemap-loader": "^0.3.7",
+        "jest": "^27.4.7",
+        "jest-cli": "^27.4.7",
+        "jest-createspyobj": "^2.0.0",
+        "jest-transform-stub": "^2.0.0",
         "minimatch": "^3.0.4",
         "mocha": "^6.2.0",
         "promise-polyfill": "^8.1.0",
@@ -87,5 +81,40 @@
     },
     "engines": {
         "node": ">=8.9.0"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "^aurelia-binding$": "<rootDir>/node_modules/aurelia-binding"
+        },
+        "modulePaths": [
+            "<rootDir>/src",
+            "<rootDir>/node_modules"
+        ],
+        "moduleFileExtensions": [
+            "js",
+            "json"
+        ],
+        "transform": {
+            "^.+\\.(css|less|sass|scss|styl|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "jest-transform-stub",
+            "^.+\\.(js)$": "babel-jest"
+        },
+        "testRegex": "\\.spec\\.js$",
+        "setupFiles": [
+            "<rootDir>/test/jest-pretest.js"
+        ],
+        "testEnvironment": "node",
+        "collectCoverage": true,
+        "collectCoverageFrom": [
+            "src/**/*.js",
+            "!**/*.spec.js",
+            "!**/node_modules/**",
+            "!**/test/**"
+        ],
+        "coverageDirectory": "<rootDir>/test/coverage",
+        "coverageReporters": [
+            "json",
+            "lcov",
+            "html"
+        ]
     }
 }

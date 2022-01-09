@@ -76,7 +76,6 @@ export class OwnershipEditor extends EventManaged {
         });
         this._modelSubscribers = [];
         if( newModel ) {
-            //this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'albumRef').subscribe(this._validate.bind(this)));
             this._modelSubscribers.push(this.bindingEngine.propertyObserver(newModel, 'pricePaid').subscribe(this._validate.bind(this)));
             this.setupValidation();
             _.defer(() => {

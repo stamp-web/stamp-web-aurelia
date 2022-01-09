@@ -36,11 +36,6 @@
         "id": "webstorm",
         "displayName": "WebStorm"
     },
-    "unitTestRunner": {
-        "id": "karma",
-        "displayName": "Karma",
-        "source": "test/unit/**/*.js"
-    },
     "platform": {
         "port": 9000,
         "host": "localhost",
@@ -57,10 +52,6 @@
         "valueConverters": "src/resources/value-converters",
         "bindingBehaviors": "src/resources/binding-behaviors",
         "staticCSS": "resources/css"
-    },
-    "testFramework": {
-        "id": "jasmine",
-        "displayName": "Jasmine"
     },
     "build": {
         "targets": [
@@ -111,19 +102,12 @@
                 "prepend": [
                     "node_modules/bluebird/js/browser/bluebird.core.js",
                     "node_modules/aurelia-cli/lib/resources/scripts/configure-bluebird.js",
-                    "node_modules/tether/dist/js/tether.min.js",
                     "node_modules/jquery/dist/jquery.js",
-                    "node_modules/popper.js/dist/umd/popper.min.js",
                     "node_modules/requirejs/require.js"
                 ],
                 "dependencies": [
                     "lodash",
                     "jquery",
-                    {
-                        "name": "popper.js",
-                        "path": "../node_modules/popper.js/dist/umd",
-                        "main": "popper.js"
-                    },
                     "aurelia-bootstrapper",
                     "aurelia-history-browser",
                     "aurelia-loader-default",
@@ -171,17 +155,6 @@
                         "name": "aurelia-i18n",
                         "path": "../node_modules/aurelia-i18n/dist/amd",
                         "main": "aurelia-i18n"
-                    },
-                    {
-                        "name": "tether",
-                        "main": "dist/js/tether.js",
-                        "path": "../node_modules/tether",
-                        "resources": [
-                            "dist/css/tether-theme-arrows-dark.css",
-                            "dist/css/tether-theme-arrows.css",
-                            "dist/css/tether-theme-basic.css",
-                            "dist/css/tether.css"
-                        ]
                     }
                 ]
             },
@@ -225,14 +198,14 @@
                     {
                         "name": "bootstrap",
                         "path": "../node_modules/bootstrap/dist",
-                        "main": "js/bootstrap.min",
+                        "main": "js/bootstrap.bundle.min",
                         "deps": [
                             "jquery"
                         ],
                         "resources": [
                             "![scss/**]"
                         ],
-                        "exports": "$"
+                        "exports": "bootstrap"
                     },
                     {
                         "name": "bootstrap-datepicker",
@@ -243,14 +216,6 @@
                         ],
                         "resources": [
                             "css/bootstrap-datepicker3.css"
-                        ]
-                    },
-                    {
-                        "name": "bootbox",
-                        "path": "../node_modules/bootbox/dist",
-                        "main": "bootbox.min",
-                        "deps": [
-                            "bootstrap"
                         ]
                     }
                 ]

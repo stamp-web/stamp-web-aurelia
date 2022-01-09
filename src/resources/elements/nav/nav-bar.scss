@@ -1,11 +1,11 @@
-@import "../../../theme/default/default";
+@import "../../../theme/semantic";
 
 nav-bar {
     nav {
         .navbar-brand {
             align-items: center;
             display:     inline-flex;
-            height:      $navbar-brand-height;
+            height:      $theme-appbar-brand-height;
             padding-top: 0;
 
             > span {
@@ -14,6 +14,7 @@ nav-bar {
         }
 
         li.active {
+            color: $theme-appbar-color;
             a {
                 border-radius: 0.5rem 0.5rem 0 0;
             }

@@ -26,21 +26,20 @@
                 </div>
                 <div class="form-group row">
                     <label for="cn-number" class="col-sm-3 col-form-label">${'editor.catalogue-number'|t}</label>
-                    <div class="col-sm-3">
+                    <div class="cn-field">
                         <input type="text" autocomplete="off" tabindex="80" class="form-control" id="cn-number" value.bind="model.number & validate:rules">
                     </div>
-                    <div class="col-sm-1 packed-col">
+                    <div class="packed-col conflict-indicator">
                         <span title.bind="conflictMessage" class="control-label sw-conversion ${icon}" click.trigger="convert()" disabled.bind="conversionModel !== undefined"></span>
                         <audio id="sw-exist-sound">
                             <source src="resources/sound/ring.ogg" type="audio/ogg">
                             <source src="resources/sound/ring.mp3" type="audio/mpeg">
                         </audio>
                     </div>
-                    <span id="inputNumberStatus" class="sr-only"></span>
                 </div>
                 <div class="form-group row">
                     <label for="cn-value" class="col-sm-3 col-form-label"  disabled.bind="model.unknown">${'editor.catalogue-value'|t}</label>
-                    <div class="col-sm-6 value-field">
+                    <div class="value-field">
                         <input type="text" autocomplete="off" tabindex="85" class="form-control" id="cn-value" disabled.bind="model.unknown" value.bind="model.value & validate:rules" >
                         <span if.bind="selectedCatalogue" class="sw-currency-label" innerhtml="${selectedCatalogue | asCurrency:'code'}"></span>
                     </div>

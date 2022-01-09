@@ -5,18 +5,24 @@ editor-dialog {
     .help-block {
         padding-top: $theme-padding-thin;
         margin-bottom: 0;
-        padding-left: calc(25% + #{1.5rem});
+        padding-left: calc(25% + #{$theme-padding-base});
     }
 
     .modal-header {
-        display: block;
+        display: flex;
         padding: $theme-padding-base;
         background-color: $theme-active-bg;
         color: $theme-active-color;
+        height: 4rem;
 
-        .close {
-            color: $theme-active-color;
-            font-size: $theme-font-size-x-large;
+        .dialog-title {
+            align-items: center;
+            font-size: $theme-font-size-base;
+            background-color: $theme-appbar-bg;
+            color: $theme-appbar-color;
+            display: flex;
+
+            padding: $theme-padding-base;
         }
     }
 
@@ -46,7 +52,7 @@ editor-dialog {
         }
 
         button.btn {
-            font-size: $theme-font-size-base;
+            height: $theme-btn-action-height;
         }
     }
 

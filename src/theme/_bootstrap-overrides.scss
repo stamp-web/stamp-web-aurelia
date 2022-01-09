@@ -1,51 +1,69 @@
-@import 'semantic';
+@import 'colors';
 
-$tooltip-opacity: $theme-tooltip-opacity;
+$brand-primary: $primary !default;
+
+$font-size-base: 1.4rem;
+$line-height-base: 1.0;
+
+$table-head-bg: transparent;
+
+$link-color: $primary !default;
+$link-hover-color: darken($link-color, 15%);
+$link-hover-decoration: underline;
+
+$input-border-color: $gray-400 !default;
+$input-color:        $body-color !default;
+
+.navbar-brand {
+    margin-left: 1.0rem;
+}
+
+.dropdown-menu {
+    .dropdown-item {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+}
+
+.tooltip {
+    &.bs-tooltip-bottom, &.bs-tooltip-top {
+        &.show {
+            opacity: 1.0;
+        }
+
+        .tooltip-arrow {
+            &::before {
+                border-bottom-color: $primary;
+            }
+        }
+    }
+
+    .tooltip-inner {
+        background-color: $primary;
+        font-size: .875rem;
+        padding: 1.0rem;
+        line-height: 1.5;
+
+        .tooltip-label {
+            &:after {
+                content: ': ';
+            }
+
+            font-weight: bold;
+            margin-right: 0.25rem;
+        }
+    }
+}
 
 ////////////////////////////////////////////////////////////////////
 // Bootstrap variables for components
 ////////////////////////////////////////////////////////////////////
-$navbar-brand-font-size: $theme-font-size-xx-large;
-$navbar-brand-height: 4.4rem;
 $card-color: $body-color;
 $card-bg: $body-bg;
 $dropdown-link-hover-color: $body-bg;
-$dropdown-link-hover-bg: theme-color("primary");
+$dropdown-link-hover-bg: $primary;
+$dropdown-item-padding-x: 1.0rem;
 
 
-.stamp-web-editor {
 
-    .table-hover {
-        tbody {
-            tr {
-                &:hover {
-                    background: $white-dark !important;
-                }
-            }
-        }
-    }
-
-    .btn-secondary {
-        border: $theme-btn-border;
-        color: $theme-text-color;
-
-
-        &:not(:disabled):not(.disabled) {
-            &.active, &:active {
-                border: $theme-btn-border;
-                color: $theme-text-color;
-
-                &:focus {
-                    box-shadow: none;
-                }
-            }
-            &:focus, &.focus {
-                box-shadow: none;
-            }
-        }
-        &:disabled, &.disabled, &.hover, &:hover {
-            border: $theme-btn-border;
-        }
-    }
-}
 

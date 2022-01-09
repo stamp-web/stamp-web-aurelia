@@ -1,13 +1,11 @@
 <template>
     <require from="resources/elements/editor-dialog.css"></require>
-	<div class="modal" id="${dialogId}" role="dialog">
+	<div class="modal" id="${dialogId}" data-bs-backdrop="static">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-						aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title"><span if.bind="icon" class="${icon}"></span>${title}</h4>
-				</div>
+					<div class="dialog-title"><span if.bind="icon" class="${icon}"></span>${title}</div>
+                </div>
 				<div class="modal-body">
 					<compose model.bind="model" view-model.bind="content"></compose>
 				</div>
@@ -16,7 +14,7 @@
                         <i class="sw-icon-attention" ></i> ${errorMsg}
                     </div>
 					<button type="button" class="btn btn-primary editor-save" tabindex="5000" click.delegate="save()" disabled.bind="!valid">${'actions.save'|t}</button>
-					<button type="button" class="btn btn-secondary editor-cancel" tabindex="5050" data-dismiss="modal">${'actions.cancel'|t}</button>
+					<button type="button" class="btn btn-secondary editor-cancel" tabindex="5050" data-bs-dismiss="modal">${'actions.cancel'|t}</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->

@@ -13,6 +13,7 @@ stamp-editor {
 
         button {
             font-size: $theme-font-size-sm;
+            height: $theme-btn-action-height;
             margin-left: $theme-margin-thin;
             &:first-child {
                 //margin-left: 0;

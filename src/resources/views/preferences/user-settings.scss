@@ -1,4 +1,4 @@
-@import "../../../theme/default/default";
+@import "../../../theme/semantic";
 
 $top-header-height: 5.6rem;
 
@@ -42,10 +42,11 @@ $top-header-height: 5.6rem;
 
         .card {
             margin-left: 2rem;
+            max-width: 50rem;
 
             .card-block {
-                min-width: 50rem;
                 padding: $theme-padding-thick;
+                width: 100%;
 
                 select {
                     font-size: $theme-font-size-sm;
@@ -64,23 +65,14 @@ $top-header-height: 5.6rem;
             }
         }
 
-        .list-group-item {
-            &:hover {
-                background-color: lighten($list-group-active-bg, 25%);
-                color:            $list-group-action-active-color;
-                cursor:           pointer;
-            }
-            &.selected {
-                background-color: $list-group-active-bg;
-                color:            $list-group-action-active-color;
-                cursor:           default;
-            }
-        }
-
         .locale-selector {
-            max-width:    200px;
+            width:    110px;
             display:      inline-block;
             margin-right: $theme-margin-base;
+        }
+
+        .pageSize-selector {
+            height: $theme-input-height;
         }
 
         button.restart {

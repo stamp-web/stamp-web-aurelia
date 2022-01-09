@@ -2,41 +2,69 @@
 
 catalogue-number-details {
 
-    .sw-conversion {
-        font-size: $theme-font-size-xs;
-        position:  absolute;
-        &.sw-convert {
-            color:  $theme-action-color;
-            cursor: pointer;
+    .row {
+        flex-wrap: nowrap;
+    }
+
+    .conflict-indicator {
+        align-items: center;
+        display: flex;
+        max-width: 2.5rem;
+        width: auto;
+
+        .sw-conversion {
+            font-size: $theme-font-size-xs;
+
+            &.sw-convert {
+                color: $theme-action-color;
+                cursor: pointer;
+            }
+
+            &.sw-warning {
+                color: $theme-warning-color;
+            }
         }
 
-        &.sw-warning {
-            color: $theme-warning-color;
-        }
     }
 
     .sw-currency-label {
         margin-left: $theme-margin-base;
+
         &.control-label {
             text-align: left;
         }
     }
 
+    .cn-field {
+        width: 12.5rem;
+    }
+
     .value-field {
+        width: 13.3rem;
         input {
             max-width: 7rem;
-            display:   inline-block;
+            display: inline-block;
         }
     }
 
-    .catalogueRef.has-error {
-        .help-block {
-            left:     calc(25% + #{$theme-margin-thick}); // col-3 for the labels
-            position: relative;
+    .catalogueRef {
+        &.has-error {
+            .help-block {
+                left: 25%;
+                position: relative;
+            }
         }
+
+        &.row {
+            flex-wrap: wrap;
+        }
+
     }
+
     .help-block {
         margin-bottom: 0;
+        width: auto;
     }
+
 }
 

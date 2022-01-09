@@ -3,6 +3,9 @@
 .entity-type {
     padding: $theme-padding-thin 0 0 0;
     .list-group-item {
+        display: flex;
+        height: 3.6rem;
+
         &:hover {
             background-color: lighten($theme-active-bg, 25%);
             color:            $theme-active-color;
@@ -22,12 +25,13 @@
             }
         }
         div {
-            display: inline-block;
+            align-items: center;
+            display: flex;
             &:last-child {
-                float: right;
+                flex: 0 0 auto;
             }
             &:first-child {
-                width: calc(100% - #{35px});
+                flex: 1 1 auto;
             }
         }
         .sw-create-action {
@@ -43,6 +47,7 @@
             padding:    0 $theme-padding-base;
             &:focus, &:active {
                 outline: none !important;
+                box-shadow: none;
             }
             &:hover {
                 opacity: 1.0;

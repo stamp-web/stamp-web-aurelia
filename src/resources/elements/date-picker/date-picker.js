@@ -29,15 +29,16 @@ const logger = LogManager.getLogger('date-picker');
 
 @customElement('date-picker')
 
-@bindable({ name: 'value', defaultValue: undefined })
-@bindable({ name: 'endValue', defaultValue: undefined })
-@bindable({ name: 'startDate', defaultValue: undefined })
-@bindable({ name: 'endDate', defaultValue: undefined })
-@bindable({ name: 'range', defaultValue: false })
 @inject(Element, I18N)
 export class DatePicker {
 
     dateDisplayFormat = 'MM/DD/YYYY';
+
+    @bindable value;
+    @bindable endValue;
+    @bindable startDate;
+    @bindable endDate;
+    @bindable range = false;
 
     constructor(element, i18n) {
         this.element = element;
@@ -49,7 +50,6 @@ export class DatePicker {
 
         this.datepicker = $(this.element).find('.date-wrapper input');
         this.datepicker.datepicker({
-            orientation: "left auto",
             language: this.i18n.getLocale(),
             autoclose: true,
             clearBtn: false,

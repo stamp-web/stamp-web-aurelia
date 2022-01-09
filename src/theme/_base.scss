@@ -1,5 +1,4 @@
 @import 'semantic';
-@import 'bootstrap-overrides';
 
 html {
     font-size: 10px;
@@ -8,7 +7,6 @@ html {
 input[type="text"],
 input[type='number'] {
     height:    $theme-input-height;
-    font-size: $theme-font-size-sm;
     -moz-appearance: textfield;
 
     &::-webkit-inner-spin-button {
@@ -24,10 +22,6 @@ input[type="checkbox"] {
     transform:   translate(0, -50%);
 }
 
-select, textarea {
-    font-size: $theme-font-size-sm;
-}
-
 button {
     &:hover {
         cursor: pointer;
@@ -37,8 +31,15 @@ button {
     }
 }
 
-th {
-    background-color: $table-head-bg;
+thead {
+    border: $theme-border;
+    height: 3.2rem;
+
+    th {
+        background-color: transparent;
+        vertical-align: middle;
+    }
+
 }
 
 :focus {
@@ -94,6 +95,7 @@ th {
 }
 
 .form-control {
+    font-size: $theme-font-size-sm;
     &:focus, &.focus {
         box-shadow: none !important;
         border-color: $theme-input-border-color !important;
@@ -114,4 +116,45 @@ ai-dialog-footer {
     }
 }
 
+.stamp-web-editor {
+
+    .form-group.row, .checkbox.row {
+        margin-bottom: $theme-margin-base;
+    }
+
+    .table-hover {
+        tbody {
+            tr {
+                &:hover {
+                    background: $theme-table-hover-bg !important;
+                }
+            }
+        }
+    }
+
+    .btn-secondary {
+        background-color: $theme-btn-secondary-bg;
+        border: $theme-btn-border;
+        color: $theme-text-color;
+
+
+        &:not(:disabled):not(.disabled) {
+            &.active, &:active {
+                background-color: $theme-btn-secondary-active-bg;
+                border: $theme-btn-border;
+                color: $theme-text-color;
+
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+            &:focus, &.focus {
+                box-shadow: none;
+            }
+        }
+        &:disabled, &.disabled, &.hover, &:hover {
+            border: $theme-btn-border;
+        }
+    }
+}
 

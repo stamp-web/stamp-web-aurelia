@@ -17,7 +17,7 @@ import {LogManager} from 'aurelia-framework';
 import {Condition, CurrencyCode} from '../util/common-models';
 import {asCurrencyValueConverter} from '../resources/value-converters/as-currency-formatted';
 
-import reportStyles from 'text!./report-styles.json';
+import * as reportStyles from './report-styles.json';
 
 import _ from 'lodash';
 
@@ -34,7 +34,7 @@ export class ReportHelper {
     }
 
     getStandardStyleDefinition() {
-        return JSON.parse(reportStyles);
+        return reportStyles;
     }
 
     generateText(text, style = 'header') {

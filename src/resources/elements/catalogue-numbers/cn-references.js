@@ -9,7 +9,6 @@ import {I18N} from 'aurelia-i18n';
 
 import $ from 'jquery';
 import _ from 'lodash';
-import bootbox from 'bootbox';
 
 const logger = LogManager.getLogger('cn-references');
 
@@ -161,16 +160,9 @@ export class CatalogueNumberReferences {
             });
         };
         let msg = this.i18next.tr("prompts.delete-catalogue-number", {number: num.number});
-        bootbox.confirm({
-            size:     'small',
-            message:  msg,
-            callback: function (result) {
-                if (result === true) {
-                    _remove.call(self, num);
-
-                }
-            }
-        });
+        if(window.confirm(msg)) {
+            _remove.call(self, num);
+        }
     }
 
     makeActive(num) {

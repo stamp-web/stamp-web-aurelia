@@ -7,7 +7,8 @@ $grid-nav-height: 5rem;
     position:   relative;
     padding:    0;
     border-top: $theme-border;
-    > .row {
+    > .stamp-content-row {
+        display: flex;
         height: 100%;
         margin: 0;
 
@@ -37,6 +38,7 @@ collapse-panel {
     z-index:       1000;
     height:        $grid-nav-height;
     margin-bottom: 0;
+    padding-left:  $theme-padding-base;
     border-radius: 0;
     font-size:     $theme-font-size-sm;
 
@@ -208,12 +210,4 @@ collapse-panel {
         width: calc(100% - 57rem);
     }
 
-}
-
-.sw-dialog-wrapper {
-    .modal-body {
-        .bootbox-body {
-            @include nowrap-text;
-        }
-    }
 }

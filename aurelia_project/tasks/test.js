@@ -1,24 +1,21 @@
-import {Server as Karma} from 'karma';
-import {CLIOptions} from 'aurelia-cli';
-import {gulp} from 'gulp';
-import {mocha} from 'gulp-mocha';
+import { runCLI } from '@jest/core';
+import path from 'path';
+import packageJson from '../../package.json';
 
-export function unit(done) {
-    let browsers = CLIOptions.hasFlag('browsers') ? [CLIOptions.getFlagValue('browsers')] : ['ChromeHeadless', 'FirefoxHeadless'];
-    new Karma({
-        configFile: __dirname + '/../../karma.conf.js',
-        browsers:   browsers,
-        singleRun:  !CLIOptions.hasFlag('watch')
-    }, done).start();
-}
+import { CLIOptions } from 'aurelia-cli';
 
-export function selenium(done) {
-    gulp.task('default', () => {
-            gulp.src(__dirname + '/../../test/selenium/**/*-test.js', {read: false})
-            // gulp-mocha needs filepaths so you can't have any plugins before it 
-                .pipe(mocha({reporter: 'nyan'}));
-            done();
-        });
-}
+export default (cb) => {
+    let options = packageJson.jest;
 
-export default unit
+    if (CLIOptions.hasFlag('watch')) {
+        Object.assign(options, { watchAll: true});
+    }
+
+    runCLI(options, [path.resolve(__dirname, '../../')]).then(({ results }) => {
+        if (results.numFailedTests || results.numFailedTestSuites) {
+            cb('Tests Failed');
+        } else {
+            cb();
+        }
+    });
+};

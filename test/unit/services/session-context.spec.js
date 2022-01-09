@@ -17,31 +17,32 @@ import {SessionContext} from 'services/session-context';
 
 describe('SessionContext test suite', () => {
     let obj;
+    let spiedFn;
 
     beforeEach( () => {
         obj = {
             fn: () => { }
         };
-        spyOn(obj, 'fn');
+        spiedFn = jest.spyOn(obj, 'fn');
     });
 
     it('add a callback and verify proper removal', () => {
         SessionContext.addContextListener("event-1", obj.fn);
         SessionContext.removeContextListener("event-1",obj.fn);
         SessionContext.publish("event-1");
-        expect( obj.fn.calls.any()).toEqual(false);
+        expect(spiedFn).not.toHaveBeenCalled();
     });
 
     it('add a callback and verify proper publish', () => {
         SessionContext.addContextListener("event-2", obj.fn);
         SessionContext.publish("event-2");
-        expect( obj.fn.calls.count()).toEqual(1);
+        expect(spiedFn).toHaveBeenCalled();
     });
 
     it('remove a callback that is not mapped', () => {
         SessionContext.removeContextListener("event-3",obj.fn);
         SessionContext.publish("event-3");
-        expect( obj.fn.calls.any()).toEqual(false);
+        expect(spiedFn).not.toHaveBeenCalled();
     });
 
 });

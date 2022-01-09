@@ -10,13 +10,6 @@
         max-height: 15.5rem;
 
         table {
-            .editing-row td {
-                padding-left: $theme-padding-thin;
-            }
-
-            td {
-                padding-left: $theme-padding-base + $theme-padding-thin;
-            }
             .col-primary {
                 width: 3rem;
             }
@@ -36,13 +29,15 @@
             }
         }
     }
-    thead {
-        border: $theme-border;
-    }
+
     tbody {
         border-right:  $theme-border;
         border-left:   $theme-border;
         border-bottom: $theme-border;
+
+        td {
+            vertical-align: middle;
+        }
     }
 
     .editing-row {

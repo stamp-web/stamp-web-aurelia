@@ -1,5 +1,4 @@
 @import "theme/_semantic";
-//@import "../node_modules/bootstrap/less/mixins/buttons.less";
 
 html {
     height: 100%;
@@ -164,11 +163,11 @@ table {
 
 #nprogress {
     .bar {
-        background: $progress-color !important;
+        background: $theme-progress-color !important;
         height:     3px;
     }
 
     .peg {
-        box-shadow: 0 0 10px $progress-color, 0 0 5px $progress-working !important;
+        box-shadow: 0 0 10px $theme-progress-color, 0 0 5px $theme-progress-working !important;
     }
 }

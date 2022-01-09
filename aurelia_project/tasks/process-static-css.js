@@ -1,5 +1,5 @@
 import gulp from 'gulp';
-import sass from 'gulp-sass';
+import sass from 'gulp-dart-sass';
 import cleanCSS from 'gulp-clean-css';
 import project from '../aurelia.json';
 import path from 'path';

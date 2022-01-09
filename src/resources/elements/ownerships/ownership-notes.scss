@@ -11,9 +11,3 @@ ownership-notes {
         color: $theme-warning-color;
     }
 }
-
-.tooltip-label {
-    &:after {
-        content: ': ';
-    }
-}

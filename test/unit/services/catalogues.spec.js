@@ -13,18 +13,19 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+import {createSpyObj} from 'jest-createspyobj';
 import {Catalogues} from 'services/catalogues';
 
 describe('Catalogue service test suite', () => {
 
-    let http = jasmine.createSpyObj('http', ['configure']);
+    let http = createSpyObj('http', ['configure']);
 
     describe('sortFn validation', () => {
         it('correctly ensures older issues are lower than newer issues', () => {
             let c = new Catalogues(http, {});
             let m = {
                 issue: 1928,
-                name: 'test catalogue'
+                name:  'test catalogue'
             };
             let result = c.sortFunc(m);
             expect(result).toBe(-1928);

@@ -1,7 +1,7 @@
 @import "../../theme/_semantic.scss";
 
 .purchase-form {
-    width:     50rem;
+    width: 50rem;
     font-size: $theme-font-size-sm;
 
     ai-dialog-body {
@@ -9,33 +9,41 @@
         flex-direction: column;
 
         .dialog-title {
-            font-size:        $theme-font-size-base;
+            align-items: center;
+            font-size: $theme-font-size-base;
             background-color: $theme-appbar-bg;
-            color:            $theme-appbar-color;
-            padding:          $theme-padding-base;
+            color: $theme-appbar-color;
+            display: flex;
+            height: 4rem;
+            padding: $theme-padding-base;
         }
 
         .dialog-content {
-            padding:          $theme-padding-thick;
+            padding: $theme-padding-thick;
             background-color: $theme-panel-bg;
-            height:           20.5rem;
+            height: 20.5rem;
 
             form {
                 padding: 0;
 
+                > .row {
+                    margin-bottom: $theme-margin-base;
+                    min-height: 2rem;
+                }
+
                 .label-value {
-                    text-align:   left;
+                    text-align: left;
                     padding-left: $theme-padding-thin;
                 }
 
                 .price-paid {
                     padding-left: 0;
-                    display:      flex;
+                    display: flex;
 
                     input {
-                        width:        7.5rem;
+                        width: 7.5rem;
                         margin-right: $theme-margin-thin;
-                        font-size:    $theme-font-size-sm;
+                        font-size: $theme-font-size-sm;
                     }
                 }
 
@@ -46,26 +54,26 @@
 
                 .checkbox {
                     padding-left: calc(33% + #{$theme-padding-thin});
-                    width:        100%;
+                    width: 100%;
 
                     input {
-                        top:          50%;
-                        transform:    translate(0, -50%);
-                        position:     relative;
+                        top: 50%;
+                        transform: translate(0, -50%);
+                        position: relative;
                         margin-right: $theme-margin-thin;
                     }
                 }
 
                 .purchase-currency {
-                    position:  relative;
-                    top:       50%;
+                    position: relative;
+                    top: 50%;
                     transform: translate(0, -50%);
                 }
 
                 .help-block {
-                    width:         100%;
+                    width: 100%;
                     margin-bottom: 0;
-                    padding-left:  calc(33% + #{$theme-padding-thin});
+                    padding-left: calc(33% + #{$theme-padding-thin});
                 }
 
             }
@@ -92,7 +100,8 @@ ai-dialog-footer {
 
     .messaging {
         text-align: left;
-        font-size:  $theme-font-size-sm;
+        font-size: $theme-font-size-sm;
+
         i {
             color: $theme-invalid-color;
         }
@@ -103,6 +112,7 @@ ai-dialog-footer {
         margin-right: $theme-margin-base;
 
         button.btn {
+            height: $theme-btn-action-height;
             margin-left: $theme-margin-thin;
         }
     }

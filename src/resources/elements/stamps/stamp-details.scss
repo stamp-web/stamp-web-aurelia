@@ -6,9 +6,19 @@ stamp-details {
             font-size: $theme-font-size-xs;
         }
     }
+
+    .rate-input-wrapper {
+        flex-wrap: nowrap;
+
+        .rate-input {
+            width: 12rem;
+        }
+
+    }
+
     .description, .countryRef {
         .help-block {
-            left:      calc(25% + #{$theme-margin-thick}); // col-3 for the labels
+            left:      25%;
             position:  relative;
             top:       0.2rem;
             max-width: 40rem;

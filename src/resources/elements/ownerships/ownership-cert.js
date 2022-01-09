@@ -18,31 +18,42 @@ import {I18N} from 'aurelia-i18n';
 
 @customElement('ownership-cert')
 @inject(Element, I18N)
-@bindable('model')
 export class OwnershipCertCustomElement {
 
     hasCert = false;
     iconCls = "";
+
+    @bindable model;
 
     constructor(element, i18n) {
         this.element = element;
         this.i18n = i18n;
     }
 
-    modelChanged(newValue) {
+    modelChanged() {
         this.iconCls = '';
-        let self = this;
-        $(self.element).find('.tooltip').remove(); // remove any tooltips
-        if (newValue) {
-            self.hasCert = ( newValue.cert);
-            self.iconCls = ( self.hasCert ) ? 'sw-icon-ribbon' : '';
-            if (self.hasCert) {
-                $(self.element).tooltip({
-                    html: true,
-                    container: 'body',
-                    title: self.i18n.tr('tooltip.cert')
-                });
+        if (this.model) {
+            this.hasCert = this.model.cert;
+            this.iconCls = (this.hasCert) ? 'sw-icon-ribbon' : '';
+            this.createTooltip();
+        }
+    }
+
+    createTooltip() {
+        if(this.hasCert) {
+            if(this.tooltip) {
+                this.tooltip.dispose();
             }
+            let title = this.i18n.tr('tooltip.cert');
+            this.tooltip = new window.Bootstrap.Tooltip(this.element, {
+                html: true,
+                delay: {show: 500, hide: 100},
+                sanitize: false,
+                placement: 'bottom',
+                trigger: 'hover',
+                container: 'body',
+                title: title
+            });
         }
     }
 }

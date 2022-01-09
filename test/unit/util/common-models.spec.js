@@ -13,6 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+import {createSpyObj} from 'jest-createspyobj';
 import {EnumeratedTypeHelper, ConditionHelper, StampHelper, Condition, Defects} from 'util/common-models';
 import _ from 'lodash';
 
@@ -58,8 +59,8 @@ describe('StampHelper test suite', () => {
         let scottCatalogue;
 
         beforeEach(() => {
-            countryServiceSpy = jasmine.createSpyObj('countryService', ['getById']);
-            catalogueServiceSpy = jasmine.createSpyObj('catalogueService', ['getById']);
+            countryServiceSpy = createSpyObj('countryService', ['getById']);
+            catalogueServiceSpy = createSpyObj('catalogueService', ['getById']);
 
             country = {
                 name: 'Germany',
@@ -94,16 +95,16 @@ describe('StampHelper test suite', () => {
         });
 
         it('proper matches for mint stamp', () => {
-            countryServiceSpy.getById.and.returnValue(country);
-            catalogueServiceSpy.getById.and.returnValue(michelCatalogue);
+            countryServiceSpy.getById.mockReturnValue(country);
+            catalogueServiceSpy.getById.mockReturnValue(michelCatalogue);
 
             let path = StampHelper.calculateImagePath(stamp, true, true, countryServiceSpy, catalogueServiceSpy);
             expect(path).toEqual('Germany/26a.jpg');
         });
 
         it('proper matches for used stamp with path', () => {
-            countryServiceSpy.getById.and.returnValue(country);
-            catalogueServiceSpy.getById.and.returnValue(michelCatalogue);
+            countryServiceSpy.getById.mockReturnValue(country);
+            catalogueServiceSpy.getById.mockReturnValue(michelCatalogue);
             stamp.catalogueNumbers[0].condition = 2;
 
             let path = StampHelper.calculateImagePath(stamp, true, false, countryServiceSpy, catalogueServiceSpy);
@@ -112,8 +113,8 @@ describe('StampHelper test suite', () => {
         });
 
         it('proper matches for used stamp without path', () => {
-            countryServiceSpy.getById.and.returnValue(country);
-            catalogueServiceSpy.getById.and.returnValue(michelCatalogue);
+            countryServiceSpy.getById.mockReturnValue(country);
+            catalogueServiceSpy.getById.mockReturnValue(michelCatalogue);
             stamp.catalogueNumbers[0].condition = 2;
 
             let path = StampHelper.calculateImagePath(stamp, false, false, countryServiceSpy, catalogueServiceSpy);
@@ -122,8 +123,8 @@ describe('StampHelper test suite', () => {
         });
 
         it('proper matches for on cover stamp with path', () => {
-            countryServiceSpy.getById.and.returnValue(country);
-            catalogueServiceSpy.getById.and.returnValue(michelCatalogue);
+            countryServiceSpy.getById.mockReturnValue(country);
+            catalogueServiceSpy.getById.mockReturnValue(michelCatalogue);
             stamp.catalogueNumbers[0].condition = 6;
 
             let path = StampHelper.calculateImagePath(stamp, true, false, countryServiceSpy, catalogueServiceSpy);
@@ -132,8 +133,8 @@ describe('StampHelper test suite', () => {
         });
 
         it('proper matches for used stamp with path and scott catalogue', () => {
-            countryServiceSpy.getById.and.returnValue(country);
-            catalogueServiceSpy.getById.and.returnValue(scottCatalogue);
+            countryServiceSpy.getById.mockReturnValue(country);
+            catalogueServiceSpy.getById.mockReturnValue(scottCatalogue);
             stamp.catalogueNumbers[0].condition = 6;
             stamp.catalogueNumbers[0].catalogueRef = 15;
 

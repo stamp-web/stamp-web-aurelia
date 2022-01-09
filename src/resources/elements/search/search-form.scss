@@ -48,6 +48,7 @@ search-form {
     }
 
     .checkbox input[type="checkbox"], .radio input[type="radio"] {
+        margin-bottom: $theme-margin-base;
         margin-left: 0;
         top: 0.2rem;
         transform: none;

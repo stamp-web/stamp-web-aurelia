@@ -13,7 +13,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {customElement, inject, bindable} from 'aurelia-framework';
+
+import {customElement, inject, computedFrom, bindable} from 'aurelia-framework';
 import {I18N} from 'aurelia-i18n';
 import {EnumeratedTypeHelper, Defects, Deceptions} from '../../../util/common-models';
 
@@ -21,13 +22,16 @@ import _ from 'lodash';
 
 @customElement('ownership-notes')
 @inject(Element, I18N)
-@bindable('model')
 export class OwnershipNotesCustomElement {
 
     hasDefects = false;
     hasDeception = false;
     hasNotes = false;
     iconCls = "";
+
+    tooltip;
+
+    @bindable model;
 
     constructor(element, i18n) {
         this.element = element;
@@ -36,24 +40,37 @@ export class OwnershipNotesCustomElement {
 
     modelChanged(newValue) {
         this.iconCls = '';
-        let self = this;
-        $(self.element).find('.tooltip').remove(); // remove any tooltips
         if( newValue ) {
-            self.hasNotes = ( newValue.notes && newValue.notes !== '');
-            self.hasDeception = (+newValue.deception > 0 );
-            self.hasDefects = (+newValue.defects > 0 );
-            self.iconCls = ( self.hasDeception ) ? 'sw-icon-deception' : ( self.hasDefects ) ? 'sw-icon-defect' : ( self.hasNotes ) ? 'sw-icon-info' : '';
-            if( self.visible ) {
-                $(self.element).tooltip({
-                    html: true,
-                    container: 'body',
-                    title: self.getPopupText.bind(self)
-                });
+            this.hasNotes = ( newValue.notes && newValue.notes !== '');
+            this.hasDeception = (+newValue.deception > 0 );
+            this.hasDefects = (+newValue.defects > 0 );
+            this.iconCls = ( this.hasDeception ) ? 'sw-icon-deception' : ( this.hasDefects ) ? 'sw-icon-defect' : ( this.hasNotes ) ? 'sw-icon-info' : '';
+            if( this.visible ) {
+                this.createTooltip();
             }
         }
     }
 
-    getPopupText() {
+    createTooltip() {
+        if(this.visible) {
+            if(this.tooltip) {
+                this.tooltip.dispose();
+            }
+            let title = this.popupText;
+            this.tooltip = new window.Bootstrap.Tooltip(this.element, {
+                html: true,
+                delay: {show: 500, hide: 100},
+                sanitize: false,
+                placement: 'bottom',
+                trigger: 'hover',
+                container: 'body',
+                title: title
+            });
+        }
+    }
+
+    @computedFrom('model.defects', 'model.deception', 'model.notes')
+    get popupText() {
         let text = '';
         if( this.hasDefects) {
             let values = EnumeratedTypeHelper.asEnumArray( Defects, this.model.defects );
@@ -83,6 +100,7 @@ export class OwnershipNotesCustomElement {
         }
         return text;
     }
+
     get visible() {
         return this.hasDeception || this.hasDefects || this.hasNotes;
     }

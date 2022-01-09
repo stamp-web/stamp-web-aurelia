@@ -32,7 +32,6 @@ import {asCurrencyValueConverter} from '../../resources/value-converters/as-curr
 import {PdfGenerator} from '../../reports/pdf-generator';
 import {ReportHelper} from '../../reports/report-helper';
 import {Predicate, Operators, Parser} from 'odata-filter-parser';
-import bootbox from 'bootbox';
 import {DialogService} from 'aurelia-dialog';
 import _ from 'lodash';
 
@@ -412,7 +411,7 @@ export class StampList extends EventManaged {
         });
 
         this.subscribe(EventNames.popupBlocked, () => {
-            bootbox.alert(this.i18next.tr('errors.popup-blocked'));
+            window.alert(this.i18next.tr('errors.popup-blocked'));
         });
 
         this.subscribe(EventNames.panelCollapsed, config => {
@@ -464,17 +463,10 @@ export class StampList extends EventManaged {
                 });
             };
 
-            bootbox.confirm({
-                size:      'large',
-                className: 'sw-dialog-wrapper',
-                message:   "Delete " + stamp.rate + ' - ' + stamp.description + "?",
-                callback:  (result) => {
-                    if (result === true) {
-                        removeCallback.call(this, stamp);
+            if(window.confirm(`Delete ${stamp.rate} - ${stamp.description}?`)) {
+                removeCallback.call(this, stamp);
+            }
 
-                    }
-                }
-            });
         });
     }
 

@@ -17,7 +17,6 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {I18N} from 'aurelia-i18n';
 import {LogManager, bindable} from 'aurelia-framework';
 import {EventNames, StorageKeys, KeyCodes} from '../../../events/event-managed';
-import bootbox from 'bootbox';
 import {Operators, Predicate} from 'odata-filter-parser';
 import _ from 'lodash';
 
@@ -103,16 +102,10 @@ export class EntityListManage {
             });
         };
         let msg = this.i18n.tr('prompts.delete-item', {name: model.name});
-        bootbox.confirm({
-            size: 'small',
-            message: msg,
-            callback: function (result) {
-                if (result === true) {
-                    _remove.call(self, model);
 
-                }
-            }
-        });
+        if(window.confirm(msg)) {
+            _remove.call(self, model);
+        }
     }
 
     clear() {

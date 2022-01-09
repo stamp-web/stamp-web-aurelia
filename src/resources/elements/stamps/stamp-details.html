@@ -7,7 +7,7 @@
     <panel heading-text="${'editor.details-title'|t}">
         <span slot="actions">
             <div class="btn-group">
-                <button class="btn btn-sm btn-secondary ${(model.wantList) ? '' : 'active'}" show.bind="!editing"
+                <button class="btn btn-sm btn-secondary ${(model.wantList) ? '' : 'active'}" if.bind="!editing"
                         type="button" click.delegate="changeEditMode('stamp')" title="${'editor.createStamp-hint'|t}">
                     <span class="sw-icon-stamp"></span>
                 </button>
@@ -16,7 +16,7 @@
                         click.delegate="changeEditMode('wantList')" title="${'editor.createWantlist-hint'|t}">
                     <span class="sw-icon-wantlist"></span>
                 </button>
-                <button class="btn btn-sm btn-secondary ${(model.wantList) ? 'active' : ''}" show.bind="editing"
+                <button class="btn btn-sm btn-secondary ${(model.wantList) ? 'active' : ''}" if.bind="editing"
                         type="button"
                         click.delegate="changeEditMode('create')" title="${'editor.createStamp-hint'|t}">
                     <span class="sw-icon-plus"></span>
@@ -33,9 +33,9 @@
                                    config.bind="{ id: 'details-countryRef', tabIndex: 40, labelProperty: 'name', valueProperty: 'id', filterSearch: true, caption: 'editor.country-select' }"></select-picker>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row rate-input-wrapper">
                 <label for="details-rate" class="col-sm-3 col-form-label">${'editor.rate'|t}</label>
-                <div class="col-sm-3">
+                <div class="rate-input">
                     <input type="text" autocomplete="off" tabindex="51" required aria-required="true"
                            class="form-control"
                            value.bind="model.rate | emptyText & validate:rules" id="details-rate"

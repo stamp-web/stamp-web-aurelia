@@ -4,7 +4,7 @@
     <require from="../../resources/elements/select-picker/select-picker"></require>
     <require from="views/catalogues/catalogue-editor.css"></require>
 
-	<form class="form-horizontal" validation-renderer="bootstrap-form">
+	<form class="form-horizontal catalogue-editor" validation-renderer="bootstrap-form">
 		<div class="form-group row">
 			<label for="editor-catalogueType" class="col-sm-3">${'editor.catalogue-type'|t}</label>
 			<div class="col-sm-9">
@@ -13,9 +13,9 @@
                 </select-picker>
 			</div>
 		</div>
-        <div class="form-group row">
+        <div class="form-group row editor-issue-row">
             <label for="editor-issue" class="col-sm-3">${'editor.issue'|t}</label>
-            <div class="col-sm-9">
+            <div class="editor-issue-wrapper">
                 <input id="editor-issue" tabindex="110" class="form-control" type="text" value.bind="model.issue & validate:rules">
             </div>
         </div>

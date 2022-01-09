@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+import {createSpyObj} from 'jest-createspyobj';
 import {StampList} from 'views/stamps/stamp-list';
 import {Stamps} from 'services/stamps';
 import {EventAggregator} from 'aurelia-event-aggregator';
@@ -22,7 +23,7 @@ describe('StampListComponent test suite', () => {
 
     let list;
     let eventBus = new EventAggregator();
-    let http = jasmine.createSpyObj('http', ['configure']);
+    let http = createSpyObj('http', ['configure']);
     let stampService = new Stamps(http, eventBus);
 
     beforeEach(() => {

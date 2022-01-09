@@ -6,12 +6,19 @@ panel {
     display:       block;
 
     .panel-header {
+        align-items: center;
         background-color: $theme-panel-contrast-bg;
+        display: flex;
+        height: 3.2rem;
         margin-bottom:    $theme-margin-thin;
-        padding:          $theme-padding-thin $theme-padding-base $theme-padding-base;
+        padding:          $theme-padding-thin $theme-padding-base;
         font-size:        $theme-font-size-base;
+        .panel-title {
+            flex: 1 1 auto;
+            max-width: 100%;
+        }
         .panel-actions {
-            float: right;
+            flex: 0 0 auto;
         }
     }
 

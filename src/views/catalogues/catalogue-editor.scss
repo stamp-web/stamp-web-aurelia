@@ -3,3 +3,17 @@
 #editor-issue {
     max-width: 5.5rem;
 }
+
+.editor-issue-row {
+    align-items: center;
+    flex-wrap: nowrap;
+
+    .editor-issue-wrapper {
+        max-width: 6.5rem;
+    }
+
+    .help-block {
+        padding-left: $theme-padding-thin;
+        padding-top: 0;
+    }
+}
