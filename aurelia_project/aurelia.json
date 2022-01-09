@@ -103,6 +103,7 @@
                     "node_modules/bluebird/js/browser/bluebird.core.js",
                     "node_modules/aurelia-cli/lib/resources/scripts/configure-bluebird.js",
                     "node_modules/jquery/dist/jquery.js",
+                    "node_modules/@popperjs/core/dist/umd/popper.js",
                     "node_modules/requirejs/require.js"
                 ],
                 "dependencies": [
