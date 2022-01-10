@@ -106,10 +106,14 @@
         "testEnvironment": "node",
         "collectCoverage": true,
         "reporters": [
-            "default", [ "jest-junit", {
-                "outputDirectory": "test/junit",
-                "outputName": "TESTS.xml"
-            }]
+            "default",
+            [
+                "jest-junit",
+                {
+                    "outputDirectory": "test/junit",
+                    "outputName": "TESTS.xml"
+                }
+            ]
         ],
         "collectCoverageFrom": [
             "src/**/*.js",
