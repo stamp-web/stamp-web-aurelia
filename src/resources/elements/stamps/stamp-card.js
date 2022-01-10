@@ -13,19 +13,21 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {bindable, customElement, inject} from 'aurelia-framework';
+import {bindable, customElement, computedFrom, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {BindingEngine} from 'aurelia-binding';
 import {EventNames} from '../../../events/event-managed';
 import {Preferences} from '../../../services/preferences';
 import {LocationHelper} from '../../../util/location-helper';
+import {byNameValueConverter} from '../../../resources/value-converters/by-name';
+import {rateFilterValueConverter} from '../../../resources/value-converters/rate-filter';
 import _ from 'lodash';
 import $ from 'jquery';
 
 var defaultImagePath = "https://drake-server.ddns.net/Thumbnails/";
 
 @customElement('stamp-card')
-@inject(Element, EventAggregator, BindingEngine, Preferences)
+@inject(Element, EventAggregator, BindingEngine, Preferences, byNameValueConverter)
 @bindable('model')
 @bindable('selected')
 @bindable('highlight')
@@ -35,17 +37,20 @@ export class StampCard {
     activeCN;
     imagePath;
 
-    constructor(element, eventBus, $bindingEngine, prefService) {
+    constructor(element, eventBus, $bindingEngine, prefService, byNameConverter) {
         this.element = element;
         this.eventBus = eventBus;
         this.prefService = prefService;
         this.bindingEngine = $bindingEngine;
+        this.byNameConverter = byNameConverter;
+        this.rateFilter = new rateFilterValueConverter();
     }
 
     modelChanged(newValue) {
         if (newValue) {
             this.bindActiveNumber();
             this.bindImagePath();
+            this.createTooltips();
         }
     }
 
@@ -132,8 +137,53 @@ export class StampCard {
         this.eventBus.publish(EventNames.stampEdit, this.model);
     }
 
+    @computedFrom('model', 'model.stampOwnerships', 'model.stampOwnerships.length')
     get ownership() {
         return ( this.model && !_.isEmpty(this.model.stampOwnerships) ) ? _.first(this.model.stampOwnerships) : undefined;
+    }
+
+    @computedFrom('model.countryRef')
+    get countryName() {
+        let name = this.byNameConverter.toView(this.model.countryRef, 'countries');
+        return name;
+    }
+
+    @computedFrom('model', 'model.stampOwnerships', 'model.stampOwnerships[0].notes', 'model.stampOwnerships[0].defects', 'model.stampOwnerships[0].deception')
+    get showNotes() {
+        return (this.ownership && (this.ownership.notes || this.ownership.defects > 0 || this.ownership.deception > 0));
+    }
+
+    @computedFrom('model.rate')
+    get rate() {
+        return this.rateFilter.toView(this.model.rate);
+    }
+
+    createTooltips() {
+        _.defer(() => { // need to defer since we are checking offsetWidth - need it to be rendered
+            if (this.model) {
+                if (this.tooltip) {
+                    this.tooltip.dispose();
+                }
+                let overflow = (el) => {
+                    return (el.offsetWidth < el.scrollWidth);
+                };
+                if (!overflow($(this.element).find('.description')[0]) && !overflow($(this.element).find('.text')[0])) {
+                    return;
+                }
+
+                let title = `${this.model.activeCatalogueNumber.number} ${this.countryName}<br/>${this.rate} - ${this.model.description}`;
+                this.tooltip = new window.Bootstrap.Tooltip($(this.element).find('.text-block')[0], {
+                    html:      true,
+                    delay:     {show: 750, hide: 100},
+                    sanitize:  false,
+                    placement: 'top',
+                    trigger:   'hover',
+                    container: 'body',
+                    title:     title
+                });
+            }
+        });
+
     }
 }
 

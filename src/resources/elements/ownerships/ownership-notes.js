@@ -15,14 +15,16 @@
  */
 
 import {customElement, inject, computedFrom, bindable} from 'aurelia-framework';
+import {BindingEngine} from 'aurelia-binding';
 import {I18N} from 'aurelia-i18n';
 import {EnumeratedTypeHelper, Defects, Deceptions} from '../../../util/common-models';
 
 import _ from 'lodash';
 
 @customElement('ownership-notes')
-@inject(Element, I18N)
-export class OwnershipNotesCustomElement {
+@inject(Element, I18N, BindingEngine)
+@bindable('model')
+export class OwnershipNotes {
 
     hasDefects = false;
     hasDeception = false;
@@ -31,27 +33,47 @@ export class OwnershipNotesCustomElement {
 
     tooltip;
 
-    @bindable model;
+    _modelSubscribers = [];
 
-    constructor(element, i18n) {
+    constructor(element, i18n, bindingEngine) {
         this.element = element;
         this.i18n = i18n;
+        this.bindingEngine = bindingEngine;
     }
 
-    modelChanged(newValue) {
+    detach() {
+        this._dispose();
+    }
+
+    modelChanged() {
         this.iconCls = '';
-        if( newValue ) {
-            this.hasNotes = ( newValue.notes && newValue.notes !== '');
-            this.hasDeception = (+newValue.deception > 0 );
-            this.hasDefects = (+newValue.defects > 0 );
-            this.iconCls = ( this.hasDeception ) ? 'sw-icon-deception' : ( this.hasDefects ) ? 'sw-icon-defect' : ( this.hasNotes ) ? 'sw-icon-info' : '';
-            if( this.visible ) {
-                this.createTooltip();
-            }
+        this._dispose();
+        if (this.model) {
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'notes').subscribe(this._calculateNotes.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'defects').subscribe(this._calculateNotes.bind(this)));
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'deception').subscribe(this._calculateNotes.bind(this)));
+            this._calculateNotes();
         }
     }
 
-    createTooltip() {
+    _dispose() {
+        this._modelSubscribers.forEach(sub => {
+            sub.dispose();
+        });
+        this._modelSubscribers = [];
+    }
+
+    _calculateNotes() {
+        this.hasNotes = !!(this.model.notes && this.model.notes !== '');
+        this.hasDeception = (+this.model.deception > 0);
+        this.hasDefects = (+this.model.defects > 0);
+        this.iconCls = (this.hasDeception) ? 'sw-icon-deception' : (this.hasDefects) ? 'sw-icon-defect' : (this.hasNotes) ? 'sw-icon-info' : '';
+        if (this.visible) {
+            this._createTooltip();
+        }
+    }
+
+    _createTooltip() {
         if(this.visible) {
             if(this.tooltip) {
                 this.tooltip.dispose();
@@ -101,8 +123,9 @@ export class OwnershipNotesCustomElement {
         return text;
     }
 
+    @computedFrom('iconCls')
     get visible() {
-        return this.hasDeception || this.hasDefects || this.hasNotes;
+        return !_.isEmpty(this.iconCls);
     }
 
 }

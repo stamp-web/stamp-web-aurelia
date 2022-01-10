@@ -77,31 +77,37 @@ stamp-card {
             }
         }
 
-        .text-header {
-            width:     100%;
-            display:   flex;
-            flex:      1 1 auto;
-            position:  relative;
-            font-size: $theme-font-size-xs;
-            .text-status {
-                display:       flex;
-                float:         left;
-                padding-right: $theme-padding-base;
-                margin-left:   -1 * $theme-padding-base;
+        .text-block {
+            display: flex;
+            flex-direction: column;
+
+            .text-header {
+                width:     100%;
+                display:   flex;
+                flex:      1 1 auto;
+                position:  relative;
+                font-size: $theme-font-size-xs;
+                .text-status {
+                    display:       flex;
+                    float:         left;
+                    padding-right: $theme-padding-base;
+                    margin-left:   -1 * $theme-padding-base;
+                }
+                .text {
+                    width:      100%;
+                    @include nowrap-text;
+                    display:    block;
+                    padding:    0 $theme-padding-base;
+                }
             }
-            .text {
+
+            .description {
                 width:      100%;
                 @include nowrap-text;
-                display:    block;
-                padding:    0 $theme-padding-base;
+                font-size:  $theme-font-size-xs;
+                padding:    $theme-padding-thin $theme-padding-base $theme-padding-base $theme-padding-base;
             }
-        }
 
-        .description {
-            width:      100%;
-            @include nowrap-text;
-            font-size:  $theme-font-size-xs;
-            padding:    $theme-padding-thin $theme-padding-base $theme-padding-base $theme-padding-base;
         }
 
     }

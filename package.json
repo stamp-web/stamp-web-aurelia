@@ -103,7 +103,7 @@
         "setupFiles": [
             "<rootDir>/test/jest-pretest.js"
         ],
-        "testEnvironment": "node",
+        "testEnvironment": "jsdom",
         "collectCoverage": true,
         "reporters": [
             "default",

@@ -34,6 +34,7 @@ $input-color:        $body-color !default;
         .tooltip-arrow {
             &::before {
                 border-bottom-color: $primary;
+                border-top-color: $primary;
             }
         }
     }

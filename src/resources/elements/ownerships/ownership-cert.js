@@ -14,45 +14,67 @@
  limitations under the License.
  */
 import {customElement, inject, bindable} from 'aurelia-framework';
+import {BindingEngine} from 'aurelia-binding';
 import {I18N} from 'aurelia-i18n';
 
 @customElement('ownership-cert')
-@inject(Element, I18N)
-export class OwnershipCertCustomElement {
+@inject(Element, I18N, BindingEngine)
+@bindable('model')
+export class OwnershipCert {
 
     hasCert = false;
     iconCls = "";
 
-    @bindable model;
+    _modelSubscribers = [];
 
-    constructor(element, i18n) {
+    constructor(element, i18n, bindingEngine) {
         this.element = element;
         this.i18n = i18n;
+        this.bindingEngine = bindingEngine;
+    }
+
+    detach() {
+        this._dispose();
     }
 
     modelChanged() {
         this.iconCls = '';
+        this._dispose();
         if (this.model) {
-            this.hasCert = this.model.cert;
-            this.iconCls = (this.hasCert) ? 'sw-icon-ribbon' : '';
-            this.createTooltip();
+            this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'cert').subscribe(this._calculateCert.bind(this)));
+            this._calculateCert();
         }
     }
 
-    createTooltip() {
-        if(this.hasCert) {
-            if(this.tooltip) {
-                this.tooltip.dispose();
-            }
+    _dispose() {
+        this._modelSubscribers.forEach(sub => {
+            sub.dispose();
+        });
+        this._modelSubscribers = [];
+    }
+
+    _calculateCert() {
+        if (this.model) {
+            this.hasCert = !!this.model.cert;
+            this.iconCls = (this.hasCert) ? 'sw-icon-ribbon' : '';
+            this._createTooltip();
+        }
+    }
+
+    _createTooltip() {
+        if (this.tooltip) {
+            this.tooltip.dispose();
+        }
+        if (this.hasCert) {
             let title = this.i18n.tr('tooltip.cert');
             this.tooltip = new window.Bootstrap.Tooltip(this.element, {
-                html: true,
-                delay: {show: 500, hide: 100},
-                sanitize: false,
+                html:      true,
+                delay:     {show: 500, hide: 100},
+                sanitize:  false,
                 placement: 'bottom',
-                trigger: 'hover',
+                trigger:   'hover',
                 container: 'body',
-                title: title
+                title:     title
             });
         }
     }

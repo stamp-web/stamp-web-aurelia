@@ -23,19 +23,18 @@
                 </button>
             </div>
         </div>
-        <div class="text-header">
-
-            <span class="text">${activeCN.number} ${model.countryRef | byName:'countries' }</span>
-            <div class="text-status">
-                <ownership-notes model.one-way="ownership" show.bind="ownership.notes || ownership.defects> 0 || ownership.deception > 0"></ownership-notes>
-                <ownership-cert model.one-way="ownership" show.bind="ownership.cert"></ownership-cert>
+        <div class="text-block">
+            <div class="text-header">
+                <span class="text">${activeCN.number} ${countryName}</span>
+                <div class="text-status">
+                    <ownership-notes model.one-way="ownership" if.bind="showNotes"></ownership-notes>
+                    <ownership-cert model.one-way="ownership" if.bind="ownership.cert"></ownership-cert>
+                </div>
+            </div>
+            <div class="description">
+                ${model.rate | rateFilter} - ${model.description}
             </div>
         </div>
-        <div class="description" title="${model.rate} - ${model.description}">
-            ${model.rate | rateFilter} - ${model.description}
-        </div>
-
-
     </div>
 
 
