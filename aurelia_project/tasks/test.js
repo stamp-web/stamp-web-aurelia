@@ -1,11 +1,9 @@
 import { runCLI } from '@jest/core';
 import path from 'path';
-import packageJson from '../../package.json';
-
 import { CLIOptions } from 'aurelia-cli';
 
 export default (cb) => {
-    let options = packageJson.jest;
+    let options = {};
 
     if (CLIOptions.hasFlag('watch')) {
         Object.assign(options, { watchAll: true});
