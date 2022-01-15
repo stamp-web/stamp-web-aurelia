@@ -39,7 +39,7 @@
             <div class="form-group row">
                 <label for="owner-defects" class="col-3 col-form-label">${'editor.defects'|t}</label>
                 <div class="col-9">
-                    <select-picker items.bind="defects" value.two-way="model.defects | bitwiseToArray:defects.length"
+                    <select-picker items.bind="defects" value.bind="model.defects | bitwiseToArray:defects.length"
                                    config.bind="{ id: 'owner-defects', tabIndex: 104, name: 'defects', labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, multiple: true, caption: 'editor.defects-select' }">
                     </select-picker>
                 </div>
@@ -48,7 +48,7 @@
                 <label for="owner-deceptions" class="col-3 col-form-label">${'editor.deceptions'|t}</label>
                 <div class="col-9">
                     <select-picker items.bind="deceptions"
-                                   value.two-way="model.deception | bitwiseToArray:deceptions.length"
+                                   value.bind="model.deception | bitwiseToArray:deceptions.length"
                                    config.bind="{ id: 'owner-deceptions', tabIndex: 107, name: 'deceptions', labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, multiple: true, caption: 'editor.deceptions-select' }">
                     </select-picker>
                 </div>

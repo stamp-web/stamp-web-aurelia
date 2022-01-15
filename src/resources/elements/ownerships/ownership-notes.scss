@@ -1,6 +1,8 @@
 @import "../../../theme/_semantic.scss";
 
 ownership-notes {
+    z-index: 10;
+
     .sw-icon-info {
         color: $theme-link-color;
     }

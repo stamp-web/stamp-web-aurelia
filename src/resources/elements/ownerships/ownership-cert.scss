@@ -1,6 +1,8 @@
 @import "../../../theme/_semantic.scss";
 
 ownership-cert {
+    z-index: 10;
+
     .sw-icon-ribbon {
         color: $theme-success-color;
     }

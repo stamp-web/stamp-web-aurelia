@@ -79,7 +79,7 @@ select-picker {
             .select2-selection__clear {
                 color:  $theme-clear-color;
                 margin-left: $theme-margin-thinner;
-                margin-right: 0;
+                margin-right: $theme-margin-thinner;
                 margin-top: 0;
                 transform: scale(1.5) translateY(0.5rem);
             }

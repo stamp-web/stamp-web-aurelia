@@ -24,7 +24,7 @@ import select2 from 'select2'; //eslint-disable-line no-unused-vars
 @customElement('select-picker')
 export class Select2Picker {
 
-    @bindable({defaultBindingMode : bindingMode.twoWay}) value;
+    @bindable({defaultBindingMode: bindingMode.twoWay}) value;
     @bindable valueType = 'Number';
     @bindable valueProperty = 'id';
     @bindable labelProperty = 'name';
@@ -51,37 +51,37 @@ export class Select2Picker {
 
         let options = {
             placeholder: caption,
-            allowClear: true
-         };
+            allowClear:  true
+        };
 
-        if( typeof this.config.filterSearch !== 'undefined' && this.config.filterSearch === false ) {
+        if (typeof this.config.filterSearch !== 'undefined' && this.config.filterSearch === false) {
             options.minimumResultsForSearch = Infinity;
         }
 
-        if( this.config.valueProperty ) {
+        if (this.config.valueProperty) {
             this.valueProperty = this.config.valueProperty;
         }
-        if( this.config.labelProperty ) {
+        if (this.config.labelProperty) {
             this.labelProperty = this.config.labelProperty;
         }
-        if( this.config.valueType ) {
+        if (this.config.valueType) {
             this.valueType = this.config.valueType;
         }
-        if( typeof this.config.allowClear !== 'undefined') {
+        if (typeof this.config.allowClear !== 'undefined') {
             options.allowClear = this.config.allowClear;
         }
 
-        if( typeof this.config.noSearch !== 'undefined') {
+        if (typeof this.config.noSearch !== 'undefined') {
             options.minimumResultsForSearch = Infinity;
         }
 
-        if( this.config.id ) {
+        if (this.config.id) {
             this.id = this.config.id;
         } else {
-            this.id = 'select-' + parseInt(Math.random() * 16384, 10);
+            this.id = `select-${parseInt(Math.random() * 16384, 10)}`;
         }
 
-        if( this.config.multiple === true || this.multiple === 'true' ) {
+        if (_.get(this, 'config.multiple') === true || _.get(this, 'multiple') === 'true') {
             options.multiple = true;
             this.multiple = true;
         }
@@ -96,7 +96,7 @@ export class Select2Picker {
         this.select2 = $select.select2(options);
 
         let tabIndex = this.config.tabIndex;
-        if( typeof tabIndex === 'undefined' ) {
+        if (typeof tabIndex === 'undefined') {
             tabIndex = -1;
         }
 
@@ -109,9 +109,9 @@ export class Select2Picker {
 
     unbind() {
         let select = this.element.firstElementChild;
-        if( select ) {
+        if (select) {
             const $select = $(select);
-            if( $select.data('select2')) { // depending on the destory state need to check whether it still thinks it is a select2
+            if ($select.data('select2')) { // depending on the destroyed state need to check whether it still thinks it is a select2
                 $select.select2('destroy');
             }
         }
@@ -122,28 +122,29 @@ export class Select2Picker {
      * @param e selection event.
      */
     onSelect(e) {
-        if( e.params && e.params.data ) {
-            let data = e.params.data.id;
-            if( this.multiple === true ) {
-                let val = data;
-                data = (this.value) ? _.clone(this.value) : this._getClearedValue();
-                data.push(val);
-                this.value = _.uniq(data); // prevent duplicates
-            } else if ( this.valueType === 'Number') {
-                this.value = data ? Number.parseInt(data) : this._getClearedValue();
+        if (e.params && e.params.data) {
+            let data = _.get(e, 'params.data.id');
+            let originValue = this.value;
+            if (this.multiple === true) {
+                originValue.push(data);
+                this.value = this._getClearedValue();
+            } else if (this.valueType === 'Number') {
+                originValue = data ? Number.parseInt(data) : this._getClearedValue();
             } else {
-                this.value = data;
+                originValue = data;
             }
-            let changeEvent = EventHelper.changeEvent(data);
-            this.element.dispatchEvent(changeEvent);
+            _.defer(() => { // need to tickle the array
+                this.value = originValue;
+                this.element.dispatchEvent(EventHelper.changeEvent(this.value));
+            });
         }
     }
 
     _getClearedValue() {
         let value = '';
-        if( this.multiple === true ) {
+        if (this.multiple === true) {
             value = [];
-        } else if ( this.valueType === 'Number') {
+        } else if (this.valueType === 'Number') {
             value = -1;
         }
         return value;
@@ -157,15 +158,27 @@ export class Select2Picker {
         return item[this.labelProperty];
     }
 
-    onUnselect(e) {
+    onUnselect() {
         _.defer(() => {
             $(this.select2).off('select2:opening');
         });
     }
 
     onUnselecting(e) {
-        this.value = this._getClearedValue();
-        this.element.dispatchEvent(EventHelper.changeEvent(this.value));
+        let removalValue = _.get(e, 'params.args.data');
+        let origValue = this.value;
+        if (removalValue) {
+            if (this.multiple) {
+                this.value = this._getClearedValue();
+                _.pull(origValue, _.get(removalValue, 'id'));
+            } else {
+                origValue = this._getClearedValue();
+            }
+        }
+        _.defer(() => {
+            this.value = origValue;
+            this.element.dispatchEvent(EventHelper.changeEvent(origValue));
+        });
 
         $(this.select2).on('select2:opening', e => {
             e.preventDefault();
@@ -198,11 +211,11 @@ export class Select2Picker {
      * Handle the conversion of the type from the modeled value to the String equivalence of the value used by select2
      */
     _convertToInternal(val) {
-        if( typeof val === 'undefined' || _.isNil(val)) {
+        if (typeof val === 'undefined' || _.isNil(val)) {
             return undefined;
         }
         let retValue = val;
-        switch(this.valueType) {
+        switch (this.valueType) {
             case 'Number':
                 retValue = val.toString();
                 break;
@@ -215,9 +228,9 @@ export class Select2Picker {
      */
     attached() {
         _.debounce(() => {
-           if( this.items && this.items.length > 0 ) { // cached items are loaded
-               this.valueChanged(this.value);
-           }
+            if (this.items && this.items.length > 0) { // cached items are loaded
+                this.valueChanged(this.value);
+            }
         }, 125)();
     }
 
@@ -229,7 +242,7 @@ export class Select2Picker {
      * @param oldValue
      */
     itemsChanged(newValue, oldValue) { //eslint-disable-line no-unused-vars
-        if( newValue && newValue.length > 0 ) {
+        if (newValue && newValue.length > 0) {
             _.defer(() => {
                 this.valueChanged(this.value);
             });
