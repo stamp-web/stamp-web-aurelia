@@ -195,7 +195,10 @@
                     {
                         "name": "flatpickr",
                         "path": "../node_modules/flatpickr/dist",
-                        "main": "flatpickr.js"
+                        "main": "flatpickr.js",
+                        "resources": [
+                            "flatpickr.min.css"
+                        ]
                     },
                     {
                         "name": "bootstrap",
