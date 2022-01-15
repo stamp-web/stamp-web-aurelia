@@ -1,5 +1,5 @@
 /**
- Copyright 2019 Jason Drake
+ Copyright 2022 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,13 +13,11 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {EnumeratedTypeHelper, ConditionHelper, StampHelper, Condition, Defects} from 'util/common-models';
-import _ from 'lodash';
 import {LocationHelper} from "../../../src/util/location-helper";
 
 describe('LocationHelper test suite', () => {
 
-    describe('resolvePath tests', () => {
+    describe('resolvePath', () => {
 
         it('use default for empty', () => {
             let v = LocationHelper.resolvePath(undefined, 'default');
@@ -39,6 +37,40 @@ describe('LocationHelper test suite', () => {
             let v = LocationHelper.resolvePath({value: 'https://site.com/some/path'}, 'default');
             expect(v).toBe('https://site.com/some/path/');
         });
+    });
 
+    describe('getQueryParameter', () => {
+
+        afterEach(() => {
+           jest.resetAllMocks();
+        });
+
+        let mockLocation = loc => {
+            const location = new URL(loc);
+            location.assign = jest.fn();
+            location.replace = jest.fn();
+            location.reload = jest.fn();
+
+            delete window.location;
+            window.location = location;
+        };
+
+        it('verify extraction of $filter parameter with $filter in parameter value', () => {
+            mockLocation('http://localhost:9000/#/?$filter=(countryName%20eq%20%27$filter%27)&$orderby=number%20asc&$top=1000');
+            let q = LocationHelper.getQueryParameter('$filter');
+            expect(q).toBe('(countryName eq \'$filter\')');
+        });
+
+        it('no parameter in location', () => {
+            mockLocation('http://localhost:9000/#/?$orderby=number%20asc&$top=1000');
+            let q = LocationHelper.getQueryParameter('$filter');
+            expect(q).toBeNull();
+        });
+
+        it('no parameter in location with a default', () => {
+            mockLocation('http://localhost:9000/#/?$orderby=number%20asc&$top=1000');
+            let q = LocationHelper.getQueryParameter('$filter', 'someDefault');
+            expect(q).toBe('someDefault');
+        });
     });
 });

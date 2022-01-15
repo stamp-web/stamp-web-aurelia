@@ -1,5 +1,5 @@
 /**
- Copyright 2017 Jason Drake
+ Copyright 2022 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -22,12 +22,12 @@ function LocationHelperFn() {
         loadResource: (filename, filetype = 'js') => {
             return new Promise((resolve,reject) => {
                 let fileRef;
-                if (filetype == 'js') {
+                if (filetype === 'js') {
                     fileRef = document.createElement('script');
                     fileRef.setAttribute('type', 'text/javascript');
                     fileRef.setAttribute('src', filename);
                 }
-                else if (filetype == 'css') {
+                else if (filetype === 'css') {
                     fileRef = document.createElement('link');
                     fileRef.setAttribute('rel', 'stylesheet');
                     fileRef.setAttribute('type', 'text/css');
@@ -42,20 +42,16 @@ function LocationHelperFn() {
                     };
                     _.defer(() => {
                         document.getElementsByTagName("head")[0].appendChild(fileRef);
-                    })
-
+                    });
                 }
             });
         },
 
-        getQueryParameter: (key, default_) => {
-            if (default_ == null) {
-                default_ = null;
-            }
-            key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-            key = key.replace("$", "\\$");
-            var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
-            var qs = regex.exec(window.location.href);
+        getQueryParameter: (key, default_ = null) => {
+            key = key.replace(/[\[]/g, "\\\[").replace(/[\]]/g, "\\\]");
+            key = key.replace(/\$/g, "\\$");
+            let regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
+            let qs = regex.exec(window.location.href);
             if (qs == null) {
                 return default_;
             } else {

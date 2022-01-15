@@ -15,10 +15,6 @@ stamp-web-aurelia is the web front-end for managing collections of stamps and le
 
 ![Screen shot showing Editing in Stamp-Web](https://i.imgur.com/1f8SF9h.png)
 
-## Build Status
-
-![Build Status](https://drake-server.ddns.net:9443/build/stamp-web-aurelia.svg)
-
 
 ## Demo Server
 
@@ -89,7 +85,7 @@ To run the unit tests, first ensure that you have followed the steps above in or
   
 ## Running the Integration Tests
 
-npm fddWebdriver for NodeJS is used for the integration tests. This project has been moved to [stamp-web-selenium](https://github.com/stamp-web/stamp-web-selenium)
+Webdriver for NodeJS is used for the integration tests. This project has been moved to [stamp-web-selenium](https://github.com/stamp-web/stamp-web-selenium)
 
 
 ## Test Statistics
