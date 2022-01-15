@@ -1,5 +1,5 @@
 /**
- Copyright 2017 Jason Drake
+ Copyright 2022 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
  limitations under the License.
  */
 import {LogManager} from 'aurelia-framework';
-import {NewInstance} from 'aurelia-dependency-injection';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {HttpClient} from 'aurelia-http-client';
 import {Preferences} from 'services/preferences';
@@ -24,7 +23,7 @@ import _ from 'lodash';
 
 const logger = LogManager.getLogger('stamp-web');
 
-require.config({catchError: true, waitSeconds: 30});
+window.requirejs.config({catchError: true, waitSeconds: 30});
 
 if (window.location.href.indexOf('debug=true') >= 0) {
     LogManager.setLevel(LogManager.logLevel.debug);
@@ -39,7 +38,6 @@ Promise.config({
 });
 
 function getLang() {
-    // Ideally we should DI these objects.  Investigate how we could do this at this early phase of the app
     let httpClient = new HttpClient();
     let eventBus = new EventAggregator();
     let prefs = new Preferences(httpClient,eventBus);
@@ -60,7 +58,6 @@ function getLang() {
             reject(new Error("Preferences services is not available"));
         }
     });
-
 }
 
 function setRoot(aurelia) {
@@ -81,8 +78,7 @@ export function configure(aurelia) {
 }
 
 function configureGlobalLibraries() {
-
-    require(['jquery','popper.js','bootstrap'], (jquery, popper, bootstrap) => {
+    window.requirejs(['jquery','popper.js','bootstrap'], (jquery, popper, bootstrap) => {
         window.jQuery = jquery;
         window.Popper = popper;
         window.Bootstrap = bootstrap;
@@ -97,9 +93,11 @@ function initialize( aurelia, lang ) {
     aurelia.use
         .standardConfiguration()
         .feature('resources')
-   /*
-        .plugin('aurelia-html-import-template-loader')
-        */
+        //Uncomment the line below to enable animation.
+        //if the css animator is enabled, add swap-order="after" to all router-view elements
+        // .plugin('aurelia-animator-css')
+        //Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
+        //  .plugin('aurelia-html-import-template-loader')
         .plugin('aurelia-dialog', config => {
             config.useDefaults();
             config.settings.lock = true;
@@ -126,9 +124,8 @@ function initialize( aurelia, lang ) {
                 setRoot(aurelia);
             });
         });
-    if (environment.debug) {
-        aurelia.use.developmentLogging();
-    }
+
+    aurelia.use.developmentLogging(environment.debug ? 'debug' : 'warn');
 
     if (environment.testing) {
         aurelia.use.plugin('aurelia-testing');

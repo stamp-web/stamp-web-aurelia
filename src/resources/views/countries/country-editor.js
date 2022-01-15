@@ -57,12 +57,12 @@ export class countryEditor {
             this.model.name = '';
             _.debounce( () => {
                 $('#editor-name').focus();
-            }, 125)(this);
+            }, 125)();
         }
         this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'name').subscribe(this._validate.bind(this)));
         _.debounce( () => {
             this._validate();
-        }, 125)(this);
+        }, 125)();
     }
 
     _validate() {

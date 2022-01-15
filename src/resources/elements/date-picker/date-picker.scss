@@ -1,202 +1,124 @@
 @import "../../../theme/_semantic.scss";
-
-// Datepickers
-$datepicker-days-bg: $theme-panel-bg;
-$datepicker-days-border: $theme-border-color;
-$datepicker-days-outside-range: $theme-input-disabled;
-$datepicker-days-outside-range-bg: $theme-input-hover-bg;
-$datepicker-days-border-hover: $theme-border-color;
-$datepicker-days-hover-bg: $theme-input-hover-bg;
-$datepicker-days-border-active: $theme-action-color;
-$datepicker-days-active: $theme-table-selected-bg;
-$datepicker-calendar-hover: $theme-link-color;
-$datepicker-today-bg: $theme-action-color;
-$datepicker-header-hover: $theme-panel-header-bg;
-$datepicker-header-border: lighten($theme-border-color, 10%);
-$datepicker-footer-hover: $theme-panel-header-bg;
-$datepicker-footer-border: lighten($theme-border-color, 10%);
+@import "../../../../node_modules/flatpickr/dist/flatpickr.min.css";
 
 date-picker {
-    outline-style: none;
-    -webkit-tap-highlight-color: transparent;
-    z-index: 2000;
-}
-
-.date-wrapper {
-    label {
-        position: relative;
-        display: inline-block;
-        text-align: left;
-        font-weight: normal;
-        margin-bottom: 0;
-        padding-right: $theme-padding-thin;
-        vertical-align: middle;
-        ussr-select: none;
-
-        &:focus {
-            border: none;
-            outline: none;
-        }
-
-        &:after {
-            content: ''
-        }
-
-    }
-
-    &:nth-child(2) {
-        label {
-            padding-left: $theme-padding-thin;
-        }
-
-    }
-}
-
-.date-control {
-    display: inline-flex;
-    min-width: 10.5rem;
+.date-picker-wrapper {
+    align-items: center;
+    display: flex;
+    max-width: 11.5rem;
     position: relative;
-    z-index: auto;
 
-    input[type="text"] {
-        z-index: auto;
-        max-width: 11.5rem;
-        width: 100%;
-
-        input::selection, textarea::selection {
-            background: $theme-active-bg;
-            color: $theme-active-color;
-        }
-
-        border-top-right-radius: $theme-border-radius !important;
-        border-bottom-right-radius: $theme-border-radius !important;
-        padding-right: #{$theme-padding-base + $theme-padding-thin};
+    input {
+        flex: 1 1 auto;
     }
 
-    .sw-icon-calendar {
-        z-index: auto;
-        position: absolute;
-        color: $theme-input-color;
-        right: $theme-padding-thin;
+    .sw-icon-calendar, .sw-icon-cancel {
+        position:absolute;
         top: 50%;
-        transform: translate(0, -50%);
-        cursor: pointer;
+        transform: translateY(-50%);
 
-        &:focus {
-            outline: none;
+
+        &.sw-icon-calendar {
+            right: $theme-margin-thin;
         }
 
-        &:hover {
-            color: $datepicker-calendar-hover;
-        }
-    }
 
-    .sw-icon-cancel {
-        z-index: auto;
-        position: absolute;
-        color: $theme-clear-color;
-        right: 2rem;
-        cursor: pointer;
-        top: 50%;
-        transform: translate(0, -50%) scale(0.9);
-
-        &:focus {
-            outline: none;
+        &.sw-icon-cancel {
+            color: $theme-clear-color;
+            right: #{$theme-margin-thinner + $theme-margin-thick};
         }
 
-        &:hover {
-            color: $datepicker-calendar-hover;
-        }
     }
 }
+}
 
-.datepicker {
-    &.dropdown-menu {
-        z-index: 1;
+$date-picker-width: 22rem;
+$date-picker-year-width: 5rem;
+
+.flatpickr-calendar {
+    font-size: $theme-font-size-sm;
+    width: $date-picker-width;
+
+    .flatpickr-months {
+        align-items: center;
+        background: $theme-panel-header-bg;
+        position: unset;
+
+        .flatpickr-prev-month, .flatpickr-next-month {
+            height: 2.5rem;
+            padding-bottom: 0;
+            padding-top: 0;
+            position: unset;
+            transform: scale(0.75);
+
+            &:hover {
+                color: $theme-active-bg;
+                font-weight: 800;
+            }
+        }
+
+        .flatpickr-month {
+            background: transparent;
+            position: unset;
+
+            .flatpickr-current-month {
+                display: flex;
+                flex: 1 1 auto;
+                align-items: center;
+                padding-top: $theme-padding-thinner;
+
+                .flatpickr-monthDropdown-months {
+                    border-bottom: 1px solid transparent;
+                    display: flex;
+                    flex: 1 1 auto;
+                    font-size: $theme-font-size-sm;
+                    margin-right: $theme-margin-thinner;
+                    text-align: center;
+
+                    &:hover {
+                        background: transparent;
+                        border-bottom-color: $theme-active-bg;
+                    }
+                }
+                .numInputWrapper {
+                    display: flex;
+                    flex: 1 1 auto;
+                    font-size: $theme-font-size-sm;
+                    max-width: $date-picker-year-width;
+                    min-width: $date-picker-year-width;
+                    width: $date-picker-year-width;
+
+                    &:hover {
+                        background: transparent;
+                        border-bottom-color: $theme-active-bg;
+                    }
+                }
+            }
+        }
+    }
+    .flatpickr-days {
+        width: $date-picker-width;
+
+        .dayContainer {
+            max-width: $date-picker-width;
+            min-width: $date-picker-width;
+            width: $date-picker-width;
+
+            .flatpickr-day {
+                border-radius: $theme-border-radius;
+                height: 2.5rem;
+                line-height: 2.5rem;
+
+                &.selected {
+                    background: $theme-active-bg;
+                    border-color: $theme-active-bg;
+                    color: $theme-active-color;
+                }
+            }
+        }
     }
 
-    table {
-        tbody {
-            td.day {
-                font-size: $theme-font-size-sm;
-                width: 3rem;;
-                max-width: 3rem;
-                min-width: 3rem;
-                border-color: $theme-active-color;
-                background-color: $datepicker-days-bg;
-
-                &.active {
-                    &:active, &.highlighted:active {
-                        border-color: $datepicker-days-border-active;
-                        background-color: $datepicker-days-active;
-                        color: $theme-active-color;
-                    }
-                }
-
-                &.disabled {
-                    color: $datepicker-days-outside-range;
-                    backgroud-color: $datepicker-days-outside-range-bg;
-
-                    &:hover {
-                        background-color: $theme-active-color;
-                    }
-                }
-
-                &.today {
-                    background-color: $datepicker-today-bg;
-                }
-
-                &:hover {
-                    background-color: $datepicker-days-hover-bg;
-                    border-color: $datepicker-days-border-hover;
-                }
-            }
-
-            td {
-                span.month, span.year {
-                    font-size: $theme-font-size-sm;
-                }
-            }
-
-            th {
-                font-weight: normal;
-            }
-        }
-
-        thead {
-            tr {
-                &:nth-child(3) {
-                    border-bottom: $theme-border;
-                }
-
-                th {
-                    background-color: $body-bg;
-                    font-weight: normal;
-                    font-size: $theme-font-size-xs;
-                }
-
-                .datepicker-switch, .prev, .next {
-                    &:hover {
-                        background-color: $datepicker-header-hover;
-                        border: 0.1rem solid $datepicker-header-border;
-                    }
-                }
-
-            }
-        }
-
-        tfoot {
-            tr {
-                th {
-                    font-size: $theme-font-size-xs;
-                    font-weight: normal;
-
-                    &:hover {
-                        background-color: $datepicker-footer-hover;
-                        border: 0.1rem solid $datepicker-footer-border;
-                    }
-                }
-            }
-        }
+    .flatpickr-current-month {
+        font-size: $theme-font-size-base;
     }
 }

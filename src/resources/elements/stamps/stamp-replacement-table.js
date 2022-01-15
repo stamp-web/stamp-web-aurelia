@@ -18,7 +18,8 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {BindingEngine} from 'aurelia-binding';
 import {Stamps} from '../../../services/stamps';
 import {Preferences} from '../../../services/preferences';
-import {EventNames, KeyCodes} from '../../../events/event-managed';
+import {EventNames} from '../../../events/event-managed';
+import {KeyCodes} from '../../../events/key-codes';
 import {Catalogues} from '../../../services/catalogues';
 import {Condition} from '../../../util/common-models';
 import {LocationHelper} from '../../../util/location-helper';
@@ -128,9 +129,9 @@ export class StampReplacementTable {
             }
         });
         if( this.filteredStamps.length > 0 ) {
-            _.debounce( context => {
-                context.editingRow = 0;
-            })(this);
+            _.debounce(() => {
+                this.editingRow = 0;
+            })();
         }
     }
 

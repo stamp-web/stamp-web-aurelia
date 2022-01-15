@@ -1,5 +1,5 @@
 /**
- Copyright 2017 Jason Drake
+ Copyright 2022 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,203 +13,148 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {inject, bindable, customElement, LogManager} from 'aurelia-framework';
-import {I18N} from 'aurelia-i18n';
-import $ from 'jquery';
+import {inject, bindable, bindingMode, customElement} from 'aurelia-framework';
+import flatpickr from 'flatpickr';
 import _ from 'lodash';
 import moment from 'moment';
+import $ from "jquery";
+import {KeyCodes} from 'events/key-codes';
+import {BaseFormElement} from '../base-form-element';
 
-import 'bootstrap-datepicker';
+const DATEFORMAT_REGEX = /^((?:19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+const DATEFORMAT = 'YYYY-MM-DD';
+const FLICKRFORMAT = 'Y-m-d';
 
 /**
- * date-picker custom element
+ * date-picker Custom Element
+ *
+ * Leverages the third-part flatpickr date picker and then overrides the behavior of the text input to work
+ * cleaner with usage patterns.
+ *
+ * <b>Implementation Notes</b>
+ * - The change event is listened to on the input to set the date in the flatpickr and this will update the value
+ * - If ENTER is hit via a KeyUp in the input box, the value will process through the same code path as the change event
+ * - If a date is changed through change / keyUp the flatpickr selected date is updated, and it is closed.
  */
-
-const logger = LogManager.getLogger('date-picker');
-
 @customElement('date-picker')
+@inject(Element)
+export class DatePicker extends BaseFormElement {
 
-@inject(Element, I18N)
-export class DatePicker {
+    @bindable({defaultBindingMode: bindingMode.twoWay}) value;
 
-    dateDisplayFormat = 'MM/DD/YYYY';
+    displayValue;
 
-    @bindable value;
-    @bindable endValue;
-    @bindable startDate;
-    @bindable endDate;
-    @bindable range = false;
-
-    constructor(element, i18n) {
-        this.element = element;
-        this.i18n = i18n;
+    constructor(element) {
+        super(element);
     }
 
     attached() {
-        this.dateDisplayFormat = this.i18n.tr('date-picker.format');
+        super.attached();
+        this._initDatePicker();
+    }
 
-        this.datepicker = $(this.element).find('.date-wrapper input');
-        this.datepicker.datepicker({
-            language: this.i18n.getLocale(),
-            autoclose: true,
-            clearBtn: false,
-            todayBtn: "linked",
-            todayHighlight: true,
-            templates: {
-                leftArrow: '<i class="sw-icon-previous"></i>',
-                rightArrow: '<i class="sw-icon-next"></i>'
-            },
-            container: $(this.element).parent(),
-            startDate: this.startDate,
-            endData: this.endDate
-        }).on('changeDate', (event) => {
-            let wrapper = $(event.currentTarget).closest('.date-control');
-            if( wrapper.hasClass('end-date')) {
-                this.lastChangeEndDate = event.date;
-            } else {
-                this.lastChangeDate = event.date;
+    getInputSelector() {
+        return '.date-picker-wrapper > input';
+    }
+
+    valueChanged(newVal, oldVal) {
+        if (newVal === oldVal || moment(newVal).isSame(oldVal)) {
+            return;
+        }
+        this._setValueInPicker(this.value);
+        this.displayValue = this._normalizeValueForDisplay(this.value);
+    }
+
+    handleKeyUp(evt) {
+        let kCode = evt.keyCode;
+        if (kCode === KeyCodes.VK_ENTER) {
+            this.change(evt);
+        } else if (kCode === KeyCodes.VK_DASH || (kCode >= KeyCodes.VK_0 && kCode <= KeyCodes.VK_9)) {
+            let v = this.extractDate(this.displayValue);
+            if (v) {
+                this._setValueInPicker(v);
             }
+        }
+        return true;
+    }
 
-        }).on('hide', (event) => {
-            let wrapper = $(event.currentTarget).closest('.date-control');
-            if( wrapper.hasClass('end-date')) {
-                this.endValue = this.lastChangeEndDate;
-            } else {
-                this.value = this.lastChangeDate;
-            }
-        });
+    change(evt) {
+        this.value = this.extractDate(this.displayValue);
+        this._setValueInPicker(this.value);
+        if(this.datePicker) {
+            this.datePicker.close();
+        }
+        /**
+         * If validation is hooked up to the date picker at some point this logic/test can be removed
+         * This just ensures that any date entered is in fact valid and if it is not we clear the display value
+         */
+        if(!this.value && !_.isEmpty(this.displayValue)) {
+            this.displayValue = '';
+        }
+        evt.stopPropagation();
+    }
 
-        this.updateDate(null, false);
-        _.defer(()=> {
-            this.updateDate(this.value, false);
-        });
+    clear(evt) {
+        if (this.datePicker) {
+            this.datePicker.clear();
+            this.datePicker.close();
+        }
+        this.value = undefined;
+        this.displayValue = '';
+        evt.stopPropagation();
+    }
 
-        if( this.endValue && this.range ) {
-            this.updateDate(null, true);
-            _.defer(()=> {
-                this.updateDate(this.endValue, true);
+    _initDatePicker() {
+        if (!this.datePicker) {
+            this.datePicker = this._getDatePicker({
+                allowInput: false,
+                onChange:   this._dateChanged.bind(this)
             });
-        }
-        this.configureAttributes();
-
-    }
-
-    startDateChanged(newVal) {
-        if (!this.datepicker) {
-            return;
-        }
-        this.datepicker.datepicker('setStartDate', newVal);
-    }
-
-    endDateChanged(newVal) {
-        if (!this.datepicker) {
-            return;
-        }
-        this.datepicker.datepicker('setEndDate', newVal);
-    }
-
-    valueChanged(newVal) {
-        if(!this.datepicker) {
-            return;
-        }
-        this.updateDate(newVal, false);
-        this.fireChangeEvent();
-    }
-
-    endValueChanged(newVal) {
-        if(!this.datepicker || !this.range) {
-            return;
-        }
-        this.updateDate(newVal, true);
-        this.fireChangeEvent();
-    }
-
-
-    clear($event) {
-        let wrapper = $($event.currentTarget).parents('.date-control');
-        wrapper.find('input').datepicker('clearDates');
-        if( wrapper.hasClass('end-date')) {
-            this.endValue = undefined;
-        } else {
-            this.value = undefined;
+            this.datePicker.setDate(this.value, true, FLICKRFORMAT);
         }
     }
 
-    show($event) {
-        let wrapper = $($event.currentTarget).parents('.date-control');
-        wrapper.find('input').datepicker('show');
+    _getDatePicker(opts) {
+        return flatpickr($(this.element).find('.date-picker-wrapper')[0], opts);
     }
 
-    detached() {
-        try {
-            $(this.element).find('.date-control input').datepicker('destroy').off('changeDate');
-        } catch (err) {
-            logger.warn('Unabled to destroy date-picker' + err);
-        }
+    _normalizeValueForDisplay(val) {
+        return (val) ? moment(val).format(DATEFORMAT) : '';
     }
 
-    /**
-     * @private
-     */
-    updateDate(val, end) {
-        let controls = $(this.element).find('.date-control input');
-        if( controls.length < 1 ) {
-            return;
-        }
-        let displayText = this.formatDisplay(val);
-        if( end ) {
-            this.lastChangeEndDate = val;
-        } else {
-            this.lastChangeDate = val;
-        }
-        $(controls[(end ? 1 : 0)]).datepicker('update', val);
-        if( end ) {
-            this.selectedEndDate = displayText;
-            $(controls[0]).datepicker('setEndDate', val);
-        } else {
-            this.selectedDate = displayText;
-            if( this.range) {
-                $(controls[1]).datepicker('setStartDate', val);
+    _setValueInPicker(val) {
+        if (this.datePicker) {
+            let dates = this.datePicker.selectedDates;
+            let currentDate = undefined;
+            if (dates && _.size(dates) > 0) {
+                currentDate = _.head(dates);
+            }
+            if (!moment(currentDate).isSame(val)) {
+                this.datePicker.setDate(val, true, FLICKRFORMAT);
             }
         }
     }
 
-    /**
-     * @private
-     */
-    configureAttributes() {
-        let controls = $(this.element).find('.date-wrapper input');
-        let tabIndex = $(this.element).attr('tabindex');
-        if(tabIndex && tabIndex !== '') {
-            $(this.element).removeAttr('tabindex');
-            controls.attr('tabindex', tabIndex);
-        }
-        let id = $(this.element).attr('id');
-        if( id && id !== '' ) {
-            $(this.element).removeAttr('id');
-            if( this.range ) {
-                $(controls[0]).attr('id', id + '-start');
-                $(controls[1]).attr('id', id + '-end');
-            } else {
-                $(controls[0]).attr('id', id);
+    extractDate(inputValue) {
+        let v = undefined;
+        if (!_.isEmpty(inputValue) && inputValue.match(DATEFORMAT_REGEX)) {
+            let m = moment(inputValue);
+            if (m.isValid()) {
+                v = m.toDate();
             }
         }
+        return v;
     }
 
     /**
-     * @private
+     * Date Change callback from flatpickr
+     *
+     * @param selectedDates - array of date objects
      */
-    formatDisplay(val) {
-        return val ? (
-            moment(_.isString(val) ? new Date(val) : val).format(this.dateDisplayFormat)) : undefined;
-    }
-
-    /**
-     * @private
-     */
-    fireChangeEvent() {
-        _.defer(()=> {
-            $(this.element).trigger('change');
-        });
+    _dateChanged(selectedDates) {
+        if (selectedDates && _.size(selectedDates) > 0) {
+            this.value = _.head(selectedDates);
+        }
     }
 }
+

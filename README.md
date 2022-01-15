@@ -97,3 +97,12 @@ Webdriver for NodeJS is used for the integration tests.  To run these tests exec
   
 from the selenium folder under test
 
+## Optimizing for Browsers
+
+To optimize the build for the latest browsers the command
+
+   ```shell
+   npx browserslist@latest --update-db
+   ```
+
+Should be run periodically to refresh the browser DB and allow for optimized compiles.

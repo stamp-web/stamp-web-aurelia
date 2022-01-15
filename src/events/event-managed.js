@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2022 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,11 +13,57 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {inject} from 'aurelia-framework';
-import {EventAggregator} from 'aurelia-event-aggregator';
 import _ from 'lodash';
 
-@inject(EventAggregator)
+export const EventNames = {
+    calculateImagePath:      'calculate-image-path',
+    changeEditMode:          'change-edit-mode',
+    checkExists:             'check-exists',
+    collapsePanel:           'collapse-panel',
+    conflictExists:          'conflict-exists',
+    convert:                 'convert',
+    countryDeleted:          'country-deleted',
+    panelCollapsed:          'panel-collapsed',
+    close:                   'close-dialog',
+    actionError:             'action-error',
+    keywordSearch:           'keywordSearch',
+    search:                  'search',
+    showImage:               'showImage',
+    save:                    'save',
+    edit:                    'edit',
+    editorCancel:            'editor-cancel',
+    deleteSuccessful:        'delete-completed',
+    create:                  'create',
+    manageEntity:            'manage-entity',
+    entityDelete:            'entity-delete',
+    selectEntity:            'select-entity',
+    entityFilter:            'entity-filter',
+    loadingStarted:          'loading-started',
+    loadingFinished:         'loading-finished',
+    pageChanged:             'page-changed',
+    pageRefreshed:           'page-refreshed',
+    popupBlocked:            'popup-blocked',
+    preferenceChanged:       'preference-changed',
+    saveSuccessful:          'save-completed',
+    updateFinished:          'update-finished',
+    setAspects:              'set-aspects',
+    stampCount:              'stamp-count',
+    stampCountForCollection: 'stamp-count-for-collection',
+    stampCreate:             'stamp-create',
+    stampEdit:               'stamp-edit',
+    stampEditorCancel:       'stamp-edit-cancel',
+    stampRemove:             'stamp-remove',
+    stampSaved:              'stamp-saved',
+    toggleStampSelection:    'stamp-select',
+    valid:                   'is-valid'
+}
+
+export const StorageKeys = {
+    referenceCatalogueNumbers: "referenceCatalogueNumbers",
+    manageEntities:            "manage-entities",
+    listFiltering:             'list-filtering'
+}
+
 export class EventManaged {
 
     _subscribers = [];
@@ -51,81 +97,3 @@ export class EventManaged {
         });
     }
 }
-
-export class EventHelper {
-
-    static changeEvent(data) {
-        let changeEvent;
-        if (window.CustomEvent) {
-            changeEvent = new CustomEvent('change', {
-                detail: {
-                    data
-                },
-                bubbles: true
-            });
-        } else {
-            changeEvent = document.createEvent('CustomEvent');
-            changeEvent.initCustomEvent('change', true, true, {
-                detail: data
-            });
-        }
-        return changeEvent;
-
-    }
-}
-
-export var EventNames = {
-    calculateImagePath: 'calculate-image-path',
-    changeEditMode: 'change-edit-mode',
-    checkExists: 'check-exists',
-    collapsePanel: 'collapse-panel',
-    conflictExists: 'conflict-exists',
-    convert: 'convert',
-    countryDeleted: 'country-deleted',
-    panelCollapsed: 'panel-collapsed',
-    close: 'close-dialog',
-    actionError: 'action-error',
-    keywordSearch: 'keywordSearch',
-    search: 'search',
-    showImage: 'showImage',
-    save: 'save',
-    edit: 'edit',
-    editorCancel: 'editor-cancel',
-    deleteSuccessful: 'delete-completed',
-    create: 'create',
-    manageEntity: 'manage-entity',
-    entityDelete: 'entity-delete',
-    selectEntity: 'select-entity',
-    entityFilter: 'entity-filter',
-    loadingStarted: 'loading-started',
-    loadingFinished: 'loading-finished',
-    pageChanged: 'page-changed',
-    pageRefreshed: 'page-refreshed',
-    popupBlocked: 'popup-blocked',
-    preferenceChanged: 'preference-changed',
-    saveSuccessful: 'save-completed',
-    updateFinished: 'update-finished',
-    setAspects: 'set-aspects',
-    stampCount: 'stamp-count',
-    stampCountForCollection: 'stamp-count-for-collection',
-    stampCreate: 'stamp-create',
-    stampEdit: 'stamp-edit',
-    stampEditorCancel: 'stamp-edit-cancel',
-    stampRemove: 'stamp-remove',
-    stampSaved: 'stamp-saved',
-    toggleStampSelection: 'stamp-select',
-    valid: 'is-valid'
-};
-
-export var StorageKeys = {
-    referenceCatalogueNumbers: "referenceCatalogueNumbers",
-    manageEntities: "manage-entities",
-    listFiltering: 'list-filtering'
-};
-
-export var KeyCodes = {
-    VK_TAB: 9,
-    VK_ENTER: 13,
-    VK_ESCAPE: 27,
-    VK_SHIFT: 16
-};

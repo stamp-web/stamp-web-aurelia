@@ -102,4 +102,21 @@ describe('OwnershipCert test suite', () => {
         });
 
     });
+
+    describe('_createTooltip', () => {
+
+        beforeEach(() => {
+            bootstrapSpy.Tooltip.mockReset();
+        });
+
+        it('disposing existing tooltips', () => {
+            ownershipCert.hasCert = false;
+            ownershipCert.tooltip = {
+                dispose: jest.fn()
+            };
+            ownershipCert._createTooltip();
+            expect(ownershipCert.tooltip.dispose).toHaveBeenCalled();
+        });
+
+    });
 });

@@ -1,5 +1,5 @@
 /**
- Copyright 2018 Jason Drake
+ Copyright 2022 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,16 +13,13 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import {customElement, bindable, LogManager} from 'aurelia-framework';
+import {customElement, bindable} from 'aurelia-framework';
 import {bindingMode} from 'aurelia-binding';
-import {EventHelper} from '../../../events/event-managed';
+import {EventHelper} from '../../../events/event-helper';
 import {I18N} from 'aurelia-i18n';
 import $ from 'jquery';
 import _ from 'lodash';
 import select2 from 'select2'; //eslint-disable-line no-unused-vars
-
-
-const logger = LogManager.getLogger('select-picker');
 
 @customElement('select-picker')
 export class Select2Picker {
@@ -217,11 +214,11 @@ export class Select2Picker {
      * Need to fire to select the first copy
      */
     attached() {
-        _.debounce( self => {
-           if( self.items && self.items.length > 0 ) { // cached items are loaded
-               self.valueChanged(self.value);
+        _.debounce(() => {
+           if( this.items && this.items.length > 0 ) { // cached items are loaded
+               this.valueChanged(this.value);
            }
-        }, 125)(this);
+        }, 125)();
     }
 
     /**

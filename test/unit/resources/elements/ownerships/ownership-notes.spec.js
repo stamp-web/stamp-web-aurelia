@@ -153,4 +153,26 @@ describe('OwnershipNotes test suite', () => {
             expect(window.Bootstrap.Tooltip).toHaveBeenCalled();
         });
     });
+
+    describe('_createTooltip', () => {
+
+        beforeEach(() => {
+            bootstrapSpy.Tooltip.mockReset();
+        });
+
+        it('disposing existing tooltips', () => {
+            let oldDispose = jest.fn();
+            ownershipNotes.tooltip = {
+                dispose: oldDispose
+            };
+            ownershipNotes.iconCls = 'sw-icon-deception';
+            ownershipNotes.hasNotes = true;
+            ownershipNotes.model = {
+                notes: 'message'
+            };
+            ownershipNotes._createTooltip();
+            expect(oldDispose).toHaveBeenCalled();
+        });
+
+    });
 });

@@ -24,6 +24,8 @@ search-form {
 
             button {
                 font-size: $theme-font-size-sm;
+                height: $theme-input-height;
+
                 &:first-child {
                     margin-left: $theme-margin-thin;
                 }

@@ -1,25 +1,16 @@
 {
     "name": "stamp-web-aurelia",
     "type": "project:application",
-    "platform": {
-        "id": "web",
-        "displayName": "Web",
-        "output": "scripts",
-        "index": "index.html"
-    },
     "transpiler": {
         "id": "babel",
         "displayName": "Babel",
         "fileExtension": ".js",
-        "options": {
-            "plugins": [
-                "@babel/plugin-transform-modules-amd"
-            ]
-        },
         "source": "src/**/*.js"
     },
     "markupProcessor": {
-        "source": ["src/**/*.html"]
+        "source": [
+            "src/**/*.html"
+        ]
     },
     "cssProcessor": {
         "source": [
@@ -46,11 +37,11 @@
     },
     "paths": {
         "root": "src",
-        "resources": "src/resources",
-        "elements": "src/resources/elements",
-        "attributes": "src/resources/attributes",
-        "valueConverters": "src/resources/value-converters",
-        "bindingBehaviors": "src/resources/binding-behaviors",
+        "resources": "resources",
+        "elements": "resources/elements",
+        "attributes": "resources/attributes",
+        "valueConverters": "resources/value-converters",
+        "bindingBehaviors": "resources/binding-behaviors",
         "staticCSS": "resources/css"
     },
     "build": {
@@ -202,6 +193,11 @@
                         ]
                     },
                     {
+                        "name": "flatpickr",
+                        "path": "../node_modules/flatpickr/dist",
+                        "main": "flatpickr.js"
+                    },
+                    {
                         "name": "bootstrap",
                         "path": "../node_modules/bootstrap/dist",
                         "main": "js/bootstrap.bundle.min",
@@ -213,17 +209,6 @@
                             "![scss/**]"
                         ],
                         "exports": "bootstrap"
-                    },
-                    {
-                        "name": "bootstrap-datepicker",
-                        "path": "../node_modules/bootstrap-datepicker/dist",
-                        "main": "js/bootstrap-datepicker",
-                        "deps": [
-                            "bootstrap"
-                        ],
-                        "resources": [
-                            "css/bootstrap-datepicker3.css"
-                        ]
                     }
                 ]
             }

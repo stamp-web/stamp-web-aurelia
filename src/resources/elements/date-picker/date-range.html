@@ -1,0 +1,11 @@
+<template>
+    <require from="resources/elements/date-picker/date-range.css"></require>
+    <require from="resources/elements/date-picker/date-picker"></require>
+
+    <span class="date-range-wrapper">
+        <label class="from-label">${'date-picker.from'|t}</label>
+        <date-picker value.two-way="startDate"></date-picker>
+        <label class="to-label">${'date-picker.to'|t}</label>
+        <date-picker value.two-way="endDate"></date-picker>
+    </span>
+</template>

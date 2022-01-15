@@ -15,7 +15,8 @@
  */
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {EventNames, KeyCodes} from '../../../events/event-managed';
+import {EventNames} from '../../../events/event-managed';
+import {KeyCodes} from '../../../events/key-codes';
 
 @customElement('paging-toolbar')
 @bindable('total')

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Stamp Web 6.0.0</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="http://drake-server.ddns.net" rel="preconnect" crossorigin="">
+    <link href="https://drake-server.ddns.net" rel="preconnect" crossorigin="">
     <link rel="stylesheet" type="text/css" href="resources/css/splash.css">
     <link rel="stylesheet" type="text/css" href="resources/fonts/stamp-web/css/stamp-web.css">
 
@@ -21,20 +21,19 @@
         <div class="build-version"></div>
     </div>
 </div>
-<script type="application/javascript">
-    var req = new XMLHttpRequest()
-    req.onreadystatechange=function(){
-        if (req.readyState==4){
-            if (req.status==200){
-                var value = JSON.parse(req.responseText);
+<script>
+    let req = new XMLHttpRequest()
+    req.onreadystatechange = function () {
+        if (req.readyState === 4) {
+            if (req.status === 200) {
+                let value = JSON.parse(req.responseText);
                 document.querySelector(".build-version").innerHTML = "Build " + value['buildTime'];
-            }
-            else{
+            } else {
                 console.log("Unable to obtain build information");
             }
         }
     }
-    req.open("GET","/build-number.json");
+    req.open("GET", "/build-number.json");
     req.send();
 
 </script>

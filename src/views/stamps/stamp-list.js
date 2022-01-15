@@ -22,12 +22,12 @@ import {Stamps} from '../../services/stamps';
 import {Preferences} from '../../services/preferences';
 import {PurchaseForm} from './purchase-form';
 import {SessionContext} from '../../services/session-context';
-import {EventNames, StorageKeys, EventManaged, KeyCodes} from '../../events/event-managed';
+import {EventNames, StorageKeys, EventManaged} from '../../events/event-managed';
+import {KeyCodes} from '../../events/key-codes';
 import {LocationHelper} from '../../util/location-helper';
 import {StampFilter, ConditionFilter, Condition, CurrencyCode} from '../../util/common-models';
 import {PredicateUtilities} from '../../util/object-utilities';
 
-import {ImagePreviewEvents} from '../../resources/elements/image-preview/image-preview';
 import {asCurrencyValueConverter} from '../../resources/value-converters/as-currency-formatted';
 import {PdfGenerator} from '../../reports/pdf-generator';
 import {ReportHelper} from '../../reports/report-helper';
@@ -117,7 +117,7 @@ export class StampList extends EventManaged {
         SessionContext.removeContextListener(SessionContext.SEARCH_CHANGE, this._searchHandler);
     };
 
-    processSearchRequest(data, oldData) { //eslint-disable-line no-unused-lets
+    processSearchRequest(data) {
         let self = this;
         let options = (!self.options) ? {} : self.options;
         if (data) {

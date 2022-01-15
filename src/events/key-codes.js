@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2022 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,19 +13,12 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import $ from 'jquery';
-import _ from 'lodash';
-
-export class stampCollectionEditor {
-
-    model;
-
-    activate(options) {
-        this.model = options;
-        if( !(this.model.id > 0) ) {
-            _.debounce( () => {
-                $('#editor-name').focus();
-            }, 125)();
-        }
-    }
+export const KeyCodes = {
+    VK_TAB:    9,
+    VK_ENTER:  13,
+    VK_ESCAPE: 27,
+    VK_SHIFT:  16,
+    VK_DASH: 189,
+    VK_0: 48,
+    VK_9: 57
 }

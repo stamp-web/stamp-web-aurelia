@@ -22,6 +22,7 @@ module.exports = {
     "testEnvironment": "jsdom",
     "testTimeout": 8000,
     "collectCoverage": true,
+    "resetMocks": true,
     "reporters": [
         "default",
         [

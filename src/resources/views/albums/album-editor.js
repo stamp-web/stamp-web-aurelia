@@ -43,7 +43,7 @@ export class albumEditor {
         if( !(this.model.id > 0) ) {
             _.debounce( () => {
                 $('#editor-name').focus();
-            }, 125)(this);
+            }, 125)();
         }
         return p;
     }

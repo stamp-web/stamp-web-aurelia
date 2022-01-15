@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2022 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,19 +13,23 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import $ from 'jquery';
-import _ from 'lodash';
+import {inject, bindable, customElement} from 'aurelia-framework';
+import {BaseFormElement} from "../base-form-element";
 
-export class stampCollectionEditor {
+@customElement('date-range')
+@inject(Element)
+export class DateRange extends BaseFormElement {
 
-    model;
+    @bindable startDate;
+    @bindable endDate;
 
-    activate(options) {
-        this.model = options;
-        if( !(this.model.id > 0) ) {
-            _.debounce( () => {
-                $('#editor-name').focus();
-            }, 125)();
-        }
+    constructor(element) {
+        super(element);
+        this.propagateChildId = false;
     }
+
+    getInputSelector() {
+        return '.date-range-wrapper > date-picker';
+    }
+
 }

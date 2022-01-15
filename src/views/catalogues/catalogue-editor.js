@@ -56,14 +56,14 @@ export class catalogueEditor {
         if( !(this.model.id > 0) ) {
             _.debounce( () => {
                 $('#editor-issue').focus();
-            }, 125)(this);
+            }, 125)();
         }
         this.setupValidation();
         this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'name').subscribe(this._validate.bind(this)));
         this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'issue').subscribe(this._validate.bind(this)));
-        _.debounce( () => {
+        _.debounce(() => {
             this._validate();
-        }, 125)(this);
+        }, 125)();
     }
 
     _validate() {

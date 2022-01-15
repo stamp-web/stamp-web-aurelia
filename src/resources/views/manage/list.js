@@ -16,7 +16,8 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {I18N} from 'aurelia-i18n';
 import {LogManager, bindable} from 'aurelia-framework';
-import {EventNames, StorageKeys, KeyCodes} from '../../../events/event-managed';
+import {EventNames, StorageKeys} from '../../../events/event-managed';
+import {KeyCodes} from '../../../events/key-codes';
 import {Operators, Predicate} from 'odata-filter-parser';
 import _ from 'lodash';
 

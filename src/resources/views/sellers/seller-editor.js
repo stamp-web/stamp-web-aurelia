@@ -25,7 +25,7 @@ export class sellerEditor {
         if( !(this.model.id > 0) ) {
             _.debounce( () => {
                 $('#editor-name').focus();
-            }, 125)(this);
+            }, 125)();
         }
     }
 }

@@ -10,7 +10,6 @@ export class LoadingIndicator extends EventManaged {
 
     constructor(eventBus) {
         super(eventBus);
-        this.eventBus = eventBus;
         this.loadingCount = 0;
 
         nprogress.configure({

@@ -1,5 +1,5 @@
 /**
- Copyright 2016 Jason Drake
+ Copyright 2022 Jason Drake
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,19 +13,18 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-import $ from 'jquery';
-import _ from 'lodash';
+export class EventHelper {
 
-export class stampCollectionEditor {
-
-    model;
-
-    activate(options) {
-        this.model = options;
-        if( !(this.model.id > 0) ) {
-            _.debounce( () => {
-                $('#editor-name').focus();
-            }, 125)();
+    static changeEvent(data) {
+        let changeEvent;
+        if (window.CustomEvent) {
+            changeEvent = new CustomEvent('change', {
+                detail: {
+                    data
+                },
+                bubbles: true
+            });
         }
+        return changeEvent;
     }
 }

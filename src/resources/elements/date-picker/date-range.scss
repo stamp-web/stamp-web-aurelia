@@ -1,0 +1,16 @@
+@import "../../../theme/_semantic.scss";
+
+date-range {
+    .date-range-wrapper {
+        align-items: center;
+        display: flex;
+
+        label {
+            margin-right: $theme-margin-thin;
+
+            &:last-of-type {
+                margin-left: $theme-margin-thin;
+            }
+        }
+    }
+}

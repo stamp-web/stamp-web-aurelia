@@ -70,7 +70,7 @@ export class StampDetailsComponent extends EventManaged {
             if( this.model.id <= 0 ) {
                 _.debounce(() => {
                     $('#details-rate').focus();
-                }, 50)(this);
+                }, 50)();
             }
             _.defer( () => {
                 this._validate();

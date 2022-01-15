@@ -123,9 +123,9 @@ export class ManageList {
         if (entityCache) {
             let cacheVal = JSON.parse(entityCache);
             if (cacheVal.field) {
-                _.debounce( that => {
-                   that.selectedEntityChanged(cacheVal.field);
-                },125)(this);
+                _.debounce(() => {
+                   this.selectedEntityChanged(cacheVal.field);
+                },125)();
             }
         }
     }

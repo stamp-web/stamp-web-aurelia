@@ -30,8 +30,9 @@ export class PdfGenerator {
     initialize() {
         return new Promise((resolve, reject) => {
             if (!window.pdfMake) {
-                require(['node_modules/pdfmake/build/pdfmake.js'], () => {
-                    require(['node_modules/pdfmake/build/vfs_fonts.js'], () => {
+                let modules = ['node_modules/pdfmake/build/pdfmake.js', 'node_modules/pdfmake/build/vfs_fonts.js']
+                window.requirejs([modules[0]], () => {
+                    window.requirejs([modules[1]], () => {
                         resolve();
                     });
                 });
