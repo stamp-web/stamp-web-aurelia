@@ -186,6 +186,7 @@ export class BaseService {
         if( this.loaded && this.models.length > 0 ) {
             let m = _.find(this.models, { id: model.id });
             if(m) {
+                this._augmentModel(model, m);
                 _.merge(m, model);
                 // Not sure if this is a good idea or not.
                 this.eventBus.publish(EventNames.updateFinished, { type: this.getCollectionName(), model: m});
@@ -290,6 +291,7 @@ export class BaseService {
                     self._postSave(retModel);
                     let m = _.find(self.models, {id: retModel.id});
                     if (m) {
+                        this._augmentModel(retModel, m);
                         _.merge(m, retModel);
                     } else {
                         m = retModel;
@@ -307,6 +309,31 @@ export class BaseService {
             }).catch(reason => {
                 reject(reason);
             });
+        });
+    }
+
+    /**
+     * Augment the model by defining any missing keys as null, unless they are objects in which case an empty object
+     * will be created.  This is for pre-merge processing.  Service values will return from the DB without being defined.
+     * If this value previously existed before the update the model that it is being merged two will have a key and the new
+     * model will not, skipping the clearing of that field.  This occurs for dates, but could show up for other values.
+     *
+     * @param model
+     * @param m
+     */
+    _augmentModel(model, m) {
+        _.forEach(_.keys(m), k => {
+            let obj = _.isObject(m[k]);
+            let arr = _.isArrayLikeObject(m[k]);
+            if (!_.has(model, k)) {
+                let num = _.isNumber(m[k]);
+                let v = arr ? [] : obj ? {} : num ? 0 : null;
+                _.set(model, k, v);
+            } else if (arr) {
+                for (let i = 0; i < m[k].length; i++) {
+                    this._augmentModel(model[k][i], m[k][i]);
+                }
+            }
         });
     }
 }
