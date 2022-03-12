@@ -4,11 +4,11 @@
     <require from="../../attributes/find-target"></require>
 
     <div class="manage-list-toolbar d-none d-lg-flex">
-        <div class="filter">
+        <div class="filter input-group">
                 <label for="filter-text">${'manage.filter'|t}</label>
                 <input id="filter-text" ref="filterInput" find-target class="form-control"
                        placeholder="${'manage.filterPlaceholder'|t}" type="text" value.bind="filterText">
-                <button class="input-group-addon btn" disabled.bind="filterText===''" click.delegate="clear()">
+                <button class="btn-outline-secondary btn" disabled.bind="filterText===''" click.delegate="clear()">
                     <span class="sw-icon-cancel"></span>
                 </button>
         </div>
@@ -34,7 +34,7 @@
                 <td class="col-name">${model.name}</td>
                 <td>
                     <div class="btn-group actions" role="group">
-                        <button type="button" class="btn btn-secondary edit-action d-none d-lg-block" click.delegate="edit(model)" data-toggle="modal" data-target="#editorDialog">
+                        <button type="button" class="btn btn-secondary edit-action d-none d-lg-block" click.delegate="edit(model)" data-bs-toggle="modal" data-bs-target="#editorDialog">
                             <span class="sw-icon-edit"></span>
                         </button>
                         <button type="button" class="btn btn-secondary delete-action d-none d-lg-block" click.trigger="remove(model)">

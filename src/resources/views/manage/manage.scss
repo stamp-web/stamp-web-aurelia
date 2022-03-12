@@ -61,24 +61,23 @@
 
 .manage-list-toolbar {
     align-items: center;
-    display: flex !important;
     height: 4rem;
     margin-bottom: $theme-margin-thin;
-    width: 100%;
 
     .filter {
         align-items: center;
-        display: inline-flex;
         flex: 1 0 auto;
+        width: fit-content;
+
+        input {
+            font-size: $theme-font-size-sm;
+            max-width: 15rem;
+        }
+
     }
 
     .total {
         flex: 0 1 auto;
-    }
-
-    input {
-        width:     auto;
-        font-size: $theme-font-size-sm;
     }
 
     button {

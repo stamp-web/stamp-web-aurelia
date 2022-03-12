@@ -71,6 +71,7 @@
         "jest-createspyobj": "^2.0.0",
         "jest-junit": "^13.0.0",
         "jest-transform-stub": "^2.0.0",
+        "jsdom": "^17.0.0",
         "minimatch": "^3.0.4",
         "regenerator-runtime": "0.13.2",
         "text": "requirejs/text#latest",

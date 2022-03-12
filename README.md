@@ -94,9 +94,10 @@ The following is a list of test statistics for the project for date
 
 | Date | Commit                                                                                                    | Number of Tests | Code Coverage |
 | --- |-----------------------------------------------------------------------------------------------------------|-----------------|---------------|
-| 2022-01-15 | [8ac447f](https://github.com/stamp-web/stamp-web-aurelia/commit/8ac447f580f29d1f0f8dd23e284c6f25448cf1d7) | 83              | 12.05%        |
-| 2022-01-15 | [081fe3f](https://github.com/stamp-web/stamp-web-aurelia/commit/081fe3f31d5962c10777f4017e2c7a5dbe26e12e) | 86              | 12.20%        |
-| 2022-01-15 | [38899a3](https://github.com/stamp-web/stamp-web-aurelia/commit/38899a32d69cd5c62ade7341a83708d4a8e1e726) | 94              | 13.29%        |
+| 2022-01-15 | [8ac447f](https://github.com/stamp-web/stamp-web-aurelia/commit/8ac447f580f29d1f0f8dd23e284c6f25448cf1d7) | 83 | 12.05%        |
+| 2022-01-15 | [081fe3f](https://github.com/stamp-web/stamp-web-aurelia/commit/081fe3f31d5962c10777f4017e2c7a5dbe26e12e) | 86 | 12.20%        |
+| 2022-01-15 | [38899a3](https://github.com/stamp-web/stamp-web-aurelia/commit/38899a32d69cd5c62ade7341a83708d4a8e1e726) | 94 | 13.29%        |
+| 2022-01-25 | [c17f067](https://github.com/stamp-web/stamp-web-aurelia/commit/c17f06784332adff83e0a2594a705de26285d30a) | 98 | 18.35%
 
 ## Optimizing for Browsers
 
