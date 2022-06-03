@@ -276,7 +276,8 @@
         "FORGERY": "Forgery",
         "FORGERY_POSSIBLE": "Possible forgery",
         "REPAIRED": "Repaired",
-        "REPRINT": "Reprint"
+        "REPRINT": "Reprint",
+        "REGUM": "Regummed"
     },
     "userLocale": {
         "en": "English (en)",

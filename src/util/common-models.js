@@ -179,7 +179,8 @@ export const Deceptions = new Enum({
     FORGERY: {ordinal: 16, description: 'deceptions.FORGERY'},
     FORGERY_POSSIBLE: {ordinal: 32, description: 'deceptions.FORGERY_POSSIBLE'},
     REPAIRED: {ordinal: 64, description: 'deceptions.REPAIRED'},
-    REPRINT: {ordinal: 128, description: 'deceptions.REPRINT'}
+    REPRINT: {ordinal: 128, description: 'deceptions.REPRINT'},
+    REGUM: {ordinal: 256, description: 'deceptions.REGUM'}
 });
 
 export const StampFilter = new Enum({
