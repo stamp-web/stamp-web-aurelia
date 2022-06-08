@@ -25,7 +25,7 @@ import {SessionContext} from '../../services/session-context';
 import {EventNames, StorageKeys, EventManaged} from '../../events/event-managed';
 import {KeyCodes} from '../../events/key-codes';
 import {LocationHelper} from '../../util/location-helper';
-import {StampFilter, ConditionFilter, Condition, CurrencyCode} from '../../util/common-models';
+import {StampFilter, ConditionFilter, Condition, CurrencyCode, StampHelper} from '../../util/common-models';
 import {PredicateUtilities} from '../../util/object-utilities';
 
 import {asCurrencyValueConverter} from '../../resources/value-converters/as-currency-formatted';
@@ -36,16 +36,6 @@ import {DialogService} from 'aurelia-dialog';
 import _ from 'lodash';
 
 const logger = LogManager.getLogger('stamp-list');
-
-function createStamp(wantList) {
-    return {
-        id:               0,
-        wantList:         wantList,
-        countryRef:       -1,
-        catalogueNumbers: [],
-        stampOwnerships:  []
-    };
-}
 
 @inject(Element, EventAggregator, Router, Stamps, Countries, Preferences, asCurrencyValueConverter, I18N, DialogService, PdfGenerator, ReportHelper)
 export class StampList extends EventManaged {
@@ -320,7 +310,7 @@ export class StampList extends EventManaged {
 
     showEditor(action) {
         if (action === 'create-stamp' || action === 'create-wantList') {
-            this.editingStamp = createStamp((action === 'create-wantList'));
+            this.editingStamp = StampHelper.createEmptyStamp((action === 'create-wantList'));
             this.panelContents = "stamp-editor";
         } else if (action === 'search-panel') {
             this.panelContents = action;

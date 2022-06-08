@@ -49,6 +49,30 @@ describe('EnumeratedTypeHelper test suite', () => {
 
 describe('StampHelper test suite', () => {
 
+    describe('createEmptyStamp test', () => {
+        it('as wantlist', () => {
+            let stamp = StampHelper.createEmptyStamp(true);
+            expect(stamp.rate).toBe('');
+            expect(stamp.description).toBe('');
+            expect(stamp.id).toBe(0);
+            expect(stamp.wantList).toBe(true);
+            expect(stamp.countryRef).toBe(-1);
+            expect(stamp.catalogueNumbers).toEqual([]);
+            expect(stamp.stampOwnerships).toEqual([]);
+        });
+
+        it('as stamp', () => {
+            let stamp = StampHelper.createEmptyStamp(false);
+            expect(stamp.rate).toBe('');
+            expect(stamp.description).toBe('');
+            expect(stamp.id).toBe(0);
+            expect(stamp.wantList).toBe(false);
+            expect(stamp.countryRef).toBe(-1);
+            expect(stamp.catalogueNumbers).toEqual([]);
+            expect(stamp.stampOwnerships).toEqual([]);
+        });
+    });
+
     describe('calculateImagePath test', () => {
 
         let countryServiceSpy;

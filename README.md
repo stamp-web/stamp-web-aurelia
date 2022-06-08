@@ -90,7 +90,7 @@ Webdriver for NodeJS is used for the integration tests. This project has been mo
 
 ## Test Statistics
 
-The following is a list of test statistics for the project for date
+The following is a list of test statistics for the project by date and commit
 
 | Date | Commit                                                                                                    | Number of Tests | Code Coverage |
 | --- |-----------------------------------------------------------------------------------------------------------|-----------------|---------------|
@@ -98,6 +98,7 @@ The following is a list of test statistics for the project for date
 | 2022-01-15 | [081fe3f](https://github.com/stamp-web/stamp-web-aurelia/commit/081fe3f31d5962c10777f4017e2c7a5dbe26e12e) | 86 | 12.20%        |
 | 2022-01-15 | [38899a3](https://github.com/stamp-web/stamp-web-aurelia/commit/38899a32d69cd5c62ade7341a83708d4a8e1e726) | 94 | 13.29%        |
 | 2022-01-25 | [c17f067](https://github.com/stamp-web/stamp-web-aurelia/commit/c17f06784332adff83e0a2594a705de26285d30a) | 98 | 18.35%
+| 2022-06-08 | [a798ac3](https://github.com/stamp-web/stamp-web-aurelia/commit/a798ac36ac61a06258729173d8fa5cacf6a0ff24) | 102 | 18.41%
 
 ## Optimizing for Browsers
 

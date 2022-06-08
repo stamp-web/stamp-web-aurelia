@@ -16,7 +16,7 @@
 
 		<div class="editor-buttons">
             <button type="button" class="btn btn-secondary" click.delegate="cancel()">${'actions.cancel'|t}</button>
-			<button type="button" class="btn btn-secondary" click.delegate="saveAndNew()" disabled.bind="invalid" if.bind="createMode">${'actions.save-and-new'|t}</button>
+			<button type="button" class="btn btn-secondary" click.delegate="saveAndNew()" disabled.bind="invalid">${'actions.save-and-new'|t}</button>
             <button type="button" class="btn btn-primary" click.delegate="save()" disabled.bind="invalid">${'actions.save'|t}</button>
 		</div>
 	</div>

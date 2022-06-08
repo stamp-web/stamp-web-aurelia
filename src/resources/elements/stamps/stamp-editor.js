@@ -330,22 +330,21 @@ export class StampEditorComponent extends EventManaged {
     }
 
     save(keepOpen) {
-        let self = this;
-        if (self.preprocess()) {
+        if (this.preprocess()) {
             // patch for https://github.com/aurelia/validatejs/issues/68
-            _.each(self.duplicateModel.catalogueNumbers, cn => {
+            _.each(this.duplicateModel.catalogueNumbers, cn => {
                 if (cn.__validationReporter__) {
                     delete cn.__validationReporter__;
                 }
             });
-            self.stampService.save(self.duplicateModel).then(stamp => {
-                if( self.duplicateModel.id <= 0 ) {
-                    self.eventBus.publish(EventNames.stampCount, { stamp: self.duplicateModel, increment: true });
-                    self.cacheSessionValues(self.duplicateModel);
+            this.stampService.save(this.duplicateModel).then(stamp => {
+                if( this.duplicateModel.id <= 0 ) {
+                    this.eventBus.publish(EventNames.stampCount, { stamp: this.duplicateModel, increment: true });
+                    this.cacheSessionValues(this.duplicateModel);
                 }
-                self.eventBus.publish(EventNames.stampSaved, { stamp: stamp, remainOpen: keepOpen });
+                this.eventBus.publish(EventNames.stampSaved, { stamp: stamp, remainOpen: keepOpen });
                 if( keepOpen) {
-                    self._resetModel();
+                    this._resetModel(this.duplicateModel);
                 }
             }).catch(err => {
                 logger.error(err);
@@ -379,34 +378,9 @@ export class StampEditorComponent extends EventManaged {
         return true;
     }
 
-    _resetModel() {
+    _resetModel(theModel) {
         this._resetValidity();
-        this.duplicateModel.id = 0;
-        this.duplicateModel.rate = "";
-        this.duplicateModel.description = "";
-        this._resetCatalogueNumber(this.activeCatalogueNumber);
-        this._resetOwnership(this.ownership);
-        this.model = this.duplicateModel;
-    }
-
-    _resetCatalogueNumber(cn) {
-        cn.id = 0;
-        cn.number = "";
-        cn.unknown = false;
-        cn.nospace = false;
-        cn.value = 0;
-    }
-
-    _resetOwnership(owner) {
-        if( owner ) {
-            owner.notes = undefined;
-            owner.cert = false;
-            owner.img = undefined;
-            owner.certImg = undefined;
-            owner.pricePaid = 0.0;
-            owner.defects = 0;
-            owner.deception = 0;
-        }
+        this.model = StampHelper.createEmptyStamp(theModel.wantList);
     }
 
     _resetValidity() {
@@ -434,24 +408,24 @@ export class StampEditorComponent extends EventManaged {
     @computedFrom('duplicateModel')
     get ownership() {
         let self = this;
-        if (!self.duplicateModel) {
+        if (!this.duplicateModel) {
             return undefined;
         }
-        let owners = self.duplicateModel.stampOwnerships;
+        let owners = this.duplicateModel.stampOwnerships;
         let owner;
-        if( self.duplicateModel.wantList === false ) {
+        if( this.duplicateModel.wantList === false ) {
             let configureOwnership = () => {
-                self.duplicateModel.stampOwnerships = [];
+                this.duplicateModel.stampOwnerships = [];
                 owner = createOwnership();
-                if( owner && self.cachedValues.purchased ) {
-                    owner.purchased = self.cachedValues.purchased;
+                if( owner && this.cachedValues.purchased ) {
+                    owner.purchased = this.cachedValues.purchased;
                 }
-                self.duplicateModel.stampOwnerships.push(owner);
+                this.duplicateModel.stampOwnerships.push(owner);
             };
             if (!owners) {
                 configureOwnership();
-            } else if (self.duplicateModel.stampOwnerships.length > 0) {
-                owner = _.first(self.duplicateModel.stampOwnerships);
+            } else if (this.duplicateModel.stampOwnerships.length > 0) {
+                owner = _.first(this.duplicateModel.stampOwnerships);
             } else {
                 configureOwnership();
 

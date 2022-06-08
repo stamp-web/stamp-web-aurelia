@@ -294,6 +294,18 @@ export var StampHelper = function() {
                 }
             }
             return path;
+        },
+
+        createEmptyStamp: (wantList) => {
+            return {
+                id:               0,
+                rate:             '',
+                description:      '',
+                wantList:         wantList,
+                countryRef:       -1,
+                catalogueNumbers: [],
+                stampOwnerships:  []
+            };
         }
     };
 }();
