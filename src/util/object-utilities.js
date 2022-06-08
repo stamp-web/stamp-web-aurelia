@@ -19,8 +19,8 @@ import _ from 'lodash';
 let Operators = ODataFilter.Operators;
 
 export var ObjectUtilities = {
-    isEqual: function (objA, objB) {
-        if( !objA || !objB ) {
+    isEqual: (objA, objB) => {
+        if (!objA || !objB) {
             return (!objA && !objB);
         }
         var aKeys = Object.keys(objA);
@@ -36,7 +36,7 @@ export var ObjectUtilities = {
         }
         return true;
     },
-    deepExtend: function (destination, source) {
+    deepExtend: (destination, source) => {
         for (var property in source) {
             if (source[property] && source[property].constructor &&
                 source[property].constructor === Object) {
@@ -81,7 +81,7 @@ export var PredicateUtilities = {
 };
 
 export var StringUtil = {
-    pluralize: function (str, count) {
+    pluralize: (str, count) => {
         var s = str;
         if (count > 1) {
             if (str.endsWith("y")) {
@@ -91,5 +91,11 @@ export var StringUtil = {
             }
         }
         return s;
+    }
+};
+
+export var DateUtil = {
+    isValidDate: (d) => {
+        return d instanceof Date && !isNaN(d)
     }
 };

@@ -48,19 +48,19 @@
                         <td class="col-primary"><span if.bind="number.active" class="sw-icon-key"></span></td>
                         <td class="col-catalogue">
                             <select-picker class="editable-cell" items.bind="catalogues" disabled.bind="loading" validate="catalogueRef" value.two-way="number.catalogueRef"
-                                           config.bind="{ id: 'cn-catalogueRef', tabIndex: 70, labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
+                                           config.bind="{ id: 'cn-catalogueRef', tabIndex: 500, labelProperty: 'displayName', valueProperty: 'id', caption: 'editor.catalogue-select' }">
                             </select-picker>
                         </td>
                         <td class="col-condition">
                             <select-picker class="editable-cell" items.bind="conditions" disabled.bind="loading" value.two-way="number.condition"
-                                           config.bind="{ id: 'cn-condition', tabIndex: 75, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
+                                           config.bind="{ id: 'cn-condition', tabIndex: 505, labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, caption: 'editor.condition-select' }">
                             </select-picker>
                         </td>
                         <td class="col-number">
-                            <input type="text" tabindex="80" autofocus class="form-control" id="cn-number" validate="number" value.bind="number.number" autocomplete="off">
+                            <input type="text" tabindex="510" autofocus class="form-control" id="cn-number" validate="number" value.bind="number.number" autocomplete="off">
                         </td>
                         <td class="col-catalogue-value">
-                            <input type="text" tabindex="85" class="form-control" id="cn-value" value.bind="number.value" autocomplete="off">
+                            <input type="text" tabindex="511" class="form-control" id="cn-value" value.bind="number.value" autocomplete="off">
                         </td>
                         <td class="col-actions">
                             <div class="btn-group actions">

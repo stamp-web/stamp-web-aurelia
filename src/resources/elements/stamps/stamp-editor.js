@@ -22,6 +22,7 @@ import {Catalogues} from '../../../services/catalogues';
 import {Preferences} from '../../../services/preferences';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames, EventManaged} from '../../../events/event-managed';
+import {DateUtil} from '../../../util/object-utilities';
 import _ from 'lodash';
 
 const logger = LogManager.getLogger('stamp-editor');
@@ -102,7 +103,7 @@ export class StampEditorComponent extends EventManaged {
         this.preferenceService = preferenceService;
 
         let purchasedValue = localStorage.getItem(CACHED_PURCHASED);
-        this.cachedValues.purchased = (purchasedValue) ? new Date(purchasedValue) : null;
+        this.cachedValues.purchased = (!_.isEmpty(purchasedValue) && purchasedValue !== 'null') ? new Date(purchasedValue) : null;
     }
 
     attached() {
@@ -356,7 +357,8 @@ export class StampEditorComponent extends EventManaged {
         let owner = (m.stampOwnerships && m.stampOwnerships.length > 0 ) ? m.stampOwnerships[0] : undefined;
         if( owner && owner.id <= 0 ) {
             this.cachedValues.purchased = (owner.purchased) ? owner.purchased : null;
-            localStorage.setItem(CACHED_PURCHASED, this.cachedValues.purchased);
+            let purchasedStr = DateUtil.isValidDate(this.cachedValues.purchased) ? this.cachedValues.purchased.toString() : '';
+            localStorage.setItem(CACHED_PURCHASED, purchasedStr);
         }
     }
 
