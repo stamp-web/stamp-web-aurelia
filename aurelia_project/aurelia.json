@@ -28,7 +28,7 @@
         "displayName": "WebStorm"
     },
     "platform": {
-        "port": 9000,
+        "port": 9001,
         "host": "localhost",
         "open": false,
         "index": "index.html",
