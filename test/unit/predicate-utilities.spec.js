@@ -21,66 +21,85 @@ let Operators = ODataParser.Operators;
 
 describe('PredicateUtilities test suite', () => {
 
+    describe('concat tests', () => {
+        it('verify undefined dropped', () => {
+           let arr = [undefined, new Predicate({subject: 'test', value: 'test-v'})];
+           let result = PredicateUtilities.concat(Operators.AND, arr);
+           expect(result.flatten().length).toBe(1);
+        });
+
+        it('verify multiple concatentated', () => {
+            let arr = [new Predicate({subject: 'p1', value: 'v1'}), new Predicate({subject: 'test', value: 'test-v'})];
+            let result = PredicateUtilities.concat(Operators.AND, arr);
+            expect(result.flatten().length).toBe(2);
+        });
+
+        it('verify multiple undefines are not concatentated', () => {
+            let arr = [new Predicate({subject: 'p1', value: 'v1'}), undefined, new Predicate({subject: 'test', value: 'test-v'}), undefined];
+            let result = PredicateUtilities.concat(Operators.AND, arr);
+            expect(result.flatten().length).toBe(2);
+        });
+    });
+
     describe('removeMatches tests', () => {
         it('remove single matching item from array', () => {
             let ps = new Predicate({ subject: 'my-subject', value: 'something'});
-            let result = PredicateUtilities.removeMatches('my-subject', [ps]);
-            expect(result.length).toBe(0);
+            let result = PredicateUtilities.removeMatches('my-subject', ps);
+            expect(result).toBe(undefined);
         });
 
         it('no removal without matching item from single array', () => {
             let ps = new Predicate({ subject: 'my-subject', value: 'something'});
-            let result = PredicateUtilities.removeMatches('no removal', [ps]);
-            expect(result.length).toBe(1);
+            let result = PredicateUtilities.removeMatches('no removal', ps);
+            expect(result.flatten().length).toBe(1);
         });
 
         it('no removal without matching item from array', () => {
-            let result = PredicateUtilities.removeMatches('no removal', [
+            let result = PredicateUtilities.removeMatches('no removal', Predicate.concat(Operators.AND, [
                 new Predicate({ subject: 'my-subject', value: 'something'}),
                 new Predicate({ subject: 'another-subject', value: 'something'}),
                 new Predicate({ subject: 'yet-again-subject', value: 'something'})
-            ]);
-            expect(result.length).toBe(3);
+            ]));
+            expect(result.flatten().length).toBe(3);
         });
 
         it('removal matching first item from array', () => {
-            let result = PredicateUtilities.removeMatches('my-subject', [
+            let result = PredicateUtilities.removeMatches('my-subject', Predicate.concat(Operators.AND, [
                 new Predicate({ subject: 'my-subject', value: 'something'}),
                 new Predicate({ subject: 'another-subject', value: 'something'}),
                 new Predicate({ subject: 'yet-again-subject', value: 'something'})
-            ]);
-            expect(result.length).toBe(2);
+            ]));
+            expect(result.flatten().length).toBe(2);
         });
 
         it('removal matching last item from array', () => {
-            let result = PredicateUtilities.removeMatches('yet-again-subject', [
+            let result = PredicateUtilities.removeMatches('yet-again-subject', Predicate.concat(Operators.AND, [
                 new Predicate({ subject: 'my-subject', value: 'something'}),
                 new Predicate({ subject: 'another-subject', value: 'something'}),
                 new Predicate({ subject: 'yet-again-subject', value: 'something'})
-            ]);
-            expect(result.length).toBe(2);
+            ]));
+            expect(result.flatten().length).toBe(2);
         });
 
         it('removal matching OR condition', () => {
-            let result = PredicateUtilities.removeMatches('condition', [
+            let result = PredicateUtilities.removeMatches('condition', Predicate.concat(Operators.AND, [
                 new Predicate({ subject: 'my-subject', value: 'something'}),
                 new Predicate({
                     subject: new Predicate({subject:'condition', value: 1}),
                     operator: Operators.OR,
                     value: new Predicate({subject:'condition', value: 4})}),
                 new Predicate({ subject: 'yet-again-subject', value: 'something'})
-            ]);
-            expect(result.length).toBe(2);
+            ]));
+            expect(result.flatten().length).toBe(2);
         });
 
         it('removal matching only AND condition', () => {
-            let result = PredicateUtilities.removeMatches('condition', [
-                new Predicate({
+            let result = PredicateUtilities.removeMatches('condition', new Predicate({
                     subject: new Predicate({subject:'condition', value: 1}),
                     operator: Operators.AND,
-                    value: new Predicate({subject:'condition', value: 4})})
-            ]);
-            expect(result.length).toBe(0);
+                    value: new Predicate({subject:'condition', value: 4})
+            }));
+            expect(result).toBe(undefined);
         });
     });
 });

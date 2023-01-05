@@ -16,6 +16,7 @@
 import ODataFilter from 'odata-filter-parser';
 import _ from 'lodash';
 
+let Predicate = ODataFilter.Predicate;
 let Operators = ODataFilter.Operators;
 
 export var ObjectUtilities = {
@@ -54,30 +55,47 @@ export var ObjectUtilities = {
 export var PredicateUtilities = {
     removeMatches(subject, predicates) {
         let predicateList = _.clone(predicates);
-        if (predicateList.length === 1 && !Operators.isLogical(predicateList[0].operator)) {
-            if (predicateList[0].subject === subject) {
-                predicateList.splice(0, 1);
+        if( Operators.isLogical(predicates.operator)) {
+            if(predicates.subject instanceof Predicate && predicates.subject.subject === subject) {
+                predicates = predicates.value;
+              //  predicates = PredicateUtilities.removeMatches(subject, predicates);
             }
-        } else {
-            _.remove(predicateList, item => {
-                return item.subject === subject;
-            });
-            let logicals = _.filter(predicateList, item => {
-                return Operators.isLogical(item.operator);
-            });
-            if (logicals.length > 0) {
-                _.forEach(logicals, logical => {
-                    let flattened = logical.flatten();
-                    let processed = PredicateUtilities.removeMatches(subject, flattened);
-                    if (processed.length < flattened.length) {
-                        let indx = _.indexOf(predicateList, logical);
-                        predicateList.splice(indx, 1);
-                    }
-                });
+            if (predicates.value instanceof Predicate && predicates.value.subject === subject) {
+                predicates = predicates.subject;
+             //   predicates = PredicateUtilities.removeMatches(subject, predicates);
+            }
+            if( predicates.subject instanceof Predicate && Operators.isLogical(predicates.subject.operator)) {
+                predicates.subject = PredicateUtilities.removeMatches(subject, predicates.subject);
+                if(_.isEmpty(predicates.subject)) {
+                    predicates = predicates.value;
+                }
+            }
+            if( predicates.value instanceof Predicate && Operators.isLogical(predicates.value.operator)) {
+                predicates.value = PredicateUtilities.removeMatches(subject, predicates.value);
+                if(_.isEmpty(predicates.value)) {
+                    predicates = predicates.subject;
+                }
             }
         }
-        return predicateList;
+        if (predicates instanceof Predicate && predicates.subject === subject) {
+            predicates = undefined;
+        }
+        return predicates;
+    },
+
+    concat(op, array) {
+        let ret = [].concat(...array.filter((elm, idx, arr) => {
+            return !_.isEmpty(elm) && (Array.isArray(elm) || elm instanceof Predicate);
+        }));
+        if (_.size(ret) > 1) {
+            return Predicate.concat(op, ret);
+        } else if (!_.isEmpty(ret) && ret[0] instanceof Predicate) {
+            return ret[0];
+        }
+        return undefined;
     }
+
+
 };
 
 export var StringUtil = {

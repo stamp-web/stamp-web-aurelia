@@ -67,20 +67,20 @@ export class StampList extends EventManaged {
     conditionFilters = ConditionFilter.symbols();
     conditionFilter = ConditionFilter.ALL;
 
-    currentFilters = [];
+    currentFilters;
 
     pageSizes = [100, 250, 500, 1000, 2500, 5000];
 
     pageInfo = {
-        total:  1,
+        total: 1,
         active: 0
     };
 
     options = {
-        $filter:       "",
-        $top:          250,
-        $skip:         0,
-        sort:          this.sortColumns[0],
+        $filter: "",
+        $top: 250,
+        $skip: 0,
+        sort: this.sortColumns[0],
         sortDirection: 'asc'
     };
 
@@ -108,15 +108,12 @@ export class StampList extends EventManaged {
     };
 
     processSearchRequest(data) {
-        let self = this;
-        let options = (!self.options) ? {} : self.options;
+        let options = (!this.options) ? {} : this.options;
         if (data) {
             options.$filter = data.serialize();
-            self.currentFilters = data.flatten();
-            logger.debug(self.currentFilters);
-            //TODO handle self.editorShown = false;
+            this.currentFilters = data;
         }
-        self.search();
+        this.search();
     }
 
     purchase() {
@@ -125,13 +122,13 @@ export class StampList extends EventManaged {
             selected = _.filter(selected, {wantList: false});
             if (selected.length > 0) {
                 let purchaseModel = {
-                    price:          0.0,
-                    currency:       CurrencyCode.USD.key,
+                    price: 0.0,
+                    currency: CurrencyCode.USD.key,
                     updateExisting: true,
                     selectedStamps: selected
                 };
                 this.dialogService.open({viewModel: PurchaseForm, model: purchaseModel}).whenClosed(response => {
-                    if(!response.wasCancelled) {
+                    if (!response.wasCancelled) {
                         this.search(true);
                     }
                 });
@@ -146,7 +143,12 @@ export class StampList extends EventManaged {
                 {name: 'Number', type: 'catalogueNumber', value: 'activeCatalogueNumber.number'},
                 {name: 'Description', type: 'text', value: 'rate', additional: ['description']},
                 {name: 'Condition', type: 'condition', value: 'activeCatalogueNumber.condition'},
-                {name: 'Cat. Value', type: 'currencyValue', value: 'activeCatalogueNumber.value', additional: ['activeCatalogueNumber.code']}
+                {
+                    name: 'Cat. Value',
+                    type: 'currencyValue',
+                    value: 'activeCatalogueNumber.value',
+                    additional: ['activeCatalogueNumber.code']
+                }
             ]
         });
         let styles = this.reportHelper.getStandardStyleDefinition();
@@ -156,14 +158,16 @@ export class StampList extends EventManaged {
 
         opts.content.push(this.reportHelper.generateText(`Wantlist: ${title}`, 'header'));
         opts.content.push(this.reportHelper.generateText(`Total number of stamps: ${this.stamps.length}`, 'text'));
-        opts.content.push({table: tmodel, style: 'table', layout: {
-            hLineColor: (i, node) => {
-                return '#aaa';
-            },
-            vLineColor: (i, node) => {
-                return '#aaa';
+        opts.content.push({
+            table: tmodel, style: 'table', layout: {
+                hLineColor: (i, node) => {
+                    return '#aaa';
+                },
+                vLineColor: (i, node) => {
+                    return '#aaa';
+                }
             }
-        }});
+        });
         opts.styles = styles;
         console.log(opts);
         this.pdfGenerator.printReport(opts);
@@ -227,7 +231,6 @@ export class StampList extends EventManaged {
     }
 
     setConditionFilter(ordinal) {
-
         this.currentFilters = PredicateUtilities.removeMatches('condition', this.currentFilters);
 
         this.conditionFilter = ConditionFilter.get(ordinal);
@@ -248,10 +251,11 @@ export class StampList extends EventManaged {
             for (let i = 0; i < conditions.length; i++) {
                 predicates.push(new Predicate({
                     subject: 'condition',
-                    value:   conditions[i]
+                    value: conditions[i]
                 }));
             }
-            this.currentFilters.push((predicates.length === 1 ) ? predicates[0] : Predicate.concat(Operators.OR, predicates));
+            let cPreds = (predicates.length === 1) ? predicates[0] : Predicate.concat(Operators.OR, predicates);
+            this.currentFilters = PredicateUtilities.concat(Operators.AND, [this.currentFilters, cPreds]);
         }
         this.search();
 
@@ -277,7 +281,7 @@ export class StampList extends EventManaged {
                 theFilter = null;
         }
         if (theFilter) {
-            this.currentFilters.push(theFilter);
+            this.currentFilters = PredicateUtilities.concat(Operators.AND, [this.currentFilters, theFilter]);
         }
         this.search();
     }
@@ -323,7 +327,7 @@ export class StampList extends EventManaged {
     }
 
     getDisplayModeClass(mode) {
-        return ( this.displayMode === mode ) ? 'active' : '';
+        return (this.displayMode === mode) ? 'active' : '';
     }
 
     @computedFrom('referenceMode', 'displayMode')
@@ -344,8 +348,7 @@ export class StampList extends EventManaged {
     processKeyFilter($event) {
         if ($event.keyCode === KeyCodes.VK_ESCAPE) {
             this.clearSearch();
-        }
-        else if ($event.keyCode === KeyCodes.VK_ENTER) {
+        } else if ($event.keyCode === KeyCodes.VK_ENTER) {
             this.sendSearch();
             $event.preventDefault();
         }
@@ -354,12 +357,22 @@ export class StampList extends EventManaged {
 
     sendSearch() {
         this.currentFilters = PredicateUtilities.removeMatches('description', this.currentFilters);
+        this.currentFilters = PredicateUtilities.removeMatches('rate', this.currentFilters);
         if (this.searchText && this.searchText !== "") {
-            this.currentFilters.unshift(new Predicate({
-                subject:  'description',
-                operator: Operators.LIKE, // LIKE is not supported?
-                value:    this.searchText
-            }));
+            this.currentFilters = PredicateUtilities.concat(Operators.AND, [this.currentFilters, new Predicate({
+                subject: new Predicate({
+                    subject: 'description',
+                    operator: Operators.LIKE,
+                    value: this.searchText
+                }),
+                operator: Operators.OR,
+                value: new Predicate({
+                    subject: 'rate',
+                    operator: Operators.LIKE,
+                    value: this.searchText
+                })
+
+            })]);
         }
         this.search();
     }
@@ -372,13 +385,8 @@ export class StampList extends EventManaged {
             opts.$orderby = cOpts.sort + " " + cOpts.sortDirection;
         }
         opts.$top = cOpts.$top > -1 ? cOpts.$top : 100;
-        if (this.currentFilters && this.currentFilters.length > 0) {
-            let current = [];
-            this.currentFilters.forEach(f => {
-                current.push(f);
-            });
-            let predicate = (current.length > 1) ? Predicate.concat(Operators.AND, current) : this.currentFilters[0];
-            opts.$filter = predicate.serialize();
+        if (this.currentFilters) {
+            opts.$filter = this.currentFilters.serialize();
             logger.debug("$filter=" + opts.$filter);
         }
         if (cOpts.$skip) {
@@ -453,7 +461,7 @@ export class StampList extends EventManaged {
                 });
             };
 
-            if(window.confirm(`Delete ${stamp.rate} - ${stamp.description}?`)) {
+            if (window.confirm(`Delete ${stamp.rate} - ${stamp.description}?`)) {
                 removeCallback.call(this, stamp);
             }
 
@@ -475,7 +483,7 @@ export class StampList extends EventManaged {
                 } else {
                     this.stampService.unselect(obj.model);
                     let selected = this.stampService.getSelected();
-                    this.lastSelected = ( selected && selected.length > 0) ? selected[selected.length - 1] : undefined;
+                    this.lastSelected = (selected && selected.length > 0) ? selected[selected.length - 1] : undefined;
                     if (this.lastSelected && this.editorShown) {
                         this.editingStamp = this._cloneStamp(this.lastSelected);
                     } else {
@@ -579,17 +587,16 @@ export class StampList extends EventManaged {
     }
 
     _processCurrentFilter($filter) {
-        let f = Parser.parse($filter);
-        if (f) {
-            this.currentFilters = f.flatten();
-            let descriptionFilter = _.find(this.currentFilters, f => {
-                return f.subject === 'description';
+        this.currentFilters = Parser.parse($filter);
+        if (this.currentFilters) {
+            let descriptionFilter = _.find(this.currentFilters, p => {
+                return _.get(p, 'subject') === 'description';
             });
             if (descriptionFilter) {
-                this.searchText = descriptionFilter.value;
+                this.searchText = descriptionFilter.value.replace(new RegExp('\\*', 'gi'), '');
             }
             logger.debug(this.currentFilters);
-            SessionContext.setSearchCondition(f);
+            SessionContext.setSearchCondition(this.currentFilters);
         }
     }
 
@@ -600,17 +607,17 @@ export class StampList extends EventManaged {
 
         return new Promise((resolve, reject) => {
             Promise.all([this.countryService.find(), this.preferenceService.find()]).then((results) => {
-                let result = (results && results.length > 0 ) ? results[0] : undefined;
+                let result = (results && results.length > 0) ? results[0] : undefined;
                 this.countries = result ? result.models : [];
                 let $filter = LocationHelper.getQueryParameter("$filter");
                 if ($filter) {
                     this._processCurrentFilter($filter);
                 } else if (result && result.total > 0) {
                     let indx = Math.floor(Math.random() * result.total);
-                    this.currentFilters.push(new Predicate({
+                    this.currentFilters = PredicateUtilities.concat(Operators.AND, [this.currentFilters, new Predicate({
                         subject: 'countryRef',
-                        value:   this.countries[indx].id
-                    }));
+                        value: this.countries[indx].id
+                    })]);
                 }
                 let $orderby = LocationHelper.getQueryParameter("$orderby");
                 if ($orderby && $orderby.length > 1) {
@@ -631,7 +638,7 @@ export class StampList extends EventManaged {
 
                 // extract image path from preferences.
                 let _imagePath = this.preferenceService.getByNameAndCategory('imagePath', 'stamps');
-                this.imagePath = ( !_.isEmpty(_imagePath)) ? _imagePath.value : this._defaultImagePath;
+                this.imagePath = (!_.isEmpty(_imagePath)) ? _imagePath.value : this._defaultImagePath;
 
                 this.search().then(() => {
                     logger.debug("StampGrid initialization time: " + ((new Date().getTime()) - t) + "ms");
