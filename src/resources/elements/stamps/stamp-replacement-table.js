@@ -32,7 +32,7 @@ const defaultImagePath = "https://drake-server.ddns.net/Thumbnails/";
 const logger = LogManager.getLogger('stamp-replacement-table');
 
 @customElement('stamp-replacement-table')
-@bindable( {
+@bindable({
     name: 'stamps',
     defaultValue: []
 })
@@ -40,14 +40,14 @@ export class StampReplacementTable {
 
     model = {
         filterCatalogueRef: -1,
-        replacementCatalogueRef: -1
+        replacementCatalogueRef: -1,
+        editCount: 0,
+        editingRow: -1
     };
     catalogues = [];
     filteredStamps = [];
-    editingRow = -1;
     conditions = Condition.symbols();
     editingCatalogueNumber;
-    editCount = 0;
 
 
     static inject() {
@@ -64,23 +64,28 @@ export class StampReplacementTable {
     }
 
     stampsChanged(newList, oldList) {
-        if( newList !== oldList ) {
+        if (newList !== oldList) {
             this.filterStamps();
         }
     }
 
     editingRowChanged(newIndex) {
-        this.editingCatalogueNumber = this.getReplacementCatalogueNumber( this.filteredStamps[newIndex]);
-        logger.debug(this.editingCatalogueNumber);
-        if( this.editingCatalogueNumber ) {
-            this._setupEditSubscribers(this.filteredStamps[newIndex], this.editingCatalogueNumber);
+        // index may be empty
+        if (this.model.editingRow < 0 || _.isEmpty(this.filteredStamps)) {
+            return;
         }
-        _.debounce( () => {
+        let stamp = this.filteredStamps[newIndex];
+        this.editingCatalogueNumber = this.getReplacementCatalogueNumber(stamp);
+        logger.debug(this.editingCatalogueNumber);
+        if (this.editingCatalogueNumber) {
+            this._setupEditSubscribers(stamp, this.editingCatalogueNumber);
+        }
+        _.debounce(() => {
             $('.replacement-number-input').focus();
         }, 250)();
     }
 
-    attached( ) {
+    attached() {
         this.loading = true;
         let cataloguePromise = this.catalogueService.find(this.catalogueService.getDefaultSearchOptions());
         let prefPromise = this.prefService.find(this.prefService.getDefaultSearchOptions());
@@ -93,7 +98,7 @@ export class StampReplacementTable {
 
         this._editSubscribers = [];
         this._modelSubscribers = [];
-        this._modelSubscribers.push(this.bindingEngine.propertyObserver(this, 'editingRow').subscribe(this.editingRowChanged.bind(this)));
+        this._modelSubscribers.push(this.bindingEngine.propertyObserver(this.model, 'editingRow').subscribe(this.editingRowChanged.bind(this)));
     }
 
     _processCatalogues(results) {
@@ -105,7 +110,7 @@ export class StampReplacementTable {
         this.thumbnailPath = LocationHelper.resolvePath(path, defaultImagePath);
     }
 
-    detached( ) {
+    detached() {
         this._modelSubscribers.forEach(sub => {
             sub.dispose();
         });
@@ -113,56 +118,59 @@ export class StampReplacementTable {
     }
 
 
-
-    filterStamps( ) {
-        this.filteredStamps.splice(0, this.filteredStamps.length);
-        let self = this;
-        _.each( this.stamps, stamp => {
-            let index = _.findIndex( stamp.catalogueNumbers, { catalogueRef: self.model.filterCatalogueRef});
-            if( index >= 0 ) {
-                let s = _.clone(stamp, true);
+    filterStamps() {
+        this.filteredStamps = [];
+        this.model.editCount = 0;
+        this.model.editingRow = -1;
+        //_.debounce(() => {
+        _.each(this.stamps, stamp => {
+            let index = _.findIndex(stamp.catalogueNumbers, (_cn) => {
+                return _cn.catalogueRef === this.model.filterCatalogueRef;
+            });
+            if (index > -1) {
+                let s = _.cloneDeep(stamp);
                 let cn = s.catalogueNumbers[index];
-                self._storeOriginalValues(cn);
-                cn.catalogueRef = self.model.replacementCatalogueRef;
+                this._storeOriginalValues(cn);
+                cn.catalogueRef = this.model.replacementCatalogueRef;
                 cn.replacing = true;
-                self.filteredStamps.push( s );
+                this.filteredStamps.push(s);
             }
         });
-        if( this.filteredStamps.length > 0 ) {
-            _.debounce(() => {
-                this.editingRow = 0;
-            })();
+        if (this.filteredStamps.length > 0) {
+            this.model.editingRow = 0;
         }
+        // })();
+
     }
 
     select($index) {
-        this.editingRow = $index;
+        this.model.editingRow = $index;
     }
 
     getCurrencyCode(cn) {
-        if( cn ) {
-            if( !cn.currencyCode ) {
-                cn.currencyCode = _.find( this.catalogues, { id: cn.catalogueRef }).code;
+        if (cn) {
+            if (!cn.currencyCode) {
+                cn.currencyCode = _.find(this.catalogues, {id: cn.catalogueRef}).code;
             }
             return cn.currencyCode;
         }
     }
 
     getReplacementCatalogueNumber(stamp) {
-        return _.find( stamp.catalogueNumbers, {replacing: true});
+        return _.find(stamp.catalogueNumbers, {replacing: true});
     }
 
     @computedFrom('model.filterCatalogueRef', 'model.replacementCatalogueRef')
     get filterReady() {
-        return ( this.model.filterCatalogueRef >= 0 && this.model.replacementCatalogueRef >= 0 );
+        return (this.model.filterCatalogueRef >= 0 && this.model.replacementCatalogueRef >= 0);
     }
 
 
     getImagePath(stamp) {
         let path = '';
-        if( !stamp.wantList && !_.isEmpty(stamp.stampOwnerships && _.first(stamp.stampOwnerships).img)) {
+        if (!stamp.wantList && !_.isEmpty(stamp.stampOwnerships && _.first(stamp.stampOwnerships).img)) {
             let img = _.first(stamp.stampOwnerships).img;
-            if( img && img !== '' ) {
+            if (img && img !== '') {
                 var index = img.lastIndexOf('/');
                 img = img.substring(0, index + 1) + "thumb-" + img.substring(index + 1);
                 path = this.thumbnailPath + img;
@@ -184,24 +192,30 @@ export class StampReplacementTable {
     }
 
     advanceToNextRow($event) {
-        if( $event.keyCode === KeyCodes.VK_TAB && this.editingRow < this.filteredStamps.length - 2) {
-            this.select(this.editingRow + 1);
+        if ($event.keyCode === KeyCodes.VK_TAB && this.model.editingRow < this.filteredStamps.length - 1) {
+            this.select(this.model.editingRow + 1);
             return false;
         }
         return true;
     }
 
     saveAll() {
-        let modified = _.filter(this.filteredStamps, { __modified__: true});
+        let modified = _.filter(this.filteredStamps, {__modified__: true});
         let savePromises = [];
         _.each(modified, (stamp) => {
             savePromises.push(this.stampsService.save(stamp));
         });
         Promise.all(savePromises).then(result => {
-            if( result ) {
+            if (result) {
                 _.each(result, s => { //eslint-disable-line no-unused-vars
-                    this.filterStamps();
+                    let index = _.findIndex(this.stamps, (s2) => {
+                        return s2.id === s.id;
+                    });
+                    if (index > -1) {
+                        this.stamps[index] = s;
+                    }
                 });
+                this.filterStamps();
             }
         });
     }
@@ -213,14 +227,20 @@ export class StampReplacementTable {
         this._editSubscribers.push(this.bindingEngine.propertyObserver(cn, 'condition').subscribe(this._checkForModifiedStamp.bind(this)));
     }
 
-    changeUnknown(stamp) {
-        let cn = this.getReplacementCatalogueNumber(stamp);
-        cn.unknown = (!cn.unknown && true);
-        this._checkForModifiedStamp(stamp, cn);
+    changeUnknown() {
+        _.defer(() => {
+            if (this.model.editingRow > -1) {
+                let stamp = this.filteredStamps[this.model.editingRow];
+                let cn = this.getReplacementCatalogueNumber(stamp);
+                cn.unknown = (!cn.unknown && true);
+                this._checkForModifiedStamp();
+            }
+        });
+
     }
 
-     _clearEditSubscribers() {
-        if( this._editSubscribers ) {
+    _clearEditSubscribers() {
+        if (this._editSubscribers) {
             this._editSubscribers.forEach(sub => {
                 sub.dispose();
             });
@@ -228,19 +248,17 @@ export class StampReplacementTable {
         this._editSubscribers = [];
     }
 
-    _checkForModifiedStamp(stamp, cn) {
-        if( !stamp ) {
-            stamp = this.filteredStamps[this.editingRow];
+    _checkForModifiedStamp() {
+        if (this.model.editingRow < 0) {
+            return;
         }
-        if( !cn) {
-            cn = this.getReplacementCatalogueNumber(stamp);
-        }
+        let stamp = this.filteredStamps[this.model.editingRow];
+        let cn = this.getReplacementCatalogueNumber(stamp);
         let currentModified = stamp.__modified__;
         let modified = this._markedAsModified(stamp, cn);
-        if( modified !== currentModified ) {
-            this.editCount += (modified) ? 1 : -1;
+        if (modified !== currentModified) {
+            this.model.editCount += (modified) ? 1 : -1;
         }
-
     }
 
     _storeOriginalValues(cn) {
@@ -254,18 +272,17 @@ export class StampReplacementTable {
     }
 
     _markedAsModified(stamp, cn) {
-        stamp.__modified__ = ( cn.__orig__.number !== cn.number ||
+        stamp.__modified__ = (cn.__orig__.number !== cn.number ||
             cn.__orig__.condition !== cn.condition ||
             cn.__orig__.value !== cn.value ||
-            cn.__orig__.unknown !== cn.unknown );
-        return (stamp.__modified__ );
+            cn.__orig__.unknown !== cn.unknown);
+        return (stamp.__modified__);
     }
 
     setAsModified(stamp) {
         stamp.__modified__ = true;
-        this.editCount++;
+        this.model.editCount++;
     }
-
 
 
 }

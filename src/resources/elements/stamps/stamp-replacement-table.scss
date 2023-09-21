@@ -150,10 +150,10 @@ stamp-replacement-table {
             position:      absolute;
             top:           50%;
             transform:     translate(0, -50%);
-            //            line-height: calc(4rem - #{2 * $theme-padding-thin});
             padding-right: $theme-padding-thick;
             font-size:     $theme-font-size-sm;
-            .badge {
+
+            label + span:first-of-type {
                 margin-right: $theme-margin-base;
             }
         }
