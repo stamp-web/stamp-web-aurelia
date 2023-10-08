@@ -46,9 +46,9 @@
         "@babel/register": "^7.4.0",
         "@jest/core": "^29.3.1",
         "async": ">=2.6.4",
-        "aurelia-cli": "^2.0.0",
+        "aurelia-cli": "3.0.1",
         "aurelia-loader-nodejs": "1.1.0",
-        "aurelia-pal-nodejs": "^2.0.0",
+        "aurelia-pal-nodejs": "^3.0.0-rc.1",
         "aurelia-testing": "1.1.0",
         "babel-jest": "^29.3.1",
         "browser-sync": "^2.27.11",
@@ -80,7 +80,7 @@
         "text": "requirejs/text#latest",
         "through2": "^2.0.5",
         "uglify-js": "^3.17.4",
-        "vinyl-fs": "^3.0.3"
+        "vinyl-fs": "^4.0.0"
     },
     "engines": {
         "node": ">=8.9.0"
