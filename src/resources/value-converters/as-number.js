@@ -14,30 +14,26 @@
  limitations under the License.
  */
 import {valueConverter} from 'aurelia-framework';
+import _ from 'lodash';
 
 @valueConverter("asNumber")
 export class asNumberValueConverter {
 
     toView(value, asFloat = false) {
         if (value) {
-            try {
-                value = asFloat ? parseFloat(value.toString()) : parseInt(value.toString());
-            } catch (err) {
-                console.log("Could not parse '" + value + "' to a number.");
-                value = -1;
-            }
+            value = asFloat ? parseFloat(value.toString()) : parseInt(value.toString());
+        }
+        if (_.isNaN(value)) {
+            value = undefined;
         }
         return value;
     }
 
     fromView(value, asFloat = false) {
         if(value) {
-            try {
-                value = (asFloat) ? parseFloat(value) : parseInt(value);
-            } catch( err ) {
-                console.log("Could not parse '" + value + "' to a number.");
-                value = -1;
-            }
+            value = (asFloat) ? parseFloat(value) : parseInt(value);
+        } if (_.isNaN(value)) {
+            value = undefined;
         }
         return value;
     }

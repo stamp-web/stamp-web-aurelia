@@ -146,6 +146,8 @@ export class EntityListManage {
                 var cacheVal = JSON.parse(filterCache);
                 if(cacheVal[fieldDef.field]) {
                     this.filterText = cacheVal[fieldDef.field];
+                } else {
+                    this.filterText = '';
                 }
             }
         }
