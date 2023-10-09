@@ -1,5 +1,4 @@
 module.exports = {
-
     "moduleNameMapper": {
         "^aurelia-binding$": "<rootDir>/node_modules/aurelia-binding"
     },
