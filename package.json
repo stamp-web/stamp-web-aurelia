@@ -48,7 +48,7 @@
         "async": ">=2.6.4",
         "aurelia-cli": "3.0.1",
         "aurelia-loader-nodejs": "1.1.0",
-        "aurelia-pal-nodejs": "^2.0.0",
+        "aurelia-pal-nodejs": "^3.0.0-rc.1",
         "aurelia-testing": "1.1.0",
         "babel-jest": "^29.3.1",
         "browser-sync": "^2.27.11",
