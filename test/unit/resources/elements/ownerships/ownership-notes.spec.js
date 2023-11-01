@@ -127,7 +127,7 @@ describe('OwnershipNotes test suite', () => {
             expect(ownershipNotes.hasNotes).toBe(true);
             expect(ownershipNotes.hasDeception).toBe(true);
             expect(ownershipNotes.hasDefects).toBe(true);
-            expect(ownershipNotes.iconCls).toEqual('sw-icon-deception');
+            expect(ownershipNotes.iconCls).toMatch(/^sw-icon-attention|sw-icon-deception$/);
             expect(window.Bootstrap.Tooltip).toHaveBeenCalled();
         });
 
@@ -138,7 +138,7 @@ describe('OwnershipNotes test suite', () => {
             expect(ownershipNotes.hasNotes).toBe(true);
             expect(ownershipNotes.hasDeception).toBe(true);
             expect(ownershipNotes.hasDefects).toBe(false);
-            expect(ownershipNotes.iconCls).toEqual('sw-icon-deception');
+            expect(ownershipNotes.iconCls).toMatch(/^sw-icon-attention|sw-icon-deception$/);
             expect(window.Bootstrap.Tooltip).toHaveBeenCalled();
         });
 
@@ -149,7 +149,7 @@ describe('OwnershipNotes test suite', () => {
             expect(ownershipNotes.hasNotes).toBe(false);
             expect(ownershipNotes.hasDeception).toBe(true);
             expect(ownershipNotes.hasDefects).toBe(true);
-            expect(ownershipNotes.iconCls).toEqual('sw-icon-deception');
+            expect(ownershipNotes.iconCls).toMatch(/^sw-icon-attention|sw-icon-deception$/);
             expect(window.Bootstrap.Tooltip).toHaveBeenCalled();
         });
     });

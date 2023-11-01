@@ -67,7 +67,7 @@ export class OwnershipNotes {
         this.hasNotes = !!(this.model.notes && this.model.notes !== '');
         this.hasDeception = (+this.model.deception > 0);
         this.hasDefects = (+this.model.defects > 0);
-        this.iconCls = (this.hasDeception) ? 'sw-icon-deception' : (this.hasDefects) ? 'sw-icon-defect' : (this.hasNotes) ? 'sw-icon-info' : '';
+        this.iconCls = (this.hasDeception) ? 'sw-icon-attention' : (this.hasDefects) ? 'sw-icon-defect' : (this.hasNotes) ? 'sw-icon-info' : '';
         if (this.visible) {
             this._createTooltip();
         }

@@ -49,7 +49,7 @@
                 <div class="col-9">
                     <select-picker items.bind="deceptions"
                                    value.bind="model.deception | bitwiseToArray:deceptions.length"
-                                   config.bind="{ id: 'owner-deceptions', tabIndex: 107, name: 'deceptions', labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, multiple: 'multiple', caption: 'editor.deceptions-select' }">
+                                   config.bind="{ id: 'owner-deceptions', tabIndex: 107, name: 'deceptions', labelProperty: 'description', valueProperty: 'ordinal', filterSearch: false, multiple: true, caption: 'editor.deceptions-select' }">
                     </select-picker>
                 </div>
             </div>
