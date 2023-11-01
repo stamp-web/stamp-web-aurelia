@@ -9,6 +9,7 @@
     <require from="../../resources/elements/select-picker/select-picker"></require>
     <require from="../../resources/elements/image-preview/image-preview"></require>
     <require from="../../resources/attributes/find-target"></require>
+    <require from="../../resources/elements/editor-dialog"></require>
 
     <require from="views/stamps/stamp-list.css"></require>
 
@@ -56,7 +57,7 @@
                     <button class="btn btn-secondary d-none d-md-block ${ displayMode === 'Upgrade' ? 'active' : ''}" title="${'actions.show-as-upgrade'|t}" click.trigger="setDisplayMode('Upgrade')">
                         <span class="sw-icon-exchange"></span>
                     </button>
-                    <button class="btn btn-secondary d-none d-md-block" title="${'actions.print'|t}" click.trigger="print()">
+                    <button class="btn btn-secondary d-none d-md-block" title="${'actions.print'|t}"  click.trigger="showReportDialog()" data-bs-toggle="modal" data-bs-target="#reportBuilderDialog">
                         <span class="sw-icon-print"></span>
                     </button>
                     <button class="btn btn-secondary d-none d-md-block ${ referenceTableState }" disabled.bind="referenceTableState === 'disabled'" title="${'actions.show-reference-cataloguenumbers'|t}" click.delegate="toggleCatalogueNumbers()">
@@ -116,8 +117,14 @@
 
 			</div>
 		</form>
-
 	</nav>
+    <editor-dialog model.bind="reportBuilder.model"
+                   save-text="${'reports.action'|t}"
+                   publish-event="generate-report"
+                   content.bind="reportBuilder.content"
+                   icon="sw-icon-print"
+                   title="${'editor.generate-report'|t}"
+                   dialog-id="reportBuilderDialog" ></editor-dialog>
 	<div class="container-fluid stamp-content" >
 		<div class="stamp-content-row">
 			<div class="sw-editor-container ${(!editorShown) ? 'full-content' : ''}" if.bind="displayMode !== 'Upgrade'">

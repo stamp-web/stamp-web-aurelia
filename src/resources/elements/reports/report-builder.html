@@ -1,0 +1,25 @@
+<template>
+    <require from="../../value-converters/empty-text"></require>
+    <form>
+        <div class="form-group row">
+            <label for="report-name" class="col-sm-3">${'reports.name'|t}</label>
+            <div class="col-sm-9">
+                <input id="report-name" tabindex="10" class="form-control" type="text" value.bind="model.title | emptyText">
+            </div>
+        </div>
+        <div class="form-group row">
+            <span class="col-sm-3"></span>
+            <label class="col-sm-9">
+                <input type="checkbox" tabindex="90" checked.bind="model.includeCountries">
+                <span>${'editor.includeCountries'|t}</span>
+            </label>
+        </div>
+        <div class="form-group row">
+            <span class="col-sm-3"></span>
+            <label class="col-sm-9">
+                <input type="checkbox" tabindex="90" checked.bind="model.includeNotes">
+                <span>${'editor.includeNotes'|t}</span>
+            </label>
+        </div>
+    </form>
+</template>

@@ -36,6 +36,7 @@ export const EventNames = {
     create:                  'create',
     manageEntity:            'manage-entity',
     entityDelete:            'entity-delete',
+    generateReport:          'generate-report',
     selectEntity:            'select-entity',
     entityFilter:            'entity-filter',
     loadingStarted:          'loading-started',

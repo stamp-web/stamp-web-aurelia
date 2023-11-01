@@ -2,13 +2,13 @@
 	<require from="../../value-converters/empty-text"></require>
 	<form validation-renderer="bootstrap-form">
 		<div class="form-group row">
-			<label for="editor-name" class="col-sm-3">Name</label>
+			<label for="editor-name" class="col-sm-3">${'editor.name'|t}</label>
 			<div class="col-sm-9">
 				<input id="editor-name" autocomplete="off" class="form-control" tabindex="50" type="text" value.bind="model.name | emptyText & validate:rules">
 			</div>
 		</div>
 		<div class="form-group row">
-			<label for="editor-desc" class="col-sm-3">Description</label>
+			<label for="editor-desc" class="col-sm-3">${'editor.description'|t}</label>
 			<div class="col-sm-9">
 				<textarea id="editor-desc" value.bind="model.description | emptyText" tabindex="100" class="form-control" rows="4"></textarea>
 			</div>
@@ -17,7 +17,7 @@
 			<div class="col-sm-offset-4 col-sm-8">
 				<div class="checkbox">
 					<span>
-						<input type="checkbox" id="editor-updateCountries" tabindex="150" checked.bind="aspects.modifyImagePath"> Update image paths
+						<input type="checkbox" id="editor-updateCountries" tabindex="150" checked.bind="aspects.modifyImagePath">${'editor.update-image-paths'|t}
 					</span>
 				</div>
 			</div>

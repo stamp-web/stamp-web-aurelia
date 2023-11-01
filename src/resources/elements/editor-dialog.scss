@@ -21,8 +21,7 @@ editor-dialog {
             background-color: $theme-appbar-bg;
             color: $theme-appbar-color;
             display: flex;
-
-            padding: $theme-padding-base;
+            padding: 0;
         }
     }
 
@@ -34,8 +33,15 @@ editor-dialog {
             font-size: $theme-font-size-sm;
         }
 
-        .checkbox {
+        .checkbox, input[type='checkbox'] {
             height: 1.6rem;
+            margin-right: $theme-margin-thin;
+        }
+
+        label {
+            align-items: start;
+            padding-top: $theme-padding-thin + $theme-padding-thinner;
+            display: flex;
         }
     }
 

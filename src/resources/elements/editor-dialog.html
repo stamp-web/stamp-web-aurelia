@@ -13,7 +13,7 @@
                     <div class="messaging" show.bind="errorMsg !== ''">
                         <i class="sw-icon-attention" ></i> ${errorMsg}
                     </div>
-					<button type="button" class="btn btn-primary editor-save" tabindex="5000" click.delegate="save()" disabled.bind="!valid">${'actions.save'|t}</button>
+					<button type="button" class="btn btn-primary editor-save" tabindex="5000" click.delegate="save()" disabled.bind="!valid">${saveText}</button>
 					<button type="button" class="btn btn-secondary editor-cancel" tabindex="5050" data-bs-dismiss="modal">${'actions.cancel'|t}</button>
 				</div>
 			</div>

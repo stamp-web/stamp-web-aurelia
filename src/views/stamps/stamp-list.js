@@ -56,6 +56,7 @@ export class StampList extends EventManaged {
     referenceMode = false;
     reportValue = "";
     reportType = "CatalogueValue";
+    reportBuilder = {};
 
     pageSize = 500;
 
@@ -136,40 +137,20 @@ export class StampList extends EventManaged {
         }
     }
 
-    print() {
-        let title = 'Test';
-        let tmodel = this.reportHelper.generateTableModel(this.stamps, {
-            cols: [
-                {name: 'Number', type: 'catalogueNumber', value: 'activeCatalogueNumber.number'},
-                {name: 'Description', type: 'text', value: 'rate', additional: ['description']},
-                {name: 'Condition', type: 'condition', value: 'activeCatalogueNumber.condition'},
-                {
-                    name: 'Cat. Value',
-                    type: 'currencyValue',
-                    value: 'activeCatalogueNumber.value',
-                    additional: ['activeCatalogueNumber.code']
-                }
-            ]
-        });
-        let styles = this.reportHelper.getStandardStyleDefinition();
-        let opts = {
-            content: []
-        };
-
-        opts.content.push(this.reportHelper.generateText(`Wantlist: ${title}`, 'header'));
-        opts.content.push(this.reportHelper.generateText(`Total number of stamps: ${this.stamps.length}`, 'text'));
-        opts.content.push({
-            table: tmodel, style: 'table', layout: {
-                hLineColor: (i, node) => {
-                    return '#aaa';
+    showReportDialog() {
+        _.defer(() => {
+            this.reportBuilder = {
+                model: {
+                    title: this.i18next.tr('reports.defaultTitle')
                 },
-                vLineColor: (i, node) => {
-                    return '#aaa';
-                }
+                content: 'resources/elements/reports/report-builder'
             }
         });
-        opts.styles = styles;
-        console.log(opts);
+    }
+
+    print(options) {
+        this.eventBus.publish(EventNames.close);
+        let opts = this.reportHelper.buildReport(this.stamps, this.countries, this.reportValue, options);
         this.pdfGenerator.printReport(opts);
     }
 
@@ -442,7 +423,10 @@ export class StampList extends EventManaged {
                     this.lastSelected = result.stamp;
                 });
             }
-            // TODO Need to toggle editor without toggling
+        });
+
+        this.subscribe(EventNames.generateReport, data => {
+            this.print(data);
         });
 
         this.subscribe(EventNames.toggleStampSelection, this.stampSelected.bind(this));

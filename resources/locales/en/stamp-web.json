@@ -78,10 +78,13 @@
         "description": "Description",
         "details-title": "Details",
         "filtering-catalogue": "Filtering Catalogue",
+        "generate-report": "Generate Report",
         "grade": "Grade",
         "grade-select": "Select grade",
         "hide": "close",
         "issue": "Year of Issue",
+        "includeCountries": "Include Countries",
+        "includeNotes": "Include Notes",
         "name": "Name",
         "modify-existing": "Modify existing values",
         "modifyTimestamp": "Modified",
@@ -100,7 +103,8 @@
         "seller-select": "Select a seller",
         "stamp-collection": "Stamp collection",
         "stamp-collection-select": "Select a stamp collection",
-        "switchToCreate-hint": "Switch to create stamp"
+        "switchToCreate-hint": "Switch to create stamp",
+        "update-image-paths": "Update image paths"
     },
     "filters": {
         "filter": "Filter",
@@ -138,6 +142,7 @@
         "nameRequired": "Name is required",
         "numberRequired": "Number is required",
         "numberInvalid": "Number exceeds the 25 character limit",
+        "stampCollectionRequired": "Stamp Collection is required",
         "resolveErrors": "Resolve issues to continue",
         "valueInvalid": "Value is not a number"
     },
@@ -210,6 +215,17 @@
     },
     "paging-toolbar": {
         "page": "Page"
+    },
+    "reports": {
+        "name": "Report Title",
+        "action": "Generate",
+        "condition": "Condition",
+        "country": "Country",
+        "defaultTitle": "Filtered Stamps",
+        "description": "Description",
+        "notes": "Notes",
+        "number": "Number",
+        "value": "Cat. Value"
     },
     "footer-statistics": {
         "catalogue-value": "Report on catalogue value",

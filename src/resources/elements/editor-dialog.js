@@ -24,10 +24,13 @@ import {EventNames, EventManaged} from '../../events/event-managed';
 @bindable('content')
 @bindable('title')
 @bindable('icon')
+@bindable('saveText')
+
 export class EditorDialog extends EventManaged {
 
     static inject = [EventAggregator, I18N];
 
+    @bindable publishEvent = EventNames.save;
     errorMsg = '';
     subscriptions = [];
     valid = true;
@@ -37,6 +40,7 @@ export class EditorDialog extends EventManaged {
         this.i18n = i18n;
         this.eventBus = eventBus;
         this.setupSubscriptions();
+        this.saveText = this.saveText || this.i18n.tr('actions.save');
     }
 
     modelChanged() {
@@ -67,7 +71,7 @@ export class EditorDialog extends EventManaged {
     }
 
     save() {
-        this.eventBus.publish(EventNames.save, {model: this.model, aspects: this.aspects});
+        this.eventBus.publish(this.publishEvent, {model: this.model, aspects: this.aspects});
 
     }
 }

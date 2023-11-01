@@ -3,26 +3,26 @@
 	<require from="../../value-converters/by-name"></require>
     <require from="../../elements/select-picker/select-picker"></require>
 
-	<form>
-		<div class="form-group row">
-			<label for="editor-stampCollection" class="col-sm-3">${'editor.stamp-collection'|t}</label>
-			<div class="col-sm-9">
-                <select-picker items.bind="stampCollections" class="stamp-collection-selector" value.two-way="model.stampCollectionRef"
-                               config.bind="{ id: 'editor-stampCollection', tabIndex: 100, name: 'stampCollectionRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.stamp-collection-select' }">
+    <form validation-renderer="bootstrap-form">
+        <div class="form-group row">
+            <label for="editor-stampCollection" class="col-sm-3">${'editor.stamp-collection'|t}</label>
+            <div class="col-sm-9">
+                <select-picker items.bind="stampCollections" class="stamp-collection-selector" value.two-way="model.stampCollectionRef & validate:rules"
+                               config.bind="{id: 'editor-stampCollection', tabIndex: 80, name: 'stampCollectionRef', labelProperty: 'name', valueProperty: 'id', caption: 'editor.stamp-collection-select' }">
                 </select-picker>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label for="editor-name" class="col-sm-3">${'editor.name'|t}</label>
-			<div class="col-sm-9">
-				<input id="editor-name" tabindex="150" class="form-control" type="text" value.bind="model.name | emptyText">
-			</div>
-		</div>
-		<div class="form-group row">
-			<label for="editor-desc" class="col-sm-3">${'editor.description'|t}</label>
-			<div class="col-sm-9">
-				<textarea id="editor-desc" tabindex="200" value.bind="model.description | emptyText" class="form-control" rows="4"></textarea>
-			</div>
-		</div>
-	</form>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="editor-name" class="col-sm-3">${'editor.name'|t}</label>
+            <div class="col-sm-9">
+                <input id="editor-name" autocomplete="off" tabindex="100" class="form-control" type="text" value.bind="model.name | emptyText & validate:rules">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="editor-desc" class="col-sm-3">${'editor.description'|t}</label>
+            <div class="col-sm-9">
+                <textarea id="editor-desc" tabindex="150" value.bind="model.description | emptyText" class="form-control" rows="4"></textarea>
+            </div>
+        </div>
+    </form>
 </template>
