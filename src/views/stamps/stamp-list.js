@@ -70,7 +70,7 @@ export class StampList extends EventManaged {
 
     currentFilters;
 
-    pageSizes = [100, 250, 500, 1000, 2500, 5000];
+    pageSizes = [100, 250, 500, 1000, 2500, 5000, 10000];
 
     pageInfo = {
         total: 1,
