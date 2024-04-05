@@ -58,7 +58,7 @@ describe('ReportHelper test suite', () => {
                     {name: 'Description', type: 'text', value: 'description', width: '*'}
                     ]
             };
-            let v = cmp.generateTableModel(stamps, [], config);
+            let v = cmp.generateTableModel(stamps, [], [], config);
             expect(v).toBeDefined();
             expect(v.body.length).toBe(3);
             let tr = v.body[0];
@@ -75,7 +75,7 @@ describe('ReportHelper test suite', () => {
                 {id: 5, number: '23', description: '1d red'},
                 {id: 7, number: '23 b', description: '1d vermilion'}
             ];
-            let v = cmp.generateTableModel(stamps, [], {});
+            let v = cmp.generateTableModel(stamps, [], [], {});
             expect(v).toBeDefined();
             expect(v.body.length).toBe(0);
             expect(v.widths.length).toBe(0);
@@ -139,15 +139,16 @@ describe('ReportHelper test suite', () => {
             let col = {
                 type: 'currencyValue',
                 value: 'activeCatalogueNumber.catalogueValue',
-                code: 'activeCatalogueNumber.currency'
+                additional: ['activeCatalogueNumber.catalogueRef']
             };
+            let catalogues = [{id: 22, code: CurrencyCode.EUR.key}]
             let stamp = {
                 activeCatalogueNumber: {
                     catalogueValue: 2243.23,
-                    currency: CurrencyCode.EUR.key
+                    catalogueRef: 22
                 }
             };
-            let result = cmp.generateTableCellValue(stamp, col, []);
+            let result = cmp.generateTableCellValue(stamp, col, [], catalogues );
             expect(result).toBe('€2,243.23');
         });
 
