@@ -36,7 +36,7 @@ export class ReportHelper {
         this.i18next = i18next;
     }
 
-    buildReport(stamps, countries, reportValue, options) {
+    buildReport(stamps, countries, catalogues, reportValue, options) {
         let reportModel = _.get(options, 'model', {});
         let title = _.get(reportModel, 'title', this.i18next.tr('reports.defaultTitle'));
         let includeCountries = _.get(reportModel, 'includeCountries', false);
@@ -51,7 +51,7 @@ export class ReportHelper {
                 name: this.i18next.tr('reports.value'),
                 type: 'currencyValue',
                 value: 'activeCatalogueNumber.value',
-                additional: ['activeCatalogueNumber.code']
+                additional: ['activeCatalogueNumber.catalogueRef']
             }
         ];
         if(includeCountries) {
@@ -62,7 +62,7 @@ export class ReportHelper {
             columns.splice(index,0, {name: this.i18next.tr('reports.notes'), type: 'notes', value: 'stampOwnerships[0]', width: '*'});
         }
 
-        let tmodel = this.generateTableModel(stamps, countries,{
+        let tmodel = this.generateTableModel(stamps, countries, catalogues,{
             cols: columns
         });
         let styles = this.getStandardStyleDefinition();
@@ -99,7 +99,7 @@ export class ReportHelper {
         };
     }
 
-    generateTableModel(stamps, countries, config) {
+    generateTableModel(stamps, countries, catalogues, config) {
         let model = {
             body: [],
             widths: []
@@ -117,7 +117,7 @@ export class ReportHelper {
             _.forEach(stamps, stamp => {
                 let row = [];
                 _.forEach(config.cols, col => {
-                    row.push(this.generateTableCellValue(stamp, col, countries));
+                    row.push(this.generateTableCellValue(stamp, col, countries, catalogues));
                 });
                 model.body.push(row);
             });
@@ -125,7 +125,7 @@ export class ReportHelper {
         return model;
     }
 
-    generateTableCellValue(stamp, col, countries) {
+    generateTableCellValue(stamp, col, countries, catalogues) {
         let val = _.get(stamp, col.value);
         let result = '';
         switch (col.type) {
@@ -136,7 +136,9 @@ export class ReportHelper {
                 result = this.converter.fromCondition(val);
                 break;
             case 'currencyValue':
-                let currencyCode = _.get(stamp, col.code, CurrencyCode.USD.key);
+                let catalogueId = +_.get(stamp, _.first(col.additional), -1);
+                let catalogue = _.find(catalogues, {id: catalogueId});
+                let currencyCode = catalogue ? catalogue.code : CurrencyCode.USD.key;
                 result = this.converter.fromCurrencyValue(val, currencyCode);
                 break;
             case 'country':

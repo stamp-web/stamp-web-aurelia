@@ -17,6 +17,7 @@ import {inject, LogManager, computedFrom} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {I18N} from 'aurelia-i18n';
 import {Countries} from '../../services/countries';
+import {Catalogues} from '../../services/catalogues';
 import {Router} from 'aurelia-router';
 import {Stamps} from '../../services/stamps';
 import {Preferences} from '../../services/preferences';
@@ -37,7 +38,7 @@ import _ from 'lodash';
 
 const logger = LogManager.getLogger('stamp-list');
 
-@inject(Element, EventAggregator, Router, Stamps, Countries, Preferences, asCurrencyValueConverter, I18N, DialogService, PdfGenerator, ReportHelper)
+@inject(Element, EventAggregator, Router, Stamps, Countries, Catalogues, Preferences, asCurrencyValueConverter, I18N, DialogService, PdfGenerator, ReportHelper)
 export class StampList extends EventManaged {
 
     stamps = [];
@@ -45,6 +46,7 @@ export class StampList extends EventManaged {
     latestSelected = undefined;
     stampCount = 0;
     countries = [];
+    catalogues = [];
     heading = "Stamp List";
     displayMode = 'Grid';
     imageShown = false;
@@ -85,11 +87,12 @@ export class StampList extends EventManaged {
         sortDirection: 'asc'
     };
 
-    constructor(element, eventBus, router, stampService, countryService, preferenceService, currencyFormatter, i18next, dialogService, pdfGenerator, reportHelper) {
+    constructor(element, eventBus, router, stampService, countryService, catalogueService, preferenceService, currencyFormatter, i18next, dialogService, pdfGenerator, reportHelper) {
         super(eventBus);
         this.element = element;
         this.stampService = stampService;
         this.countryService = countryService;
+        this.catalogueService = catalogueService;
         this.preferenceService = preferenceService;
         this.currencyFormatter = currencyFormatter;
         this.router = router;
@@ -150,7 +153,7 @@ export class StampList extends EventManaged {
 
     print(options) {
         this.eventBus.publish(EventNames.close);
-        let opts = this.reportHelper.buildReport(this.stamps, this.countries, this.reportValue, options);
+        let opts = this.reportHelper.buildReport(this.stamps, this.countries, this.catalogues, this.reportValue, options);
         this.pdfGenerator.printReport(opts);
     }
 
@@ -590,9 +593,10 @@ export class StampList extends EventManaged {
         this.referenceMode = (localStorage.getItem(StorageKeys.referenceCatalogueNumbers) === 'true');
 
         return new Promise((resolve, reject) => {
-            Promise.all([this.countryService.find(), this.preferenceService.find()]).then((results) => {
+            Promise.all([this.countryService.find(), this.catalogueService.find(), this.preferenceService.find()]).then((results) => {
                 let result = (results && results.length > 0) ? results[0] : undefined;
                 this.countries = result ? result.models : [];
+                this.catalogues = (results && results.length > 1) ? results[1].models : [];
                 let $filter = LocationHelper.getQueryParameter("$filter");
                 if ($filter) {
                     this._processCurrentFilter($filter);
