@@ -34,7 +34,8 @@
         "odata-filter-parser": "^0.5.0",
         "pdfmake": "^0.2.7",
         "requirejs": "^2.3.2",
-        "select2": "4.0.3"
+        "select2": "4.0.3",
+        "serve-static": "^1.16.2"
     },
     "devDependencies": {
         "@babel/core": "^7.20.12",
@@ -51,7 +52,7 @@
         "aurelia-pal-nodejs": "^3.0.0-rc.1",
         "aurelia-testing": "1.1.0",
         "babel-jest": "^29.3.1",
-        "browser-sync": "^2.27.11",
+        "browser-sync": "^3.0.3",
         "connect-history-api-fallback": "^1.6.0",
         "debounce": "^1.2.0",
         "expect.js": "^0.3.1",
