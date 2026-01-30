@@ -48,7 +48,7 @@ pipeline {
             }
         }
 
-        stage('Stamp Build') {
+        stage('Trigger Notify') {
             steps {
                 sh '''
                     echo "{\"buildTime\": ${BUILD_ID}}\" > build-number.json
