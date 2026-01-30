@@ -60,7 +60,14 @@ pipeline {
 
     post {
         success {
+            archiveArtifacts artifacts: 'resources/**', fingerprint: true
+            archiveArtifacts artifacts: 'scripts/**', fingerprint: true
+            archiveArtifacts artifacts: 'index.html', fingerprint: true
+            archiveArtifacts artifacts: 'favicon.ico', fingerprint: true
             archiveArtifacts artifacts: 'build-number.json', fingerprint: true
+            archiveArtifacts artifacts: 'node_modules/pdfmake/build/pdfmake.js', fingerprint: true
+            archiveArtifacts artifacts: 'node_modules/pdfmake/build/vfs_fonts.js', fingerprint: true
+            archiveArtifacts artifacts: 'package.json', fingerprint: true
         }
     }
 }
