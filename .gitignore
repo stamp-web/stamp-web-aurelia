@@ -1,6 +1,7 @@
 node_modules
 .idea
 .DS_STORE
+dist
 scripts/**/*.js
 resources/css/splash.css
 resources/css/print.css
@@ -8,3 +9,5 @@ resources/css/print.css
 package-lock.json
 test/coverage
 test/junit
+/*.tgz
+

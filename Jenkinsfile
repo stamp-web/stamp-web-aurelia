@@ -56,6 +56,15 @@ pipeline {
                 '''
             }
         }
+
+        stage('Package') {
+             steps {
+                sh '''
+                    mkdir -p archive
+                    npm pack --pack-destination archive
+                '''
+             }
+        }
     }
 
     post {
