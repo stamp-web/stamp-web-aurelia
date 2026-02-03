@@ -43,7 +43,7 @@ class ParameterHelper {
 @inject(HttpClient, EventAggregator)
 export class BaseService {
 
-    baseHref = "stamp-webservices";
+    baseHref = "../stamp-webservices";
 
     parameters = {};
 
