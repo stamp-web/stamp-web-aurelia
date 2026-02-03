@@ -18,15 +18,8 @@ function cp(src, dst) {
 rm(dist);
 fs.mkdirSync(dist);
 
-
-"resources/**",
-    "scripts/**",
-    "index.html",
-    "favicon.ico",
-    "node_modules/pdfmake/build/pdfmake.js",
-    "node_modules/pdfmake/build/vfs_fonts.js"
-
 /* copy runtime assets */
+cp('resources', 'dist/resources');
 cp('scripts', 'dist/scripts');
 cp('index.html', 'dist/index.html');
 cp('favicon.ico', 'dist/favicon.ico');
