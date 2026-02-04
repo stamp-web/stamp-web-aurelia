@@ -19,12 +19,13 @@ import {EntityManaged} from "./entity-managed";
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 import _ from 'lodash';
+import {AppConfig} from "../app-config";
 
-@inject(HttpClient, EventAggregator)
+@inject(HttpClient, EventAggregator, AppConfig)
 export class Catalogues extends EntityManaged {
 
-    constructor(http, eventBus) {
-        super(http, eventBus);
+    constructor(http, eventBus, appConfig) {
+        super(http, eventBus, appConfig);
     }
 
     getDefaultSearchOptions() {

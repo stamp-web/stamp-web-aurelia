@@ -19,12 +19,13 @@ import {BaseService} from "./base-service";
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 import _ from 'lodash';
+import {AppConfig} from "../app-config";
 
-@inject(HttpClient, EventAggregator)
+@inject(HttpClient, EventAggregator, AppConfig)
 export class Preferences extends BaseService {
 
-    constructor(http, eventBus) {
-        super(http, eventBus);
+    constructor(http, eventBus,appConfig) {
+        super(http, eventBus, appConfig);
     }
 
     getDefaultSearchOptions() {

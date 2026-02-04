@@ -53,6 +53,19 @@ To run the app, follow these steps.
   ```
 5. Browse to [localhost:9000](http://localhost:9000) to see the app. You can make changes in the code found under `src` and the browser should auto-refresh itself as you save files.
 
+## Configuration
+
+In order to deploy behind a reverse proxy environment the ability to configure the urls of the application can be done 
+through the configuration file "resources/app-config".  The following are the supported parameters:
+
+  ```json
+  {
+     "baseHref": "/",
+     "stampWebUrl": "/stamp-web/#",
+     "stampWebServices": "/../stamp-webservices/"
+  }
+  ```
+
 ## Browser Support
 
 This project is only going to support the latest browsers (Chrome/Firefox/Edge).

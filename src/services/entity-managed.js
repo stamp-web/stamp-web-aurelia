@@ -18,12 +18,13 @@ import {HttpClient} from "aurelia-http-client";
 import {BaseService} from "./base-service";
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {EventNames} from '../events/event-managed';
+import {AppConfig} from "../app-config";
 
-@inject(HttpClient, EventAggregator)
+@inject(HttpClient, EventAggregator, AppConfig)
 export class EntityManaged extends BaseService {
 
-    constructor(http, eventBus) {
-        super(http, eventBus);
+    constructor(http, eventBus, appConfig) {
+        super(http, eventBus, appConfig);
         if( this.updateInternalCount ) {
             this.eventBus.subscribe(EventNames.stampCount, this.updateInternalCount.bind(this));
         }

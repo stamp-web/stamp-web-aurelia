@@ -18,12 +18,13 @@ import {HttpClient} from "aurelia-http-client";
 import {EntityManaged} from "./entity-managed";
 import {EventNames} from '../events/event-managed';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {AppConfig} from "../app-config";
 
-@inject(HttpClient, EventAggregator)
+@inject(HttpClient, EventAggregator, AppConfig)
 export class StampCollections extends EntityManaged {
 
-    constructor(http, eventBus) {
-        super(http, eventBus);
+    constructor(http, eventBus, appConfig) {
+        super(http, eventBus, appConfig);
         this.eventBus.subscribe( EventNames.stampCountForCollection, this.updateFromAlbumCount.bind(this));
     }
 

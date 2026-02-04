@@ -20,6 +20,7 @@ import {Preferences} from 'services/preferences';
 import environment from './environment';
 import Backend from 'i18next-xhr-backend'
 import _ from 'lodash';
+import {AppConfig} from "./app-config";
 
 const logger = LogManager.getLogger('stamp-web');
 
@@ -37,10 +38,12 @@ Promise.config({
   }
 });
 
-function getLang() {
+async function getLang(aurelia) {
     let httpClient = new HttpClient();
     let eventBus = new EventAggregator();
-    let prefs = new Preferences(httpClient,eventBus);
+    let appConfig = aurelia.container.get(AppConfig);
+    await appConfig.load(window.location.pathname);
+    let prefs = new Preferences(httpClient,eventBus, appConfig);
     return new Promise( (resolve,reject) => {
         if( prefs ) {
             prefs.find({
@@ -67,9 +70,10 @@ function setRoot(aurelia) {
     }
 }
 
-export function configure(aurelia) {
+export async function configure(aurelia) {
+
     configureGlobalLibraries();
-    getLang().then(lang => {
+    getLang(aurelia).then(lang => {
         initialize( aurelia, lang );
     }).catch(e => {
         console.log('WARNING: Failure to obtain a language to use for Stamp-Web.  Defaulting to "en"');
@@ -85,13 +89,11 @@ function configureGlobalLibraries() {
     });
 }
 
-function initialize( aurelia, lang ) {
-
+async function initialize( aurelia, lang ) {
 
     aurelia.setupAureliaFinished = false;
     aurelia.setupI18NFinished = false;
-    aurelia.use
-        .standardConfiguration()
+    await aurelia.use.standardConfiguration()
         .feature('resources')
         //Uncomment the line below to enable animation.
         //if the css animator is enabled, add swap-order="after" to all router-view elements

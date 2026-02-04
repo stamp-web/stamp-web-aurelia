@@ -20,12 +20,13 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {Stamps} from "./stamps";
 
 import _ from 'lodash';
+import {AppConfig} from "../app-config";
 
-@inject(HttpClient, EventAggregator, Stamps)
+@inject(HttpClient, EventAggregator, AppConfig, Stamps)
 export class CatalogueNumbers extends BaseService {
 
-    constructor(http, eventBus, stampService) {
-        super(http, eventBus);
+    constructor(http, eventBus, appConfig, stampService) {
+        super(http, eventBus, appConfig);
         this.stampService = stampService;
     }
 

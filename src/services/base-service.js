@@ -21,6 +21,7 @@ import {EventNames} from '../events/event-managed';
 import {LogManager} from 'aurelia-framework';
 import _ from 'lodash';
 import $ from 'jquery';
+import {AppConfig} from '../app-config';
 
 const logger = LogManager.getLogger('services');
 
@@ -40,10 +41,10 @@ class ParameterHelper {
 }
 
 
-@inject(HttpClient, EventAggregator)
+@inject(HttpClient, EventAggregator, AppConfig)
 export class BaseService {
 
-    baseHref = "../stamp-webservices";
+    baseHref = null;
 
     parameters = {};
 
@@ -57,15 +58,19 @@ export class BaseService {
     selections = [];
 
 
-    constructor(http, eventBus) {
+    constructor(http, eventBus, appConfig) {
         this.http = http;
         this.paramHelper = new ParameterHelper();
         this.eventBus = eventBus;
+        this.appConfig = appConfig;
+
         this.http.configure(x => {
             //       x.withHeader('Authorization', 'Basic ' + btoa(this.username + ":" + this.password));
             x.withHeader('Accept', 'application/json');
             x.withHeader('Content-Type', 'application/json');
         });
+
+        this.baseHref = (appConfig?.stampWebServicesUrl ?? '/../stamp-webservices').replace(/\/$/, '');
     }
 
     monitoredParams(params) {
