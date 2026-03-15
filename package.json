@@ -17,7 +17,6 @@
     },
     "files": [
         "dist/"
-
     ],
     "dependencies": {
         "@popperjs/core": "^2.11.2",
@@ -39,7 +38,7 @@
         "odata-filter-parser": "^0.5.0",
         "pdfmake": "^0.2.7",
         "requirejs": "^2.3.2",
-        "select2": "4.0.3",
+        "select2": "^4.0.13",
         "serve-static": "^1.16.2"
     },
     "devDependencies": {
@@ -69,7 +68,7 @@
         "gulp-dart-sass": "^1.0.2",
         "gulp-eslint": "^6.0.0",
         "gulp-htmlmin": "^5.0.1",
-        "gulp-notify": "^4.0.0",
+        "gulp-notify": "^5.0.0",
         "gulp-plumber": "^1.2.1",
         "gulp-rename": "^2.0.0",
         "http-proxy-middleware": "^0.19.1",

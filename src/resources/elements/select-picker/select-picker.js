@@ -93,7 +93,7 @@ export class Select2Picker {
         $select.on('select2:unselect', this.onUnselect.bind(this));
         // the old values may have been assigned to the selector from previous edits
         $select.val(undefined);
-        this.select2 = $select.select2(options);
+
 
         let tabIndex = this.config.tabIndex;
         if (typeof tabIndex === 'undefined') {
@@ -103,6 +103,7 @@ export class Select2Picker {
         $select.attr('tabindex', -1);
         // Need to debounce in order to implement the tabindex change
         _.debounce((selectTarget, index) => {
+            this.select2 = $select.select2(options);
             selectTarget.parent().find('.select2-selection').attr('tabindex', index);
         })($select, tabIndex);
     }
