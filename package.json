@@ -71,7 +71,7 @@
         "gulp-notify": "^5.0.0",
         "gulp-plumber": "^1.2.1",
         "gulp-rename": "^2.0.0",
-        "http-proxy-middleware": "^0.19.1",
+        "http-proxy-middleware": "^2.0.8",
         "isomorphic-fetch": "^3.0.0",
         "jest": "^29.3.1",
         "jest-cli": "^29.3.1",
@@ -91,5 +91,12 @@
     },
     "engines": {
         "node": ">=8.9.0"
+    },
+    "overrides": {
+        "braces": "^3.0.3",
+        "flatted": "^3.4.2",
+        "tmp": "^0.2.7",
+        "uuid": "^11.1.1",
+        "micromatch": "^4.0.8"
     }
 }

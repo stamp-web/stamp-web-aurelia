@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import browserSync from 'browser-sync'
 import historyApiFallback from 'connect-history-api-fallback/lib';
-import proxy from 'http-proxy-middleware';
+import { createProxyMiddleware as proxy } from 'http-proxy-middleware';
 import project from '../aurelia.json';
 import build from './build';
 import {CLIOptions} from 'aurelia-cli';
