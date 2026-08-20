@@ -27,6 +27,15 @@ function configureEnvironment() {
         .pipe(gulp.dest(project.paths.root));
 }
 
+const notifyError = (err) => {
+    console.error(err.message || err);
+    try {
+        notify.onError('Error: <%= error.message %>')(err);
+    } catch (e) {
+        // Ignore notification system errors on Node 22+
+    }
+};
+
 function buildJavaScript() {
     let transpile = babel(project.transpiler.options);
     if (useCache) {
@@ -42,7 +51,7 @@ function buildJavaScript() {
         since: gulp.lastRun(buildJavaScript)
     })
         .pipe(plumber({
-            errorHandler: notify.onError('Error: <%= error.message %>')
+            errorHandler: notifyError
         }))
         .pipe(transpile)
         .pipe(build.bundle());

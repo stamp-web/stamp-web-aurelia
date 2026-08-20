@@ -1,17 +1,14 @@
 import gulp from 'gulp';
-import browserSync from 'browser-sync'
+import browserSync from 'browser-sync';
 import historyApiFallback from 'connect-history-api-fallback/lib';
 import { createProxyMiddleware as proxy } from 'http-proxy-middleware';
 import project from '../aurelia.json';
 import build from './build';
-import {CLIOptions} from 'aurelia-cli';
+import watch from './watch';
+import { CLIOptions } from 'aurelia-cli';
 import proxySettings from './proxy.json';
-import processCSS from './process-css';
 import _ from 'lodash';
-
-function onChange(path) {
-    console.log(`File Changed: ${path}`);
-}
+import Immutable from 'immutable';
 
 function reload(done) {
     browserSync.reload();
@@ -36,7 +33,7 @@ let serve = gulp.series(
             open: false,
             port: 9000,
             logLevel: 'silent',
-            server: {
+            server: Immutable.fromJS({
                 baseDir: ['.'],
                 middleware: [
                     historyApiFallback(),
@@ -46,7 +43,7 @@ let serve = gulp.series(
                         next();
                     }
                 ]
-            }
+            })
         }, function (err, bs) {
             let urls = bs.options.get('urls').toJS();
             console.log(`Application Available At: ${urls.local}`);
@@ -56,31 +53,16 @@ let serve = gulp.series(
     }
 );
 
-let refresh = gulp.series(
-    build,
-    reload
-);
-
-let refreshCSS = gulp.series(
-    build,
-    reload
-);
-
-let watch = function () {
-    gulp.watch(project.transpiler.source, refresh).on('change', onChange);
-    gulp.watch(project.markupProcessor.source, refresh).on('change', onChange);
-    gulp.watch(project.cssProcessor.source, refreshCSS).on('change', onChange)
-}
-
 let run;
 
 if (CLIOptions.hasFlag('watch')) {
     run = gulp.series(
         serve,
-        watch
+        done => watch(reload)
     );
 } else {
     run = serve;
 }
 
 export default run;
+

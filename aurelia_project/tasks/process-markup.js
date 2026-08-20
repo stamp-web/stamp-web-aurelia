@@ -5,9 +5,18 @@ import htmlmin from 'gulp-htmlmin';
 import plumber from 'gulp-plumber';
 import notify from 'gulp-notify';
 
+const notifyError = (err) => {
+  console.error(err.message || err);
+  try {
+    notify.onError('Error: <%= error.message %>')(err);
+  } catch (e) {
+    // Ignore notification system errors on Node 22+
+  }
+};
+
 export default function processMarkup() {
   return gulp.src(project.markupProcessor.source, {sourcemaps: true, since: gulp.lastRun(processMarkup)})
-      .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
+      .pipe(plumber({errorHandler: notifyError}))
       .pipe(htmlmin({
           removeComments: true,
           collapseWhitespace: true,
@@ -17,3 +26,4 @@ export default function processMarkup() {
       }))
       .pipe(build.bundle());
 }
+

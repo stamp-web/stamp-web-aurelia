@@ -34,7 +34,7 @@
 
 ## Commands
 
-- Install deps: `npm i`
+- Install deps: `npm i` (Note: `.npmrc` includes `allow-git=all` to support git dependencies in npm 10.9+)
 - Run unit tests: `au test`
 - Build for production: `au build --env prod`
 - Run dev: `au run --watch`

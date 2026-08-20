@@ -1,6 +1,5 @@
 import gulp from 'gulp';
 import minimatch from 'minimatch';
-import gulpWatch from 'gulp-watch';
 import debounce from 'debounce';
 import project from '../aurelia.json';
 import transpile from './transpile';
@@ -43,13 +42,9 @@ let watch = (callback) => {
 };
 
 let watchPath = (p) => {
-    gulpWatch(
-        p,
-        {
-            read: false, // performance optimization: do not read actual file contents
-            verbose: true
-        },
-        (vinyl) => processChange(vinyl));
+    gulp.watch(p).on('all', (event, filePath) => {
+        processChange({ path: filePath, cwd: process.cwd() });
+    });
 };
 
 let processChange = (vinyl) => {
